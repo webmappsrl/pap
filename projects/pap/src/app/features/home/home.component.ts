@@ -1,55 +1,10 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { buttonInfo } from '../../models/buttonInfo';
-
-const mock: buttonInfo[] = [
-  {
-    label: "company",
-    img: 'assets/icons/logo-e.png',
-    url: "company"
-  },
-  {
-    label: "calendar",
-    icon: "fa-calendar",
-    url: "calendar"
-  },
-  {
-    label: "map",
-    icon: "fa-map",
-    url: "map"
-  },
-  {
-    label: "book",
-    icon: "fa-check",
-    url: "book"
-  },
-  {
-    label: "abandonment",
-    icon: "fa-comments",
-    url: "abandonment"
-  },
-  {
-    label: "signal",
-    icon: "fa-pencil",
-    url: "signal"
-  },
-  {
-    label: "trashbook",
-    icon: "fa-clipboard",
-    url: "trashbook"
-  },
-  {
-    label: "reports",
-    icon: "fa-list",
-    url: "reports"
-  },
-  {
-    label: "info",
-    icon: "fa-info",
-    url: "info"
-  }
-
-];
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../core/core.state';
+import {buttonInfo} from '../../models/buttonInfo';
+import {yHomes} from './state/home.actions';
+import {selectHomeState} from './state/home.selectors';
 
 @Component({
   selector: 'pap-home',
@@ -59,17 +14,13 @@ const mock: buttonInfo[] = [
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent {
-  public buttons: buttonInfo[] = mock;
-
-  constructor(
-    private navCtrl: NavController
-  ) {
-
+  homeView$ = this._store.pipe(select(selectHomeState));
+  constructor(private _store: Store<AppState>,    private _navCtrl: NavController) {
+    this._store.dispatch(yHomes());
   }
 
   public gotoPage(url: string) {
     console.log("------- ~ HomeComponent ~ gotoPage ~ url", url);
     // this.navCtrl.navigateForward(url);
   }
-
 }
