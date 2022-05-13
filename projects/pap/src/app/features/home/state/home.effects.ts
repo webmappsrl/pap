@@ -31,9 +31,9 @@ export class HomeEffects {
             url: 'map',
           },
           {
-            label: 'disruption',
-            icon: 'create',
-            url: 'disruption',
+            label: 'book',
+            icon: 'checkmark',
+            url: 'book',
           },
           {
             label: 'abandonment',
@@ -41,9 +41,9 @@ export class HomeEffects {
             url: 'abandonment',
           },
           {
-            label: 'book',
-            icon: 'checkmark',
-            url: 'book',
+            label: 'disruption',
+            icon: 'create',
+            url: 'disruption',
           },
           {
             label: 'trashbook',
