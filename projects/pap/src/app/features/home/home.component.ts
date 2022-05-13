@@ -19,7 +19,7 @@ export class HomeComponent {
     this._store.dispatch(yHomes());
   }
 
-  public gotoPage(url: string) {
+  public gotoPage(url?: string) {
     console.log("------- ~ HomeComponent ~ gotoPage ~ url", url);
     // this.navCtrl.navigateForward(url);
   }

@@ -1,5 +1,6 @@
 export interface buttonInfo {
-    url: string,
+    action: string,
+    url?: string,
     icon?: string,
     img?: string,
     label: string,

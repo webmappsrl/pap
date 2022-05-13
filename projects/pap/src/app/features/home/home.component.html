@@ -1,21 +1,22 @@
 <ion-content padding class="pap-home">
     <ion-grid>
         <ion-row>
-          <ng-container *ngIf="homeView$|async as view">
-            <ion-col *ngFor="let button of view.buttons" size="4" class="ion-align-self-center">
-                <div class="ion-activatable ripple-parent pap-home-button {{button.class}}"
-                    [ngClass]="{'pap-home-button-disabled':button.disabled}"
-                    (click)="!button.disabled && gotoPage(button.url)">
-                    <div class="pap-home-button-image">
-                    <ion-icon *ngIf="button.icon" name="{{button.icon}}" class="pap-home-button-image-icon"></ion-icon>
-                    <img *ngIf="button.img" class="pap-home-button-image-img" src="{{button.img}}" />
+            <ng-container *ngIf="homeView$|async as view">
+                <ion-col *ngFor="let button of view.buttons" size="4" class="ion-align-self-center">
+                    <div class="ripple-parent pap-home-button {{button.class}}"
+                        [ngClass]="{'pap-home-button-disabled':button.disabled,'ion-activatable':!button.disabled}"
+                        (click)="!button.disabled && gotoPage(button.url)">
+                        <div class="pap-home-button-image">
+                            <ion-icon *ngIf="button.icon" name="{{button.icon}}" class="pap-home-button-image-icon">
+                            </ion-icon>
+                            <img *ngIf="button.img" class="pap-home-button-image-img" src="{{button.img}}" />
 
+                        </div>
+                        <p class="pap-home-button-label">{{button.label}}</p>
+                        <ion-ripple-effect type="unbounded"></ion-ripple-effect>
                     </div>
-                    <p class="pap-home-button-label">{{button.label}}</p>
-                    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
-                </div>
-            </ion-col>
-          </ng-container>
+                </ion-col>
+            </ng-container>
         </ion-row>
     </ion-grid>
 </ion-content>
