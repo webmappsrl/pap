@@ -10,42 +10,42 @@ const mock: buttonInfo[] = [
   },
   {
     label: "calendar",
-    icon: "md-calendar",
+    icon: "fa-calendar",
     url: "calendar"
   },
   {
     label: "map",
-    icon: "map",
+    icon: "fa-map",
     url: "map"
   },
   {
-    label: "disruption",
-    icon: "md-create",
-    url: "disruption"
-  },
-  {
-    label: "abandonment",
-    icon: "md-chatbubbles",
-    url: "abandonment"
-  },
-  {
     label: "book",
-    icon: "md-checkmark",
+    icon: "fa-check",
     url: "book"
   },
   {
+    label: "abandonment",
+    icon: "fa-comments",
+    url: "abandonment"
+  },
+  {
+    label: "signal",
+    icon: "fa-pencil",
+    url: "signal"
+  },
+  {
     label: "trashbook",
-    icon: "md-clipboard",
+    icon: "fa-clipboard",
     url: "trashbook"
   },
   {
     label: "reports",
-    icon: "md-list",
+    icon: "fa-list",
     url: "reports"
   },
   {
     label: "info",
-    icon: "md-information",
+    icon: "fa-info",
     url: "info"
   }
 

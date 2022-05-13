@@ -6,7 +6,7 @@
                 <div class="ion-activatable ripple-parent pap-home-button {{button.class}}"
                     [ngClass]="{'pap-home-button-disabled':button.disabled}"
                     (click)="!button.disabled && gotoPage(button.url)">
-                    <i *ngIf="button.icon" class="{{button.icon}} pap-home-button-icon"></i>
+                    <i *ngIf="button.icon" class="fa {{button.icon}} pap-home-button-icon"></i>
                     <img *ngIf="button.img" class="pap-home-button-img" src="{{button.img}}" />
                     <p class="pap-home-button-label">{{button.label}}</p>
                     <ion-ripple-effect type="unbounded"></ion-ripple-effect>
