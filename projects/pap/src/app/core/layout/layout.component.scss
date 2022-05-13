@@ -1,3 +1,5 @@
-pap-layout {
-  background-color: aqua;
+.pap-layout {
+  &-main {
+    height: 100vh;
+  }
 }

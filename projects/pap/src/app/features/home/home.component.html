@@ -1,2 +1,18 @@
-<p>home feature works!</p>
-<ion-header></ion-header>
+<ion-content padding class="pap-home">
+    <ion-grid>
+        <ion-row>
+
+            <ion-col *ngFor="let button of buttons" size="4" class="ion-align-self-center">
+                <div class="ion-activatable ripple-parent pap-home-button {{button.class}}"
+                    [ngClass]="{'pap-home-button-disabled':button.disabled}"
+                    (click)="!button.disabled && gotoPage(button.url)">
+                    <i *ngIf="button.icon" class="{{button.icon}} pap-home-button-icon"></i>
+                    <img *ngIf="button.img" class="pap-home-button-img" src="{{button.img}}" />
+                    <p class="pap-home-button-label">{{button.label}}</p>
+                    <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+                </div>
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
+</ion-content>

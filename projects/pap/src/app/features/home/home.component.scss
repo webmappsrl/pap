@@ -1,3 +1,32 @@
-pap-home {
-  background-color: red;
+.pap-home {
+  .pap-home-button {
+    text-align: center;
+    &-icon, &-img {
+      display: inline-block;
+      font-size: 35px;
+      width: 74px;
+      height: 74px;
+      line-height: 70px;
+      border-radius: 37px;
+      vertical-align: middle;
+      color: var(--ion-color-primary);
+      border: 2px solid var(--ion-color-primary);
+    }
+    &-label {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.79em;
+      color: var(--ion-color-primary);
+    }
+
+    .pap-home-button-disabled {
+      &-icon {
+        color: #666666;
+        border: 2px solid #666666;
+      }
+      &-label {
+        color: #666666;
+      }
+    }
+  }
 }
