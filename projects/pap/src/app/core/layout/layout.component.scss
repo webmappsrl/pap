@@ -1,5 +1,7 @@
-.pap-layout {
-  &-main {
-    height: 100vh;
+pap-layout {
+  .pap-layout {
+    &-main {
+      height: 100vh;
+    }
   }
 }
