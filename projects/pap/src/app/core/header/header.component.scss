@@ -1,0 +1,14 @@
+pap-header {
+}
+.pap-header {
+    --background: var(--ion-color-primary);
+    &-button {
+        color: var(--ion-color-secondary-contrast);
+    }
+    &-title {
+        text-align: center;
+        color: var(--ion-color-secondary-contrast);
+    }
+    &-image {
+    }
+}
