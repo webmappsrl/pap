@@ -23,6 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm install
+      - name: linting
       - run: npm run lint
       - name: Deploy to server
         uses: appleboy/ssh-action@master
