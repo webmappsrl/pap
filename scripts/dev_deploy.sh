@@ -13,9 +13,9 @@ npm install
 npm run build
 
 # delete old build
- rm -rf /var/www/html/dev.app.portapporta.webmapp.it/*
+rm -rf /var/www/html/dev.app.portapporta.webmapp.it/*
 
 #move new build to www
-mv /pap/dist/pap/* /var/www/html/dev.app.portapporta.webmapp.it/ -f
+mv dist/pap/* /var/www/html/dev.app.portapporta.webmapp.it/ -f
 
 echo "Deployment finished!"
