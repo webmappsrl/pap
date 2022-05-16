@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
@@ -10,8 +10,8 @@ import {LayoutEffects} from './layout/state/layout.effects';
 import {LayoutComponent} from './layout/layout.component';
 import {environment} from '../../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {AppState, reducers} from './core.state';
-import { HeaderComponent } from './header/header.component';
+import {reducers} from './core.state';
+import {HeaderComponent} from './header/header.component';
 @NgModule({
   declarations: [LayoutComponent, HeaderComponent],
   imports: [

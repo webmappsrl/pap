@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
+import {TestBed} from '@angular/core/testing';
+import {provideMockActions} from '@ngrx/effects/testing';
+import {Observable} from 'rxjs';
 
-import { HomeEffects } from './home.effects';
+import {HomeEffects} from './home.effects';
 
 describe('HomeEffects', () => {
   let actions$: Observable<any>;
@@ -10,10 +10,7 @@ describe('HomeEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        HomeEffects,
-        provideMockActions(() => actions$)
-      ]
+      providers: [HomeEffects, provideMockActions(() => actions$)],
     });
 
     effects = TestBed.inject(HomeEffects);

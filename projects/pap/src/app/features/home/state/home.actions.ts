@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {buttonInfo} from '../../../models/buttonInfo';
+import {buttonInfo} from '../home.model';
 
 export const yHomes = createAction(
   '[Home] Y Homes'

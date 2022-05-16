@@ -1,6 +1,6 @@
 import {Action, createReducer, on} from '@ngrx/store';
 import * as LayoutActions from './layout.actions';
-import {LayoutState} from './layout.model';
+import {LayoutState} from '../layout.model';
 
 export const mainLayoutFeatureKey = 'mainLayout';
 

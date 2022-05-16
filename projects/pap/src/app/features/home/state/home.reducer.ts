@@ -1,5 +1,5 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import {buttonInfo} from '../../../models/buttonInfo';
+import {Action, createReducer, on} from '@ngrx/store';
+import {buttonInfo} from '../home.model';
 import * as HomeActions from './home.actions';
 
 export const homeFeatureKey = 'home';

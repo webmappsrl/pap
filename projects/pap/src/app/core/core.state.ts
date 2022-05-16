@@ -1,7 +1,7 @@
 import {ActionReducerMap, createFeatureSelector, MetaReducer} from '@ngrx/store';
 import {environment} from '../../environments/environment';
 import {homeReducer, HomeState} from '../features/home/state/home.reducer';
-import {LayoutState} from './layout/state/layout.model';
+import {LayoutState} from './layout/layout.model';
 import {layoutReducer} from './layout/state/layout.reducer';
 
 export const reducers: ActionReducerMap<AppState> = {

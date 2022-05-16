@@ -1,15 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap } from 'rxjs/operators';
-import { Observable, EMPTY, of } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {catchError, map, concatMap} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 import * as HomeActions from './home.actions';
 
-
-
 @Injectable()
 export class HomeEffects {
-
   yHomes$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(HomeActions.yHomes),
@@ -19,66 +16,63 @@ export class HomeEffects {
             label: 'company',
             img: 'assets/icons/logo-e.png',
             url: 'company',
-            action: 'navigation'
+            action: 'navigation',
           },
           {
-            label: 'calendar',
+            label: 'calendario',
             icon: 'calendar',
             url: 'calendar',
-            action: 'navigation'
+            action: 'navigation',
           },
           {
-            label: 'map',
+            label: 'centri raccolta',
             icon: 'map',
             url: 'map',
-            action: 'navigation'
+            action: 'navigation',
           },
           {
-            label: 'book',
+            label: 'prenota servizio',
             icon: 'checkmark',
             url: 'book',
-            action: 'navigation'
+            action: 'navigation',
           },
           {
-            label: 'abandonment',
+            label: 'segnala abbandono',
             icon: 'chatbubbles',
             url: 'abandonment',
-            action: 'navigation'
+            action: 'navigation',
           },
           {
-            label: 'disruption',
+            label: 'attiva segnalazione',
             icon: 'create',
             url: 'disruption',
-            action: 'navigation'
+            action: 'navigation',
           },
           {
-            label: 'trashbook',
+            label: 'rifiutario',
             icon: 'clipboard',
             url: 'trashbook',
-            action: 'navigation'
+            action: 'navigation',
           },
           {
-            label: 'reports',
+            label: 'le mie segnalazioni',
             icon: 'list',
             url: 'reports',
-            action: 'navigation'
+            action: 'navigation',
           },
           {
             label: 'info',
             icon: 'information',
             url: 'info',
-            action: 'navigation'
+            action: 'navigation',
           },
         ]).pipe(
-          map(buttons => HomeActions.yHomesSuccess({ buttons })),
-          catchError(error => of(HomeActions.yHomesFailure({ error }))),
+          map(buttons => HomeActions.yHomesSuccess({buttons})),
+          catchError(error => of(HomeActions.yHomesFailure({error}))),
         ),
       ),
     );
   });
 
-
-
-  constructor(private actions$: Actions) { }
-
+  constructor(private actions$: Actions) {}
 }
