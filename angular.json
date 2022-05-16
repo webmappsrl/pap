@@ -72,7 +72,7 @@
                 "input": "node_modules/@ionic/angular/css/flex-utils.css"
               },
               {
-                "input": "projects/pap/src/theme/variables.css"
+                "input": "projects/pap/src/theme/variables.scss"
               }
             ],
             "scripts": []
@@ -145,19 +145,14 @@
                 "output": "./svg"
               }
             ],
-            "styles": [
-              "projects/pap/src/styles.scss"
-            ],
+            "styles": ["projects/pap/src/styles.scss"],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "projects/pap/**/*.ts",
-              "projects/pap/**/*.html"
-            ]
+            "lintFilePatterns": ["projects/pap/**/*.ts", "projects/pap/**/*.html"]
           }
         },
         "ionic-cordova-serve": {

@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import {buttonInfo} from '../home.model';
 
 export const yHomes = createAction(
   '[Home] Y Homes'
@@ -6,10 +7,7 @@ export const yHomes = createAction(
 
 export const yHomesSuccess = createAction(
   '[Home] Y Homes Success',
-  props<{ data: any }>()
+  props<{buttons: buttonInfo[]}>(),
 );
 
-export const yHomesFailure = createAction(
-  '[Home] Y Homes Failure',
-  props<{ error: any }>()
-);
+export const yHomesFailure = createAction('[Home] Y Homes Failure', props<{error: string}>());
