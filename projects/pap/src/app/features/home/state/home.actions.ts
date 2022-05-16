@@ -1,9 +1,7 @@
-import { createAction, props } from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 import {buttonInfo} from '../home.model';
 
-export const yHomes = createAction(
-  '[Home] Y Homes'
-);
+export const yHomes = createAction('[Home] Y Homes');
 
 export const yHomesSuccess = createAction(
   '[Home] Y Homes Success',
