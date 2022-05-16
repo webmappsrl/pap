@@ -31,4 +31,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: 'cd /pap && ./scripts/dev_deploy.sh'
+          script: 'cd pap && ./scripts/dev_deploy.sh'
