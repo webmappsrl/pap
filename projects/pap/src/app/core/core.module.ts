@@ -12,6 +12,8 @@ import {environment} from '../../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {reducers} from './core.state';
 import {HeaderComponent} from './header/header.component';
+import * as fromHeader from './header/state/header.reducer';
+import {HeaderEffects} from './header/state/header.effects';
 @NgModule({
   declarations: [LayoutComponent, HeaderComponent],
   imports: [
@@ -23,6 +25,8 @@ import {HeaderComponent} from './header/header.component';
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([LayoutEffects]),
     IonicModule.forRoot(),
+    StoreModule.forFeature(fromHeader.headerFeatureKey, fromHeader.reducer),
+    EffectsModule.forFeature([HeaderEffects]),
   ],
   exports: [LayoutComponent],
 })

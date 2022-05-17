@@ -11,4 +11,16 @@ pap-header {
     &-image {
     }
   }
+  .pap-header-menu {
+    &-header {
+      --background: var(--ion-color-primary);
+    }
+    &-title {
+      text-align: center;
+      color: var(--ion-color-secondary-contrast);
+    }
+
+    .pap-header-menu-item {
+    }
+  }
 }

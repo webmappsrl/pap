@@ -4,6 +4,7 @@ import {catchError, map, concatMap} from 'rxjs/operators';
 import {of} from 'rxjs';
 
 import * as HomeActions from './home.actions';
+import {buttonAction} from '../home.model';
 
 @Injectable()
 export class HomeEffects {
@@ -13,58 +14,71 @@ export class HomeEffects {
       concatMap(() =>
         of([
           {
-            label: 'company',
+            label: 'Centro notifiche',
+            url: 'notification',
+            action: buttonAction.NAVIGATION,
+            hideInHome: true,
+          },
+          {
+            label: 'Company',
             img: 'assets/icons/logo-e.png',
             url: 'company',
-            action: 'navigation',
+            action: buttonAction.NAVIGATION,
           },
           {
-            label: 'calendario',
+            label: 'Calendario',
             icon: 'calendar',
             url: 'calendar',
-            action: 'navigation',
+            action: buttonAction.NAVIGATION,
           },
           {
-            label: 'centri raccolta',
+            label: 'Centri raccolta',
             icon: 'map',
             url: 'map',
-            action: 'navigation',
+            action: buttonAction.NAVIGATION,
+            hideInMenu: true,
           },
           {
-            label: 'prenota servizio',
+            label: 'Prenota servizio',
             icon: 'checkmark',
             url: 'book',
-            action: 'navigation',
+            action: buttonAction.NAVIGATION,
           },
           {
-            label: 'segnala abbandono',
+            label: 'Segnala abbandono',
             icon: 'chatbubbles',
             url: 'abandonment',
-            action: 'navigation',
+            action: buttonAction.NAVIGATION,
           },
           {
-            label: 'attiva segnalazione',
+            label: 'Attiva segnalazione',
             icon: 'create',
             url: 'disruption',
-            action: 'navigation',
+            action: buttonAction.NAVIGATION,
           },
           {
-            label: 'rifiutario',
+            label: 'Rifiutario',
             icon: 'clipboard',
             url: 'trashbook',
-            action: 'navigation',
+            action: buttonAction.NAVIGATION,
           },
           {
-            label: 'le mie segnalazioni',
+            label: 'Le mie segnalazioni',
             icon: 'list',
             url: 'reports',
-            action: 'navigation',
+            action: buttonAction.NAVIGATION,
           },
           {
-            label: 'info',
+            label: 'Info',
             icon: 'information',
             url: 'info',
-            action: 'navigation',
+            action: buttonAction.NAVIGATION,
+          },
+          {
+            label: 'Impostazioni',
+            url: 'settings',
+            action: buttonAction.NAVIGATION,
+            hideInHome: true,
           },
         ]).pipe(
           map(buttons => HomeActions.yHomesSuccess({buttons})),
