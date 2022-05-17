@@ -30,7 +30,7 @@
       </ion-header>
       <ion-content>
         <ion-list>
-          <ion-item *ngFor="let button of homeview.buttons" class="pap-header-menu-item">
+          <ion-item *ngFor="let button of homeview.buttons" class="pap-header-menu-item" (click)="action(button.action,button.url)">
             {{button.label}}
           </ion-item>
         </ion-list>

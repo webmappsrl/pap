@@ -13,6 +13,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/trash-book/trash-book.module').then(m => m.TrashBookModule),
   },
+  { path: 'settings', loadChildren: () => import('./features/settings/settings.module').then(m => m.SettingsModule) },
   {
     path: '**',
     redirectTo: 'home', // all no defined route redirect to home
