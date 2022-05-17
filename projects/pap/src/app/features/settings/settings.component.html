@@ -1,18 +1,19 @@
+<ng-container *ngIf="settingsView$|async as settingsView">
 <ion-content padding class="pap-settings">
     <ion-list>
         <ion-list-header>
-            <ion-icon class="pap-settings-editicon" name="pencil" *ngIf="!editMode" (click)="edit(true)"></ion-icon>
-            <ion-icon class="pap-settings-editicon" name="checkmark-circle-outline" *ngIf="editMode"  (click)="edit(false)"></ion-icon>
+            <ion-icon class="pap-settings-editicon" name="pencil" *ngIf="!settingsView.editMode" (click)="edit(true)"></ion-icon>
+            <ion-icon class="pap-settings-editicon" name="checkmark-circle-outline" *ngIf="settingsView.editMode"  (click)="edit(false)"></ion-icon>
             <ion-label>Profilo</ion-label>
         </ion-list-header>
         <ion-item>
             <ion-label position="fixed">Nome</ion-label>
-            <ion-input [(ngModel)]="profile.firstName" required [disabled]="!editMode" placeholder="Inserire il nome">
+            <ion-input [(ngModel)]="profile.firstName" required [disabled]="!settingsView.editMode" placeholder="Inserire il nome">
             </ion-input>
         </ion-item>
         <ion-item>
             <ion-label position="fixed">Cognome</ion-label>
-            <ion-input [(ngModel)]="profile.lastName" required [disabled]="!editMode" placeholder="Inserire il Cognome">
+            <ion-input [(ngModel)]="profile.lastName" required [disabled]="!settingsView.editMode" placeholder="Inserire il Cognome">
             </ion-input>
         </ion-item>
         <ion-item>
@@ -40,7 +41,7 @@
         </ion-item>
         <ion-item>
             <ion-label>Notifiche push</ion-label>
-            <ion-toggle [value]="profile.notification" [disabled]="!editMode" slot="end"></ion-toggle>
+            <ion-toggle [value]="profile.notification" [disabled]="!settingsView.editMode" slot="end"></ion-toggle>
         </ion-item>
     </ion-list>
     <ion-list>
@@ -60,3 +61,5 @@
     </div>
 
 </ion-content>
+
+</ng-container>

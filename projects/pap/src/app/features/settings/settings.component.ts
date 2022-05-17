@@ -1,4 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../core/core.state';
+import {toggleEdit} from './state/settings.actions';
+import {SettingsState} from './state/settings.reducer';
+import {selectSettingsState} from './state/settings.selectors';
 
 @Component({
   selector: 'pap-settings',
@@ -8,7 +13,7 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@an
   encapsulation: ViewEncapsulation.None,
 })
 export class SettingsComponent implements OnInit {
-  editMode: boolean = false;
+  settingsView$;
   profile: any = {};
 
   appVersion = '1.2.3';
@@ -24,11 +29,13 @@ export class SettingsComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private _store: Store<AppState>) {
+    this.settingsView$ = this._store.pipe(select(selectSettingsState));
+  }
 
   ngOnInit(): void {}
 
   edit(value: boolean) {
-    this.editMode = value;
+    this._store.dispatch(toggleEdit());
   }
 }
