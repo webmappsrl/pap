@@ -15,8 +15,11 @@ export const initialState: TrashBookState = {
 export const reducer = createReducer(
   initialState,
   on(TrashBookActions.loadTrashBooks, state => state),
-  on(TrashBookActions.loadTrashBooksSuccess, (state, action) => state),
-  on(TrashBookActions.loadTrashBooksFailure, (state, action) => state),
+  on(TrashBookActions.loadTrashBooksSuccess, (state, action) => ({
+    ...state,
+    trashBook: action.data,
+  })),
+  on(TrashBookActions.loadTrashBooksFailure, (state, action) => ({...state, error: action.error})),
 );
 
 export function trashBookReducer(
