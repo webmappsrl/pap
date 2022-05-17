@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TrashBookComponent } from './trash-book.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {TrashBookComponent} from './trash-book.component';
 
-const routes: Routes = [{ path: '', component: TrashBookComponent }];
+const routes: Routes = [{path: '', component: TrashBookComponent}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TrashBookRoutingModule { }
+export class TrashBookRoutingModule {}
