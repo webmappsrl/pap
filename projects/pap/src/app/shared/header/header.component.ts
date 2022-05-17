@@ -3,11 +3,11 @@ import {MenuController, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
 import {of} from 'rxjs';
 import {headerInfo} from './header.model';
-import {AppState} from '../core.state';
 import {selectHomeState} from '../../features/home/state/home.selectors';
 import {selectHeaderState} from './state/header.selectors';
 import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {buttonAction} from '../../features/home/home.model';
+import {AppState} from '../../core/core.state';
 
 @Component({
   selector: 'pap-header',

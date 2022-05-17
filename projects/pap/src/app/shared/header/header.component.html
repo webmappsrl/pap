@@ -2,7 +2,7 @@
   <ion-header>
     <ion-toolbar class="pap-header">
       <ion-buttons slot="start">
-        <ion-back-button *ngIf="view.showBack"></ion-back-button>
+        <ion-back-button></ion-back-button>
         <ion-button *ngIf="view.buttonStart" class="{{view.buttonStart.class}}  pap-header-button"
           (click)="action(view.buttonStart.action,view.buttonStart.url)">
           <ion-icon slot="icon-only" [name]="view.buttonStart.icon"></ion-icon>

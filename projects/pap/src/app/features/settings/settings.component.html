@@ -1,65 +1,85 @@
 <ng-container *ngIf="settingsView$|async as settingsView">
-<ion-content padding class="pap-settings">
-    <ion-list>
-        <ion-list-header>
-            <ion-icon class="pap-settings-editicon" name="pencil" *ngIf="!settingsView.editMode" (click)="edit(true)"></ion-icon>
-            <ion-icon class="pap-settings-editicon" name="checkmark-circle-outline" *ngIf="settingsView.editMode"  (click)="edit(false)"></ion-icon>
-            <ion-label>Profilo</ion-label>
-        </ion-list-header>
-        <ion-item>
-            <ion-label position="fixed">Nome</ion-label>
-            <ion-input [(ngModel)]="profile.firstName" required [disabled]="!settingsView.editMode" placeholder="Inserire il nome">
-            </ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="fixed">Cognome</ion-label>
-            <ion-input [(ngModel)]="profile.lastName" required [disabled]="!settingsView.editMode" placeholder="Inserire il Cognome">
-            </ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="fixed">Email</ion-label>
-            <ion-input [value]="profile.email" type="email" required [disabled]="true"
-                placeholder="Inserire la propria Email"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="fixed">Posizione</ion-label>
-        </ion-item>
-        <ion-item>
-            <ion-label position="fixed">Indirizzo</ion-label>
-            <ion-textarea [value]="profile.address" [disabled]="true" placeholder="Indirizzo di riferimento">
-            </ion-textarea>
-        </ion-item>
-        <ion-item>
-            <ion-label position="fixed">Area</ion-label>
-            <ion-textarea [value]="profile.area" required [disabled]="true" placeholder="Area di appartenenza">
-            </ion-textarea>
-        </ion-item>
-        <ion-item>
-            <ion-label position="fixed">Tipo di utenza</ion-label>
-            <ion-input [value]="profile.userType" required [disabled]="true" placeholder="Domestica o commerciale">
-            </ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>Notifiche push</ion-label>
-            <ion-toggle [value]="profile.notification" [disabled]="!settingsView.editMode" slot="end"></ion-toggle>
-        </ion-item>
-    </ion-list>
-    <ion-list>
-        <ion-radio-group [value]="profile.language">
-            <ion-list-header>
-                <ion-label>Cambia lingua
-                </ion-label>
-            </ion-list-header>
-            <ion-item *ngFor="let lang of languages">
-                <ion-label>{{lang.label}}</ion-label>
-                <ion-radio slot="end" [value]="lang.value"></ion-radio>
-            </ion-item>
-        </ion-radio-group>
-    </ion-list>
-    <div class="pap-settings-version">
-        Versione {{appVersion}}
-    </div>
 
-</ion-content>
+    <!-- <pap-header></pap-header> -->
+
+    <ion-header>
+        <ion-toolbar class="pap-header">
+            <ion-buttons slot="start">
+                <ion-back-button class="back-button"></ion-back-button>
+            </ion-buttons>
+            <ion-title class="pap-header-title">
+                portAPPorta
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+
+
+    <ion-content padding class="pap-settings">
+        <ion-list>
+            <ion-list-header>
+                <ion-icon class="pap-settings-editicon" name="pencil" *ngIf="!settingsView.editMode"
+                    (click)="edit(true)"></ion-icon>
+                <ion-icon class="pap-settings-editicon" name="checkmark-circle-outline" *ngIf="settingsView.editMode"
+                    (click)="edit(false)"></ion-icon>
+                <ion-label>Profilo</ion-label>
+            </ion-list-header>
+            <ion-item>
+                <ion-label position="fixed">Nome</ion-label>
+                <ion-input [(ngModel)]="profile.firstName" required [disabled]="!settingsView.editMode"
+                    placeholder="Inserire il nome">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="fixed">Cognome</ion-label>
+                <ion-input [(ngModel)]="profile.lastName" required [disabled]="!settingsView.editMode"
+                    placeholder="Inserire il Cognome">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="fixed">Email</ion-label>
+                <ion-input [value]="profile.email" type="email" required [disabled]="true"
+                    placeholder="Inserire la propria Email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="fixed">Posizione</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label position="fixed">Indirizzo</ion-label>
+                <ion-textarea [value]="profile.address" [disabled]="true" placeholder="Indirizzo di riferimento">
+                </ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ion-label position="fixed">Area</ion-label>
+                <ion-textarea [value]="profile.area" required [disabled]="true" placeholder="Area di appartenenza">
+                </ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ion-label position="fixed">Tipo di utenza</ion-label>
+                <ion-input [value]="profile.userType" required [disabled]="true" placeholder="Domestica o commerciale">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Notifiche push</ion-label>
+                <ion-toggle [value]="profile.notification" [disabled]="!settingsView.editMode" slot="end"></ion-toggle>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-radio-group [value]="profile.language">
+                <ion-list-header>
+                    <ion-label>Cambia lingua
+                    </ion-label>
+                </ion-list-header>
+                <ion-item *ngFor="let lang of languages">
+                    <ion-label>{{lang.label}}</ion-label>
+                    <ion-radio slot="end" [value]="lang.value"></ion-radio>
+                </ion-item>
+            </ion-radio-group>
+        </ion-list>
+        <div class="pap-settings-version">
+            Versione {{appVersion}}
+        </div>
+
+    </ion-content>
 
 </ng-container>
