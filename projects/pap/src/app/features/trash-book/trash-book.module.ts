@@ -1,17 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { TrashBookRoutingModule } from './trash-book-routing.module';
-import { TrashBookComponent } from './trash-book.component';
-
+import {TrashBookRoutingModule} from './trash-book-routing.module';
+import {TrashBookComponent} from './trash-book.component';
+import {StoreModule} from '@ngrx/store';
+import * as fromTrashBook from './state/trash-book.reducer';
+import {EffectsModule} from '@ngrx/effects';
+import {TrashBookEffects} from './state/trash-book.effects';
 
 @NgModule({
-  declarations: [
-    TrashBookComponent
-  ],
+  declarations: [TrashBookComponent],
   imports: [
     CommonModule,
-    TrashBookRoutingModule
-  ]
+    TrashBookRoutingModule,
+    StoreModule.forFeature(fromTrashBook.trashBookFeatureKey, fromTrashBook.reducer),
+    EffectsModule.forFeature([TrashBookEffects]),
+  ],
 })
-export class TrashBookModule { }
+export class TrashBookModule {}
