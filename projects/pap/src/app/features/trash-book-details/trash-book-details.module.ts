@@ -8,9 +8,10 @@ import * as fromTrashBookDetails from './state/trash-book-details.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {TrashBookDetailsEffects} from './state/trash-book-details.effects';
 import {SharedModule} from '../../shared/shared.module';
+import {TrashBookTypeComponent} from './trash-book-type/trash-book-type.component';
 
 @NgModule({
-  declarations: [TrashBookDetailsComponent],
+  declarations: [TrashBookDetailsComponent, TrashBookTypeComponent],
   imports: [
     CommonModule,
     SharedModule,
