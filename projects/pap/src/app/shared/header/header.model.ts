@@ -6,4 +6,5 @@ export interface headerInfo {
   showBack: boolean;
   buttonStart?: buttonInfo;
   buttonEnd?: buttonInfo;
+  isMenuOpen: boolean;
 }
