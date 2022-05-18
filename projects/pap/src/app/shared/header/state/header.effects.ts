@@ -39,5 +39,26 @@ export class HeaderEffects {
     );
   });
 
+  showButtons$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(HeaderActions.showButtons),
+      concatMap(action =>
+        of(headermock).pipe(
+          map(data => {
+            if (!action.show) {
+              data.showBack = true;
+              data.buttonEnd = undefined;
+              data.buttonStart = undefined;
+            }
+            console.log('------- ~ HeaderEffects ~ showButtons$=createEffect ~ data', action, data);
+            return data;
+          }),
+          map(data => HeaderActions.loadHeadersSuccess({data})),
+          catchError(error => of(HeaderActions.loadHeadersFailure({error}))),
+        ),
+      ),
+    );
+  });
+
   constructor(private actions$: Actions) {}
 }
