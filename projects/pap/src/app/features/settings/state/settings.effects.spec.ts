@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
+import {TestBed} from '@angular/core/testing';
+import {provideMockActions} from '@ngrx/effects/testing';
+import {Observable} from 'rxjs';
 
-import { SettingsEffects } from './settings.effects';
+import {SettingsEffects} from './settings.effects';
 
 describe('SettingsEffects', () => {
   let actions$: Observable<any>;
@@ -10,10 +10,7 @@ describe('SettingsEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        SettingsEffects,
-        provideMockActions(() => actions$)
-      ]
+      providers: [SettingsEffects, provideMockActions(() => actions$)],
     });
 
     effects = TestBed.inject(SettingsEffects);

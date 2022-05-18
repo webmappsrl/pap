@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
+import {TestBed} from '@angular/core/testing';
+import {provideMockActions} from '@ngrx/effects/testing';
+import {Observable} from 'rxjs';
 
-import { HeaderEffects } from './header.effects';
+import {HeaderEffects} from './header.effects';
 
 describe('HeaderEffects', () => {
   let actions$: Observable<any>;
@@ -10,10 +10,7 @@ describe('HeaderEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        HeaderEffects,
-        provideMockActions(() => actions$)
-      ]
+      providers: [HeaderEffects, provideMockActions(() => actions$)],
     });
 
     effects = TestBed.inject(HeaderEffects);

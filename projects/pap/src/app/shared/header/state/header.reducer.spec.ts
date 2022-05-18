@@ -1,4 +1,4 @@
-import { reducer, initialState } from './header.reducer';
+import {reducer, initialState} from './header.reducer';
 
 describe('Header Reducer', () => {
   describe('an unknown action', () => {
