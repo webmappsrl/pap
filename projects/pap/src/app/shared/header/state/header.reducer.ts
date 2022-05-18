@@ -31,7 +31,7 @@ export const reducer = createReducer(
     ...state,
     header: {...state.header, isMenuOpen: false},
   })),
-  on(HeaderActions.showButtons, state => state),
+  on(HeaderActions.showButtons, state => ({...state})),
 );
 
 export function headerReducer(state: HeaderState | undefined, action: Action): HeaderState {

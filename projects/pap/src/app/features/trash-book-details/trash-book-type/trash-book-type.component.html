@@ -1,10 +1,7 @@
-<pap-header></pap-header>
+<ion-header><pap-header></pap-header></ion-header>
 <ng-container *ngIf="trashBookDetailsView$|async as trashBookDetailsView">
     <ion-content padding class="trash-book-type">
 
-        <!-- <div id="types-path">
-            <a (click)="dismiss()">{{ pageData.path }}</a> > {{ data.name }}
-          </div> -->
         <h1 class="trash-book-type-title">
             {{ trashBookDetailsView.selected?.trashBookType?.name }}
         </h1>

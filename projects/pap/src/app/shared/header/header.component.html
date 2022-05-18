@@ -1,9 +1,9 @@
 <ng-container *ngIf="(headerView$|async)?.header as view">
-  <ion-header>
+
     <ion-toolbar class="pap-header">
       <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-        <ion-button *ngIf="view.buttonStart" class="{{view.buttonStart.class}}  pap-header-button"
+        <ion-back-button class="back-button"></ion-back-button>
+        <ion-button *ngIf="view.buttonStart && showStartButton" class="{{view.buttonStart.class}}  pap-header-button"
           (click)="action(view.buttonStart.action,view.buttonStart.url)">
           <ion-icon slot="icon-only" [name]="view.buttonStart.icon"></ion-icon>
         </ion-button>
@@ -13,13 +13,13 @@
         <img *ngIf="view.img" class="pap-header-img" src="{{view.img}}" />
       </ion-title>
       <ion-buttons slot="end">
-        <ion-button *ngIf="view.buttonEnd" class="{{view.buttonEnd.class}} pap-header-button"
+        <ion-button *ngIf="view.buttonEnd && showEndButton" class="{{view.buttonEnd.class}} pap-header-button"
           (click)="action(view.buttonEnd.action,view.buttonEnd.url)">
           <ion-icon slot="icon-only" [name]="view.buttonEnd.icon"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
-  </ion-header>
+
 
   <ng-container *ngIf="homeView$|async as homeview">
     <ion-menu side="start" menuId="mainmenu" contentId="main" class="pap-header-menu" (ionDidClose)="closedMenu()">

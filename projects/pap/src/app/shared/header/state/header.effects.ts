@@ -45,15 +45,14 @@ export class HeaderEffects {
       concatMap(action =>
         of(headermock).pipe(
           map(data => {
+            let dataclone = {...data};
             if (!action.show) {
-              data.showBack = true;
-              data.buttonEnd = undefined;
-              data.buttonStart = undefined;
+              dataclone.showBack = true;
+              delete dataclone.buttonEnd;
+              delete dataclone.buttonStart;
             }
-            console.log('------- ~ HeaderEffects ~ showButtons$=createEffect ~ data', action, data);
-            return data;
+            return HeaderActions.loadHeadersSuccess({data: dataclone});
           }),
-          map(data => HeaderActions.loadHeadersSuccess({data})),
           catchError(error => of(HeaderActions.loadHeadersFailure({error}))),
         ),
       ),

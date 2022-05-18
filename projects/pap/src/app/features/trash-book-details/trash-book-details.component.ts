@@ -25,7 +25,6 @@ export class TrashBookDetailsComponent implements OnInit {
   }
 
   info(type: any) {
-    console.log('------- ~ TrashBookDetailsComponent ~ info ~ type', type);
     const modal = this._modalController
       .create({
         component: TrashBookTypeComponent,

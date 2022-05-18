@@ -1,7 +1,7 @@
 <!-- <pre>{{trashBookView$|async|json}}</pre> -->
 
 <ng-container *ngIf="trashBookView$|async as trashBookView">
-    <pap-header></pap-header>
+    <ion-header><pap-header></pap-header></ion-header>
         <ion-searchbar placeholder="ricerca" debounce="200" (ionChange)="searchChange($event)"></ion-searchbar>
     <ion-content padding class="pap-trashbook">
         <ion-list>
