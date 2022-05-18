@@ -28,8 +28,6 @@ interface ActionEvt {
 export class HeaderComponent implements OnDestroy {
   private _actionEVT$: EventEmitter<ActionEvt> = new EventEmitter<ActionEvt>();
   private _actionEVTSub: Subscription = Subscription.EMPTY;
-  private _headerViewSub: Subscription = Subscription.EMPTY;
-  private _isOpen$: Observable<boolean> = from(this._menuCtrl.isOpen('mainmenu'));
 
   headerView$ = this._store.pipe(select(selectHeaderState));
   homeView$ = this._store.pipe(select(selectHomeState));
@@ -39,34 +37,16 @@ export class HeaderComponent implements OnDestroy {
     private _navCtrl: NavController,
     private _menuCtrl: MenuController,
   ) {
-    this._headerViewSub = this.headerView$
-      .pipe(withLatestFrom(this._isOpen$))
-      .subscribe(([openAction, isOpen]) => {
-        if (openAction && !isOpen) {
-          this._menuCtrl.enable(true, 'mainmenu');
-          this._menuCtrl.open('mainmenu');
-        }
-        if (!openAction && isOpen) {
-          this._menuCtrl.enable(false, 'mainmenu');
-          this._menuCtrl.close('mainmenu');
-        }
-      });
-
-    this._actionEVTSub = this._actionEVT$
-      .pipe(withLatestFrom(this._isOpen$))
-      .subscribe(([evt, isOpen]) => {
-        if (evt.action === 'open-menu') {
-          console.log('------- ~ HeaderComponent ~ action ~ isOpen', isOpen);
-          if (!isOpen) {
-            this._store.dispatch(openMenu());
-          } else {
-            this._store.dispatch(closeMenu());
-          }
-        }
-        if (evt.action === buttonAction.NAVIGATION && evt.url) {
-          this._navCtrl.navigateForward(evt.url);
-        }
-      });
+    this._actionEVTSub = this._actionEVT$.subscribe(evt => {
+      if (evt.action === 'open-menu') {
+        this._store.dispatch(openMenu());
+        this._menuCtrl.open('mainmenu');
+      }
+      if (evt.action === buttonAction.NAVIGATION && evt.url) {
+        this.closedMenu();
+        this._navCtrl.navigateForward(evt.url);
+      }
+    });
     this._store.dispatch(loadHeaders());
   }
 
@@ -75,11 +55,11 @@ export class HeaderComponent implements OnDestroy {
   }
 
   public closedMenu(): void {
+    this._menuCtrl.close('mainmenu');
     this._store.dispatch(closeMenu());
   }
 
   public ngOnDestroy(): void {
-    this._headerViewSub.unsubscribe();
     this._actionEVTSub.unsubscribe();
   }
 }
