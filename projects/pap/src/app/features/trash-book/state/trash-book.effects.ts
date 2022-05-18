@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, concatMap, switchMap} from 'rxjs/operators';
+import {catchError, map, concatMap, switchMap, withLatestFrom} from 'rxjs/operators';
 import {Observable, EMPTY, of} from 'rxjs';
 
 import * as TrashBookActions from './trash-book.actions';
@@ -12,7 +12,15 @@ export class TrashBookEffects {
     return this.actions$.pipe(
       ofType(TrashBookActions.loadTrashBooks),
       switchMap(_ => this._trashBookSvc.getTrashBook()),
-      map(data => TrashBookActions.loadTrashBooksSuccess({data})),
+      withLatestFrom(this._trashBookSvc.getTrashTypes()),
+      map(([data, trashTypes]) => {
+        data = data.map(waste => {
+          waste.trashBookType = trashTypes.find(tt => tt.id === waste.trash_type_id);
+          waste.hide = false;
+          return waste;
+        });
+        return TrashBookActions.loadTrashBooksSuccess({data});
+      }),
       catchError(error => of(TrashBookActions.loadTrashBooksFailure({error}))),
     );
   });

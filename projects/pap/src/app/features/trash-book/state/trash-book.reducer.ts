@@ -20,6 +20,14 @@ export const reducer = createReducer(
     trashBook: action.data,
   })),
   on(TrashBookActions.loadTrashBooksFailure, (state, action) => ({...state, error: action.error})),
+  on(TrashBookActions.filterTrashBooks, (state, action) => ({
+    ...state,
+    trashBook: state.trashBook.map(x => {
+      let y = Object.assign({}, x);
+      y.hide = !!action.filter && !x.name.toLowerCase().includes(action.filter.toLowerCase());
+      return y;
+    }),
+  })),
 );
 
 export function trashBookReducer(

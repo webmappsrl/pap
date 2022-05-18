@@ -1,2 +1,18 @@
-<p>trash-book works!</p>
-<pre>{{trashBookView$|async|json}}</pre>
+<!-- <pre>{{trashBookView$|async|json}}</pre> -->
+
+<ng-container *ngIf="trashBookView$|async as trashBookView">
+    <pap-header></pap-header>
+    <ion-content padding class="pap-trashbook">
+        <ion-searchbar placeholder="ricerca" debounce="200" (ionChange)="searchChange($event)"></ion-searchbar>
+        <ion-list>
+            <ion-item *ngFor="let item of trashBookView.trashBook" detail button (click)="buttonClick(item)"
+                [hidden]="item.hide">
+                <ion-icon slot="start" *ngIf="item" style="color:{{(item.trashBookType?.color)}}" [name]="item.trashBookType?.color
+                     ?'ellipse':'ellipse-outline'">
+                </ion-icon>
+                <ion-label>{{item.name}}</ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+</ng-container>

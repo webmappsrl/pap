@@ -8,7 +8,7 @@
           <ion-col *ngIf="!button.hideInHome" size="4" class="ion-align-self-center">
             <div class="ripple-parent pap-home-button {{button.class}}"
               [ngClass]="{'pap-home-button-disabled':button.disabled,'ion-activatable':!button.disabled}"
-              (click)="!button.disabled && gotoPage(button.url)">
+              (click)="!button.disabled && action(button.action,button.url)">
               <div class="pap-home-button-image">
                 <ion-icon *ngIf="button.icon" name="{{button.icon}}" class="pap-home-button-image-icon">
                 </ion-icon>
