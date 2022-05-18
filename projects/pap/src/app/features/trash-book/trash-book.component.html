@@ -2,8 +2,8 @@
 
 <ng-container *ngIf="trashBookView$|async as trashBookView">
     <pap-header></pap-header>
-    <ion-content padding class="pap-trashbook">
         <ion-searchbar placeholder="ricerca" debounce="200" (ionChange)="searchChange($event)"></ion-searchbar>
+    <ion-content padding class="pap-trashbook">
         <ion-list>
             <ion-item *ngFor="let item of trashBookView.trashBook" detail button (click)="buttonClick(item)"
                 [hidden]="item.hide">

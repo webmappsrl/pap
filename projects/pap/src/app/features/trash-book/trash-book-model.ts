@@ -4,6 +4,7 @@ export interface TrashBookRow {
   notes: string;
   pap: boolean;
   delivery: boolean;
+  where: string;
   collection_center: boolean;
   translations: any;
   trash_type_id: number;
