@@ -1,14 +1,23 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnDestroy,
+  ViewEncapsulation,
+} from '@angular/core';
 import {MenuController, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {of} from 'rxjs';
-import {headerInfo} from './header.model';
+import {from, Observable, of, Subscription, take, withLatestFrom} from 'rxjs';
 import {selectHomeState} from '../../features/home/state/home.selectors';
 import {selectHeaderState} from './state/header.selectors';
 import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {buttonAction} from '../../features/home/home.model';
 import {AppState} from '../../core/core.state';
 
+interface ActionEvt {
+  action: buttonAction;
+  url?: string;
+}
 @Component({
   selector: 'pap-header',
   templateUrl: './header.component.html',
@@ -16,49 +25,61 @@ import {AppState} from '../../core/core.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent {
-  headerView$;
-  homeView$;
+export class HeaderComponent implements OnDestroy {
+  private _actionEVT$: EventEmitter<ActionEvt> = new EventEmitter<ActionEvt>();
+  private _actionEVTSub: Subscription = Subscription.EMPTY;
+  private _headerViewSub: Subscription = Subscription.EMPTY;
+  private _isOpen$: Observable<boolean> = from(this._menuCtrl.isOpen('mainmenu'));
+
+  headerView$ = this._store.pipe(select(selectHeaderState));
+  homeView$ = this._store.pipe(select(selectHomeState));
 
   constructor(
     private _store: Store<AppState>,
     private _navCtrl: NavController,
-    private _menu: MenuController,
+    private _menuCtrl: MenuController,
   ) {
-    this.homeView$ = this._store.pipe(select(selectHomeState));
-    this.headerView$ = this._store.pipe(select(selectHeaderState));
-    this.headerView$.subscribe(x => this.openMenu(x.header.isMenuOpen));
+    this._headerViewSub = this.headerView$
+      .pipe(withLatestFrom(this._isOpen$))
+      .subscribe(([openAction, isOpen]) => {
+        if (openAction && !isOpen) {
+          this._menuCtrl.enable(true, 'mainmenu');
+          this._menuCtrl.open('mainmenu');
+        }
+        if (!openAction && isOpen) {
+          this._menuCtrl.enable(false, 'mainmenu');
+          this._menuCtrl.close('mainmenu');
+        }
+      });
+
+    this._actionEVTSub = this._actionEVT$
+      .pipe(withLatestFrom(this._isOpen$))
+      .subscribe(([evt, isOpen]) => {
+        if (evt.action === 'open-menu') {
+          console.log('------- ~ HeaderComponent ~ action ~ isOpen', isOpen);
+          if (!isOpen) {
+            this._store.dispatch(openMenu());
+          } else {
+            this._store.dispatch(closeMenu());
+          }
+        }
+        if (evt.action === buttonAction.NAVIGATION && evt.url) {
+          this._navCtrl.navigateForward(evt.url);
+        }
+      });
     this._store.dispatch(loadHeaders());
   }
 
-  async openMenu(openAction: boolean) {
-    const isOpen = await this._menu.isOpen('mainmenu');
-    if (openAction && !isOpen) {
-      this._menu.enable(true, 'mainmenu');
-      this._menu.open('mainmenu');
-    }
-    if (!openAction && isOpen) {
-      this._menu.enable(false, 'mainmenu');
-      this._menu.close('mainmenu');
-    }
+  public action(action: buttonAction, url?: string): void {
+    this._actionEVT$.emit({action, url});
   }
 
-  async action(action: buttonAction, url?: string) {
-    if (action === 'open-menu') {
-      const isOpen = await this._menu.isOpen('mainmenu');
-      console.log('------- ~ HeaderComponent ~ action ~ isOpen', isOpen);
-      if (!isOpen) {
-        this._store.dispatch(openMenu());
-      } else {
-        this._store.dispatch(closeMenu());
-      }
-    }
-    if (action === buttonAction.NAVIGATION && url) {
-      this._navCtrl.navigateForward(url);
-    }
-  }
-
-  closedMenu() {
+  public closedMenu(): void {
     this._store.dispatch(closeMenu());
+  }
+
+  public ngOnDestroy(): void {
+    this._headerViewSub.unsubscribe();
+    this._actionEVTSub.unsubscribe();
   }
 }

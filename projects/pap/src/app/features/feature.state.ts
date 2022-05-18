@@ -1,11 +1,10 @@
-import {ActionReducerMap, createFeatureSelector} from '@ngrx/store';
+import {ActionReducerMap} from '@ngrx/store';
 import {AppState} from '../core/core.state';
 
 import {homeReducer, HomeState} from './home/state/home.reducer';
 import {trashBookReducer, TrashBookState} from './trash-book/state/trash-book.reducer';
 
 export const FEATURE_NAME = 'features';
-export const selectExamples = createFeatureSelector<State, FeatureState>(FEATURE_NAME);
 export const reducers: ActionReducerMap<FeatureState> = {
   home: homeReducer,
   trashBook: trashBookReducer,

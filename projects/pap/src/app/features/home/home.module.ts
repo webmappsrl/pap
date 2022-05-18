@@ -7,7 +7,6 @@ import {StoreModule} from '@ngrx/store';
 import * as fromHome from './state/home.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {HomeEffects} from './state/home.effects';
-import {CoreModule} from '../../core/core.module';
 @NgModule({
   declarations: [HomeComponent],
   imports: [
