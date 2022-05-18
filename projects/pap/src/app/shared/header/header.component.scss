@@ -1,5 +1,4 @@
 pap-header {
-  
   .pap-header-menu {
     &-header {
       --background: var(--ion-color-primary);
@@ -11,5 +10,8 @@ pap-header {
 
     .pap-header-menu-item {
     }
+  }
+  ion-item {
+    pointer-events: auto !important;
   }
 }
