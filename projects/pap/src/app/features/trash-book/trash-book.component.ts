@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../core/core.state';
@@ -14,14 +14,11 @@ import {TrashBookRow} from './trash-book-model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class TrashBookComponent implements OnInit {
+export class TrashBookComponent {
   trashBookView$ = this._store.pipe(select(selectTrashBookState));
   constructor(private _store: Store<AppState>, private _navCtrl: NavController) {
-    this._store.dispatch(loadTrashBooks());
-  }
-
-  ngOnInit(): void {
     this._store.dispatch(showButtons({show: false}));
+    this._store.dispatch(loadTrashBooks());
   }
 
   searchChange(event: any) {
