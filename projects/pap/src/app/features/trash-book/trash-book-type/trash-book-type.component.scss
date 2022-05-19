@@ -1,0 +1,33 @@
+pap-trash-book-type {
+    .trash-book-type {
+        &-title {
+            font-weight: bold;
+            text-align: center;
+            font-style: italic;
+        }
+
+        &-content {
+            padding: 15px;
+        }
+
+        &-subtitle {
+            text-align: center;
+            font-style: italic;
+        }
+
+        &-icon-container {
+            text-align: center;
+        }
+        &-icon-allowed {
+            font-size: 24px;
+            color: var(--ion-color-success);
+        }
+        &-icon-notallowed {
+            font-size: 24px;
+            color: var(--ion-color-danger);
+        }
+        &-allowedornot{
+            text-align: center;
+        }
+    }
+}

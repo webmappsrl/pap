@@ -5,18 +5,4 @@ pap-layout {
     }
   }
 }
-.pap-header {
-  ion-back-button.back-button {
-    color: var(--ion-color-secondary-contrast);
-  }
-  --background: var(--ion-color-primary);
-  &-button {
-    color: var(--ion-color-secondary-contrast);
-  }
-  &-title {
-    text-align: center;
-    color: var(--ion-color-secondary-contrast);
-  }
-  &-image {
-  }
-}
+

@@ -1,19 +1,6 @@
 <ng-container *ngIf="settingsView$|async as settingsView">
 
-    <!-- <pap-header></pap-header> -->
-
-    <ion-header>
-        <ion-toolbar class="pap-header">
-            <ion-buttons slot="start">
-                <ion-back-button class="back-button"></ion-back-button>
-            </ion-buttons>
-            <ion-title class="pap-header-title">
-                portAPPorta
-            </ion-title>
-        </ion-toolbar>
-    </ion-header>
-
-
+    <ion-header><pap-header></pap-header></ion-header>
 
     <ion-content padding class="pap-settings">
         <ion-list>

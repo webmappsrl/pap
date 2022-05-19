@@ -13,4 +13,7 @@ export const loadHeadersFailure = createAction(
 );
 
 export const openMenu = createAction('[Header] Open Menu');
+
 export const closeMenu = createAction('[Header] Close Menu');
+
+export const showButtons = createAction('[Header] Show Buttons', props<{show: boolean}>());

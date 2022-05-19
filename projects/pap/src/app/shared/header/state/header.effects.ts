@@ -39,5 +39,25 @@ export class HeaderEffects {
     );
   });
 
+  showButtons$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(HeaderActions.showButtons),
+      concatMap(action =>
+        of(headermock).pipe(
+          map(data => {
+            let dataclone = {...data};
+            if (!action.show) {
+              dataclone.showBack = true;
+              delete dataclone.buttonEnd;
+              delete dataclone.buttonStart;
+            }
+            return HeaderActions.loadHeadersSuccess({data: dataclone});
+          }),
+          catchError(error => of(HeaderActions.loadHeadersFailure({error}))),
+        ),
+      ),
+    );
+  });
+
   constructor(private actions$: Actions) {}
 }
