@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {MenuController, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {from, Observable, of, Subscription, take, withLatestFrom} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {selectHomeState} from '../../features/home/state/home.selectors';
 import {selectHeaderState} from './state/header.selectors';
 import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
@@ -45,6 +45,7 @@ export class HeaderComponent implements OnDestroy {
       if (evt.action === 'open-menu') {
         this._store.dispatch(openMenu());
         this._menuCtrl.open('mainmenu');
+        this._menuCtrl.enable(true);
       }
       if (evt.action === buttonAction.NAVIGATION && evt.url) {
         this.closedMenu();
@@ -61,6 +62,7 @@ export class HeaderComponent implements OnDestroy {
   public closedMenu(): void {
     this._menuCtrl.close('mainmenu');
     this._store.dispatch(closeMenu());
+    this._menuCtrl.enable(false);
   }
 
   public ngOnDestroy(): void {
