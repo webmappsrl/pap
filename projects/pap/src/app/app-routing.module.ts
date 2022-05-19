@@ -17,7 +17,6 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () => import('./features/settings/settings.module').then(m => m.SettingsModule),
   },
-  { path: 'trashBookDetails', loadChildren: () => import('./features/trash-book-details/trash-book-details.module').then(m => m.TrashBookDetailsModule) },
   {
     path: '**',
     redirectTo: 'home', // all no defined route redirect to home

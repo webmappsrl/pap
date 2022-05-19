@@ -17,3 +17,8 @@ export const filterTrashBooks = createAction(
   '[TrashBook] filter TrashBooks',
   props<{filter: string}>(),
 );
+
+export const setTrashBookDetail = createAction(
+  '[TrashBook] set TrashBook detail',
+  props<{trashBookDetail: TrashBookRow}>(),
+);

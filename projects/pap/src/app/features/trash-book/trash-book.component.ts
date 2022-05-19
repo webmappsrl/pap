@@ -3,8 +3,7 @@ import {NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../core/core.state';
 import {showButtons} from '../../shared/header/state/header.actions';
-import {setTrashBookDetails} from '../trash-book-details/state/trash-book-details.actions';
-import {filterTrashBooks, loadTrashBooks} from './state/trash-book.actions';
+import {filterTrashBooks, loadTrashBooks, setTrashBookDetail} from './state/trash-book.actions';
 import {selectTrashBookState} from './state/trash-book.selectors';
 import {TrashBookRow} from './trash-book-model';
 
@@ -30,7 +29,7 @@ export class TrashBookComponent implements OnInit {
   }
 
   buttonClick(item: TrashBookRow) {
-    this._store.dispatch(setTrashBookDetails({trashBookRow: item}));
-    this._navCtrl.navigateForward('trashBookDetails');
+    this._store.dispatch(setTrashBookDetail({trashBookDetail: item}));
+    this._navCtrl.navigateForward('trashbook/detail');
   }
 }

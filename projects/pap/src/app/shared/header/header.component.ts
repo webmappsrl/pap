@@ -35,8 +35,8 @@ export class HeaderComponent implements OnDestroy {
   headerView$ = this._store.pipe(select(selectHeaderState));
   homeView$ = this._store.pipe(select(selectHomeState));
 
-  @Input('startButton') showStartButton: boolean = false;
-  @Input('endButton') showEndButton: boolean = false;
+  @Input() startButton: boolean = false;
+  @Input() endButton: boolean = false;
 
   constructor(
     private _store: Store<AppState>,

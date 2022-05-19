@@ -6,6 +6,7 @@ export const trashBookFeatureKey = 'trashBook';
 
 export interface TrashBookState {
   trashBook: TrashBookRow[];
+  trashBookDetail?: TrashBookRow;
 }
 
 export const initialState: TrashBookState = {
@@ -27,6 +28,10 @@ export const reducer = createReducer(
       y.hide = !!action.filter && !x.name.toLowerCase().includes(action.filter.toLowerCase());
       return y;
     }),
+  })),
+  on(TrashBookActions.setTrashBookDetail, (state, action) => ({
+    ...state,
+    trashBookDetail: action.trashBookDetail,
   })),
 );
 

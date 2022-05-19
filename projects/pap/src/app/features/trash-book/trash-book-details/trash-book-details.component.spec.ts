@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TrashBookDetailsComponent } from './trash-book-details.component';
+import {TrashBookDetailsComponent} from './trash-book-details.component';
 
 describe('TrashBookDetailsComponent', () => {
   let component: TrashBookDetailsComponent;
@@ -8,9 +8,8 @@ describe('TrashBookDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TrashBookDetailsComponent ]
-    })
-    .compileComponents();
+      declarations: [TrashBookDetailsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

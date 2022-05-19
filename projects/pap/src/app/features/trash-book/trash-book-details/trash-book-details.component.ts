@@ -1,11 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ModalController, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {AppState} from '../../core/core.state';
-import {showButtons} from '../../shared/header/state/header.actions';
-import {loadTrashBookDetailss} from './state/trash-book-details.actions';
-import {selectTrashBookDetailsState} from './state/trash-book-details.selectors';
-import {TrashBookTypeComponent} from './trash-book-type/trash-book-type.component';
+import {AppState} from '../../../core/core.state';
+import {showButtons} from '../../../shared/header/state/header.actions';
+import {selectedTrashBookDetail} from '../state/trash-book.selectors';
+import {TrashBookTypeComponent} from '../trash-book-type/trash-book-type.component';
 
 @Component({
   selector: 'pap-trash-book-details',
@@ -15,11 +14,9 @@ import {TrashBookTypeComponent} from './trash-book-type/trash-book-type.componen
   encapsulation: ViewEncapsulation.None,
 })
 export class TrashBookDetailsComponent implements OnInit {
-  trashBookDetailsView$ = this._store.pipe(select(selectTrashBookDetailsState));
+  trashBookDetailsView$ = this._store.pipe(select(selectedTrashBookDetail));
 
-  constructor(private _store: Store<AppState>, private _modalController: ModalController) {
-    this._store.dispatch(loadTrashBookDetailss());
-  }
+  constructor(private _store: Store<AppState>, private _modalController: ModalController) {}
   ngOnInit(): void {
     this._store.dispatch(showButtons({show: false}));
   }
