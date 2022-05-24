@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   test: false,
+  // api: 'http://portapporta.webmapp.it',
+  api: 'http://127.0.0.1:8000',
 };
 
 /*

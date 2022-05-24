@@ -10,6 +10,8 @@ import {LayoutComponent} from './layout/layout.component';
 import {environment} from '../../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {reducers} from './core.state';
+import {AuthInterceptor} from './auth.interceptor';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 @NgModule({
   declarations: [LayoutComponent],
   imports: [
@@ -22,6 +24,7 @@ import {reducers} from './core.state';
     EffectsModule.forRoot([LayoutEffects]),
     IonicModule.forRoot(),
   ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   exports: [LayoutComponent],
 })
 export class CoreModule {}
