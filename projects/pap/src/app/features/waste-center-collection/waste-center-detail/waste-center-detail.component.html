@@ -1,1 +1,14 @@
-<p>waste-center-detail works!</p>
+<ion-content>
+    <ion-label>{{feature?.properties?.name}}</ion-label>
+    <ion-img *ngIf="feature?.properties?.picture_url" [src]="feature?.properties?.picture_url"></ion-img>
+    <ion-label>{{feature?.properties?.description}}</ion-label>
+    <ion-button (click)="navigate()">
+        Indicazioni stradali
+    </ion-button>
+    <ion-button (click)="website()">
+        website
+    </ion-button>
+    <ion-button (click)="close()">
+        ok
+    </ion-button>
+</ion-content>
