@@ -7,10 +7,12 @@ export const trashBookFeatureKey = 'trashBook';
 export interface TrashBookState {
   trashBook: TrashBookRow[];
   trashBookDetail?: TrashBookRow;
+  error: string;
 }
 
 export const initialState: TrashBookState = {
   trashBook: [],
+  error: '',
 };
 
 export const reducer = createReducer(
