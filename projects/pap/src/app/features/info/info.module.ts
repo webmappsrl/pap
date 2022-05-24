@@ -1,17 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { InfoRoutingModule } from './info-routing.module';
-import { InfoComponent } from './info.component';
-
+import {InfoRoutingModule} from './info-routing.module';
+import {InfoComponent} from './info.component';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    InfoComponent
-  ],
-  imports: [
-    CommonModule,
-    InfoRoutingModule
-  ]
+  declarations: [InfoComponent],
+  imports: [CommonModule, SharedModule, InfoRoutingModule],
 })
-export class InfoModule { }
+export class InfoModule {}
