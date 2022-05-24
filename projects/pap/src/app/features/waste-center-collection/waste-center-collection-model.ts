@@ -3,10 +3,10 @@ export interface WasteCenterCollectionFeature extends GeoJson {
 }
 
 export interface WasteCenterCollectionFeatureProperties {
-  'marker-color': string; //BAD JSON
-  'marker-size': string; //BAD JSON
+  'marker-color': string; //BAD JSON??
+  'marker-size': string; //BAD JSON??
   website: string;
-  picture_url: string; //BAD JSON
+  picture_url: string; //BAD JSON??
   name: string;
   orario: string;
   description: string;

@@ -19,7 +19,7 @@ export const reducer = createReducer(
   on(WasteCenterCollectionActions.loadWasteCenterCollections, state => state),
   on(WasteCenterCollectionActions.loadWasteCenterCollectionsSuccess, (state, action) => ({
     ...state,
-    WasteCenterCollection: action.data,
+    wasteCenterCollection: action.data,
   })),
   on(WasteCenterCollectionActions.loadWasteCenterCollectionsFailure, (state, action) => state),
 );

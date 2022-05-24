@@ -13,6 +13,10 @@ export class WasteCenterCollectionEffects {
       ofType(WasteCenterCollectionActions.loadWasteCenterCollections),
       switchMap(_ => this._WasteCenterCollectionSvc.getWasteCenterCollection()),
       map(data => {
+        console.log(
+          '------- ~ WasteCenterCollectionEffects ~ loadWasteCenterCollections$=createEffect ~ data',
+          data,
+        );
         return WasteCenterCollectionActions.loadWasteCenterCollectionsSuccess({data});
       }),
       catchError(error =>
