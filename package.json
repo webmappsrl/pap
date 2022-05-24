@@ -20,12 +20,14 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@asymmetrik/ngx-leaflet": "^13.0.2",
     "@ionic/angular": "^6.1.5",
     "@ngrx/effects": "^13.2.0",
     "@ngrx/entity": "^13.2.0",
     "@ngrx/schematics": "^13.2.0",
     "@ngrx/store": "^13.2.0",
     "@ngrx/store-devtools": "^13.2.0",
+    "leaflet": "^1.8.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -39,7 +41,9 @@
     "@angular-eslint/template-parser": "13.2.1",
     "@angular/cli": "~13.3.5",
     "@angular/compiler-cli": "~13.3.0",
+    "@ionic/angular-toolkit": "latest",
     "@types/jasmine": "~3.10.0",
+    "@types/leaflet": "^1.7.10",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "5.17.0",
     "@typescript-eslint/parser": "5.17.0",
@@ -56,7 +60,6 @@
     "prettier": "2.6.2",
     "prettier-eslint": "^14.0.3",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "~4.6.2",
-    "@ionic/angular-toolkit": "latest"
+    "typescript": "~4.6.2"
   }
 }

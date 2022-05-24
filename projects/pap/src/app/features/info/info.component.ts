@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {of} from 'rxjs';
 
 @Component({
   selector: 'pap-info',
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 // implements OnInit
 export class InfoComponent {

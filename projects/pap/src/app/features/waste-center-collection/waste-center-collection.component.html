@@ -1,0 +1,8 @@
+<ion-header>
+    <pap-header></pap-header>
+</ion-header>
+<ng-container *ngIf="wccView$|async as view">
+    <ion-content class="">
+        <pap-map [markers]="view.wasteCenterCollection"></pap-map>
+    </ion-content>
+</ng-container>

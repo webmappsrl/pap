@@ -18,6 +18,7 @@ const routes: Routes = [
     loadChildren: () => import('./features/settings/settings.module').then(m => m.SettingsModule),
   },
   {path: 'info', loadChildren: () => import('./features/info/info.module').then(m => m.InfoModule)},
+  { path: 'waste-center-collection', loadChildren: () => import('./features/waste-center-collection/waste-center-collection.module').then(m => m.WasteCenterCollectionModule) },
   {
     path: '**',
     redirectTo: 'home', // all no defined route redirect to home
