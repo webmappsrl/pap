@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
-import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable } from 'rxjs';
+import {TestBed} from '@angular/core/testing';
+import {provideMockActions} from '@ngrx/effects/testing';
+import {Observable} from 'rxjs';
 
-import { InfoEffects } from './info.effects';
+import {InfoEffects} from './info.effects';
 
 describe('InfoEffects', () => {
   let actions$: Observable<any>;
@@ -10,10 +10,7 @@ describe('InfoEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        InfoEffects,
-        provideMockActions(() => actions$)
-      ]
+      providers: [InfoEffects, provideMockActions(() => actions$)],
     });
 
     effects = TestBed.inject(InfoEffects);
