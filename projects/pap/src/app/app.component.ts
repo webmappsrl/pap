@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {select, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
+import {loadAuths} from './core/auth/state/auth.actions';
 import {AppState} from './core/core.state';
-import {TrashBookError} from './features/trash-book/state/trash-book.selectors';
 
 @Component({
   selector: 'pap-root',
@@ -9,12 +9,7 @@ import {TrashBookError} from './features/trash-book/state/trash-book.selectors';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  trashBookView$ = this._store.pipe(select(TrashBookError));
   constructor(private _store: Store<AppState>) {
-    this.trashBookView$.subscribe(err => {
-      if (err != '') {
-        window.alert(JSON.stringify(err));
-      }
-    });
+    this._store.dispatch(loadAuths());
   }
 }
