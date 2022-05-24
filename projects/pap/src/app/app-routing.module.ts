@@ -17,6 +17,7 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () => import('./features/settings/settings.module').then(m => m.SettingsModule),
   },
+  {path: 'info', loadChildren: () => import('./features/info/info.module').then(m => m.InfoModule)},
   {
     path: '**',
     redirectTo: 'home', // all no defined route redirect to home

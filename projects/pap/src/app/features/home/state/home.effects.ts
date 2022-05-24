@@ -22,7 +22,7 @@ export class HomeEffects {
           {
             label: 'Company',
             img: 'assets/icons/logo-e.png',
-            url: 'company',
+            url: 'info',
             action: buttonAction.NAVIGATION,
           },
           {
@@ -69,9 +69,9 @@ export class HomeEffects {
             action: buttonAction.NAVIGATION,
           },
           {
-            label: 'Info',
+            label: 'Richiedi Informazioni',
             icon: 'information',
-            url: 'info',
+            url: 'askinfo',
             action: buttonAction.NAVIGATION,
           },
           {
