@@ -69,9 +69,9 @@ export class HomeEffects {
             action: buttonAction.NAVIGATION,
           },
           {
-            label: 'Info',
+            label: 'Richiedi Informazioni',
             icon: 'information',
-            url: 'info',
+            url: 'askinfo',
             action: buttonAction.NAVIGATION,
           },
           {
