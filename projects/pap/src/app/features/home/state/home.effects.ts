@@ -22,7 +22,7 @@ export class HomeEffects {
           {
             label: 'Company',
             img: 'assets/icons/logo-e.png',
-            url: 'company',
+            url: 'info',
             action: buttonAction.NAVIGATION,
           },
           {
