@@ -11,11 +11,15 @@ import {HeaderEffects} from './header/state/header.effects';
 import {MapComponent} from './map/map.component';
 import * as fromMap from './map/state/map.reducer';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ErrorFormHandlerComponent} from './error-form-handler/error-form-handler';
 
 @NgModule({
-  declarations: [HeaderComponent, MapComponent],
+  declarations: [HeaderComponent, ErrorFormHandlerComponent, MapComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     IonicModule,
     HttpClientModule,
@@ -30,6 +34,7 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
     HttpClientModule,
     HeaderComponent,
     MapComponent,
+    ErrorFormHandlerComponent,
   ],
 })
 export class SharedModule {}

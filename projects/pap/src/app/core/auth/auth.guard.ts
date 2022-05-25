@@ -1,8 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {AlertController} from '@ionic/angular';
+import {AlertController, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {from, Observable, switchMap, tap} from 'rxjs';
+import {Observable, switchMap, tap} from 'rxjs';
 import {AppState} from '../core.state';
 import {isLogged} from './state/auth.selectors';
 
@@ -11,7 +11,11 @@ import {isLogged} from './state/auth.selectors';
 })
 export class AuthGuard implements CanActivate {
   private _alerEVT: EventEmitter<void> = new EventEmitter<void>();
-  constructor(private _store: Store<AppState>, private _alertCtrl: AlertController) {
+  constructor(
+    private _store: Store<AppState>,
+    private _alertCtrl: AlertController,
+    private _navCtrl: NavController,
+  ) {
     this._alerEVT
       .pipe(
         switchMap(_ =>
@@ -21,11 +25,11 @@ export class AuthGuard implements CanActivate {
             buttons: [
               {
                 text: 'login',
-                role: 'login',
+                role: 'sign-in',
               },
               {
                 text: 'registrati',
-                role: 'registrati',
+                role: 'sign-up',
               },
               'annulla',
             ],
@@ -37,7 +41,9 @@ export class AuthGuard implements CanActivate {
         }),
       )
       .subscribe(res => {
-        console.log(res);
+        if (res && res.role) {
+          this._navCtrl.navigateForward(res.role);
+        }
       });
   }
   canActivate(

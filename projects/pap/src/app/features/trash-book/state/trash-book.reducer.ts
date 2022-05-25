@@ -22,7 +22,9 @@ export const reducer = createReducer(
     ...state,
     trashBook: action.data,
   })),
-  on(TrashBookActions.loadTrashBooksFailure, (state, action) => ({...state, error: action.error})),
+  on(TrashBookActions.loadTrashBooksFailure, (state, action) => {
+    return {...state, error: 'error'};
+  }),
   on(TrashBookActions.filterTrashBooks, (state, action) => ({
     ...state,
     trashBook: state.trashBook.map(x => {

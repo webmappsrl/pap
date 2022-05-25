@@ -1,0 +1,14 @@
+<ion-list *ngIf="errors != null">
+  <ng-container *ngFor="let err of [(errors|keyvalue)[0]]">
+    <ion-label color="danger" *ngIf="err.key === 'required'">
+      questo campo è obbligatorio
+    </ion-label>
+    <ion-label color="danger" *ngIf="err.key === 'email'"> questo campo è una email </ion-label>
+    <ion-label color="danger" *ngIf="err.key === 'minlength'">
+      questo campo deve essere almeno di 8 caratteri
+    </ion-label>
+    <ion-label color="danger" *ngIf="err.key === 'confirmedValidator'">
+      questo campo deve essere ugale al campo password
+    </ion-label>
+  </ng-container>
+</ion-list>

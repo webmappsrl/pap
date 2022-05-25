@@ -19,6 +19,14 @@ const routes: Routes = [
   },
   {path: 'info', loadChildren: () => import('./features/info/info.module').then(m => m.InfoModule)},
   {
+    path: 'sign-in',
+    loadChildren: () => import('./features/sign-in/sign-in.module').then(m => m.SignInModule),
+  },
+  {
+    path: 'sign-up',
+    loadChildren: () => import('./features/sign-up/sign-up.module').then(m => m.SignUpModule),
+  },
+  {
     path: 'waste-center-collection',
     loadChildren: () =>
       import('./features/waste-center-collection/waste-center-collection.module').then(
