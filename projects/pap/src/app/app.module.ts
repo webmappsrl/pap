@@ -8,10 +8,11 @@ import {environment} from '../environments/environment';
 import {EffectsModule} from '@ngrx/effects';
 import {IonicModule} from '@ionic/angular';
 import {HttpClientModule} from '@angular/common/http';
+import {AuthModule} from './core/auth/auth.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [CoreModule, AppRoutingModule, IonicModule.forRoot(), HttpClientModule],
+  imports: [CoreModule, AppRoutingModule, IonicModule.forRoot(), HttpClientModule, AuthModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

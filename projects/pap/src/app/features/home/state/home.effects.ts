@@ -34,7 +34,7 @@ export class HomeEffects {
           {
             label: 'Centri raccolta',
             icon: 'map',
-            url: 'map',
+            url: 'waste-center-collection',
             action: buttonAction.NAVIGATION,
             hideInMenu: true,
           },

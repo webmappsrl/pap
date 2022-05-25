@@ -38,9 +38,9 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-list *ngIf="homeView$|async as homeview">
+      <ion-list *ngIf="homeView$|async as homeView">
         <ion-item
-          *ngFor="let button of homeview.buttons"
+          *ngFor="let button of homeView.buttons"
           class="pap-header-menu-item"
           (click)="action(button.action,button.url)"
         >
