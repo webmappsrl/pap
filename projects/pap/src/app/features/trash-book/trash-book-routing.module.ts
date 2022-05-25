@@ -5,8 +5,8 @@ import {TrashBookDetailsComponent} from './trash-book-details/trash-book-details
 import {TrashBookComponent} from './trash-book.component';
 
 const routes: Routes = [
-  {path: '', component: TrashBookComponent, canActivate: [AuthGuard]},
-  {path: 'detail', component: TrashBookDetailsComponent, canActivate: [AuthGuard]},
+  {path: '', component: TrashBookComponent},
+  {path: 'detail', component: TrashBookDetailsComponent},
 ];
 
 @NgModule({

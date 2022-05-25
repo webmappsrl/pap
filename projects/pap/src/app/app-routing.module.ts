@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from './core/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,6 +11,7 @@ const routes: Routes = [
   {path: 'home', loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule)},
   {
     path: 'trashbook',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./features/trash-book/trash-book.module').then(m => m.TrashBookModule),
   },
@@ -19,7 +21,16 @@ const routes: Routes = [
   },
   {path: 'info', loadChildren: () => import('./features/info/info.module').then(m => m.InfoModule)},
   {
+    path: 'sign-in',
+    loadChildren: () => import('./features/sign-in/sign-in.module').then(m => m.SignInModule),
+  },
+  {
+    path: 'sign-up',
+    loadChildren: () => import('./features/sign-up/sign-up.module').then(m => m.SignUpModule),
+  },
+  {
     path: 'waste-center-collection',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./features/waste-center-collection/waste-center-collection.module').then(
         m => m.WasteCenterCollectionModule,
