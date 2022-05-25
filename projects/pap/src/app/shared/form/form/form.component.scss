@@ -1,7 +1,144 @@
 pap-form {
-    .pap-form-footer {
-        .pap-form-buttons {
-            display: flex;
+    width: 90%;
+    margin: auto auto;
+}
+
+// .pap-form-checkbox {
+//     width: 90%;
+//     margin: 30px auto;
+//     ion-checkbox {
+//         width: auto;
+//         margin: 8px;
+//         float: left;
+//     }
+
+//     ion-label {
+//         display: inline;
+//         font-size: 1.2em;
+//     }
+// }
+
+// .pap-form-content {
+//     .pap-form-toggle {
+//         width: 30px;
+//         margin: 50px auto;
+//     }
+
+//     .pap-form-checkbox {
+//         width: 90%;
+//         margin: 30px auto;
+//         ion-checkbox {
+//             width: auto;
+//             margin: 8px;
+//             float: left;
+//         }
+
+//         ion-label {
+//             display: inline;
+//             font-size: 1.2em;
+//         }
+//     }
+// }
+
+// .pap-form-input > input {
+//     font-size: 1.5em;
+// }
+
+// .pap-form-textarea > textarea {
+//     font-size: 1.5em;
+//     padding: 10px;
+//     border-left: 1px solid #aaaaaa;
+// }
+
+// .pap-form-textarea > textarea:focus {
+//     // border-left: 1px solid color($colors, secondary, base);
+// }
+
+// .pap-form-location {
+//     font-size: 1.3em;
+// }
+
+// .pap-form-location-title {
+//     font-weight: bold;
+// }
+
+// .pap-image {
+//     display: block;
+//     margin: auto;
+// }
+
+// .pap-company_page {
+//     text-align: justify;
+//     text-justify: inter-word;
+//     font-size: 1.5em;
+// }
+
+// .pap-report {
+//     margin-bottom: 30px;
+// }
+
+// .pap-form-page {
+//     text-align: center;
+//     color: #999999;
+// }
+
+// .pap-form-location div {
+//     overflow: auto;
+// }
+
+// .pap-form-address {
+//     line-height: 1.3em;
+//     vertical-align: middle;
+// }
+
+// .pap-form-address {
+//     width: 100%;
+// }
+
+// .pap-form-p {
+//     margin: 2px 0;
+// }
+
+// .pap-recap-note {
+//     max-width: 70%;
+//     color: #999999;
+//     font-style: italic;
+// }
+
+// .scroll-content {
+//     padding-bottom: 0 !important;
+// }
+
+// .info-content {
+//     text-align: justify;
+//     font-size: 1.4em;
+//     text-justify: inter-word;
+// }
+
+// .pap-info-title {
+//     text-align: center;
+//     font-weight: 700;
+//     font-style: italic;
+// }
+
+// .pap-info-subtitle {
+//     font-style: italic;
+//     text-align: center;
+// }
+
+.pap-form-footer {
+    text-align: center;
+    .pap-form-buttons {
+        display: flex;
+        justify-content: space-between;
+        ion-button {
+            font-size: 1.4em;
+            button {
+                height: 40px;
+            }
+            ion-icon {
+                font-size: 2em;
+            }
         }
     }
 }

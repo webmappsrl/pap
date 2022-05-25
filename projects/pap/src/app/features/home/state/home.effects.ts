@@ -71,7 +71,7 @@ export class HomeEffects {
           {
             label: 'Richiedi Informazioni',
             icon: 'information',
-            url: 'askinfo',
+            url: 'info-ticket',
             action: buttonAction.NAVIGATION,
           },
           {

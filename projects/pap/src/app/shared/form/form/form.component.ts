@@ -6,11 +6,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
-  @Input('form') form;
-  @Input('loading') loading;
-  @Input('pos') pos: number;
+  @Input('form') form: any;
+  @Input('loading') loading!: any;
+  @Input('pos') pos: number = 0;
   // @Input('code') code: number;
-  @Input('extra') extra: boolean;
+  @Input('extra') extra: boolean = false;
   @Output() onFormFilled = new EventEmitter();
   @Output() onClickExit = new EventEmitter();
   @Output() onCheckEmail = new EventEmitter();
@@ -23,27 +23,21 @@ export class FormComponent implements OnInit {
 
   sendData() {}
 
-  addressOnChange(event) {}
+  addressOnChange(event: any) {}
 
-  saveImage(event) {}
+  saveImage(event: any) {}
 
-  isChecked(default, value) : boolean{
+  isChecked(def: any, value: any): boolean {
     return false;
   }
 
-  getValue(item){
+  getValue(item: any) {}
 
-  }
+  getAddress(e: any) {}
 
-  getAddress(e){
+  radioClick(value: any) {}
+  sendExit() {}
+  sendBack() {}
 
-  }
-  
-  radioClick(value){
-
-}
-sendExit(){}
-  sendBack(){}
-
-changeFocus(n:number){}
+  changeFocus(n: number) {}
 }

@@ -36,6 +36,7 @@ const routes: Routes = [
         m => m.WasteCenterCollectionModule,
       ),
   },
+  { path: 'info-ticket', loadChildren: () => import('./features/info-ticket/info-ticket.module').then(m => m.InfoTicketModule) },
   {
     path: '**',
     redirectTo: 'home', // all no defined route redirect to home
