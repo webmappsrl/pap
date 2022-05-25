@@ -27,6 +27,7 @@
     "@ngrx/schematics": "^13.2.0",
     "@ngrx/store": "^13.2.0",
     "@ngrx/store-devtools": "^13.2.0",
+    "@ngx-translate/core": "^14.0.0",
     "leaflet": "^1.8.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

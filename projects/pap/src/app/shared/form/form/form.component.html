@@ -1,1 +1,118 @@
-<p>form works!</p>
+<ion-content>
+    <form class="pap-form" (ngSubmit)="sendData()" *ngIf="form?.step && form.step[0]">
+        <div id="pap-form-content">
+            <ng-container *ngIf="form.step[pos].type as inputType">
+                <ion-label class="pap-form-label">
+                    {{ form.step[pos].label | translate: form.step[pos].translationsObj.label }}
+                </ion-label>
+
+                <ion-item *ngIf="['text','email','textarea','tel' ].includes(inputType)">
+                    <ion-label floating>{{
+                        form.step[pos].placeholder | translate: form.step[pos].translationsObj.placeholder
+                        }}</ion-label>
+
+                    <ion-input *ngIf="['text','email','tel' ].includes(inputType)" [type]="inputType" [name]="inputType"
+                        value="{{ form.step[pos].default }}" #focusInput clearInput="true" class="pap-form-input"
+                        [(ngModel)]="form.step[pos].default">
+                    </ion-input>
+
+                    <ion-textarea *ngIf="'textarea'==inputType" name="email" value="{{ form.step[pos].default }}"
+                        #focusInput class="pap-form-textarea" [(ngModel)]="form.step[pos].default"></ion-textarea>
+
+                </ion-item>
+                <ng-container [ngSwitch]="inputType">
+                    <div *ngSwitchCase="'switch'" class="pap-form-toggle">
+                        <ion-toggle block name="toggle" checked="{{ form.step[pos].default }}"
+                            [(ngModel)]="form.step[pos].default">
+                        </ion-toggle>
+                    </div>
+
+                    <div *ngSwitchCase="'checkbox'" class="pap-form-checkbox">
+                        <ion-checkbox name="checkbox" checked="{{ form.step[pos].default }}"
+                            [(ngModel)]="form.step[pos].default">
+                        </ion-checkbox>
+                        <ion-label floating innerHTML="{{
+                            form.step[pos].placeholder
+                                | translate: form.step[pos].translationsObj.placeholder
+                            }}"></ion-label>
+                    </div>
+
+                    <!-- <pap-form-location *ngSwitchCase="'location'" [location]="form.step[pos].default[0]"
+            (positionSet)="getAddress($event)"></pap-form-location> -->
+                    <div class="pap-form-location" *ngSwitchCase="'location'">
+                        <div>
+                            <span class="pap-form-location-title">{{ "forms.address" | translate }}:</span><br />
+                            <div class="pap-form-address">
+                                <ion-textarea class="pap-form-textarea" [value]="form.step[pos].default[1]"
+                                    (input)="addressOnChange($event)">
+                                </ion-textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <pap-form-picture-picker *ngSwitchCase="'image'" (imageTaken)="saveImage($event)">
+                    </pap-form-picture-picker>
+
+                    <ion-list *ngSwitchCase="'radio'" radio-group>
+                        <ion-radio-group [value]="form.step[pos].default">
+                            <div *ngFor="let item of form.step[pos].options">
+                                <ion-item *ngIf="item.show === true">
+                                    <ion-label *ngIf="item.translationsObj && item.translationsObj.label">{{
+                                        item.label | translate: item.translationsObj.label
+                                        }}</ion-label>
+                                    <ion-radio value="{{ item.value }}" (click)="radioClick(item.value)">
+                                    </ion-radio>
+                                </ion-item>
+                            </div>
+                            <div *ngIf="extra">
+                                <ion-item *ngFor="let item of form.step[pos].extraOptions">
+                                    <ion-label>{{
+                                        item.label | translate: item.translationsObj.label
+                                        }}</ion-label>
+                                    <ion-radio value="{{ item.value }}" (click)="radioClick(item.value)"></ion-radio>
+                                </ion-item>
+                            </div>
+                        </ion-radio-group>
+                    </ion-list>
+
+                    <!-- <div *ngSwitchCase="'code'" class="pap-form-code">
+                        <ng-container *ngFor="let idx of [0,1,2,3]">
+                            <ion-item class="code">
+                                <ion-input clearOnEdit="true" type="tel" maxlength="1" [name]="'code'+(idx+1)"
+                                    class="code-input" (input)="changeFocus(idx+2%4)"
+                                    [(ngModel)]="form.step[pos].default[idx]">
+                                </ion-input>
+                            </ion-item>
+                        </ng-container>
+                    </div> -->
+                </ng-container>
+            </ng-container>
+        </div>
+
+        <div class="pap-form-footer">
+            <div class="pap-form-page" *ngIf="form.pages">
+                {{ pos + 1 }}/{{ form.pages }}
+            </div>
+            <div class="pap-form-buttons">
+                <div>
+
+                    <button ion-button type="button" color="light" (click)="sendExit()">
+                        {{ "cancella" | translate }}
+                    </button>
+                    <button ion-button type="button" *ngIf="pos !== 0" color="light" (click)="sendBack()">
+                        <ion-icon name="arrow-back"></ion-icon>
+                    </button>
+                </div>
+                <div>
+                    <button ion-button type="submit" *ngIf="pos + 1 !== form.step.length" color="secondary">
+                        <ion-icon name="arrow-forward"></ion-icon>
+                    </button>
+                    <button ion-button type="submit" *ngIf="pos + 1 === form.step.length" color="secondary">
+                        <ion-icon name="checkmark"></ion-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</ion-content>

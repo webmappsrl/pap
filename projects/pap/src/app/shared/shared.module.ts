@@ -8,11 +8,11 @@ import {EffectsModule} from '@ngrx/effects';
 import {HeaderComponent} from './header/header.component';
 import * as fromHeader from './header/state/header.reducer';
 import {HeaderEffects} from './header/state/header.effects';
-import {MapComponent} from './map/map.component';
-import * as fromMap from './map/state/map.reducer';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ErrorFormHandlerComponent} from './error-form-handler/error-form-handler';
+import {TranslateModule} from '@ngx-translate/core';
+import {MapComponent} from './map/map.component';
 
 @NgModule({
   declarations: [HeaderComponent, ErrorFormHandlerComponent, MapComponent],
@@ -25,7 +25,7 @@ import {ErrorFormHandlerComponent} from './error-form-handler/error-form-handler
     HttpClientModule,
     LeafletModule,
     StoreModule.forFeature(fromHeader.headerFeatureKey, fromHeader.reducer),
-    StoreModule.forFeature(fromMap.mapFeatureKey, fromMap.reducer),
+    TranslateModule.forRoot(),
   ],
   exports: [
     CommonModule,
@@ -37,6 +37,7 @@ import {ErrorFormHandlerComponent} from './error-form-handler/error-form-handler
     HeaderComponent,
     MapComponent,
     ErrorFormHandlerComponent,
+    TranslateModule,
   ],
 })
 export class SharedModule {}
