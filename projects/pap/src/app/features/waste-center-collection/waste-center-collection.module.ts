@@ -7,11 +7,10 @@ import {StoreModule} from '@ngrx/store';
 import * as fromWasteCenterCollection from './state/waste-center-collection.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {WasteCenterCollectionEffects} from './state/waste-center-collection.effects';
-import {WasteCenterDetailComponent} from './waste-center-detail/waste-center-detail.component';
 import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [WasteCenterCollectionComponent, WasteCenterDetailComponent],
+  declarations: [WasteCenterCollectionComponent],
   imports: [
     CommonModule,
     SharedModule,

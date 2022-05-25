@@ -6,7 +6,6 @@ export const wasteCenterCollectionFeatureKey = 'wasteCenterCollection';
 
 export interface WasteCenterCollectionState {
   wasteCenterCollection: WasteCenterCollectionFeature[];
-  wasteCenterDetail?: WasteCenterCollectionFeature;
 }
 
 export const initialState: WasteCenterCollectionState = {
