@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {WasteCenterCollectionFeature} from '../waste-center-collection-model';
 
@@ -9,23 +9,23 @@ import {WasteCenterCollectionFeature} from '../waste-center-collection-model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class WasteCenterDetailComponent implements OnInit {
-  constructor(private modalController: ModalController) {}
-
+export class WasteCenterDetailComponent {
   @Input()
   feature!: WasteCenterCollectionFeature;
 
-  ngOnInit(): void {}
+  constructor(private _modalCtrl: ModalController) {}
+
+  close() {
+    this._modalCtrl.dismiss({
+      'dismissed': true,
+    });
+  }
 
   navigate() {
     console.log('------- ~ WasteCenterDetailComponent ~ navigate ~ navigate', this.feature);
   }
+
   website() {
     console.log('------- ~ WasteCenterDetailComponent ~ website ~ website', this.feature);
-  }
-  close() {
-    this.modalController.dismiss({
-      'dismissed': true,
-    });
   }
 }

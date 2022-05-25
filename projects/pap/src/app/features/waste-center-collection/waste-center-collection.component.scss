@@ -1,8 +1,10 @@
-.pap-modal-reduce {
+pap-waste-center-collection {
+  .pap-modal-reduce {
     position: absolute;
     min-width: 300px;
     min-height: 500px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
 }

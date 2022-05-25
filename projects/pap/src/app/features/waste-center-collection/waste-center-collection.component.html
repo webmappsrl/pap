@@ -1,8 +1,11 @@
 <ion-header>
-    <pap-header></pap-header>
+  <pap-header></pap-header>
 </ion-header>
 <ng-container *ngIf="wccView$|async as view">
-    <ion-content class="">
-        <pap-map [markers]="view.wasteCenterCollection" (clickMarker)="clickedMarker($event)"></pap-map>
-    </ion-content>
+  <ion-content class="">
+    <pap-map
+      [markers]="view.wasteCenterCollection"
+      (markerClickEvt)="clickedMarker($event)"
+    ></pap-map>
+  </ion-content>
 </ng-container>
