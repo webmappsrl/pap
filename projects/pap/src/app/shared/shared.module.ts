@@ -30,6 +30,8 @@ import {ErrorFormHandlerComponent} from './error-form-handler/error-form-handler
   exports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     HttpClientModule,
     HeaderComponent,
