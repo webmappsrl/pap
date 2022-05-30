@@ -1,16 +1,25 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 
 @Component({
   selector: 'pap-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
-export class FormComponent implements OnInit {
-  @Input('form') form: any;
-  @Input('loading') loading!: any;
-  @Input('pos') pos: number = 0;
+export class FormComponent {
+  @Input() form: any;
+  @Input() loading!: any;
+  @Input() pos: number = 0;
   // @Input('code') code: number;
-  @Input('extra') extra: boolean = false;
+  @Input() extra: boolean = false;
   @Output() onFormFilled = new EventEmitter();
   @Output() onClickExit = new EventEmitter();
   @Output() onCheckEmail = new EventEmitter();
@@ -18,8 +27,6 @@ export class FormComponent implements OnInit {
   @Output() onReverseLocating = new EventEmitter();
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   sendData() {}
 
