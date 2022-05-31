@@ -3,6 +3,6 @@
 </ion-header>
 <ng-container>
     <ion-content class="">
-        <pap-form [form]="form"></pap-form>
+        <pap-form [form]="form" (onFormFilled)="formFilled($event)" (onClickExit)="exitPage()"></pap-form>
     </ion-content>
 </ng-container>

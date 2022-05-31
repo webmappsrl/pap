@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'pap-info-ticket',
@@ -30,7 +31,7 @@ export class InfoTicketComponent implements OnInit {
         label: 'forms.info.infoLabel',
         type: 'textarea',
         mandatory: true,
-        default: '',
+        value: '',
         recap: 'forms.info.infoRecap',
         translationsObj: {
           label: {
@@ -42,13 +43,22 @@ export class InfoTicketComponent implements OnInit {
         label: 'forms.info.phoneLabel',
         type: 'tel',
         mandatory: false,
-        default: '',
+        value: '',
         recap: 'forms.info.phoneRecap',
       },
     ],
   };
 
-  constructor() {}
+  constructor(private navController: NavController) {}
 
   ngOnInit(): void {}
+
+  formFilled(event: any) {
+    this.form = event;
+    console.log('------- ~ InfoTicketComponent ~ formFilled ~ this.form', this.form);
+  }
+
+  exitPage() {
+    this.navController.pop();
+  }
 }
