@@ -1,5 +1,5 @@
 <form class="pap-form" (ngSubmit)="sendData()" *ngIf="form?.step && form?.step[0]">
-    <div id="pap-form-content">
+    <div class="pap-form-content">
         <ng-container *ngIf="form?.step[pos]?.type as inputType">
             <ion-label class="pap-form-label">
                 {{ form.step[pos].label | translate: form.step[pos].translationsObj?.label }}
@@ -93,20 +93,22 @@
             {{ pos + 1 }}/{{ form.pages }}
         </div>
         <div class="pap-form-buttons">
-            <div>
-
-                <button ion-button type="button" color="light" (click)="sendExit()">
+            <div class="pap-form-buttonblock">
+                <button class="pap-form-button" ion-button type="button" color="light" (click)="sendExit()">
                     {{ "cancella" | translate }}
                 </button>
-                <button ion-button type="button" *ngIf="pos !== 0" color="light" (click)="backStep()">
+                <button class="pap-form-button" ion-button type="button" *ngIf="pos !== 0" color="light"
+                    (click)="backStep()">
                     <ion-icon name="arrow-back"></ion-icon>
                 </button>
             </div>
-            <div>
-                <button ion-button (click)="nextStep()" *ngIf="pos + 1 !== form.step.length" color="secondary">
+            <div class="pap-form-buttonblock">
+                <button class="pap-form-button" ion-button type="button" (click)="nextStep()"
+                    *ngIf="pos + 1 !== form.step.length" color="secondary">
                     <ion-icon name="arrow-forward"></ion-icon>
                 </button>
-                <button ion-button type="submit" *ngIf="pos + 1 === form.step.length" color="secondary">
+                <button class="pap-form-button" ion-button type="submit" *ngIf="pos + 1 === form.step.length"
+                    color="secondary">
                     <ion-icon name="checkmark"></ion-icon>
                 </button>
             </div>

@@ -7,13 +7,23 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {AlertController, IonInput} from '@ionic/angular';
+import {AlertController, IonInput, ToastController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 
 const ADDRESS_INDEX = 1;
 const REGEX_NUMBER = /([0-9\s\-]{7,})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
 const REGEX_EMAIL =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const TOAST_DURATION = 3000;
+
+// const MESSAGES_WRONGCODE = 'Codice errato. Controlla di averlo inserito correttamente o torna indietro per controllare che la mail che hai inserito sia corretta';
+// const MESSAGES_INVALIDCODE = 'Devi inserire un codice valido prima di procedere';
+const MESSAGES_MANDATORY = 'Questo campo è obbligatorio';
+const MESSAGES_INVALIDNUMBER = 'Il numero di telefono inserito non è valido';
+const MESSAGES_INVALIDEMAIL = "Inserisci un'email valida";
+const MESSAGES_INVALIDPOSITION = 'Seleziona una posizione valida per proseguire';
+const MESSAGES_EXIT = 'Si, esci';
+const MESSAGES_CONTINUE = 'Continua';
 
 @Component({
   selector: 'pap-form',
@@ -38,7 +48,11 @@ export class FormComponent {
   @ViewChild('focusInput')
   focusInput!: IonInput;
 
-  constructor(private _translateService: TranslateService, private alertCtrl: AlertController) {}
+  constructor(
+    private _translateService: TranslateService,
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
+  ) {}
 
   currentForm() {
     return this.form.step[this.pos];
@@ -105,7 +119,7 @@ export class FormComponent {
   }
 
   sendData() {
-    if (!this.isValid) {
+    if (!this.isValid()) {
       return;
     }
 
@@ -117,31 +131,32 @@ export class FormComponent {
     //     this.currentForm().value[2] !== '' &&
     //     this.currentForm().value[3] !== ''
     //   )
-    //     this.sendToast(this._translateService.instant('messages.wrongCode'));
-    //   else this.sendToast(this._translateService.instant('messages.invalidCode'));
+    //     this.sendToast(this._translateService.instant(MESSAGES_WRONGCODE));
+    //   else this.sendToast(this._translateService.instant(MESSAGES_INVALIDCODE));
     // }
   }
 
   isValid() {
     let res = true;
+    console.log('------- ~ isValid ~ res', res);
 
-    if (!this.shouldAccept()) {
-      this.sendToast(this._translateService.instant('messages.mandatory'));
+    if (this.isInvalidMandatory()) {
+      this.sendToast(this._translateService.instant(MESSAGES_MANDATORY));
       res = false;
     }
 
     if (this.isInvalidPhone()) {
-      this.sendToast(this._translateService.instant('messages.invalidNumber'));
+      this.sendToast(this._translateService.instant(MESSAGES_INVALIDNUMBER));
       res = false;
     }
 
     if (this.isInvalidEmail()) {
-      this.sendToast(this._translateService.instant('messages.validEmail'));
+      this.sendToast(this._translateService.instant(MESSAGES_INVALIDEMAIL));
       res = false;
     }
 
     if (this.isInvalidLocation()) {
-      this.sendToast(this._translateService.instant('messages.validPosition'));
+      this.sendToast(this._translateService.instant(MESSAGES_INVALIDPOSITION));
       res = false;
     }
 
@@ -150,7 +165,7 @@ export class FormComponent {
       this.currentForm().value[1] === '' &&
       this.currentForm().value[2][1] === ''
     ) {
-      this.sendToast(this._translateService.instant('messages.validPosition'));
+      this.sendToast(this._translateService.instant(MESSAGES_INVALIDPOSITION));
       res = false;
     }
 
@@ -185,8 +200,7 @@ export class FormComponent {
     );
   }
 
-  shouldAccept(): boolean {
-    let isMandatory: boolean = this.currentForm().mandatory;
+  isInvalidMandatory(): boolean {
     let isValid: boolean =
       !['checkbox', 'switch'].includes(this.currentForm().type) &&
       this.currentForm().value !== null &&
@@ -194,25 +208,31 @@ export class FormComponent {
     let isValidChoice: boolean =
       ['checkbox', 'switch'].includes(this.currentForm().type) && this.currentForm().value === true;
 
-    return !isMandatory || (isMandatory && isValid) || (isMandatory && isValidChoice);
+    return this.currentForm().mandatory && !isValid && !isValidChoice;
   }
 
   changeFocus(n: number) {}
 
-  sendToast(message: string) {}
+  async sendToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: TOAST_DURATION,
+    });
+    toast.present();
+  }
 
   async sendAlert(message: string) {
     let alert = await this.alertCtrl.create({
       message: message,
       buttons: [
         {
-          text: this._translateService.instant('messages.exit'),
+          text: this._translateService.instant(MESSAGES_EXIT),
           handler: () => {
             this.onClickExit.emit();
           },
         },
         {
-          text: this._translateService.instant('messages.continue'),
+          text: this._translateService.instant(MESSAGES_CONTINUE),
           role: 'cancel',
         },
       ],
