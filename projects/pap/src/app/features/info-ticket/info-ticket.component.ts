@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'pap-info-ticket',
   templateUrl: './info-ticket.component.html',
   styleUrls: ['./info-ticket.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class InfoTicketComponent implements OnInit {
   public form = {

@@ -9,7 +9,19 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {GeoJson} from '../../features/waste-center-collection/waste-center-collection-model';
-import {Map, map, tileLayer, marker, icon, LeafletEvent, LatLngExpression} from 'leaflet';
+import {
+  Map,
+  map,
+  tileLayer,
+  marker,
+  icon,
+  LeafletEvent,
+  LatLngExpression,
+  LeafletMouseEvent,
+  latLng,
+} from 'leaflet';
+
+const DEFAULT_CENTER_ZOOM = 12;
 
 const MAP_OPTIONS = {
   MAX_ZOOM: 18,
@@ -26,15 +38,34 @@ const MAP_OPTIONS = {
   encapsulation: ViewEncapsulation.None,
 })
 export class MapComponent implements OnInit, OnDestroy {
+  myPositionMarker!: any;
   map!: Map;
   @Output() markerClickEvt: EventEmitter<GeoJson> = new EventEmitter<GeoJson>();
+
+  @Output() genericClickEvt: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   @Input() set markers(value: GeoJson[]) {
     this.makeMarkers(value);
   }
 
+  @Input() set positionMarker(value: number[]) {
+    if (value) {
+      this.makePositionMarker(value);
+    }
+  }
+
+  @Input() set center(value: number[]) {
+    if (value) {
+      this.centerToPoint(value);
+    }
+  }
+
   clickedMarker(_: LeafletEvent, feature: GeoJson) {
     this.markerClickEvt.emit(feature);
+  }
+
+  clickOnMap(ev: LeafletMouseEvent) {
+    this.genericClickEvt.emit([ev.latlng.lat, ev.latlng.lng]);
   }
 
   makeMarkers(features: GeoJson[]): void {
@@ -64,6 +95,19 @@ export class MapComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initMap();
   }
+
+  makePositionMarker(coords: number[]) {
+    if (this.myPositionMarker) {
+      this.myPositionMarker.remove();
+    }
+    this.myPositionMarker = marker(latLng(coords[0], coords[1]));
+    this.myPositionMarker.addTo(this.map);
+  }
+
+  centerToPoint(coord: number[]) {
+    this.map.setView(latLng(coord[0], coord[1]), DEFAULT_CENTER_ZOOM);
+  }
+
   private initMap(): void {
     this.map = map('map').setView(
       MAP_OPTIONS.START_COORD as LatLngExpression,
@@ -78,5 +122,7 @@ export class MapComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.map.invalidateSize();
     }, 400);
+
+    this.map.on('click', e => this.clickOnMap(e as LeafletMouseEvent));
   }
 }

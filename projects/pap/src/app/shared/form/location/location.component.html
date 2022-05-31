@@ -1,1 +1,14 @@
-<p>location works!</p>
+<pap-map (genericClickEvt)="mapClick($event)" [positionMarker]="myPosition" [center]="myPosition"></pap-map>
+
+<button ion-button type="button" outline icon-left block (click)="getLocation()">
+    <ion-icon name="pin"></ion-icon>
+    {{ 'La mia posizione' | translate }}
+</button>
+
+<div>
+    <span class="pap-form-location-title">{{ "forms.address" | translate }}:</span><br />
+    <div class="pap-form-address">
+        <ion-textarea class="pap-form-textarea" [value]="myPositionString" (input)="addressOnChange($event)">
+        </ion-textarea>
+    </div>
+</div>

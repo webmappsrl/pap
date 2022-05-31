@@ -39,14 +39,16 @@
                 <!-- <pap-form-location *ngSwitchCase="'location'" [location]="form.step[pos].value[0]"
             (positionSet)="getAddress($event)"></pap-form-location> -->
                 <div class="pap-form-location" *ngSwitchCase="'location'">
-                    <div>
+
+                    <pap-form-location (positionSet)="getAddress($event)"></pap-form-location>
+                    <!-- <div>
                         <span class="pap-form-location-title">{{ "forms.address" | translate }}:</span><br />
                         <div class="pap-form-address">
                             <ion-textarea class="pap-form-textarea" [value]="form.step[pos].value[1]"
                                 (input)="addressOnChange($event)">
                             </ion-textarea>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <pap-form-picture-picker *ngSwitchCase="'image'" (imageTaken)="saveImage($event)">

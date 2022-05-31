@@ -58,13 +58,13 @@ export class FormComponent {
     return this.form.step[this.pos];
   }
 
-  addressOnChange(event: any) {
-    if (event?.target && typeof event.target.value === 'string') {
-      let address: string = event.target.value;
-      this.currentForm().value[ADDRESS_INDEX] = address;
-      this.onLocating.emit([address, this.pos]);
-    }
-  }
+  // addressOnChange(event: any) {
+  //   if (event?.target && typeof event.target.value === 'string') {
+  //     let address: string = event.target.value;
+  //     this.currentForm().value[ADDRESS_INDEX] = address;
+  //     this.onLocating.emit([address, this.pos]);
+  //   }
+  // }
 
   saveImage(event: any) {
     this.currentForm().value = event;
@@ -79,7 +79,9 @@ export class FormComponent {
     return JSON.stringify(item.value);
   }
 
-  //  getAddress(e: any) {}
+  getAddress(value: any) {
+    this.currentForm().value = value;
+  }
 
   radioClick(value: any) {
     this.currentForm().value = value;
