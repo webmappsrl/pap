@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map, switchMap} from 'rxjs';
-import {GOOOGLEAPIKEY} from '../../api.keys';
+import {GOOOGLEAPIKEY} from '../../../api.keys';
 
 const MAP = {
   bounds: {

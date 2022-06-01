@@ -4,7 +4,7 @@ import {catchError, map, concatMap} from 'rxjs/operators';
 import {Observable, EMPTY, of} from 'rxjs';
 
 import * as InfoTicketActions from './info-ticket.actions';
-import {ReportService} from '../../../services/report.service';
+import {ReportService} from '../../../shared/services/report.service';
 
 @Injectable()
 export class InfoTicketEffects {

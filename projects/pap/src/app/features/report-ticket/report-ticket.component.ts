@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
+import {TicketForm} from '../../shared/models/form.model';
 
 @Component({
   selector: 'pap-report-ticket',
@@ -9,7 +10,7 @@ import {NavController} from '@ionic/angular';
   encapsulation: ViewEncapsulation.None,
 })
 export class ReportTicketComponent implements OnInit {
-  public form = {
+  public form: TicketForm = {
     cancel: 'forms.disruption.cancel',
     finalMessage: 'forms.disruption.finalMessage',
     translationsObj: {

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {ToastController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
-import {LocationService} from '../../../services/location.service';
+import {LocationService} from '../../services/location.service';
 // import {Geolocation} from '@awesome-cordova-plugins/geolocation/ngx';
 
 const TOAST_DURATION = 2500;

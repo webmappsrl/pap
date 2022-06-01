@@ -4,6 +4,9 @@ import {select, Store} from '@ngrx/store';
 import {first} from 'rxjs';
 import {AuthService} from '../../core/auth/state/auth.service';
 import {AppState} from '../../core/core.state';
+import {ApiTicketType} from '../../shared/models/apimodels';
+import {TicketForm} from '../../shared/models/form.model';
+import {ReportService} from '../../shared/services/report.service';
 import {selectInfoState} from '../info/state/info.selectors';
 import {loadInfoTickets, sendReportInfoTickets} from './state/info-ticket.actions';
 import {selectInfoTicketState} from './state/info-ticket.selectors';
@@ -22,7 +25,7 @@ export class InfoTicketComponent implements OnInit {
   public end = false;
   public privacyCheck: boolean = false;
 
-  public form = {
+  public form: TicketForm = {
     cancel: 'Uscendo perderai tutti i dati inseriti. Sicuro di volerlo fare?',
     finalMessage:
       'La tua richiesta è stata inoltrata correttamente: verrai ricontattato quanto prima per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni. Puoi rivedere tutte le tue segnalazioni nella sezione "Le mie Segnalazioni"',
@@ -71,6 +74,7 @@ export class InfoTicketComponent implements OnInit {
     private navController: NavController,
     private authSErvice: AuthService,
     private _store: Store<AppState>,
+    private reportService: ReportService,
   ) {}
 
   ngOnInit(): void {
@@ -96,20 +100,7 @@ export class InfoTicketComponent implements OnInit {
       .getUser()
       .pipe(first())
       .subscribe(user => {
-        console.log('------- ~ InfoTicketComponent ~ saveData ~ user', user);
-
-        let report = {
-          email: user.email,
-          name: user.name,
-          // lastname: this.lastname,
-          // address: this.address,
-          // location: this.location,
-          type: 'info',
-          subtype: this.form.step[1].value,
-          picture: '',
-          note: '',
-          tel: this.form.step[2].value,
-        };
+        let report = this.reportService.createReport(this.form, user, ApiTicketType.INFO);
         this._store.dispatch(sendReportInfoTickets({data: report}));
       });
   }
