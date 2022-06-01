@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 
 @Component({
   selector: 'pap-form-picture-picker',
@@ -7,4 +13,11 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class PicturePickerComponent {}
+export class PicturePickerComponent {
+  @Output() imageTaken = new EventEmitter<string>();
+
+  public picture: string = '';
+  public text: string = '';
+
+  imageSheet() {}
+}

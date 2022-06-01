@@ -1,1 +1,5 @@
-<p>picture-picker works!</p>
+<img *ngIf='this.picture != ""' src="{{this.picture}}" class="pap-form-picturepicker-img" />
+<ion-button expand="block" (click)="imageSheet()">
+    <ion-icon slot="start" name="image"></ion-icon>
+    {{text}}
+</ion-button>`,

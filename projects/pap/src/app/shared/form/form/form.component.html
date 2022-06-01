@@ -40,7 +40,8 @@
             (positionSet)="getAddress($event)"></pap-form-location> -->
                 <div class="pap-form-location" *ngSwitchCase="'location'">
 
-                    <pap-form-location (positionSet)="getAddress($event)"></pap-form-location>
+                    <pap-form-location (positionSet)="setPosition($event)" (addressSet)="setAddress($event)">
+                    </pap-form-location>
                     <!-- <div>
                         <span class="pap-form-location-title">{{ "forms.address" | translate }}:</span><br />
                         <div class="pap-form-address">
@@ -55,24 +56,24 @@
                 </pap-form-picture-picker>
 
                 <ion-list *ngSwitchCase="'radio'" radio-group>
-                    <ion-radio-group [value]="form.step[pos].value">
-                        <div *ngFor="let item of form.step[pos].options">
+                    <ion-radio-group (ionChange)="radioClick($event)" value="{{form.step[pos].value}}">
+                        <ng-container *ngFor="let item of form.step[pos].options">
                             <ion-item *ngIf="item.show === true">
                                 <ion-label>{{
                                     item.label | translate: item.translationsObj?.label
                                     }}</ion-label>
-                                <ion-radio value="{{ item.value }}" (click)="radioClick(item.value)">
+                                <ion-radio [value]="item.value">
                                 </ion-radio>
                             </ion-item>
-                        </div>
-                        <div *ngIf="extra">
+                        </ng-container>
+                        <ng-container *ngIf="extra">
                             <ion-item *ngFor="let item of form.step[pos].extraOptions">
                                 <ion-label>{{
                                     item.label | translate: item.translationsObj?.label
                                     }}</ion-label>
-                                <ion-radio value="{{ item.value }}" (click)="radioClick(item.value)"></ion-radio>
+                                <ion-radio [value]="item.value"></ion-radio>
                             </ion-item>
-                        </div>
+                        </ng-container>
                     </ion-radio-group>
                 </ion-list>
 

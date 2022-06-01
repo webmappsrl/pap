@@ -19,6 +19,7 @@ import {
   LatLngExpression,
   LeafletMouseEvent,
   latLng,
+  Icon,
 } from 'leaflet';
 
 const DEFAULT_CENTER_ZOOM = 12;
@@ -71,17 +72,10 @@ export class MapComponent implements OnInit, OnDestroy {
   makeMarkers(features: GeoJson[]): void {
     // TODO remove old markers?
 
-    const myIcon = icon({
-      iconUrl: '/assets/icons/pin_poi.png',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-      popupAnchor: [-3, -76],
-    });
-
     for (const feature of features) {
       const lon = feature.geometry.coordinates[0];
       const lat = feature.geometry.coordinates[1];
-      const myMarker = marker([lat, lon], {icon: myIcon});
+      const myMarker = marker([lat, lon], {icon: this.getIcon('wastecenter')});
 
       myMarker.on('click', e => this.clickedMarker(e, feature));
       myMarker.addTo(this.map);
@@ -100,12 +94,29 @@ export class MapComponent implements OnInit, OnDestroy {
     if (this.myPositionMarker) {
       this.myPositionMarker.remove();
     }
-    this.myPositionMarker = marker(latLng(coords[0], coords[1]));
+
+    this.myPositionMarker = marker(latLng(coords[0], coords[1]), {icon: this.getIcon('position')});
     this.myPositionMarker.addTo(this.map);
   }
 
+  getIcon(type: string): Icon {
+    let imgUrl = '/assets/icons/pin_poi.png';
+    if (type == 'position') {
+      imgUrl = '/assets/images/marker-icon-2x.png';
+    }
+
+    return icon({
+      iconUrl: imgUrl,
+      shadowUrl: '/assets/images/marker-shadow.png',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [-3, -76],
+    });
+  }
+
   centerToPoint(coord: number[]) {
-    this.map.setView(latLng(coord[0], coord[1]), DEFAULT_CENTER_ZOOM);
+    const zoom = this.map.getZoom();
+    this.map.setView(latLng(coord[0], coord[1]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
   }
 
   private initMap(): void {

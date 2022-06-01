@@ -10,6 +10,7 @@ import {
 import {AlertController, IonInput, ToastController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 
+const POSITION_INDEX = 0;
 const ADDRESS_INDEX = 1;
 const REGEX_NUMBER = /([0-9\s\-]{7,})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
 const REGEX_EMAIL =
@@ -58,14 +59,6 @@ export class FormComponent {
     return this.form.step[this.pos];
   }
 
-  // addressOnChange(event: any) {
-  //   if (event?.target && typeof event.target.value === 'string') {
-  //     let address: string = event.target.value;
-  //     this.currentForm().value[ADDRESS_INDEX] = address;
-  //     this.onLocating.emit([address, this.pos]);
-  //   }
-  // }
-
   saveImage(event: any) {
     this.currentForm().value = event;
     // this.content.resize();
@@ -79,12 +72,24 @@ export class FormComponent {
     return JSON.stringify(item.value);
   }
 
-  getAddress(value: any) {
-    this.currentForm().value = value;
+  setPosition(value: any) {
+    this.currentForm().value[POSITION_INDEX] = value;
   }
 
-  radioClick(value: any) {
-    this.currentForm().value = value;
+  setAddress(value: string) {
+    this.currentForm().value[ADDRESS_INDEX] = value;
+  }
+
+  // addressOnChange(event: any) {
+  //   if (event?.target && typeof event.target.value === 'string') {
+  //     let address: string = event.target.value;
+  //     this.currentForm().value[ADDRESS_INDEX] = address;
+  //     this.onLocating.emit([address, this.pos]);
+  //   }
+  // }
+
+  radioClick(event: any) {
+    this.currentForm().value = event.detail.value;
   }
 
   sendExit() {
@@ -186,11 +191,12 @@ export class FormComponent {
   }
 
   isInvalidLocation(): boolean {
+    console.log('------- ~ isInvalidLocation ~ this.currentForm()', this.currentForm());
     return (
       this.currentForm().type === 'location' &&
       (this.currentForm().value === null ||
-        !this.currentForm().value[0] ||
-        !this.currentForm().value[1])
+        !this.currentForm().value[POSITION_INDEX] ||
+        !this.currentForm().value[ADDRESS_INDEX])
     );
   }
 
