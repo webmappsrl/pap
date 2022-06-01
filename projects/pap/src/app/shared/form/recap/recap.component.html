@@ -1,1 +1,24 @@
-<p>recap works!</p>
+<ion-label class="pap-form-label">
+    {{'Ricapitolando'|translate}}
+</ion-label>
+<ion-list>
+    <ion-item *ngFor="let item of form.step">
+        <ion-label class="pap-form-recap-label">
+            {{item.recap | translate}}
+        </ion-label>
+        <ion-note class="pap-form-recap-note" slot="end"
+            *ngIf="item.type !== 'location' && item.type !== 'radio' && item.type !== 'image' && item.value !== ''">
+            {{item.value}}
+        </ion-note>
+        <ion-note class="pap-form-recap-note" slot="end" *ngIf="item.type === 'radio' && item.value !== ''">
+            {{getTranslation(item)}}
+        </ion-note>
+        <ion-note class="pap-form-recap-note" slot="end" *ngIf="item.type !== 'location' && item.value === ''">
+            {{'messages.notInserted' | translate}}
+        </ion-note>
+        <ion-note class="pap-form-recap-note" slot="end" *ngIf="item.type === 'location'">
+            {{item.value[1]}}
+        </ion-note>
+        <img src="{{item.value}}" *ngIf="item.type === 'image' && item.value !== ''" />
+    </ion-item>
+</ion-list>

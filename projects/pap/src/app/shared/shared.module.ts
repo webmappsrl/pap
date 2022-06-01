@@ -47,6 +47,7 @@ import {PicturePickerComponent} from './form/picture-picker/picture-picker.compo
     HeaderComponent,
     MapComponent,
     FormComponent,
+    RecapComponent,
     ErrorFormHandlerComponent,
     TranslateModule,
   ],

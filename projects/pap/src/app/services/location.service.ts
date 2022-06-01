@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map, switchMap} from 'rxjs';
+import {GOOOGLEAPIKEY} from '../../api.keys';
 
 const MAP = {
   bounds: {
@@ -34,12 +35,7 @@ export class LocationService {
   getAddress(coordinates: number[]) {
     return this.http
       .get(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
-          coordinates[0] +
-          ',' +
-          coordinates[1] +
-          '{{GOOOGLE-API-KEY}}',
-        {},
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[0]},${coordinates[1]}&key=${GOOOGLEAPIKEY}`,
       )
       .pipe(
         switchMap((response: any) => {
