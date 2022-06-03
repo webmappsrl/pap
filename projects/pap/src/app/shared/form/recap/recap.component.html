@@ -1,0 +1,27 @@
+<ion-label class="pap-form-label">
+  {{'Ricapitolando'|translate}}
+</ion-label>
+<ion-list>
+  <ng-container *ngFor="let item of steps$|async">
+    <ion-item>
+      <ion-label class="pap-form-recap-label">
+        {{(item.recap||'') | translate}}
+      </ion-label>
+      <ng-container [ngSwitch]="item.type">
+        <ion-note *ngSwitchCase="'text'">
+          {{form.controls[item.type].value}}
+        </ion-note>
+        <ion-note *ngSwitchCase="'phone'">
+          {{form.controls[item.type].value}}
+        </ion-note>
+        <ion-note *ngSwitchCase="'note'">
+          {{form.controls[item.type].value}}
+        </ion-note>
+        <img src="{{item.value}}" *ngSwitchCase="'image'" />
+        <ion-note *ngSwitchDefault class="pap-form-recap-note" slot="end">
+          {{'messages.notInserted' | translate}}
+        </ion-note>
+      </ng-container>
+    </ion-item>
+  </ng-container>
+</ion-list>

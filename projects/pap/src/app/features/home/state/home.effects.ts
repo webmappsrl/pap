@@ -41,19 +41,19 @@ export class HomeEffects {
           {
             label: 'Prenota servizio',
             icon: 'checkmark',
-            url: 'book',
+            url: 'ticket-reservation',
             action: buttonAction.NAVIGATION,
           },
           {
             label: 'Segnala abbandono',
             icon: 'chatbubbles',
-            url: 'abandonment',
+            url: 'abandonment-ticket',
             action: buttonAction.NAVIGATION,
           },
           {
             label: 'Attiva segnalazione',
             icon: 'create',
-            url: 'disruption',
+            url: 'report-ticket',
             action: buttonAction.NAVIGATION,
           },
           {
@@ -71,7 +71,7 @@ export class HomeEffects {
           {
             label: 'Richiedi Informazioni',
             icon: 'information',
-            url: 'askinfo',
+            url: 'info-ticket',
             action: buttonAction.NAVIGATION,
           },
           {

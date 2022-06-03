@@ -37,6 +37,30 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'info-ticket',
+    loadChildren: () =>
+      import('./features/info-ticket/info-ticket.module').then(m => m.InfoTicketModule),
+  },
+  {
+    path: 'ticket-reservation',
+    loadChildren: () =>
+      import('./features/ticket-reservation/ticket-reservation.module').then(
+        m => m.TicketReservationModule,
+      ),
+  },
+  {
+    path: 'abandonment-ticket',
+    loadChildren: () =>
+      import('./features/abandonment-ticket/abandonment-ticket.module').then(
+        m => m.AbandonmentTicketModule,
+      ),
+  },
+  {
+    path: 'report-ticket',
+    loadChildren: () =>
+      import('./features/report-ticket/report-ticket.module').then(m => m.ReportTicketModule),
+  },
+  {
     path: '**',
     redirectTo: 'home', // all no defined route redirect to home
   },

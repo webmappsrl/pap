@@ -1,0 +1,72 @@
+pap-form {
+    width: 90%;
+    margin: auto auto;
+
+    .pap-form-content {
+        .pap-form-label {
+            padding: 14px;
+            display: block;
+        }
+    }
+    .pap-form-toggle {
+        width: 30px;
+        margin: 50px auto;
+    }
+
+    .pap-form-input > input {
+        font-size: 1.5em;
+    }
+
+    .pap-form-textarea > textarea {
+        font-size: 1.5em;
+        padding: 10px;
+        border-left: 1px solid #aaaaaa;
+    }
+
+    .pap-form-textarea > textarea:focus {
+        //  border-left: 1px solid color($colors, secondary, base);
+    }
+
+    .pap-form-checkbox {
+        width: 90%;
+        margin: 30px auto;
+        ion-checkbox {
+            width: auto;
+            margin: 8px;
+            float: left;
+        }
+
+        ion-label {
+            display: inline;
+            font-size: 1.2em;
+        }
+    }
+}
+
+.pap-form-footer {
+    text-align: center;
+    .pap-form-page {
+        text-align: center;
+        color: #999999;
+        font-size: 1.1em;
+    }
+    .pap-form-buttons {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        .pap-form-buttonblock {
+            display: flex;
+            height: 100%;
+            .pap-form-button {
+                margin: 4px;
+                font-size: 1.2em;
+                height: 40px;
+                display: inline-block;
+                align-self: flex-end;
+                ion-icon {
+                    font-size: 1.5em;
+                }
+            }
+        }
+    }
+}
