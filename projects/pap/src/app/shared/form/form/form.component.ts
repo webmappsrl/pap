@@ -3,12 +3,16 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {AlertController, IonInput, ToastController} from '@ionic/angular';
-import {TranslateService} from '@ngx-translate/core';
+import {FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {AlertController, IonInput, NavController} from '@ionic/angular';
+import {select, Store} from '@ngrx/store';
+import {BehaviorSubject, Observable, switchMap} from 'rxjs';
+import {AppState} from '../../../core/core.state';
+import {TicketFormConf, TicketFormStep} from '../../models/form.model';
+import {resetTicket, sendTicket} from '../state/form.actions';
+import {ticketError, ticketLoading, ticketSuccess} from '../state/form.selectors';
 
 const POSITION_INDEX = 0;
 const ADDRESS_INDEX = 1;
@@ -19,10 +23,6 @@ const TOAST_DURATION = 3000;
 
 // const MESSAGES_WRONGCODE = 'Codice errato. Controlla di averlo inserito correttamente o torna indietro per controllare che la mail che hai inserito sia corretta';
 // const MESSAGES_INVALIDCODE = 'Devi inserire un codice valido prima di procedere';
-const MESSAGES_MANDATORY = 'Questo campo è obbligatorio';
-const MESSAGES_INVALIDNUMBER = 'Il numero di telefono inserito non è valido';
-const MESSAGES_INVALIDEMAIL = "Inserisci un'email valida";
-const MESSAGES_INVALIDPOSITION = 'Seleziona una posizione valida per proseguire';
 const MESSAGES_EXIT = 'Si, esci';
 const MESSAGES_CONTINUE = 'Continua';
 
@@ -34,217 +34,84 @@ const MESSAGES_CONTINUE = 'Continua';
   encapsulation: ViewEncapsulation.None,
 })
 export class FormComponent {
-  @Input() form: any;
-  @Input() loading!: any;
-  @Input() pos: number = 0;
-  // @Input('code') code: number;
-  @Input() extra: boolean = false;
-  @Output() onFormFilled = new EventEmitter();
-  @Output() onClickExit = new EventEmitter();
-  @Output() onCheckEmail = new EventEmitter();
-  @Output() onLocating = new EventEmitter();
-  @Output() onReverseLocating = new EventEmitter();
-  // @ViewChild(Content) content: Content;
-
-  @ViewChild('focusInput')
   focusInput!: IonInput;
+  formError$: Observable<any> = this._store.pipe(select(ticketError));
+  formSuccess$: Observable<any> = this._store.pipe(select(ticketSuccess));
+  formLoading$: Observable<boolean> = this._store.pipe(select(ticketLoading));
+  @Input() set ticketFormConf(ticketFormConf: TicketFormConf) {
+    this.ticketFormConf$.next(ticketFormConf);
+    ticketFormConf.step.forEach(step => {
+      const validators: ValidatorFn[] = [];
+      if (step.mandatory) {
+        validators.push(Validators.required);
+      }
+
+      const formControl = new FormControl('', validators);
+      this.ticketForm.addControl(step.type, formControl);
+    });
+    const ticketTypeControl = new FormControl(ticketFormConf.ticketType);
+    this.ticketForm.addControl('ticket_type', ticketTypeControl);
+    console.log(ticketTypeControl.value);
+  }
+
+  pos$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  recap$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  ticketForm: FormGroup = new FormGroup({});
+  ticketFormConf$: BehaviorSubject<TicketFormConf | null> =
+    new BehaviorSubject<TicketFormConf | null>(null);
+  alertEvt$: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
-    private _translateService: TranslateService,
-    private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
-  ) {}
-
-  currentForm() {
-    return this.form.step[this.pos];
-  }
-
-  saveImage(event: any) {
-    this.currentForm().value = event;
-    // this.content.resize();
-  }
-
-  isChecked(def: any, value: any): boolean {
-    return JSON.stringify(def) === JSON.stringify(value);
-  }
-
-  getValue(item: any): string {
-    return JSON.stringify(item.value);
-  }
-
-  setPosition(value: any) {
-    this.currentForm().value[POSITION_INDEX] = value;
-  }
-
-  setAddress(value: string) {
-    this.currentForm().value[ADDRESS_INDEX] = value;
-  }
-
-  // addressOnChange(event: any) {
-  //   if (event?.target && typeof event.target.value === 'string') {
-  //     let address: string = event.target.value;
-  //     this.currentForm().value[ADDRESS_INDEX] = address;
-  //     this.onLocating.emit([address, this.pos]);
-  //   }
-  // }
-
-  radioClick(event: any) {
-    this.currentForm().value = event.detail.value;
-  }
-
-  sendExit() {
-    if (this.form.cancel) {
-      this.sendAlert(this._translateService.instant(this.form.cancel));
-    } else this.onClickExit.emit();
+    private _store: Store<AppState>,
+    private _navCtrl: NavController,
+    private _alertCtrl: AlertController,
+  ) {
+    this.alertEvt$.pipe(switchMap(obj => this._alertCtrl.create(obj)));
   }
 
   backStep() {
-    if (this.pos === 0) this.sendExit();
+    if (this.pos$.value === 0) this.sendExit();
     else {
-      this.pos--;
-      this.setFocus();
+      const backStep = (this.pos$.value as number) - 1;
+      this.pos$.next(backStep);
     }
+  }
+
+  close(): void {
+    this._store.dispatch(resetTicket());
+    setTimeout(() => {
+      this._navCtrl.navigateRoot('home');
+    }, 0);
+  }
+
+  isValid(currentStep: TicketFormStep): boolean {
+    const formControlName = currentStep.type;
+    const formControl = this.ticketForm.controls[formControlName];
+    console.log(formControl.value);
+    return !formControl.invalid;
   }
 
   nextStep() {
-    if (this.isValid() && this.pos + 1 < this.form.step.length) {
-      this.pos++;
-      this.setFocus(350);
+    const nextStep = (this.pos$.value as number) + 1;
+    if (nextStep < (this.ticketFormConf$.value as TicketFormConf).step.length) {
+      this.pos$.next(nextStep);
     }
   }
 
-  setFocus(delay: number = 150) {
-    setTimeout(() => {
-      if (this.focusInput) {
-        this.focusInput.setFocus();
-      }
-      // if (this.code1) {
-      //   this.code1.setFocus();
-      //   this.content.scrollTo(0, 500);
-      // }
-    }, delay);
+  recap(): void {
+    this.recap$.next(true);
   }
 
   sendData() {
-    if (!this.isValid()) {
-      return;
-    }
-
-    this.onFormFilled.emit(this.form);
-    // } else {
-    //   if (
-    //     this.currentForm().value[0] !== '' &&
-    //     this.currentForm().value[1] !== '' &&
-    //     this.currentForm().value[2] !== '' &&
-    //     this.currentForm().value[3] !== ''
-    //   )
-    //     this.sendToast(this._translateService.instant(MESSAGES_WRONGCODE));
-    //   else this.sendToast(this._translateService.instant(MESSAGES_INVALIDCODE));
-    // }
+    this.recap$.next(false);
+    this._store.dispatch(sendTicket({ticket: this.ticketForm.value}));
   }
 
-  isValid() {
-    let res = true;
-    console.log('------- ~ isValid ~ res', res);
-
-    if (this.isInvalidMandatory()) {
-      this.sendToast(this._translateService.instant(MESSAGES_MANDATORY));
-      res = false;
-    }
-
-    if (this.isInvalidPhone()) {
-      this.sendToast(this._translateService.instant(MESSAGES_INVALIDNUMBER));
-      res = false;
-    }
-
-    if (this.isInvalidEmail()) {
-      this.sendToast(this._translateService.instant(MESSAGES_INVALIDEMAIL));
-      res = false;
-    }
-
-    if (this.isInvalidLocation()) {
-      this.sendToast(this._translateService.instant(MESSAGES_INVALIDPOSITION));
-      res = false;
-    }
-
-    if (
-      this.currentForm().type === 'location' &&
-      this.currentForm().value[1] === '' &&
-      this.currentForm().value[2][1] === ''
-    ) {
-      this.sendToast(this._translateService.instant(MESSAGES_INVALIDPOSITION));
-      res = false;
-    }
-
-    return res;
+  sendExit() {
+    this._store.dispatch(resetTicket());
+    this._navCtrl.navigateRoot('home');
   }
-
-  isInvalidEmail(): boolean {
-    if (this.currentForm().type === 'email') {
-      if (REGEX_EMAIL.test(this.currentForm().value)) {
-        this.onCheckEmail.emit([this.currentForm().value, this.pos]);
-      } else {
-        return false;
-      }
-    }
-    return false;
-  }
-
-  isInvalidLocation(): boolean {
-    console.log('------- ~ isInvalidLocation ~ this.currentForm()', this.currentForm());
-    return (
-      this.currentForm().type === 'location' &&
-      (this.currentForm().value === null ||
-        !this.currentForm().value[POSITION_INDEX] ||
-        !this.currentForm().value[ADDRESS_INDEX])
-    );
-  }
-
-  isInvalidPhone(): boolean {
-    return (
-      this.currentForm().type === 'tel' &&
-      this.currentForm().value !== '' &&
-      !REGEX_NUMBER.test(this.currentForm().value)
-    );
-  }
-
-  isInvalidMandatory(): boolean {
-    let isValid: boolean =
-      !['checkbox', 'switch'].includes(this.currentForm().type) &&
-      this.currentForm().value !== null &&
-      this.currentForm().value !== '';
-    let isValidChoice: boolean =
-      ['checkbox', 'switch'].includes(this.currentForm().type) && this.currentForm().value === true;
-
-    return this.currentForm().mandatory && !isValid && !isValidChoice;
-  }
-
-  changeFocus(n: number) {}
-
-  async sendToast(message: string) {
-    const toast = await this.toastCtrl.create({
-      message: message,
-      duration: TOAST_DURATION,
-    });
-    toast.present();
-  }
-
-  async sendAlert(message: string) {
-    let alert = await this.alertCtrl.create({
-      message: message,
-      buttons: [
-        {
-          text: this._translateService.instant(MESSAGES_EXIT),
-          handler: () => {
-            this.onClickExit.emit();
-          },
-        },
-        {
-          text: this._translateService.instant(MESSAGES_CONTINUE),
-          role: 'cancel',
-        },
-      ],
-    });
-    alert.present();
+  saveImage(image: any) {
+    console.log(image);
   }
 }

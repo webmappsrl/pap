@@ -7,6 +7,7 @@ export const environment = {
   test: false,
   api: 'http://dev.portapporta.webmapp.it',
   // api: 'http://127.0.0.1:8000',
+  GOOOGLEAPIKEY: '',
 };
 
 /*

@@ -1,33 +1,21 @@
 <ion-header>
-    <pap-header></pap-header>
+  <pap-header></pap-header>
 </ion-header>
 <ng-container *ngIf="infoTicketView$|async as view">
-    <ion-content class="" *ngIf="!view.reportSend">
-        <pap-form [form]="form" *ngIf="!end" [pos]="pos" (onFormFilled)="formFilled($event)" (onClickExit)="exitPage()">
-        </pap-form>
-
-        <div *ngIf="end">
-            <pap-form-recap [form]="form" (onClickExit)="exitPage()"></pap-form-recap>
-            <div class="pap-infoticket-checkbox">
-                <ion-checkbox name="checkbox" [(ngModel)]="privacyCheck"></ion-checkbox>
-                <ion-label
-                    innerHTML="{{'Dichiaro di aver letto ed accettato le condizioni sulla privacy' | translate }}">
-                </ion-label>
-            </div>
-            <div class="pap-infoticket-buttons">
-                <ion-button color="light" (click)='exitPage()'>{{'esci' | translate}}</ion-button>
-                <ion-button color="light" (click)='openForm()'>{{'torna indietro' | translate}}</ion-button>
-                <ion-button *ngIf="privacyCheck" class="right" color="secondary" (click)='saveData()'>
-                    {{'Segnala' | translate}}</ion-button>
-            </div>
-        </div>
-    </ion-content>
-    <ion-content class="" *ngIf="view.reportSend">
-        <ion-label>
-            {{form.finalMessage| translate}}
-        </ion-label>
-        <div class="pap-infoticket-buttons">
-            <ion-button color="light" (click)='exitPage()'>{{'esci' | translate}}</ion-button>
-        </div>
-    </ion-content>
+  <ion-content class="" *ngIf="!view.reportSend">
+    <pap-form
+      [ticketFormConf]="formConf"
+      (onFormFilled)="formFilled($event)"
+      (onClickExit)="exitPage()"
+    >
+    </pap-form>
+  </ion-content>
+  <ion-content class="" *ngIf="view.reportSend">
+    <ion-label>
+      {{formConf.finalMessage| translate}}
+    </ion-label>
+    <div class="pap-infoticket-buttons">
+      <ion-button color="light" (click)="exitPage()">{{'esci' | translate}}</ion-button>
+    </div>
+  </ion-content>
 </ng-container>

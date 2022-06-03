@@ -1,8 +1,12 @@
 <ion-header>
-    <pap-header></pap-header>
+  <pap-header></pap-header>
 </ion-header>
 <ng-container>
-    <ion-content class="">
-        <pap-form [form]="form" (onFormFilled)="formFilled($event)" (onClickExit)="exitPage()"></pap-form>
-    </ion-content>
+  <ion-content class="">
+    <pap-form
+      [ticketFormConf]="form"
+      (onFormFilled)="formFilled($event)"
+      (onClickExit)="exitPage()"
+    ></pap-form>
+  </ion-content>
 </ng-container>

@@ -5,7 +5,7 @@ import {first} from 'rxjs';
 import {AuthService} from '../../core/auth/state/auth.service';
 import {AppState} from '../../core/core.state';
 import {ApiTicketType} from '../../shared/models/apimodels';
-import {TicketForm} from '../../shared/models/form.model';
+import {TicketFormConf} from '../../shared/models/form.model';
 import {ReportService} from '../../shared/services/report.service';
 import {selectInfoState} from '../info/state/info.selectors';
 import {loadInfoTickets, sendReportInfoTickets} from './state/info-ticket.actions';
@@ -21,11 +21,11 @@ import {selectInfoTicketState} from './state/info-ticket.selectors';
 export class InfoTicketComponent implements OnInit {
   infoTicketView$ = this._store.pipe(select(selectInfoTicketState));
 
-  public pos = 0;
   public end = false;
   public privacyCheck: boolean = false;
 
-  public form: TicketForm = {
+  public formConf: TicketFormConf = {
+    ticketType: 'info',
     cancel: 'Uscendo perderai tutti i dati inseriti. Sicuro di volerlo fare?',
     finalMessage:
       'La tua richiesta è stata inoltrata correttamente: verrai ricontattato quanto prima per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni. Puoi rivedere tutte le tue segnalazioni nella sezione "Le mie Segnalazioni"',
@@ -49,7 +49,7 @@ export class InfoTicketComponent implements OnInit {
       },
       {
         label: 'Scrivi qui le informazioni che vorresti richiedere a {{companyName}}',
-        type: 'textarea',
+        type: 'note',
         mandatory: true,
         value: '',
         recap: 'Richiesta',
@@ -62,7 +62,7 @@ export class InfoTicketComponent implements OnInit {
       {
         label:
           "Per rendere l'operazione più rapida puoi decidere di lasciarci il tuo numero di telefono",
-        type: 'tel',
+        type: 'phone',
         mandatory: false,
         value: '',
         recap: 'Telefono',
@@ -82,12 +82,10 @@ export class InfoTicketComponent implements OnInit {
   }
 
   formFilled(event: any) {
-    this.form = event;
     this.end = true;
   }
 
   openForm() {
-    this.pos = 2;
     this.end = !this.end;
   }
 
@@ -100,7 +98,7 @@ export class InfoTicketComponent implements OnInit {
       .getUser()
       .pipe(first())
       .subscribe(user => {
-        let report = this.reportService.createReport(this.form, user, ApiTicketType.INFO);
+        let report = this.reportService.createReport(this.formConf, user, ApiTicketType.INFO);
         this._store.dispatch(sendReportInfoTickets({data: report}));
       });
   }

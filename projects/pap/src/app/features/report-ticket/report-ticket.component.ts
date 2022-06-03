@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {TicketForm} from '../../shared/models/form.model';
+import {TicketFormConf} from '../../shared/models/form.model';
 
 @Component({
   selector: 'pap-report-ticket',
@@ -9,9 +9,10 @@ import {TicketForm} from '../../shared/models/form.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class ReportTicketComponent implements OnInit {
-  public form: TicketForm = {
+export class ReportTicketComponent {
+  public form: TicketFormConf = {
     cancel: 'forms.disruption.cancel',
+    ticketType: 'report',
     finalMessage: 'forms.disruption.finalMessage',
     translationsObj: {
       finalMessage: {
@@ -86,7 +87,7 @@ export class ReportTicketComponent implements OnInit {
       },
       {
         label: 'forms.disruption.notesLabel',
-        type: 'textarea',
+        type: 'note',
         mandatory: false,
         value: '',
         recap: 'forms.disruption.notesRecap',
@@ -95,8 +96,6 @@ export class ReportTicketComponent implements OnInit {
   };
 
   constructor(private navController: NavController) {}
-
-  ngOnInit(): void {}
 
   formFilled(event: any) {
     this.form = event;

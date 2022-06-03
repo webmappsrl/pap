@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
+import {EffectsModule} from '@ngrx/effects';
 import {IonicModule} from '@ionic/angular';
 import {HttpClientModule} from '@angular/common/http';
 import {StoreModule} from '@ngrx/store';
@@ -15,6 +16,9 @@ import {FormComponent} from './form/form/form.component';
 import {LocationComponent} from './form/location/location.component';
 import {RecapComponent} from './form/recap/recap.component';
 import {PicturePickerComponent} from './form/picture-picker/picture-picker.component';
+import {InputTypePipe} from './form/input-type.pipe';
+import {InputPatternPipe} from './form/input-pattern.pipe';
+import {FormEffects} from './form/state/form.effects';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,8 @@ import {PicturePickerComponent} from './form/picture-picker/picture-picker.compo
     LocationComponent,
     RecapComponent,
     PicturePickerComponent,
+    InputTypePipe,
+    InputPatternPipe,
   ],
   imports: [
     CommonModule,
@@ -34,7 +40,8 @@ import {PicturePickerComponent} from './form/picture-picker/picture-picker.compo
     IonicModule,
     HttpClientModule,
     StoreModule.forFeature(fromHeader.headerFeatureKey, fromHeader.reducer),
-    StoreModule.forFeature(fromForm.formFeatureKey, fromForm.reducer),
+    StoreModule.forFeature(fromForm.ticketFeatureKey, fromForm.reducer),
+    EffectsModule.forFeature([FormEffects]),
     TranslateModule.forRoot(),
   ],
   exports: [
@@ -50,6 +57,8 @@ import {PicturePickerComponent} from './form/picture-picker/picture-picker.compo
     RecapComponent,
     ErrorFormHandlerComponent,
     TranslateModule,
+    InputTypePipe,
+    InputPatternPipe,
   ],
 })
 export class SharedModule {}

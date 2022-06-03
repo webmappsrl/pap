@@ -1,8 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map, switchMap} from 'rxjs';
-import {GOOOGLEAPIKEY} from '../../../api.keys';
-
+import {environment as env} from 'projects/pap/src/environments/environment';
 const MAP = {
   bounds: {
     southWest: {
@@ -35,7 +34,7 @@ export class LocationService {
   getAddress(coordinates: number[]) {
     return this.http
       .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[0]},${coordinates[1]}&key=${GOOOGLEAPIKEY}`,
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[0]},${coordinates[1]}&key=${env.GOOOGLEAPIKEY}`,
       )
       .pipe(
         switchMap((response: any) => {

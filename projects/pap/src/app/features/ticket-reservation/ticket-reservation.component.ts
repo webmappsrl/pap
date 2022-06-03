@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {TicketForm} from '../../shared/models/form.model';
+import {TicketFormConf} from '../../shared/models/form.model';
 
 @Component({
   selector: 'pap-ticket-reservation',
@@ -9,9 +9,10 @@ import {TicketForm} from '../../shared/models/form.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class TicketReservationComponent implements OnInit {
-  public form: TicketForm = {
+export class TicketReservationComponent {
+  public form: TicketFormConf = {
     cancel: 'forms.bookService.cancel',
+    ticketType: 'reservation',
     finalMessage: 'forms.bookService.finalMessage',
     translationsObj: {
       finalMessage: {
@@ -82,14 +83,14 @@ export class TicketReservationComponent implements OnInit {
       },
       {
         label: 'forms.bookService.notesLabel',
-        type: 'textarea',
+        type: 'note',
         mandatory: false,
         value: '',
         recap: 'forms.bookService.notesRecap',
       },
       {
         label: 'forms.bookService.phoneLabel',
-        type: 'tel',
+        type: 'phone',
         mandatory: false,
         value: '',
         recap: 'forms.bookService.phoneRecap',
@@ -98,8 +99,6 @@ export class TicketReservationComponent implements OnInit {
   };
 
   constructor(private navController: NavController) {}
-
-  ngOnInit(): void {}
 
   formFilled(event: any) {
     this.form = event;

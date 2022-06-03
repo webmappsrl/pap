@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {TicketForm} from '../../shared/models/form.model';
+import {TicketFormConf} from '../../shared/models/form.model';
 
 @Component({
   selector: 'pap-abandonment-ticket',
@@ -9,9 +9,10 @@ import {TicketForm} from '../../shared/models/form.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class AbandonmentTicketComponent implements OnInit {
-  public form: TicketForm = {
+export class AbandonmentTicketComponent {
+  public form: TicketFormConf = {
     cancel: 'forms.abandonment.cancel',
+    ticketType: 'abandonment',
     finalMessage: 'forms.abandonment.finalMessage',
     translationsObj: {
       finalMessage: {
@@ -90,7 +91,7 @@ export class AbandonmentTicketComponent implements OnInit {
       },
       {
         label: 'forms.abandonment.notesLabel',
-        type: 'textarea',
+        type: 'note',
         mandatory: false,
         value: '',
         recap: 'forms.abandonment.notesRecap',
@@ -99,8 +100,6 @@ export class AbandonmentTicketComponent implements OnInit {
   };
 
   constructor(private navController: NavController) {}
-
-  ngOnInit(): void {}
 
   formFilled(event: any) {
     this.form = event;
