@@ -1,7 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {map, switchMap} from 'rxjs';
-import {environment as env} from 'projects/pap/src/environments/environment';
+import {map} from 'rxjs';
 const MAP = {
   bounds: {
     southWest: {
@@ -34,12 +33,13 @@ export class LocationService {
   getAddress(coordinates: number[]) {
     return this.http
       .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[0]},${coordinates[1]}&key=${env.GOOOGLEAPIKEY}`,
+        //  `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[0]},${coordinates[1]}&key=${env.GOOOGLEAPIKEY}`,
+        `https://nominatim.openstreetmap.org/reverse?lat=${coordinates[0]}&lon=${coordinates[1]}&format=json`,
       )
       .pipe(
-        switchMap((response: any) => {
-          console.log('------- ~ LocationService ~ switchMap ~ response', response);
-          return response;
+        map((response: any) => {
+          const address = response.display_name ?? '';
+          return address as string;
         }),
       );
   }

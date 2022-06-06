@@ -8,23 +8,14 @@ import {
 import {FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {AlertController, IonInput, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {BehaviorSubject, Observable, switchMap} from 'rxjs';
+import {BehaviorSubject, map, Observable, switchMap, withLatestFrom} from 'rxjs';
 import {AppState} from '../../../core/core.state';
+import {loadTrashBooks} from '../../../features/trash-book/state/trash-book.actions';
+import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
+import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {TicketFormConf, TicketFormStep} from '../../models/form.model';
 import {resetTicket, sendTicket} from '../state/form.actions';
 import {ticketError, ticketLoading, ticketSuccess} from '../state/form.selectors';
-
-const POSITION_INDEX = 0;
-const ADDRESS_INDEX = 1;
-const REGEX_NUMBER = /([0-9\s\-]{7,})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
-const REGEX_EMAIL =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const TOAST_DURATION = 3000;
-
-// const MESSAGES_WRONGCODE = 'Codice errato. Controlla di averlo inserito correttamente o torna indietro per controllare che la mail che hai inserito sia corretta';
-// const MESSAGES_INVALIDCODE = 'Devi inserire un codice valido prima di procedere';
-const MESSAGES_EXIT = 'Si, esci';
-const MESSAGES_CONTINUE = 'Continua';
 
 @Component({
   selector: 'pap-form',
@@ -38,20 +29,26 @@ export class FormComponent {
   formError$: Observable<any> = this._store.pipe(select(ticketError));
   formSuccess$: Observable<any> = this._store.pipe(select(ticketSuccess));
   formLoading$: Observable<boolean> = this._store.pipe(select(ticketLoading));
+  trashBookTypesOpts$!: Observable<TrashBookType[]>;
   @Input() set ticketFormConf(ticketFormConf: TicketFormConf) {
     this.ticketFormConf$.next(ticketFormConf);
     ticketFormConf.step.forEach(step => {
       const validators: ValidatorFn[] = [];
-      if (step.mandatory) {
+      if (step.required) {
         validators.push(Validators.required);
       }
 
       const formControl = new FormControl('', validators);
       this.ticketForm.addControl(step.type, formControl);
+      this.trashBookTypesOpts$ = this._store.pipe(
+        select(trashBookTypes),
+        map(trashBookTypes =>
+          trashBookTypes.filter(t => t.showed_in[ticketFormConf.ticketType] === true),
+        ),
+      );
     });
     const ticketTypeControl = new FormControl(ticketFormConf.ticketType);
     this.ticketForm.addControl('ticket_type', ticketTypeControl);
-    console.log(ticketTypeControl.value);
   }
 
   pos$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
@@ -66,9 +63,12 @@ export class FormComponent {
     private _navCtrl: NavController,
     private _alertCtrl: AlertController,
   ) {
+    this._store.dispatch(loadTrashBooks());
     this.alertEvt$.pipe(switchMap(obj => this._alertCtrl.create(obj)));
   }
-
+  log(val: any) {
+    console.log(val);
+  }
   backStep() {
     if (this.pos$.value === 0) this.sendExit();
     else {

@@ -21,6 +21,9 @@ import {
   latLng,
   Icon,
 } from 'leaflet';
+import {AppState} from '@capacitor/app';
+import {Store} from '@ngrx/store';
+import {setMarker} from './state/map.actions';
 
 const DEFAULT_CENTER_ZOOM = 12;
 
@@ -42,7 +45,6 @@ export class MapComponent implements OnInit, OnDestroy {
   myPositionMarker!: any;
   map!: Map;
   @Output() markerClickEvt: EventEmitter<GeoJson> = new EventEmitter<GeoJson>();
-
   @Output() genericClickEvt: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   @Input() set markers(value: GeoJson[]) {
@@ -61,12 +63,15 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
+  constructor(private _store: Store<AppState>) {}
   clickedMarker(_: LeafletEvent, feature: GeoJson) {
     this.markerClickEvt.emit(feature);
   }
 
   clickOnMap(ev: LeafletMouseEvent) {
-    this.genericClickEvt.emit([ev.latlng.lat, ev.latlng.lng]);
+    const coords: [number, number] = [ev.latlng.lat, ev.latlng.lng];
+    this._store.dispatch(setMarker({coords}));
+    this.genericClickEvt.emit(coords);
   }
 
   makeMarkers(features: GeoJson[]): void {

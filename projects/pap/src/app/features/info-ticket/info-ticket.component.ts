@@ -40,7 +40,7 @@ export class InfoTicketComponent implements OnInit {
         label:
           "Questo serivizio ti permette di richiedere informazioni direttamente a {{companyName}}. Al termine ti verrà assegnato un codice della richiesta e verrà inviata una email a {{companyName}}: verrai ricontattato appena possibile. Clicca sul bottone ' >          ' per iniziare.",
         type: 'label',
-        mandatory: false,
+        required: false,
         translationsObj: {
           label: {
             companyName: 'APP.company',
@@ -50,7 +50,7 @@ export class InfoTicketComponent implements OnInit {
       {
         label: 'Scrivi qui le informazioni che vorresti richiedere a {{companyName}}',
         type: 'note',
-        mandatory: true,
+        required: true,
         value: '',
         recap: 'Richiesta',
         translationsObj: {
@@ -63,7 +63,7 @@ export class InfoTicketComponent implements OnInit {
         label:
           "Per rendere l'operazione più rapida puoi decidere di lasciarci il tuo numero di telefono",
         type: 'phone',
-        mandatory: false,
+        required: false,
         value: '',
         recap: 'Telefono',
       },

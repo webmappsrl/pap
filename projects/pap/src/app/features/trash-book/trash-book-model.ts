@@ -22,5 +22,11 @@ export interface TrashBookType {
   color: string;
   allowed: string[];
   notallowed: string[];
+  showed_in: {
+    abandonment: boolean;
+    info: boolean;
+    report: boolean;
+    reservation: boolean;
+  };
   translations: any;
 }

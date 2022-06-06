@@ -3,16 +3,16 @@ import {TicketFieldTypes, TicketType} from '../form/model';
 export interface TicketFormConf {
   cancel: string;
   finalMessage: string;
-  translationsObj: any;
   pages: number;
   ticketType: TicketType;
   step: TicketFormStep[];
+  translationsObj?: any;
 }
 
 export interface TicketFormStep {
   label: string;
   type: TicketFieldTypes | FormFieldTypes;
-  mandatory: boolean;
+  required: boolean;
   value?: any;
   translationsObj?: any;
   options?: TicketFormOption[];
@@ -20,7 +20,7 @@ export interface TicketFormStep {
   recap?: string;
   placeholder?: string;
 }
-export type FormFieldTypes = 'label' | 'radio';
+export type FormFieldTypes = 'label' | 'select';
 export interface TicketFormOption {
   label: string;
   value: string;

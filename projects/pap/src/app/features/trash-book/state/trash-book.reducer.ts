@@ -1,17 +1,19 @@
 import {Action, createReducer, on} from '@ngrx/store';
-import {TrashBookRow} from '../trash-book-model';
+import {TrashBookRow, TrashBookType} from '../trash-book-model';
 import * as TrashBookActions from './trash-book.actions';
 
 export const trashBookFeatureKey = 'trashBook';
 
 export interface TrashBookState {
   trashBook: TrashBookRow[];
+  trashBookTypes: TrashBookType[];
   trashBookDetail?: TrashBookRow;
   error: string;
 }
 
 export const initialState: TrashBookState = {
   trashBook: [],
+  trashBookTypes: [],
   error: '',
 };
 
@@ -20,7 +22,8 @@ export const reducer = createReducer(
   on(TrashBookActions.loadTrashBooks, state => state),
   on(TrashBookActions.loadTrashBooksSuccess, (state, action) => ({
     ...state,
-    trashBook: action.data,
+    trashBook: action.data.trashBookRows,
+    trashBookTypes: action.data.trashBookTypes,
   })),
   on(TrashBookActions.loadTrashBooksFailure, (state, action) => {
     return {...state, error: 'error'};
