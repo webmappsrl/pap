@@ -9,12 +9,12 @@
         <ion-list>
             <ion-item *ngFor="let item of calendarView.calendar | keyvalue" class="pap-calendar-item" lines="none">
                 <ion-label slot="start" class="pap-calendar-date">
-                    <div class="pap-calendar-monthday">{{item.key}}</div>
-                    <div class="pap-calendar-monthname">{{item.key}}</div>
+                    <div class="pap-calendar-monthday">{{dateOf(item.key) | dfnsFormat: 'd' }}</div>
+                    <div class="pap-calendar-monthname">{{dateOf(item.key) | dfnsFormat: 'MMMM' }}</div>
 
                 </ion-label>
                 <div>
-                    <div class="pap-calendar-weekday">lunedì</div>
+                    <div class="pap-calendar-weekday">{{dateOf(item.key) | dfnsFormat: 'EEEE' }}</div>
                     <div div *ngFor="let trash of item.value" class="pap-calendar-event">
                         <div class="pap-calendar-time">{{trash.start_time}} - {{trash.stop_time}}</div>
                         <div>

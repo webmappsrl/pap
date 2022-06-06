@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
+import {parse} from 'date-fns';
 import {AppState} from '../../core/core.state';
 import {showButtons} from '../../shared/header/state/header.actions';
 import {setTrashBookDetail, setTrashBookType} from '../trash-book/state/trash-book.actions';
@@ -33,5 +34,9 @@ export class CalendarComponent implements OnInit {
         showBackdrop: true,
       })
       .then(modal => modal.present());
+  }
+
+  dateOf(dateStr: string) {
+    return parse(dateStr, 'yyyy-MM-dd', new Date());
   }
 }

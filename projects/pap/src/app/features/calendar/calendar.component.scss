@@ -1,14 +1,15 @@
 pap-calendar {
     .pap-calendar-item {
         margin-bottom: 15px;
-        padding: 10px;
         border-bottom: 2px solid var(--ion-color-secondary);
 
         .pap-calendar-date {
-            max-width: 60px;
+            max-width: 70px;
             color: var(--ion-color-primary);
             font-weight: 300;
             font-size: 50px;
+            text-align: center;
+            overflow: visible;
             .pap-calendar-monthday {
             }
             .pap-calendar-monthname {
@@ -23,8 +24,8 @@ pap-calendar {
             font-style: italic;
         }
         .pap-calendar-event {
+            padding: 5px 0 15px;
             .pap-calendar-time {
-                padding-top: 15px;
             }
             .pap-calendar-trashlist {
                 display: inline-block;
