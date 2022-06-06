@@ -1,4 +1,14 @@
 pap-calendar {
+    .pap-calendar-info {
+        display: block;
+        padding: 10px;
+    }
+    .pap-calendar-infobuttoncontainer {
+        width: 100%;
+        text-align: center;
+        .pap-calendar-infobutton {
+        }
+    }
     .pap-calendar-item {
         margin-bottom: 15px;
         border-bottom: 2px solid var(--ion-color-secondary);

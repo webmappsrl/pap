@@ -11,6 +11,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AuthModule} from './core/auth/auth.module';
 import {DateFnsConfigurationService, DateFnsModule} from 'ngx-date-fns';
 import {it} from 'date-fns/locale';
+import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 const italianConfig = new DateFnsConfigurationService();
 italianConfig.setLocale(it);
@@ -26,6 +27,6 @@ italianConfig.setLocale(it);
     DateFnsModule.forRoot(),
   ],
   bootstrap: [AppComponent],
-  providers: [{provide: DateFnsConfigurationService, useValue: italianConfig}],
+  providers: [InAppBrowser, {provide: DateFnsConfigurationService, useValue: italianConfig}],
 })
 export class AppModule {}
