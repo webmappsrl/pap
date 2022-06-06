@@ -60,6 +60,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/report-ticket/report-ticket.module').then(m => m.ReportTicketModule),
   },
+  { path: 'calendar', loadChildren: () => import('./features/calendar/calendar.module').then(m => m.CalendarModule) },
   {
     path: '**',
     redirectTo: 'home', // all no defined route redirect to home
