@@ -26,6 +26,7 @@
             class="pap-form-textarea"
             [formControlName]="currentStep.type"
           ></ion-textarea>
+          <pre>{{currentStep.type}}</pre>
           <ng-container [ngSwitch]="currentStep.type">
             <div *ngSwitchCase="'switch'" class="pap-form-toggle">
               <ion-toggle block name="toggle" [checked]="currentStep.value"> </ion-toggle>
@@ -50,7 +51,12 @@
               [options]="(trashBookTypesOpts$|async)??[]"
               (ngModelChange)="log($event)"
             ></pap-form-select>
-            <pap-form-picture-picker *ngSwitchCase="'image'"> </pap-form-picture-picker>
+            <pap-form-image-picker
+              *ngSwitchCase="'image'"
+              #focusInput
+              [formControlName]="currentStep.type"
+            >
+            </pap-form-image-picker>
           </ng-container>
           <ion-item *ngIf="ticketForm.controls[currentStep.type].errors as errors">
             <pap-error-form-handler [errors]="errors"></pap-error-form-handler>

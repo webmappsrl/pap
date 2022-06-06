@@ -15,19 +15,12 @@ import * as fromForm from './form/state/form.reducer';
 import {FormComponent} from './form/form/form.component';
 import {LocationComponent} from './form/location/location.component';
 import {RecapComponent} from './form/recap/recap.component';
-import {PicturePickerComponent} from './form/picture-picker/picture-picker.component';
+import {ImagePickerComponent} from './form/image-picker/image-picker.component';
 import {InputTypePipe} from './form/input-type.pipe';
 import {InputPatternPipe} from './form/input-pattern.pipe';
 import {FormEffects} from './form/state/form.effects';
 import {SelectComponent} from './form/select/select.component';
 
-const FormComponents = [
-  FormComponent,
-  LocationComponent,
-  RecapComponent,
-  PicturePickerComponent,
-  SelectComponent,
-];
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -38,7 +31,7 @@ const FormComponents = [
     FormComponent,
     LocationComponent,
     RecapComponent,
-    PicturePickerComponent,
+    ImagePickerComponent,
     SelectComponent,
   ],
   imports: [
@@ -69,7 +62,7 @@ const FormComponents = [
     FormComponent,
     LocationComponent,
     RecapComponent,
-    PicturePickerComponent,
+    ImagePickerComponent,
     SelectComponent,
   ],
 })
