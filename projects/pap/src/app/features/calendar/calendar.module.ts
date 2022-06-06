@@ -5,6 +5,7 @@ import {CalendarRoutingModule} from './calendar-routing.module';
 import {CalendarComponent} from './calendar.component';
 import {StoreModule} from '@ngrx/store';
 import * as fromCalendar from './state/calendar.reducer';
+import * as fromTrashBook from '../trash-book/state/trash-book.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {CalendarEffects} from './state/calendar.effects';
 import {SharedModule} from '../../shared/shared.module';
@@ -16,6 +17,7 @@ import {SharedModule} from '../../shared/shared.module';
     CalendarRoutingModule,
     SharedModule,
     StoreModule.forFeature(fromCalendar.calendarFeatureKey, fromCalendar.reducer),
+    StoreModule.forFeature(fromTrashBook.trashBookFeatureKey, fromTrashBook.reducer),
     EffectsModule.forFeature([CalendarEffects]),
   ],
 })

@@ -23,11 +23,7 @@ export class CalendarComponent implements OnInit {
     this._store.dispatch(loadCalendars());
   }
 
-  ngOnInit(): void {
-    this.calendarView$.subscribe(state => {
-      console.log('------- ~ CalendarComponent ~ ngOnInit ~ state', state);
-    });
-  }
+  ngOnInit(): void {}
 
   info(tbType: TrashBookType) {
     this._store.dispatch(setTrashBookType({trashBookType: tbType}));

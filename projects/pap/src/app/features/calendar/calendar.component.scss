@@ -1,0 +1,37 @@
+pap-calendar {
+    .pap-calendar-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-bottom: 2px solid var(--ion-color-secondary);
+
+        .pap-calendar-date {
+            max-width: 60px;
+            color: var(--ion-color-primary);
+            font-weight: 300;
+            font-size: 50px;
+            .pap-calendar-monthday {
+            }
+            .pap-calendar-monthname {
+                font-weight: 700;
+                font-size: 14px;
+                text-transform: uppercase;
+            }
+        }
+        .pap-calendar-weekday {
+            font-size: 0.9em;
+            font-weight: 600;
+            font-style: italic;
+        }
+        .pap-calendar-event {
+            .pap-calendar-time {
+                padding-top: 15px;
+            }
+            .pap-calendar-trashlist {
+                display: inline-block;
+                color: #555555;
+                //line-height: 2;
+                text-transform: Capitalize;
+            }
+        }
+    }
+}
