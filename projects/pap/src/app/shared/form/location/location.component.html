@@ -1,16 +1,18 @@
-<pap-map class="pap-form-location-map" (genericClickEvt)="mapClick($event)" [positionMarker]="myPosition"
-    [center]="myPosition"></pap-map>
-
+<pap-map
+  class="pap-form-location-map"
+  (genericClickEvt)="mapClick($event)"
+  [positionMarker]="myPosition"
+  [center]="myPosition"
+></pap-map>
 
 <div class="pap-form-location-infocontainer">
-    <ion-button expand="block" (click)="getLocation()">
-        <ion-icon slot="start" name="pin"></ion-icon>
-        {{ 'La mia posizione' | translate }}
-    </ion-button>
-    <span class="pap-form-location-title">{{ "forms.address" | translate }}:</span><br />
-    <div class="pap-form-location-address">
-        <ion-textarea class="pap-form-location-textarea" [value]="myPositionString" [readonly]="true"
-            (input)="addressOnChange($event)">
-        </ion-textarea>
-    </div>
+  <ion-button expand="block" (click)="getLocation()">
+    <ion-icon slot="start" name="pin"></ion-icon>
+    {{ 'La mia posizione' | translate }}
+  </ion-button>
+  <ng-container *ngIf="currentAddress$|async as currentAddress">
+    <h2 class="pap-form-location-title">{{ 'indirizzo'| translate }}:</h2>
+    <br />
+    <span>{{currentAddress$|async}}</span>
+  </ng-container>
 </div>

@@ -1,18 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
-import {ToastController} from '@ionic/angular';
-import {TranslateService} from '@ngx-translate/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {AppState} from '@capacitor/app';
+import {select, Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {setMarker} from '../../map/state/map.actions';
+import {currentAddress} from '../../map/state/map.selectors';
 import {LocationService} from '../../services/location.service';
-// import {Geolocation} from '@awesome-cordova-plugins/geolocation/ngx';
-
-const TOAST_DURATION = 2500;
-const MESSAGES_GETOUTOFBOUNDS = 'Al momento sei al di fuori dei confini';
-const MESSAGES_GENERICERROR = 'Si è verificato un errore. Riprova tra qualche minuto';
 
 @Component({
   selector: 'pap-form-location',
@@ -20,24 +13,46 @@ const MESSAGES_GENERICERROR = 'Si è verificato un errore. Riprova tra qualche m
   styleUrls: ['./location.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: LocationComponent,
+    },
+  ],
 })
-export class LocationComponent {
-  @Output() positionSet = new EventEmitter<number[]>();
-  @Output() addressSet = new EventEmitter<string>();
-
+export class LocationComponent implements ControlValueAccessor {
   public myPosition: number[] = [];
   public myPositionString: string = '';
+  onChange = (location: number) => {};
+  onTouched = () => {};
+  touched = false;
+  disabled = false;
+  location: [number, number] | [] = [];
+  currentAddress$: Observable<string> = this._store.pipe(select(currentAddress));
+  constructor(private locationService: LocationService, private _store: Store<AppState>) {}
+  writeValue(coords: any): void {
+    this.location = coords;
+    this.onChange(coords);
+  }
 
-  constructor(
-    // private geolocation: Geolocation,
-    private translateService: TranslateService,
-    private toastCtrl: ToastController,
-    private locationService: LocationService,
-  ) {}
+  registerOnChange(onChange: any) {
+    this.onChange = onChange;
+  }
+
+  registerOnTouched(onTouched: any) {
+    this.onTouched = onTouched;
+  }
+
+  markAsTouched() {
+    if (!this.touched) {
+      this.onTouched();
+      this.touched = true;
+    }
+  }
 
   setAddress(address: string) {
     this.myPositionString = address;
-    this.addressSet.emit(address);
   }
 
   addressOnChange(event: any) {
@@ -50,9 +65,9 @@ export class LocationComponent {
   }
 
   setPosition(coords: number[]) {
+    this.writeValue(coords);
     if (this.locationService.isInsideMap(coords)) {
       this.myPosition = coords;
-      this.positionSet.emit(coords);
       this.locationService.getAddress(coords).subscribe(
         res => {
           this.setAddress(res as string);
@@ -61,27 +76,18 @@ export class LocationComponent {
           this.setAddress(`${coords[0]} ${coords[1]}`);
         },
       );
-    } else {
-      this.sendToast(this.translateService.instant(MESSAGES_GETOUTOFBOUNDS));
     }
   }
 
   async getLocation() {
     try {
-      // const resp = await this.geolocation.getCurrentPosition();
-      // console.log('------- ~ LocationComponent ~ getLocation ~ resp', resp);
-      // const respCoord = [resp.coords.latitude, resp.coords.longitude];
-      // this.setPosition(respCoord);
+      navigator.geolocation.getCurrentPosition(location => {
+        const coords = [location.coords.latitude, location.coords.longitude] as [number, number];
+        this._store.dispatch(setMarker({coords}));
+        this.writeValue(coords);
+      });
     } catch (error) {
-      this.sendToast(this.translateService.instant(MESSAGES_GENERICERROR));
+      console.error(error);
     }
-  }
-
-  async sendToast(message: string) {
-    const toast = await this.toastCtrl.create({
-      message: message,
-      duration: TOAST_DURATION,
-    });
-    toast.present();
   }
 }

@@ -37,7 +37,12 @@
                 [innerHTML]="(currentStep.placeholder||'')| translate: currentStep.translationsObj?.placeholder"
               ></ion-label>
             </div>
-            <pap-form-location *ngSwitchCase="'location'"> </pap-form-location>
+            <pap-form-location
+              *ngSwitchCase="'location'"
+              #focusInput
+              [formControlName]="currentStep.type"
+            >
+            </pap-form-location>
             <pap-form-select
               *ngSwitchCase="'select'"
               #focusInput
