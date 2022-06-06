@@ -20,12 +20,7 @@ export interface TrashBookType {
   howto: string;
   where: string;
   color: string;
-  allowed: {
-    abandonment: boolean;
-    info: boolean;
-    report: boolean;
-    reservation: boolean;
-  };
+  allowed: string[];
   notallowed: string[];
   translations: any;
 }
