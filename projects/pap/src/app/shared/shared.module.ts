@@ -19,18 +19,27 @@ import {PicturePickerComponent} from './form/picture-picker/picture-picker.compo
 import {InputTypePipe} from './form/input-type.pipe';
 import {InputPatternPipe} from './form/input-pattern.pipe';
 import {FormEffects} from './form/state/form.effects';
+import {SelectComponent} from './form/select/select.component';
 
+const FormComponents = [
+  FormComponent,
+  LocationComponent,
+  RecapComponent,
+  PicturePickerComponent,
+  SelectComponent,
+];
 @NgModule({
   declarations: [
     HeaderComponent,
     ErrorFormHandlerComponent,
     MapComponent,
+    InputTypePipe,
+    InputPatternPipe,
     FormComponent,
     LocationComponent,
     RecapComponent,
     PicturePickerComponent,
-    InputTypePipe,
-    InputPatternPipe,
+    SelectComponent,
   ],
   imports: [
     CommonModule,
@@ -53,12 +62,15 @@ import {FormEffects} from './form/state/form.effects';
     HttpClientModule,
     HeaderComponent,
     MapComponent,
-    FormComponent,
-    RecapComponent,
     ErrorFormHandlerComponent,
     TranslateModule,
     InputTypePipe,
     InputPatternPipe,
+    FormComponent,
+    LocationComponent,
+    RecapComponent,
+    PicturePickerComponent,
+    SelectComponent,
   ],
 })
 export class SharedModule {}

@@ -12,6 +12,8 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {reducers} from './core.state';
 import {AuthInterceptor} from './auth.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {TrashBookEffects} from '../features/trash-book/state/trash-book.effects';
+import * as fromTrashBook from '../features/trash-book/state/trash-book.reducer';
 @NgModule({
   declarations: [LayoutComponent],
   imports: [
@@ -21,7 +23,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     IonicModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([LayoutEffects]),
+    StoreModule.forFeature(fromTrashBook.trashBookFeatureKey, fromTrashBook.reducer),
+    EffectsModule.forRoot([LayoutEffects, TrashBookEffects]),
     IonicModule.forRoot(),
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],

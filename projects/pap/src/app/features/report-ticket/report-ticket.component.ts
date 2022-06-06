@@ -24,7 +24,7 @@ export class ReportTicketComponent {
       {
         label: 'forms.disruption.introductionLabel',
         type: 'label',
-        mandatory: false,
+        required: false,
         translationsObj: {
           label: {
             companyName: 'APP.company,',
@@ -66,29 +66,29 @@ export class ReportTicketComponent {
           },
         ],
         extraOptions: [],
-        type: 'radio',
-        mandatory: true,
+        type: 'select',
+        required: true,
         value: '',
         recap: 'forms.disruption.typeRecap',
       },
       {
         label: '',
         type: 'location',
-        mandatory: true,
+        required: true,
         value: [null, '', [null, '']],
         recap: 'forms.disruption.addressRecap',
       },
       {
         label: 'forms.disruption.pictureLabel',
         type: 'image',
-        mandatory: false,
+        required: false,
         value: '',
         recap: 'forms.disruption.pictureRecap',
       },
       {
         label: 'forms.disruption.notesLabel',
         type: 'note',
-        mandatory: false,
+        required: false,
         value: '',
         recap: 'forms.disruption.notesRecap',
       },

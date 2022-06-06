@@ -30,7 +30,6 @@
             <div *ngSwitchCase="'switch'" class="pap-form-toggle">
               <ion-toggle block name="toggle" [checked]="currentStep.value"> </ion-toggle>
             </div>
-
             <div *ngSwitchCase="'checkbox'" class="pap-form-checkbox">
               <ion-checkbox name="checkbox" [checked]="currentStep.value"> </ion-checkbox>
               <ion-label
@@ -38,10 +37,14 @@
                 [innerHTML]="(currentStep.placeholder||'')| translate: currentStep.translationsObj?.placeholder"
               ></ion-label>
             </div>
-            <div class="pap-form-location" *ngSwitchCase="'location'">
-              <pap-form-location> </pap-form-location>
-            </div>
-
+            <pap-form-location *ngSwitchCase="'location'"> </pap-form-location>
+            <pap-form-select
+              *ngSwitchCase="'select'"
+              #focusInput
+              [formControlName]="currentStep.type"
+              [options]="(trashBookTypesOpts$|async)??[]"
+              (ngModelChange)="log($event)"
+            ></pap-form-select>
             <pap-form-picture-picker *ngSwitchCase="'image'"> </pap-form-picture-picker>
           </ng-container>
           <ion-item *ngIf="ticketForm.controls[currentStep.type].errors as errors">
