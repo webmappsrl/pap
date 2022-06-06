@@ -8,7 +8,7 @@ export interface TicketForm {
 export interface TicketFormStep {
   label: string;
   type: TicketFieldTypes;
-  mandatory: boolean;
+  required: boolean;
   value?: any;
   translationsObj?: any;
   options?: TicketFormOption[];

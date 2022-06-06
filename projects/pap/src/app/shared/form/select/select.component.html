@@ -1,0 +1,11 @@
+<ion-list *ngIf="(options$|async) as opts">
+  <ion-item *ngFor="let opt of opts" (click)="writeValue(opt)" [class.selected]="opt.id ===select">
+    <ion-icon
+      slot="start"
+      style="color:{{(opt?.color)}}"
+      [name]="opt.color
+               ?'ellipse':'ellipse-outline'"
+    ></ion-icon>
+    <ion-label>{{opt.name}}</ion-label>
+  </ion-item>
+</ion-list>

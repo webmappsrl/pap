@@ -5,7 +5,7 @@ export const loadTrashBooks = createAction('[TrashBook] Load TrashBooks');
 
 export const loadTrashBooksSuccess = createAction(
   '[TrashBook] Load TrashBooks Success',
-  props<{data: TrashBookRow[]}>(),
+  props<{data: {trashBookRows: TrashBookRow[]; trashBookTypes: TrashBookType[]}}>(),
 );
 
 export const loadTrashBooksFailure = createAction(

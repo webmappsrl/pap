@@ -7,6 +7,7 @@ export const trashBookFeatureKey = 'trashBook';
 
 export interface TrashBookState {
   trashBook: TrashBookRow[];
+  trashBookTypes: TrashBookType[];
   trashBookDetail?: TrashBookRow;
   trashBookType?: TrashBookType;
   error: string;
@@ -14,6 +15,7 @@ export interface TrashBookState {
 
 export const initialState: TrashBookState = {
   trashBook: [],
+  trashBookTypes: [],
   error: '',
 };
 
@@ -22,7 +24,8 @@ export const reducer = createReducer(
   on(TrashBookActions.loadTrashBooks, state => state),
   on(TrashBookActions.loadTrashBooksSuccess, (state, action) => ({
     ...state,
-    trashBook: action.data,
+    trashBook: action.data.trashBookRows,
+    trashBookTypes: action.data.trashBookTypes,
   })),
   on(TrashBookActions.loadTrashBooksFailure, (state, action) => {
     return {...state, error: 'error'};

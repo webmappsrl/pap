@@ -11,90 +11,41 @@ import {TicketFormConf} from '../../shared/models/form.model';
 })
 export class AbandonmentTicketComponent {
   public form: TicketFormConf = {
-    cancel: 'forms.abandonment.cancel',
-    ticketType: 'abandonment',
-    finalMessage: 'forms.abandonment.finalMessage',
-    translationsObj: {
-      finalMessage: {
-        companyName: 'APP.company,',
-      },
-    },
+    cancel: 'Sicuro di voler cancellare la prenotazione?',
+    finalMessage:
+      'La tua richiesta è stata inoltrata correttamente a ESA: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ESA. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”',
     pages: 5,
+    ticketType: 'abandonment',
     step: [
       {
-        label: 'forms.abandonment.introductionLabel',
+        label:
+          'Questo serivizio ti permette di inviare una segnalazione di abbandono ad ESA. Al termine della segnalazione ti verrà assegnato un codice e verrà inviata una email a ESA. Clicca sul bottone “Procedi” per iniziare.',
         type: 'label',
-        mandatory: false,
-        translationsObj: {
-          label: {
-            companyName: 'APP.company,',
-          },
-        },
+        required: false,
       },
       {
-        label: 'forms.abandonment.typeLabel',
-        options: [
-          {
-            label: 'types.ingombranti',
-            value: 'Ingombranti',
-            show: true,
-          },
-          {
-            label: 'types.RAEE',
-            value: 'RAEE',
-            show: true,
-          },
-          {
-            label: 'types.verde',
-            value: 'Verde',
-            show: true,
-          },
-          {
-            label: 'types.inerti',
-            value: 'Inerti',
-            show: true,
-          },
-          {
-            label: 'types.domesticWaste',
-            value: 'Rifiuti domestici',
-            show: true,
-          },
-          {
-            label: 'types.dangerous',
-            value: 'Rifiuti pericolosi',
-            show: true,
-          },
-          {
-            label: 'types.other',
-            value: 'Altro',
-            show: true,
-          },
-        ],
-        type: 'radio',
-        mandatory: true,
-        value: '',
-        recap: 'forms.abandonment.typeRecap',
+        label: 'Scegli il tipo di abbandono:',
+        type: 'select',
+        required: true,
+        recap: 'Servizio',
       },
       {
         label: '',
         type: 'location',
-        mandatory: true,
-        value: [null, '', [null, '']],
-        recap: 'forms.abandonment.addressRecap',
+        required: true,
+        recap: 'Indirizzo',
       },
       {
-        label: 'forms.abandonment.pictureLabel',
+        label: 'Aggiungi una foto: ci aiuterà a capire la situazione',
         type: 'image',
-        mandatory: true,
-        value: '',
-        recap: 'forms.abandonment.pictureRecap',
+        required: true,
+        recap: 'Immagine',
       },
       {
-        label: 'forms.abandonment.notesLabel',
+        label: 'Se lo ritieni opportuno puoi inserire delle note',
         type: 'note',
-        mandatory: false,
-        value: '',
-        recap: 'forms.abandonment.notesRecap',
+        required: false,
+        recap: 'Note',
       },
     ],
   };
