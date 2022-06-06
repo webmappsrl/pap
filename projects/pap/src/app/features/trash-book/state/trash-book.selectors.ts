@@ -8,6 +8,10 @@ export const selectedTrashBookDetail = createSelector(
   selectTrashBookState,
   state => state.trashBookDetail,
 );
+export const selectedTrashBookType = createSelector(
+  selectTrashBookState,
+  state => state.trashBookType,
+);
 export const TrashBookError = createSelector(
   selectTrashBookState,
   state => state != null && state.error,

@@ -9,10 +9,12 @@ import {EffectsModule} from '@ngrx/effects';
 import {IonicModule} from '@ionic/angular';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthModule} from './core/auth/auth.module';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [CoreModule, AppRoutingModule, IonicModule.forRoot(), HttpClientModule, AuthModule],
   bootstrap: [AppComponent],
+  providers: [DatePipe],
 })
 export class AppModule {}

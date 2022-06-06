@@ -1,5 +1,6 @@
+import {act} from '@ngrx/effects';
 import {Action, createReducer, on} from '@ngrx/store';
-import {TrashBookRow} from '../trash-book-model';
+import {TrashBookRow, TrashBookType} from '../trash-book-model';
 import * as TrashBookActions from './trash-book.actions';
 
 export const trashBookFeatureKey = 'trashBook';
@@ -7,6 +8,7 @@ export const trashBookFeatureKey = 'trashBook';
 export interface TrashBookState {
   trashBook: TrashBookRow[];
   trashBookDetail?: TrashBookRow;
+  trashBookType?: TrashBookType;
   error: string;
 }
 
@@ -36,6 +38,11 @@ export const reducer = createReducer(
   on(TrashBookActions.setTrashBookDetail, (state, action) => ({
     ...state,
     trashBookDetail: action.trashBookDetail,
+    trashBookType: action.trashBookDetail.trashBookType,
+  })),
+  on(TrashBookActions.setTrashBookType, (state, action) => ({
+    ...state,
+    trashBookType: action.trashBookType,
   })),
 );
 

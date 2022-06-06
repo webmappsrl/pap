@@ -1,5 +1,5 @@
 import {createAction, props} from '@ngrx/store';
-import {TrashBookRow} from '../trash-book-model';
+import {TrashBookRow, TrashBookType} from '../trash-book-model';
 
 export const loadTrashBooks = createAction('[TrashBook] Load TrashBooks');
 
@@ -21,4 +21,9 @@ export const filterTrashBooks = createAction(
 export const setTrashBookDetail = createAction(
   '[TrashBook] set TrashBook detail',
   props<{trashBookDetail: TrashBookRow}>(),
+);
+
+export const setTrashBookType = createAction(
+  '[TrashBook] set TrashBook type',
+  props<{trashBookType: TrashBookType}>(),
 );

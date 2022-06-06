@@ -1,1 +1,28 @@
-<p>calendar works!</p>
+<!-- <pre>{{calendarView$|async|json}}</pre> -->
+
+<ng-container *ngIf="calendarView$|async as calendarView">
+    <ion-header>
+        <pap-header></pap-header>
+    </ion-header>
+
+    <ion-content padding class="pap-calendar">
+        <ion-list>
+            <ion-item *ngFor="let item of calendarView.calendar | keyvalue">
+                <ion-label slot="start">{{item.key}}</ion-label>
+                <ion-label>
+                    <div div *ngFor="let trash of item.value">
+                        {{trash.start_time}} - {{trash.stop_time}}
+                        <div>
+                            <span *ngFor="let trashType of trash.trash_objects" (click)="info(trashType)">
+                                <ion-icon class="trash-book-details-icon" slot="end" style="color:{{trashType?.color}}"
+                                    name="ellipse"></ion-icon>
+                                {{trashType.name}}
+                            </span>
+                        </div>
+                    </div>
+                </ion-label>
+
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ng-container>
