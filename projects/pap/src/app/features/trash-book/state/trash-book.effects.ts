@@ -5,7 +5,6 @@ import {Observable, EMPTY, of, forkJoin} from 'rxjs';
 
 import * as TrashBookActions from './trash-book.actions';
 import {TrashBookService} from './trash-book.service';
-import {TrashBookRow} from '../trash-book-model';
 
 @Injectable()
 export class TrashBookEffects {

@@ -50,7 +50,12 @@
               [options]="(trashBookTypesOpts$|async)??[]"
               (ngModelChange)="log($event)"
             ></pap-form-select>
-            <pap-form-picture-picker *ngSwitchCase="'image'"> </pap-form-picture-picker>
+            <pap-form-image-picker
+              *ngSwitchCase="'image'"
+              #focusInput
+              [formControlName]="currentStep.type"
+            >
+            </pap-form-image-picker>
           </ng-container>
           <ion-item *ngIf="ticketForm.controls[currentStep.type].errors as errors">
             <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
@@ -71,7 +76,7 @@
               ion-button
               type="button"
               color="light"
-              (click)="sendExit()"
+              (click)="close()"
             >
               {{ "cancella" | translate }}
             </button>
@@ -138,13 +143,7 @@
     <div class="pap-form-footer">
       <div class="pap-form-buttons">
         <div class="pap-form-buttonblock">
-          <button
-            class="pap-form-button"
-            ion-button
-            type="button"
-            color="light"
-            (click)="sendExit()"
-          >
+          <button class="pap-form-button" ion-button type="button" color="light" (click)="close()">
             {{ "cancella" | translate }}
           </button>
         </div>

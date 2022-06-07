@@ -69,8 +69,8 @@ export class FormComponent {
   log(val: any) {
     console.log(val);
   }
-  backStep() {
-    if (this.pos$.value === 0) this.sendExit();
+  backStep(): void {
+    if (this.pos$.value === 0) this.close();
     else {
       const backStep = (this.pos$.value as number) - 1;
       this.pos$.next(backStep);
@@ -79,9 +79,11 @@ export class FormComponent {
 
   close(): void {
     this._store.dispatch(resetTicket());
+    console.log('close form');
+    this.recap$.next(false);
     setTimeout(() => {
       this._navCtrl.navigateRoot('home');
-    }, 0);
+    }, 200);
   }
 
   isValid(currentStep: TicketFormStep): boolean {
@@ -91,7 +93,7 @@ export class FormComponent {
     return !formControl.invalid;
   }
 
-  nextStep() {
+  nextStep(): void {
     const nextStep = (this.pos$.value as number) + 1;
     if (nextStep < (this.ticketFormConf$.value as TicketFormConf).step.length) {
       this.pos$.next(nextStep);
@@ -102,16 +104,8 @@ export class FormComponent {
     this.recap$.next(true);
   }
 
-  sendData() {
+  sendData(): void {
     this.recap$.next(false);
     this._store.dispatch(sendTicket({ticket: this.ticketForm.value}));
-  }
-
-  sendExit() {
-    this._store.dispatch(resetTicket());
-    this._navCtrl.navigateRoot('home');
-  }
-  saveImage(image: any) {
-    console.log(image);
   }
 }

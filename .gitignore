@@ -40,6 +40,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+/resources
+/ios
 
 # secrets
 api.keys.ts

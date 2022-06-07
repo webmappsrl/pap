@@ -1,7 +1,13 @@
 {
-  "name": "pap",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+  "defaultProject": "core",
+  "projects": {
+    "core": {
+      "name": "core",
+      "integrations": {
+        "cordova": {},
+        "capacitor": {}
+      },
+      "type": "angular"
+    }
+  }
 }

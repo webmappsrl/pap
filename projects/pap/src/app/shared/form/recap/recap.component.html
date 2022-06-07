@@ -11,13 +11,21 @@
         <ion-note *ngSwitchCase="'text'">
           {{form.controls[item.type].value}}
         </ion-note>
+        <ion-note *ngSwitchCase="'select'">
+          {{(currentTrashBookType$|async)?.name}}
+        </ion-note>
+        <ion-note *ngSwitchCase="'location'">
+          {{currentAddress$|async}}
+        </ion-note>
         <ion-note *ngSwitchCase="'phone'">
           {{form.controls[item.type].value}}
         </ion-note>
         <ion-note *ngSwitchCase="'note'">
           {{form.controls[item.type].value}}
         </ion-note>
-        <img src="{{item.value}}" *ngSwitchCase="'image'" />
+        <ng-container *ngSwitchCase="'image'">
+          <img [src]="form.controls[item.type].value" />
+        </ng-container>
         <ion-note *ngSwitchDefault class="pap-form-recap-note" slot="end">
           {{'messages.notInserted' | translate}}
         </ion-note>

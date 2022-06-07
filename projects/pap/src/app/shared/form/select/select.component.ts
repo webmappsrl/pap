@@ -1,7 +1,10 @@
 import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {AppState} from '@capacitor/app';
+import {Store} from '@ngrx/store';
 import {BehaviorSubject} from 'rxjs';
 import {TrashBookRow, TrashBookType} from '../../../features/trash-book/trash-book-model';
+import {currentTrashBookType} from '../state/form.actions';
 
 @Component({
   selector: 'pap-form-select',
@@ -28,9 +31,10 @@ export class SelectComponent implements ControlValueAccessor {
   onTouched = () => {};
   touched = false;
   disabled = false;
-  constructor() {}
-  writeValue(obj: TrashBookRow): void {
+  constructor(private _store: Store<AppState>) {}
+  writeValue(obj: TrashBookType): void {
     this.select = obj.id;
+    this._store.dispatch(currentTrashBookType({currentTrashBookType: obj}));
     this.onChange(obj.id);
   }
 
