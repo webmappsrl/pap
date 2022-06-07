@@ -9,7 +9,7 @@ import {TrashBookType} from '../trash-book/trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book/trash-book-type/trash-book-type.component';
 import {loadCalendars} from './state/calendar.actions';
 import {selectCalendarState} from './state/calendar.selectors';
-import {inAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
+import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
   selector: 'pap-calendar',
@@ -23,9 +23,8 @@ export class CalendarComponent {
   constructor(
     private _store: Store<AppState>,
     private _modalController: ModalController,
-    private _inAppBrowser: inAppBrowser,
+    private _inAppBrowser: InAppBrowser,
   ) {
-    // this._store.dispatch(loadTrashBooks());
     this._store.dispatch(showButtons({show: false}));
     this._store.dispatch(loadCalendars());
   }

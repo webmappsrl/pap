@@ -10,7 +10,6 @@ import {AlertController, IonInput, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
 import {BehaviorSubject, map, Observable, switchMap, withLatestFrom} from 'rxjs';
 import {AppState} from '../../../core/core.state';
-import {loadTrashBooks} from '../../../features/trash-book/state/trash-book.actions';
 import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {TicketFormConf, TicketFormStep} from '../../models/form.model';
@@ -63,7 +62,6 @@ export class FormComponent {
     private _navCtrl: NavController,
     private _alertCtrl: AlertController,
   ) {
-    // this._store.dispatch(loadTrashBooks());
     this.alertEvt$.pipe(switchMap(obj => this._alertCtrl.create(obj)));
   }
   log(val: any) {

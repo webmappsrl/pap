@@ -26,7 +26,6 @@
             class="pap-form-textarea"
             [formControlName]="currentStep.type"
           ></ion-textarea>
-          <pre>{{currentStep.type}}</pre>
           <ng-container [ngSwitch]="currentStep.type">
             <div *ngSwitchCase="'switch'" class="pap-form-toggle">
               <ion-toggle block name="toggle" [checked]="currentStep.value"> </ion-toggle>
