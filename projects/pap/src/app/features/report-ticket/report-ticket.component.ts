@@ -11,86 +11,41 @@ import {TicketFormConf} from '../../shared/models/form.model';
 })
 export class ReportTicketComponent {
   public form: TicketFormConf = {
-    cancel: 'forms.disruption.cancel',
     ticketType: 'report',
-    finalMessage: 'forms.disruption.finalMessage',
-    translationsObj: {
-      finalMessage: {
-        companyName: 'APP.company,',
-      },
-    },
+    cancel: 'Sicuro di voler cancellare la prenotazione?',
+    finalMessage:
+      'La tua richiesta è stata inoltrata correttamente a ESA: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ESA. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”',
     pages: 5,
     step: [
       {
-        label: 'forms.disruption.introductionLabel',
+        label:
+          'Questo servizio ti permette di segnalare ad ESA un eventuale malfunzionamento. Al termine ti verrà assegnato un codice e verrà inviata una email a ESA: verrai ricontattato in caso di necessità. Clicca sul bottone “Procedi” per iniziare.',
         type: 'label',
         required: false,
-        translationsObj: {
-          label: {
-            companyName: 'APP.company,',
-          },
-        },
       },
       {
-        label: 'forms.disruption.typeLabel',
-        options: [
-          {
-            label: 'types.organico',
-            value: 'Organico',
-            show: true,
-          },
-          {
-            label: 'types.carta',
-            value: 'Carta, Cartone e Tetrapak',
-            show: true,
-          },
-          {
-            label: 'types.multimateriale',
-            value: 'Multimateriale leggero',
-            show: true,
-          },
-          {
-            label: 'types.vetro',
-            value: 'Vetro',
-            show: true,
-          },
-          {
-            label: 'types.verde',
-            value: 'Verde',
-            show: true,
-          },
-          {
-            label: 'types.indifferenziato',
-            value: 'Indifferenziato',
-            show: true,
-          },
-        ],
-        extraOptions: [],
+        label: 'Scegli il tipo di servizio che non ha funzionato:',
         type: 'select',
         required: true,
-        value: '',
-        recap: 'forms.disruption.typeRecap',
+        recap: 'Servizio',
       },
       {
         label: '',
         type: 'location',
         required: true,
-        value: [null, '', [null, '']],
-        recap: 'forms.disruption.addressRecap',
+        recap: 'Indirizzo',
       },
       {
-        label: 'forms.disruption.pictureLabel',
+        label: 'Puoi aggiungere una foto: ci aiuterà a capire meglio cosa è successo',
         type: 'image',
         required: false,
-        value: '',
-        recap: 'forms.disruption.pictureRecap',
+        recap: 'Immagine',
       },
       {
-        label: 'forms.disruption.notesLabel',
+        label: 'Se lo ritieni opportuno puoi inserire delle note',
         type: 'note',
         required: false,
-        value: '',
-        recap: 'forms.disruption.notesRecap',
+        recap: 'Note',
       },
     ],
   };

@@ -3,7 +3,9 @@
 </ion-label>
 <ion-list>
   <ng-container *ngFor="let item of steps$|async">
-    <ion-item>
+    <ion-item
+      *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''"
+    >
       <ion-label class="pap-form-recap-label">
         {{(item.recap||'') | translate}}
       </ion-label>
