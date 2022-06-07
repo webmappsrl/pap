@@ -1,22 +1,27 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, concatMap, switchMap} from 'rxjs/operators';
-import {Observable, EMPTY, of, forkJoin} from 'rxjs';
+import {catchError, map, switchMap, withLatestFrom} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 import * as CalendarActions from './calendar.actions';
 import {CalendarService} from '../calendar.service';
-import {TrashBookService} from '../../trash-book/state/trash-book.service';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../../core/core.state';
+import {trashBookTypes} from '../../trash-book/state/trash-book.selectors';
 
 @Injectable()
 export class CalendarEffects {
-  constructor(private actions$: Actions, private calendarService: CalendarService) {}
+  constructor(
+    private actions$: Actions,
+    private calendarService: CalendarService,
+    private store: Store<AppState>,
+  ) {}
 
   loadCalendars$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(CalendarActions.loadCalendars),
-      switchMap(_ =>
-        forkJoin([this.calendarService.getCalendar(), this.calendarService.getTrashTypes()]),
-      ),
+      switchMap(_ => this.calendarService.getCalendar()),
+      withLatestFrom(this.store.pipe(select(trashBookTypes))),
       map(([calendar, trashTypes]) => {
         for (let k in calendar) {
           if (calendar[k]) {

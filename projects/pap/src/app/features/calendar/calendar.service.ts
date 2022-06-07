@@ -112,8 +112,4 @@ export class CalendarService {
       ],
     });
   }
-
-  getTrashTypes(): Observable<TrashBookType[]> {
-    return this._http.get(`${env.api}/api/c/4/trash_types.json`) as Observable<TrashBookType[]>;
-  }
 }
