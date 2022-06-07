@@ -1,8 +1,5 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
-import {select, Store} from '@ngrx/store';
-import {AppState} from '../../../core/core.state';
-import {showButtons} from '../../../shared/header/state/header.actions';
-import {selectedTrashBookType} from '../state/trash-book.selectors';
+import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
+import {TrashBookType} from '../trash-book-model';
 
 @Component({
   selector: 'pap-trash-book-type',
@@ -12,10 +9,7 @@ import {selectedTrashBookType} from '../state/trash-book.selectors';
   encapsulation: ViewEncapsulation.None,
 })
 export class TrashBookTypeComponent {
-  trashBookTypeView$ = this._store.pipe(select(selectedTrashBookType));
+  @Input() trashBookType!: TrashBookType;
 
-  constructor(private _store: Store<AppState>) {
-    this._store.dispatch(showButtons({show: false}));
-    this.trashBookTypeView$.subscribe(tb => {});
-  }
+  constructor() {}
 }

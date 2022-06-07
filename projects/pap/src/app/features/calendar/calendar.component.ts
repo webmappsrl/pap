@@ -42,6 +42,7 @@ export class CalendarComponent implements OnInit {
       .create({
         component: TrashBookTypeComponent,
         showBackdrop: true,
+        componentProps: {trashBookType: tbType},
       })
       .then(modal => modal.present());
   }

@@ -4,6 +4,7 @@ import {select, Store} from '@ngrx/store';
 import {AppState} from '../../../core/core.state';
 import {showButtons} from '../../../shared/header/state/header.actions';
 import {selectedTrashBookDetail} from '../state/trash-book.selectors';
+import {TrashBookType} from '../trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book-type/trash-book-type.component';
 
 @Component({
@@ -20,12 +21,15 @@ export class TrashBookDetailsComponent {
     this._store.dispatch(showButtons({show: false}));
   }
 
-  info(type: any) {
-    const modal = this._modalController
-      .create({
-        component: TrashBookTypeComponent,
-        showBackdrop: true,
-      })
-      .then(modal => modal.present());
+  info(tbType: TrashBookType | undefined) {
+    if (tbType) {
+      const modal = this._modalController
+        .create({
+          component: TrashBookTypeComponent,
+          showBackdrop: true,
+          componentProps: {trashBookType: tbType},
+        })
+        .then(modal => modal.present());
+    }
   }
 }
