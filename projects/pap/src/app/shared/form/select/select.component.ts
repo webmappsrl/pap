@@ -24,6 +24,12 @@ export class SelectComponent implements ControlValueAccessor {
   options$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   select: number = -1;
 
+  @Input() set selected(value: TrashBookType | null | undefined) {
+    if (value) {
+      this.writeValue(value);
+    }
+  }
+
   @Input() set options(opts: TrashBookType[]) {
     this.options$.next(opts);
   }
@@ -33,9 +39,11 @@ export class SelectComponent implements ControlValueAccessor {
   disabled = false;
   constructor(private _store: Store<AppState>) {}
   writeValue(obj: TrashBookType): void {
-    this.select = obj.id;
-    this._store.dispatch(currentTrashBookType({currentTrashBookType: obj}));
-    this.onChange(obj.id);
+    if (obj) {
+      this.select = obj.id;
+      this._store.dispatch(currentTrashBookType({currentTrashBookType: obj}));
+      this.onChange(obj.id);
+    }
   }
 
   registerOnChange(onChange: any) {

@@ -15,7 +15,12 @@ import {trashBookTypes} from '../../../features/trash-book/state/trash-book.sele
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {TicketFormConf, TicketFormStep} from '../../models/form.model';
 import {resetTicket, sendTicket} from '../state/form.actions';
-import {ticketError, ticketLoading, ticketSuccess} from '../state/form.selectors';
+import {
+  currentTrashBookType,
+  ticketError,
+  ticketLoading,
+  ticketSuccess,
+} from '../state/form.selectors';
 
 @Component({
   selector: 'pap-form',
@@ -29,6 +34,9 @@ export class FormComponent {
   formError$: Observable<any> = this._store.pipe(select(ticketError));
   formSuccess$: Observable<any> = this._store.pipe(select(ticketSuccess));
   formLoading$: Observable<boolean> = this._store.pipe(select(ticketLoading));
+  currentTrashbookType$: Observable<TrashBookType | undefined> = this._store.pipe(
+    select(currentTrashBookType),
+  );
   trashBookTypesOpts$!: Observable<TrashBookType[]>;
   @Input() set ticketFormConf(ticketFormConf: TicketFormConf) {
     this.ticketFormConf$.next(ticketFormConf);

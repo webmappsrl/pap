@@ -27,7 +27,8 @@
             <pap-form-location *ngSwitchCase="'location'" #focusInput [formControlName]="currentStep.type">
             </pap-form-location>
             <pap-form-select *ngSwitchCase="'select'" #focusInput [formControlName]="currentStep.type"
-              [options]="(trashBookTypesOpts$|async)??[]" (ngModelChange)="log($event)"></pap-form-select>
+              [selected]="currentTrashbookType$|async" [options]="(trashBookTypesOpts$|async)??[]"
+              (ngModelChange)="log($event)"></pap-form-select>
             <pap-form-image-picker *ngSwitchCase="'image'" #focusInput [formControlName]="currentStep.type">
             </pap-form-image-picker>
           </ng-container>
