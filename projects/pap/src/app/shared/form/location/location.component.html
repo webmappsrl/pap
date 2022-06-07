@@ -10,9 +10,12 @@
     <ion-icon slot="start" name="pin"></ion-icon>
     {{ 'La mia posizione' | translate }}
   </ion-button>
-  <ng-container *ngIf="currentAddress$|async as currentAddress">
+  <ng-container *ngIf="currentAddress$|async as currentAddress; else skeleton">
     <h2 class="pap-form-location-title">{{ 'indirizzo'| translate }}:</h2>
     <br />
-    <span>{{currentAddress$|async}}</span>
+    <span>{{currentAddress}}</span>
   </ng-container>
+  <ng-template #skeleton>
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </ng-template>
 </div>

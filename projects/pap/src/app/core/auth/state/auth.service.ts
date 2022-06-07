@@ -18,6 +18,7 @@ export class AuthService {
   }
 
   login(credential: any) {
+    console.log('login ', env.api);
     return this._http.post(
       `${env.api}/api/login`,
       {

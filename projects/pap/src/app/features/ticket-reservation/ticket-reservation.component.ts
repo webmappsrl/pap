@@ -11,89 +11,49 @@ import {TicketFormConf} from '../../shared/models/form.model';
 })
 export class TicketReservationComponent {
   public form: TicketFormConf = {
-    cancel: 'forms.bookService.cancel',
     ticketType: 'reservation',
-    finalMessage: 'forms.bookService.finalMessage',
-    translationsObj: {
-      finalMessage: {
-        companyName: 'APP.company,',
-      },
-    },
+    cancel: 'Sicuro di voler cancellare la prenotazione?',
+    finalMessage:
+      'La tua richiesta è stata inoltrata correttamente a ESA: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ESA. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”',
     pages: 6,
     step: [
       {
-        label: 'forms.bookService.introductionLabel',
+        label:
+          'Questo serivizio ti permette di inviare una richiesta di prenotazione di un servizio ESA. Al termine della segnalazione ti verrà assegnato un codice della segnalazione e verrà inviata una email a ESA: verrai ricontattato concordare i dettagli della prenotazione. Clicca sul bottone “Procedi” per iniziare.',
         type: 'label',
         required: false,
-        translationsObj: {
-          label: {
-            companyName: 'APP.company,',
-          },
-        },
       },
       {
-        label: 'forms.bookService.typeLabel',
-        options: [
-          {
-            label: 'types.ingombranti',
-            value: 'Ingombranti',
-            show: true,
-          },
-          {
-            label: 'types.RAEE',
-            value: 'RAEE',
-            show: true,
-          },
-          {
-            label: 'types.verde',
-            value: 'Verde',
-            show: true,
-          },
-        ],
-        extraOptions: [
-          {
-            label: 'types.pile',
-            value: 'Pile',
-            show: true,
-          },
-          {
-            label: 'types.farmaci',
-            value: 'Farmaci',
-            show: true,
-          },
-        ],
+        label: 'Scegli il tipo di servizio da prenotare:',
         type: 'select',
         required: true,
-        value: '',
-        recap: 'forms.bookService.typeRecap',
+        recap: 'Servizio',
       },
       {
         label: '',
         type: 'location',
         required: true,
-        value: [null, '', [null, '']],
-        recap: 'forms.bookService.addressRecap',
+        recap: 'Indirizzo',
       },
       {
-        label: 'forms.bookService.pictureLabel',
+        label:
+          'Puoi aggiungere una foto: ci aiuterà a capire meglio il rifiuto che dobbiamo ritirare',
         type: 'image',
         required: false,
-        value: '',
-        recap: 'forms.bookService.pictureRecap',
+        recap: 'Immagine',
       },
       {
-        label: 'forms.bookService.notesLabel',
+        label: 'Se lo ritieni opportuno puoi inserire delle note',
         type: 'note',
         required: false,
-        value: '',
-        recap: 'forms.bookService.notesRecap',
+        recap: 'Note',
       },
       {
-        label: 'forms.bookService.phoneLabel',
+        label:
+          "Per rendere l'operazione più rapida puoi decidere di lasciarci il tuo numero di telefono",
         type: 'phone',
         required: false,
-        value: '',
-        recap: 'forms.bookService.phoneRecap',
+        recap: 'Telefono',
       },
     ],
   };

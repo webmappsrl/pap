@@ -13,3 +13,8 @@ export const ticketLoading = createSelector(
   selectTicketState,
   state => state != null && state.loading,
 );
+
+export const currentTrashBookType = createSelector(
+  selectTicketState,
+  state => state.currentTrashBookType,
+);

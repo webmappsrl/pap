@@ -38,7 +38,7 @@ export class AbandonmentTicketComponent {
       {
         label: 'Aggiungi una foto: ci aiuterà a capire la situazione',
         type: 'image',
-        required: true,
+        required: false,
         recap: 'Immagine',
       },
       {

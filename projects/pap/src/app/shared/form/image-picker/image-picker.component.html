@@ -1,6 +1,4 @@
-IMAGEEE
-<img *ngIf='this.image != ""' src="{{this.image}}" class="pap-form-picturepicker-img" />
-<ion-button expand="block" (click)="takeImage()">
+<img *ngIf="(image$|async) as image" [src]="image" class="pap-form-picturepicker-img" />
+<ion-button expand="block" (click)="imageSheet()">
   <ion-icon slot="start" name="image"></ion-icon>
-  image
 </ion-button>

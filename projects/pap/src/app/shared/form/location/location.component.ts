@@ -29,7 +29,7 @@ export class LocationComponent implements ControlValueAccessor {
   touched = false;
   disabled = false;
   location: [number, number] | [] = [];
-  currentAddress$: Observable<string> = this._store.pipe(select(currentAddress));
+  currentAddress$: Observable<string | undefined> = this._store.pipe(select(currentAddress));
   constructor(private locationService: LocationService, private _store: Store<AppState>) {}
   writeValue(coords: any): void {
     this.location = coords;

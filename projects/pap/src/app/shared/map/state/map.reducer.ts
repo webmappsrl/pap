@@ -6,13 +6,12 @@ export const mapFeatureKey = 'map';
 
 export interface State {
   currentMarkerCoords: [number, number] | [];
-  currentMarkerAddress: string;
   error: string;
+  currentMarkerAddress?: string;
 }
 
 export const initialState: State = {
   currentMarkerCoords: [],
-  currentMarkerAddress: '',
   error: '',
 };
 
@@ -25,6 +24,7 @@ export const reducer = createReducer(
   on(MapActions.setMarker, (state, action) => ({
     ...state,
     currentMarkerCoords: action.coords,
+    currentMarkerAddress: undefined,
   })),
   on(MapActions.setCurrentMarkerSuccess, (state, action) => ({
     ...state,

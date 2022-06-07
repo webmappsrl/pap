@@ -1,11 +1,13 @@
 {
-  "defaultProject": "pap",
+  "defaultProject": "core",
   "projects": {
-    "pap": {
-      "name": "pap",
-      "integrations": {},
-      "type": "angular",
-      "root": "projects/pap"
+    "core": {
+      "name": "core",
+      "integrations": {
+        "cordova": {},
+        "capacitor": {}
+      },
+      "type": "angular"
     }
   }
 }
