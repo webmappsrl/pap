@@ -113,8 +113,8 @@ export class MapComponent implements OnInit, OnDestroy {
     return icon({
       iconUrl: imgUrl,
       shadowUrl: '/assets/images/marker-shadow.png',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
+      iconSize: type == 'position' ? [25, 41] : [40, 40],
+      iconAnchor: [12.5, 41],
       popupAnchor: [-3, -76],
     });
   }

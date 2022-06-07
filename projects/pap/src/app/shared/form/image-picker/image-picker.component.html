@@ -1,4 +1,4 @@
 <img *ngIf="(image$|async) as image" [src]="image" class="pap-form-picturepicker-img" />
-<ion-button expand="block" (click)="imageSheet()">
-  <ion-icon slot="start" name="image"></ion-icon>
+<ion-button expand="block" fill="outline" class="pap-form-picturepicker-button" (click)="imageSheet()">
+  <ion-icon slot="start" name="image"></ion-icon> {{'Aggiungi immagine' | translate}}
 </ion-button>

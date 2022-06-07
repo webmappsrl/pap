@@ -5,6 +5,7 @@ pap-home {
     --padding-start: 10px;
     .pap-home-button {
       text-align: center;
+      padding-bottom: 40px;
       &-image {
         width: 74px;
         height: 74px;
@@ -28,7 +29,7 @@ pap-home {
       &-label {
         font-weight: 700;
         text-transform: uppercase;
-        font-size: 0.79em;
+        font-size: 0.7em;
         color: var(--ion-color-primary);
       }
 

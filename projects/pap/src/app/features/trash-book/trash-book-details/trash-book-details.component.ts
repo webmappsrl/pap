@@ -32,4 +32,6 @@ export class TrashBookDetailsComponent {
         .then(modal => modal.present());
     }
   }
+
+  book() {}
 }

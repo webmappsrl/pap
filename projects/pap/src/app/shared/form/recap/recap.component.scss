@@ -1,4 +1,19 @@
 pap-form-recap {
     padding: 15px;
     display: block;
+    .pap-form-recap-title {
+        font-size: large;
+        font-weight: bold;
+        padding: 15px;
+    }
+
+    .pap-form-recap-label {
+        max-width: 40%;
+    }
+
+    .pap-form-recap-note {
+        padding: 15px 0px 15px 20px;
+        text-align: right;
+        max-width: 60%;
+    }
 }

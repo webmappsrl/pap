@@ -8,11 +8,14 @@
   </h1>
 
   <div class="trash-book-type-content">{{trashBookType?.description}}</div>
-  <h2 *ngIf="trashBookType?.howto" class="trash-book-type-subtitle">Come</h2>
+  <h2 *ngIf="trashBookType?.howto" class="trash-book-type-subtitle">{{'Come'|translate}}</h2>
   <div *ngIf="trashBookType?.howto" class="trash-book-type-content">
     {{trashBookType?.howto}}
   </div>
 
+
+  <h2 *ngIf="trashBookType?.allowed || trashBookType?.notallowed" class="trash-book-type-subtitle">{{'Cosa'|translate}}
+  </h2>
   <ion-grid>
     <ion-row>
       <ion-col size="6">
