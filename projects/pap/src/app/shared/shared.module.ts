@@ -19,6 +19,7 @@ import {ImagePickerComponent} from './form/image-picker/image-picker.component';
 import {InputTypePipe} from './form/input-type.pipe';
 import {InputPatternPipe} from './form/input-pattern.pipe';
 import {FormEffects} from './form/state/form.effects';
+import {HeaderEffects} from './header/state/header.effects';
 import {SelectComponent} from './form/select/select.component';
 
 @NgModule({
@@ -42,6 +43,7 @@ import {SelectComponent} from './form/select/select.component';
     IonicModule,
     HttpClientModule,
     StoreModule.forFeature(fromHeader.headerFeatureKey, fromHeader.reducer),
+    EffectsModule.forFeature([HeaderEffects]),
     StoreModule.forFeature(fromForm.ticketFeatureKey, fromForm.reducer),
     EffectsModule.forFeature([FormEffects]),
     TranslateModule.forRoot(),

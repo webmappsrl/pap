@@ -22,3 +22,8 @@ export const setTrashBookDetail = createAction(
   '[TrashBook] set TrashBook detail',
   props<{trashBookDetail: TrashBookRow}>(),
 );
+
+export const setTrashBookType = createAction(
+  '[TrashBook] set TrashBook type',
+  props<{trashBookType: TrashBookType}>(),
+);

@@ -42,6 +42,7 @@ testem.log
 Thumbs.db
 /resources
 /ios
+/android
 
 # secrets
 api.keys.ts

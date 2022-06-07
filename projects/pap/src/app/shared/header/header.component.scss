@@ -1,4 +1,9 @@
 pap-header {
+  ion-button.modal {
+    display: block;
+    color: #fff;
+    font-size: 1.3rem;
+  }
   .pap-header {
     ion-back-button.back-button {
       color: var(--ion-color-secondary-contrast);

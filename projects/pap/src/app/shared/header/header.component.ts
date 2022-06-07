@@ -6,7 +6,7 @@ import {
   OnDestroy,
   ViewEncapsulation,
 } from '@angular/core';
-import {MenuController, NavController} from '@ionic/angular';
+import {MenuController, ModalController, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
 import {selectHomeState} from '../../features/home/state/home.selectors';
@@ -36,10 +36,13 @@ export class HeaderComponent implements OnDestroy {
   @Input() startButton: boolean = false;
   @Input() endButton: boolean = false;
 
+  @Input() modal: boolean = false;
+
   constructor(
     private _store: Store<AppState>,
     private _navCtrl: NavController,
     private _menuCtrl: MenuController,
+    private modalCtrl: ModalController,
   ) {
     this._actionEVTSub = this._actionEVT$.subscribe(evt => {
       if (evt.action === 'open-menu') {
@@ -67,5 +70,9 @@ export class HeaderComponent implements OnDestroy {
 
   public ngOnDestroy(): void {
     this._actionEVTSub.unsubscribe();
+  }
+
+  public closeModal() {
+    this.modalCtrl.dismiss();
   }
 }

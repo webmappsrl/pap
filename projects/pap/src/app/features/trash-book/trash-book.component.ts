@@ -18,7 +18,7 @@ export class TrashBookComponent {
   trashBookView$ = this._store.pipe(select(selectTrashBookState));
   constructor(private _store: Store<AppState>, private _navCtrl: NavController) {
     this._store.dispatch(showButtons({show: false}));
-    this._store.dispatch(loadTrashBooks());
+    // this._store.dispatch(loadTrashBooks());
   }
 
   searchChange(event: any) {

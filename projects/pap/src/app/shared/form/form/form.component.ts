@@ -63,7 +63,7 @@ export class FormComponent {
     private _navCtrl: NavController,
     private _alertCtrl: AlertController,
   ) {
-    this._store.dispatch(loadTrashBooks());
+    // this._store.dispatch(loadTrashBooks());
     this.alertEvt$.pipe(switchMap(obj => this._alertCtrl.create(obj)));
   }
   log(val: any) {

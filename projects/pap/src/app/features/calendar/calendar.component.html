@@ -1,0 +1,41 @@
+<!-- <pre>{{calendarView$|async|json}}</pre> -->
+
+<ng-container *ngIf="calendarView$|async as calendarView">
+    <ion-header>
+        <pap-header></pap-header>
+    </ion-header>
+
+    <ion-content padding class="pap-calendar">
+        <ion-label class="pap-calendar-info">La raccolta del Verde viene gestita esternamente all'APP. Puoi comunque
+            controllarla dal sito</ion-label>
+        <div class="pap-calendar-infobuttoncontainer">
+
+            <ion-button class="pap-calendar-infobutton" (click)="openLink()">Vedi</ion-button>
+        </div>
+
+        <ion-list>
+            <ion-item *ngFor="let item of calendarView.calendar | keyvalue" class="pap-calendar-item" lines="none">
+                <ion-label slot="start" class="pap-calendar-date">
+                    <div class="pap-calendar-monthday">{{dateOf(item.key) | dfnsFormat: 'd' }}</div>
+                    <div class="pap-calendar-monthname">{{dateOf(item.key) | dfnsFormat: 'MMMM' }}</div>
+
+                </ion-label>
+                <div>
+                    <div class="pap-calendar-weekday">{{dateOf(item.key) | dfnsFormat: 'EEEE' }}</div>
+                    <div div *ngFor="let trash of item.value" class="pap-calendar-event">
+                        <div class="pap-calendar-time">{{trash.start_time}} - {{trash.stop_time}}</div>
+                        <div>
+                            <div *ngFor="let trashType of trash.trash_objects" (click)="info(trashType)"
+                                class="pap-calendar-trashlist">
+                                <ion-icon class="trash-book-details-icon" slot="end" style="color:{{trashType?.color}}"
+                                    name="ellipse"></ion-icon>
+                                {{trashType.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ng-container>
