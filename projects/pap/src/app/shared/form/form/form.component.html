@@ -2,59 +2,34 @@
 <ng-template #ticket>
   <ng-container *ngIf="ticketFormConf$|async as ticketFormConf">
     <ng-container *ngIf="ticketFormConf.step[(pos$|async)||0] as currentStep">
-      <form
-        [formGroup]="ticketForm"
-        class="pap-form"
-        *ngIf="ticketFormConf.step && ticketFormConf.step[0] &&(recap$|async) === false"
-      >
+      <form [formGroup]="ticketForm" class="pap-form"
+        *ngIf="ticketFormConf.step && ticketFormConf.step[0] &&(recap$|async) === false">
         <div class="pap-form-content">
           <ion-label class="pap-form-label" *ngIf="currentStep.label != null">
             {{ currentStep.label }}
           </ion-label>
-          <ion-input
-            *ngIf="['text','phone'].includes(currentStep.type)"
-            #focusInput
-            class="pap-form-input"
-            [type]="currentStep.type|inputType"
-            [pattern]="currentStep.type|inputPattern"
-            [formControlName]="currentStep.type"
-          >
+          <ion-input *ngIf="['text','phone'].includes(currentStep.type)" #focusInput class="pap-form-input"
+            [type]="currentStep.type|inputType" [pattern]="currentStep.type|inputPattern"
+            [formControlName]="currentStep.type">
           </ion-input>
-          <ion-textarea
-            *ngIf="['note'].includes(currentStep.type)"
-            #focusInput
-            class="pap-form-textarea"
-            [formControlName]="currentStep.type"
-          ></ion-textarea>
+          <ion-textarea *ngIf="['note'].includes(currentStep.type)" #focusInput class="pap-form-textarea" rows="4"
+            [autoGrow]="true" placeholder="Eventuali note..." [formControlName]="currentStep.type"></ion-textarea>
           <ng-container [ngSwitch]="currentStep.type">
             <div *ngSwitchCase="'switch'" class="pap-form-toggle">
               <ion-toggle block name="toggle" [checked]="currentStep.value"> </ion-toggle>
             </div>
             <div *ngSwitchCase="'checkbox'" class="pap-form-checkbox">
               <ion-checkbox name="checkbox" [checked]="currentStep.value"> </ion-checkbox>
-              <ion-label
-                floating
-                [innerHTML]="(currentStep.placeholder||'')| translate: currentStep.translationsObj?.placeholder"
-              ></ion-label>
+              <ion-label floating
+                [innerHTML]="(currentStep.placeholder||'')| translate: currentStep.translationsObj?.placeholder">
+              </ion-label>
             </div>
-            <pap-form-location
-              *ngSwitchCase="'location'"
-              #focusInput
-              [formControlName]="currentStep.type"
-            >
+            <pap-form-location *ngSwitchCase="'location'" #focusInput [formControlName]="currentStep.type">
             </pap-form-location>
-            <pap-form-select
-              *ngSwitchCase="'select'"
-              #focusInput
-              [formControlName]="currentStep.type"
-              [options]="(trashBookTypesOpts$|async)??[]"
-              (ngModelChange)="log($event)"
-            ></pap-form-select>
-            <pap-form-image-picker
-              *ngSwitchCase="'image'"
-              #focusInput
-              [formControlName]="currentStep.type"
-            >
+            <pap-form-select *ngSwitchCase="'select'" #focusInput [formControlName]="currentStep.type"
+              [selected]="currentTrashbookType$|async" [options]="(trashBookTypesOpts$|async)??[]"
+              (ngModelChange)="log($event)"></pap-form-select>
+            <pap-form-image-picker *ngSwitchCase="'image'" #focusInput [formControlName]="currentStep.type">
             </pap-form-image-picker>
           </ng-container>
           <ion-item *ngIf="ticketForm.controls[currentStep.type].errors as errors">
@@ -71,61 +46,30 @@
         </div>
         <div class="pap-form-buttons">
           <div class="pap-form-buttonblock">
-            <button
-              class="pap-form-button"
-              ion-button
-              type="button"
-              color="light"
-              (click)="close()"
-            >
-              {{ "cancella" | translate }}
-            </button>
-            <button
-              class="pap-form-button"
-              ion-button
-              type="button"
-              *ngIf="pos$.value !== 0"
-              color="light"
-              (click)="backStep()"
-            >
-              <ion-icon name="arrow-back"></ion-icon>
-            </button>
+            <ion-button class="pap-form-button" type="button" color="light" (click)="close()">
+              {{ "annulla" | translate }}
+            </ion-button>
+            <ion-button class="pap-form-button" type="button" *ngIf="pos$.value !== 0" color="light"
+              (click)="backStep()">
+              <ion-icon name="chevron-back"></ion-icon>
+            </ion-button>
           </div>
           <div class="pap-form-buttonblock">
-            <button
-              class="pap-form-button"
-              ion-button
-              type="button"
-              [disabled]="!isValid(currentStep)"
-              (click)="nextStep()"
-              *ngIf="pos$.value +1 < ticketFormConf.step.length"
-              color="secondary"
-            >
-              <ion-icon name="arrow-forward"></ion-icon>
-            </button>
+            <ion-button class="pap-form-button" type="button" [disabled]="!isValid(currentStep)" (click)="nextStep()"
+              *ngIf="pos$.value +1 < ticketFormConf.step.length" color="primary">
+              <ion-icon color="light" name="chevron-forward"></ion-icon>
+            </ion-button>
             <ng-container *ngIf="recap$|async as recap; else recapt">
-              <button
-                class="pap-form-button"
-                ion-button
-                type="submit"
-                (click)="sendData()"
-                *ngIf="(recap$|async) === true"
-                color="secondary"
-              >
-                <ion-icon name="checkmark"></ion-icon>
-              </button>
+              <ion-button class="pap-form-button" type="submit" (click)="sendData()" *ngIf="(recap$|async) === true"
+                color="primary">
+                <ion-icon color="light" name="checkmark"></ion-icon>
+              </ion-button>
             </ng-container>
             <ng-template #recapt>
-              <button
-                class="pap-form-button"
-                ion-button
-                type="submit"
-                (click)="recap()"
-                *ngIf="(recap$|async) === false && pos$.value + 1 === ticketFormConf.step.length"
-                color="secondary"
-              >
-                <ion-icon name="checkmark"></ion-icon>
-              </button>
+              <ion-button class="pap-form-button" type="submit" (click)="recap()"
+                *ngIf="(recap$|async) === false && pos$.value + 1 === ticketFormConf.step.length" color="primary">
+                <ion-icon color="light" name="checkmark"></ion-icon>
+              </ion-button>
             </ng-template>
           </div>
         </div>
@@ -135,28 +79,18 @@
 </ng-template>
 <ion-modal [isOpen]="recap$|async">
   <ng-template>
-    <pap-form-recap
-      *ngIf="recap$|async"
-      [form]="ticketForm"
-      [conf]="(ticketFormConf$|async)!"
-    ></pap-form-recap>
+    <pap-form-recap *ngIf="recap$|async" [form]="ticketForm" [conf]="(ticketFormConf$|async)!"></pap-form-recap>
     <div class="pap-form-footer">
       <div class="pap-form-buttons">
         <div class="pap-form-buttonblock">
-          <button class="pap-form-button" ion-button type="button" color="light" (click)="close()">
-            {{ "cancella" | translate }}
-          </button>
+          <ion-button class="pap-form-button" type="button" color="light" (click)="close()">
+            {{ "annulla" | translate }}
+          </ion-button>
         </div>
         <div class="pap-form-buttonblock">
-          <button
-            class="pap-form-button"
-            ion-button
-            type="submit"
-            (click)="sendData()"
-            color="secondary"
-          >
-            <ion-icon name="checkmark"></ion-icon>
-          </button>
+          <ion-button class="pap-form-button" type="submit" (click)="sendData()" color="primary">
+            <ion-icon color="light" name="checkmark"></ion-icon>
+          </ion-button>
         </div>
       </div>
     </div>
@@ -169,15 +103,9 @@
     <div class="pap-form-footer">
       <div class="pap-form-buttons">
         <div class="pap-form-buttonblock">
-          <button
-            class="pap-form-button"
-            ion-button
-            type="submit"
-            (click)="close()"
-            color="secondary"
-          >
-            <ion-icon name="checkmark"></ion-icon>
-          </button>
+          <ion-button class="pap-form-button" type="submit" (click)="close()" color="secondary">
+            <ion-icon color="light" name="checkmark"></ion-icon>
+          </ion-button>
         </div>
       </div>
     </div>

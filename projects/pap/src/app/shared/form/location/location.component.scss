@@ -1,9 +1,23 @@
 pap-form-location {
+  .pap-form-location {
+    position: relative;
+  }
   .pap-form-location-map {
-    height: 400px;
+    height: 350px;
   }
 
-  .pap-form-location-infocontainer {
-    margin-top: 400px;
+  .pap-form-location-padding {
+    height: 350px;
+  }
+
+  .pap-form-location-skeleton {
+    min-height: 50px;
+  }
+
+  .pap-form-location-title {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
   }
 }

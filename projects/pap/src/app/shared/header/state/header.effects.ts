@@ -8,8 +8,8 @@ import {headerInfo} from '../header.model';
 import {buttonAction} from '../../../features/home/home.model';
 
 const headermock: headerInfo = {
-  label: 'portAPPorta',
-  // img: 'assets/icons/logo-e.png',
+  // label: 'portAPPorta',
+  img: 'assets/images/header-logo.svg',
   showBack: false,
   buttonStart: {
     label: '',

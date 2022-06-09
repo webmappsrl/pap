@@ -11,7 +11,6 @@ const routes: Routes = [
   {path: 'home', loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule)},
   {
     path: 'trashbook',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./features/trash-book/trash-book.module').then(m => m.TrashBookModule),
   },
@@ -38,11 +37,13 @@ const routes: Routes = [
   },
   {
     path: 'info-ticket',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./features/info-ticket/info-ticket.module').then(m => m.InfoTicketModule),
   },
   {
     path: 'ticket-reservation',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./features/ticket-reservation/ticket-reservation.module').then(
         m => m.TicketReservationModule,
@@ -50,6 +51,7 @@ const routes: Routes = [
   },
   {
     path: 'abandonment-ticket',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./features/abandonment-ticket/abandonment-ticket.module').then(
         m => m.AbandonmentTicketModule,
@@ -57,6 +59,7 @@ const routes: Routes = [
   },
   {
     path: 'report-ticket',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./features/report-ticket/report-ticket.module').then(m => m.ReportTicketModule),
   },

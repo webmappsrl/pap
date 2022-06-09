@@ -3,9 +3,13 @@ pap-form {
     margin: auto auto;
 
     .pap-form-content {
+        padding: 25px;
+        padding-bottom: 15px;
         .pap-form-label {
-            padding: 14px;
-            display: block;
+            line-height: 28px;
+            font-size: 20px;
+            font-weight: 300;
+            text-align: justify;
         }
     }
     .pap-form-toggle {
@@ -13,14 +17,15 @@ pap-form {
         margin: 50px auto;
     }
 
-    .pap-form-input > input {
-        font-size: 1.5em;
+    .pap-form-input {
+        font-size: 1.3em;
+        border-left: 1px solid var(--ion-color-primary);
     }
 
-    .pap-form-textarea > textarea {
-        font-size: 1.5em;
+    .pap-form-textarea {
+        font-size: 1.1em;
         padding: 10px;
-        border-left: 1px solid #aaaaaa;
+        border-left: 1px solid var(--ion-color-primary);
     }
 
     .pap-form-textarea > textarea:focus {

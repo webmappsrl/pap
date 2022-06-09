@@ -5,3 +5,21 @@
     position: relative;
     overflow: hidden;
 }
+
+/**************** font *************/
+
+@font-face {
+    font-family: "Neutra text";
+    src: url("assets/fonts/noto-sans-regular.ttf"), url("assets/fonts/Neutra2Text-Bold.otf") format("opentype");
+}
+
+/************ iOS header height ***************/
+.ios.platform-mobile ion-toolbar,
+.ios.platform-mobile ion-toolbar,
+.ios.platform-mobile ion-modal.show-page {
+    padding-top: constant(safe-area-inset-top); // for ios 11.1
+    padding-top: env(safe-area-inset-top); // for ios 11.2 and onwards
+    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(100% - constant(safe-area-inset-top));
+    height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+}

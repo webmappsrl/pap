@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import {FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
@@ -14,7 +15,12 @@ import {trashBookTypes} from '../../../features/trash-book/state/trash-book.sele
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {TicketFormConf, TicketFormStep} from '../../models/form.model';
 import {resetTicket, sendTicket} from '../state/form.actions';
-import {ticketError, ticketLoading, ticketSuccess} from '../state/form.selectors';
+import {
+  currentTrashBookType,
+  ticketError,
+  ticketLoading,
+  ticketSuccess,
+} from '../state/form.selectors';
 
 @Component({
   selector: 'pap-form',
@@ -24,10 +30,13 @@ import {ticketError, ticketLoading, ticketSuccess} from '../state/form.selectors
   encapsulation: ViewEncapsulation.None,
 })
 export class FormComponent {
-  focusInput!: IonInput;
+  @ViewChild('focusInput') focusInput!: IonInput;
   formError$: Observable<any> = this._store.pipe(select(ticketError));
   formSuccess$: Observable<any> = this._store.pipe(select(ticketSuccess));
   formLoading$: Observable<boolean> = this._store.pipe(select(ticketLoading));
+  currentTrashbookType$: Observable<TrashBookType | undefined> = this._store.pipe(
+    select(currentTrashBookType),
+  );
   trashBookTypesOpts$!: Observable<TrashBookType[]>;
   @Input() set ticketFormConf(ticketFormConf: TicketFormConf) {
     this.ticketFormConf$.next(ticketFormConf);
@@ -87,7 +96,6 @@ export class FormComponent {
   isValid(currentStep: TicketFormStep): boolean {
     const formControlName = currentStep.type;
     const formControl = this.ticketForm.controls[formControlName];
-    console.log(formControl.value);
     return !formControl.invalid;
   }
 
@@ -96,6 +104,11 @@ export class FormComponent {
     if (nextStep < (this.ticketFormConf$.value as TicketFormConf).step.length) {
       this.pos$.next(nextStep);
     }
+    setTimeout(() => {
+      if (this.focusInput && this.focusInput.setFocus) {
+        this.focusInput.setFocus();
+      }
+    }, 100);
   }
 
   recap(): void {
