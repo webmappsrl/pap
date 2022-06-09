@@ -99,9 +99,12 @@ export class MapComponent implements OnInit, OnDestroy {
     if (this.myPositionMarker) {
       this.myPositionMarker.remove();
     }
-
-    this.myPositionMarker = marker(latLng(coords[0], coords[1]), {icon: this.getIcon('position')});
-    this.myPositionMarker.addTo(this.map);
+    if (this.map != null) {
+      this.myPositionMarker = marker(latLng(coords[0], coords[1]), {
+        icon: this.getIcon('position'),
+      });
+      this.myPositionMarker.addTo(this.map);
+    }
   }
 
   getIcon(type: string): Icon {
@@ -120,8 +123,10 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   centerToPoint(coord: number[]) {
-    const zoom = this.map.getZoom();
-    this.map.setView(latLng(coord[0], coord[1]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
+    if (this.map != null) {
+      const zoom = this.map.getZoom();
+      this.map.setView(latLng(coord[0], coord[1]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
+    }
   }
 
   private initMap(): void {
