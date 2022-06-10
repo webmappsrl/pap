@@ -24,14 +24,14 @@ import {currentUserTypes} from '../state/sign-up.selectors';
       </ion-item>
       <ng-container *ngIf="(confiniZone$|async) as zone; else noValidZone">
         <ion-item>
-          <pap-form-select formControlName="user_type" [options]="userTypes$|async">
+          <pap-form-select formControlName="user_type_id" [options]="userTypes$|async">
           </pap-form-select>
         </ion-item>
         <input
           hidden
           *ngIf="zone.properties as prop"
           required
-          formControlName="zone"
+          formControlName="zone_id"
           [(ngModel)]="prop.id"
         />
       </ng-container>

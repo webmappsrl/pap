@@ -61,8 +61,8 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
       ),
       thirdStep: fb.group({
         location: ['', [Validators.required]],
-        user_type: ['', [Validators.required]],
-        zone: [''],
+        user_type_id: ['', [Validators.required]],
+        zone_id: [''],
       }),
     });
     this._store.pipe(select(selectAuthState)).subscribe(val => {
