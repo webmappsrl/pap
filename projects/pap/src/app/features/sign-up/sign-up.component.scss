@@ -1,0 +1,17 @@
+pap-sign-up {
+  form {
+    height: 100%;
+    ion-list {
+      height: 100%;
+    }
+    ion-grid {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+    }
+  }
+  pap-form-location {
+    width: 100%;
+  }
+}

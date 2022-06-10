@@ -10,7 +10,7 @@ export class MapEffects {
     return this.actions$.pipe(
       ofType(MapActions.setMarker),
       switchMap(action =>
-        this._locationService.getAddress(action.coords).pipe(
+        this._locationSvc.getAddress(action.coords).pipe(
           map(address => MapActions.setCurrentMarkerSuccess({address})),
           catchError(error => {
             return of(MapActions.setCurrentMarkerFailure({error}));
@@ -19,5 +19,19 @@ export class MapEffects {
       ),
     );
   });
-  constructor(private actions$: Actions, private _locationService: LocationService) {}
+
+  loadConfiniZone$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(MapActions.loadConfiniZone),
+      switchMap(_ =>
+        this._locationSvc.getConfiniZone().pipe(
+          map(data => MapActions.loadConfiniZoneSuccess({data})),
+          catchError(error => {
+            return of(MapActions.loadConfiniZoneFailure({error}));
+          }),
+        ),
+      ),
+    );
+  });
+  constructor(private actions$: Actions, private _locationSvc: LocationService) {}
 }
