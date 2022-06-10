@@ -1,23 +1,22 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  Validators,
-  ValidatorFn,
-} from '@angular/forms';
+import {ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {loadSignUps} from '../../core/auth/state/auth.actions';
 import {error, selectAuthState} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
+import {loadConfiniZone} from '../../shared/map/state/map.actions';
+import {FormProvider} from './form-provider';
+import {loadUserTypes} from './state/sign-up.actions';
 export function ConfirmedValidator(controlName: string, matchingControlName: string) {
   return (formGroup: FormGroup) => {
     const control = formGroup.controls[controlName];
     const matchingControl = formGroup.controls[matchingControlName];
-    if (matchingControl.errors && !matchingControl.errors['confirmedValidator']) {
+    if (
+      matchingControl == null ||
+      (matchingControl.errors && !matchingControl.errors['confirmedValidator'])
+    ) {
       return;
     }
     if (control.value !== matchingControl.value) {
@@ -32,27 +31,53 @@ export function ConfirmedValidator(controlName: string, matchingControlName: str
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{provide: FormProvider, useExisting: SignUpComponent}],
 })
-export class SignUpComponent {
-  signUpForm: FormGroup;
+export class SignUpComponent extends FormProvider implements OnDestroy {
+  private _isLoggesSub: Subscription = Subscription.EMPTY;
+
   error$: Observable<string | false | undefined> = this._store.select(error);
+  signUpForm: FormGroup;
+  step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
   constructor(fb: FormBuilder, private _store: Store<AppState>, private _navCtrl: NavController) {
-    this.signUpForm = fb.group(
-      {
+    super();
+    this._store.dispatch(loadConfiniZone());
+    this._store.dispatch(loadUserTypes());
+    this.signUpForm = fb.group({
+      firstStep: fb.group({
         name: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
-      },
-      {
-        validator: ConfirmedValidator('password', 'password_confirmation'),
-      },
-    );
+      }),
+      secondStep: fb.group(
+        {
+          password: ['', [Validators.required, Validators.minLength(8)]],
+          password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
+        },
+        {
+          validator: ConfirmedValidator('password', 'password_confirmation'),
+        },
+      ),
+      thirdStep: fb.group({
+        location: ['', [Validators.required]],
+        user_type: ['', [Validators.required]],
+        zone: [''],
+      }),
+    });
     this._store.pipe(select(selectAuthState)).subscribe(val => {
       if (val.isLogged) {
         this._navCtrl.navigateRoot('home');
       }
     });
+  }
+
+  getForm() {
+    return this.signUpForm;
+  }
+
+  ngOnDestroy(): void {
+    this._isLoggesSub.unsubscribe();
   }
 
   register(value: any) {

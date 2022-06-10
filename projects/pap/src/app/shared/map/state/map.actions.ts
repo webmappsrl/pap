@@ -19,3 +19,15 @@ export const setCurrentMarkerFailure = createAction(
   '[Map] set current marker Failure',
   props<{error: any}>(),
 );
+
+export const loadConfiniZone = createAction('[Map] Load confini zone');
+
+export const loadConfiniZoneSuccess = createAction(
+  '[Map] Load confini zone Success',
+  props<{data: any}>(),
+);
+
+export const loadConfiniZoneFailure = createAction(
+  '[Map] Load confini zone Failure',
+  props<{error: any}>(),
+);

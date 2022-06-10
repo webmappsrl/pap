@@ -3,53 +3,27 @@
   <form [formGroup]="signUpForm">
     <ion-list>
       <ion-list-header>
-        <ion-label>Registrazione</ion-label>
+        <ion-label position="stacked">Registrazione</ion-label>
       </ion-list-header>
-
-      <ion-item>
-        <ion-label position="fixed">Nome</ion-label>
-        <ion-input formControlName="name" required placeholder="Inserire il nome"> </ion-input>
-      </ion-item>
-      <ion-item *ngIf="signUpForm.controls['name'].errors as errors">
-        <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
-      </ion-item>
-      <ion-item>
-        <ion-label position="fixed">Email</ion-label>
-        <ion-input formControlName="email" required placeholder="Inserire la email"> </ion-input>
-      </ion-item>
-      <ion-item *ngIf="signUpForm.controls['email'].errors as errors">
-        <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
-      </ion-item>
-      <ion-item>
-        <ion-label position="fixed">Password</ion-label>
-        <ion-input required formControlName="password" placeholder="Inserire la password">
-        </ion-input>
-      </ion-item>
-      <ion-item *ngIf="signUpForm.controls['password'].errors as errors">
-        <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
-      </ion-item>
-      <ion-item>
-        <ion-label position="fixed">Conferma password</ion-label>
-        <ion-input
-          required
-          formControlName="password_confirmation"
-          placeholder="Inserire la password"
-        >
-        </ion-input>
-      </ion-item>
-      <ion-item *ngIf="signUpForm.controls['password_confirmation'].errors as errors">
-        <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
-      </ion-item>
+      <ng-container [ngSwitch]="step$|async">
+        <pap-first-step-signup-form
+          *ngSwitchCase="0"
+          (next)="step$.next(step$.value +1)"
+        ></pap-first-step-signup-form>
+        <pap-second-step-signup-form
+          *ngSwitchCase="1"
+          (next)="step$.next(step$.value +1)"
+          (prev)="step$.next(step$.value -1)"
+        ></pap-second-step-signup-form>
+        <pap-third-step-signup-form
+          *ngSwitchCase="2"
+          (next)="register(signUpForm.value)"
+          (prev)="step$.next(step$.value -1)"
+        ></pap-third-step-signup-form>
+      </ng-container>
       <ion-item *ngIf="error$|async as error">
-        <ion-label color="danger">{{error}}</ion-label>
+        <ion-label position="stacked" color="danger">{{error}}</ion-label>
       </ion-item>
-      <ion-button
-        type="submit"
-        [disabled]="!signUpForm.valid"
-        block
-        (click)="register(signUpForm.value)"
-        >sign up</ion-button
-      >
     </ion-list>
   </form>
 </ion-content>
