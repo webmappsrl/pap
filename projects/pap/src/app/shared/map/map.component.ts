@@ -69,7 +69,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   clickOnMap(ev: LeafletMouseEvent) {
-    const coords: [number, number] = [ev.latlng.lat, ev.latlng.lng];
+    const coords: [number, number] = [ev.latlng.lng, ev.latlng.lat];
     this._store.dispatch(setMarker({coords}));
     this.genericClickEvt.emit(coords);
   }

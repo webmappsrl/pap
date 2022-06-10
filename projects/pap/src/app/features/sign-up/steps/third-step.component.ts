@@ -23,16 +23,18 @@ import {currentUserTypes} from '../state/sign-up.selectors';
         <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
       </ion-item>
       <ng-container *ngIf="(confiniZone$|async) as zone; else noValidZone">
-        <ion-item>
-          <pap-form-select formControlName="user_type_id" [options]="userTypes$|async">
-          </pap-form-select>
+        <ion-item *ngIf="userTypes$|async as userTypes">
+          <ng-container  *ngIf="userTypes.length >0;else noUserTypes">
+            <pap-form-select formControlName="user_type_id" [options]="userTypes">
+              </pap-form-select>
+            </ng-container>
         </ion-item>
         <input
           hidden
           *ngIf="zone.properties as prop"
           required
           formControlName="zone_id"
-          [(ngModel)]="prop.id"
+          [ngModel]="prop.id"
         />
       </ng-container>
       <ng-template #noValidZone>
@@ -40,7 +42,9 @@ import {currentUserTypes} from '../state/sign-up.selectors';
           <ion-label color="danger">seleziona una zona valida</ion-label>
         </ion-item>
       </ng-template>
-      
+      <ng-template #noUserTypes>
+        <ion-label>non ci sono tipi utente associati a questa zona</ion-label>
+      </ng-template>
       <ion-grid>
         <ion-row>
           <ion-col class="ion-align-self-start">
