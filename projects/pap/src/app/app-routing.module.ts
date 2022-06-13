@@ -29,7 +29,6 @@ const routes: Routes = [
   },
   {
     path: 'waste-center-collection',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./features/waste-center-collection/waste-center-collection.module').then(
         m => m.WasteCenterCollectionModule,
