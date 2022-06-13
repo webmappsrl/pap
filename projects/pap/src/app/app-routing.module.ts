@@ -64,6 +64,7 @@ const routes: Routes = [
   },
   {
     path: 'calendar',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./features/calendar/calendar.module').then(m => m.CalendarModule),
   },
   {
