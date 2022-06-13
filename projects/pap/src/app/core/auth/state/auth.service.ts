@@ -37,10 +37,7 @@ export class AuthService {
     return this._http.post(
       `${env.api}/api/register`,
       {
-        name: credential.name,
-        email: credential.email,
-        password: credential.password,
-        password_confirmation: credential.password_confirmation,
+        ...credential,
         company_id: 8,
       },
       {

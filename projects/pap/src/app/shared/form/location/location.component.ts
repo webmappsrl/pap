@@ -66,17 +66,15 @@ export class LocationComponent implements ControlValueAccessor {
 
   setPosition(coords: number[]) {
     this.writeValue(coords);
-    if (this.locationService.isInsideMap(coords)) {
-      this.myPosition = coords;
-      this.locationService.getAddress(coords).subscribe(
-        res => {
-          this.setAddress(res as string);
-        },
-        (error: any) => {
-          this.setAddress(`${coords[0]} ${coords[1]}`);
-        },
-      );
-    }
+    this.myPosition = coords;
+    this.locationService.getAddress(coords).subscribe(
+      res => {
+        this.setAddress(res as string);
+      },
+      (error: any) => {
+        this.setAddress(`${coords[0]} ${coords[1]}`);
+      },
+    );
   }
 
   async getLocation() {
