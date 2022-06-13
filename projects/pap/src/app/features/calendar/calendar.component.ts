@@ -41,7 +41,7 @@ export class CalendarComponent {
   }
 
   dateOf(dateStr: string): Date {
-    return parse(dateStr, 'yyyy-MM-dd', new Date());
+    return new Date(dateStr);
   }
 
   openLink(): void {
