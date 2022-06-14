@@ -40,10 +40,6 @@ export class CalendarComponent {
       .then(modal => modal.present());
   }
 
-  dateOf(dateStr: string): Date {
-    return new Date(dateStr);
-  }
-
   openLink(): void {
     this._inAppBrowser.create('HTTP://www.google.com');
   }
