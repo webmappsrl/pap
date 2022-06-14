@@ -6,13 +6,8 @@ import {it} from 'date-fns/locale';
 })
 export class PapDatePipe implements PipeTransform {
   transform(value: string, format = 'MMMM'): string {
-    const newDate = new Date(value);
-    const resDate = fm(newDate, format, {
+    return fm(new Date(value), format, {
       locale: it,
     });
-    console.log(resDate);
-    this._cdr.detectChanges();
-    return resDate;
   }
-  constructor(private _cdr: ChangeDetectorRef) {}
 }
