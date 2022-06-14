@@ -1,8 +1,8 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {AlertController, AlertOptions, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {map, Observable, switchMap, tap, zip} from 'rxjs';
+import {map, Observable, Subscription, switchMap, tap, zip} from 'rxjs';
 import {AppState} from '../core.state';
 import {isLogged, isVerified} from './state/auth.selectors';
 
@@ -30,14 +30,15 @@ const NO_VERIFIED: AlertOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
-  private _alerEVT: EventEmitter<AlertOptions> = new EventEmitter<AlertOptions>();
+export class AuthGuard implements CanActivate, OnDestroy {
+  private _alertEVT: EventEmitter<AlertOptions> = new EventEmitter<AlertOptions>();
+  private _alertSub: Subscription = Subscription.EMPTY;
   constructor(
     private _store: Store<AppState>,
     private _alertCtrl: AlertController,
     private _navCtrl: NavController,
   ) {
-    this._alerEVT
+    this._alertSub = this._alertEVT
       .pipe(
         switchMap(opt => this._alertCtrl.create(opt)),
         switchMap(alert => {
@@ -60,13 +61,16 @@ export class AuthGuard implements CanActivate {
     return zip([isLogged$, isVerified$]).pipe(
       map(([isL, isV]) => {
         if (!isL) {
-          this._alerEVT.emit(NO_LOGGED);
+          this._alertEVT.emit(NO_LOGGED);
         } else if (!isV) {
-          this._alerEVT.emit(NO_VERIFIED);
+          this._alertEVT.emit(NO_VERIFIED);
         }
 
         return isL && isV;
       }),
     );
+  }
+  ngOnDestroy(): void {
+    this._alertSub.unsubscribe();
   }
 }
