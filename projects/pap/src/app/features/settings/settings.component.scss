@@ -1,13 +1,25 @@
 pap-settings {
-    .pap-settings {
-        --padding-bottom: 80px;
-        &-editicon{
-            font-size: 1.5rem;
-            padding: 5px;
-        }
-        &-version {
-            font-size: 0.9rem;
-            padding: 15px;
-        }
+  .pap-settings {
+    --padding-bottom: 80px;
+    &-editicon {
+      font-size: 1.5rem;
+      padding: 5px;
     }
+    &-version {
+      font-size: 0.9rem;
+      padding: 15px;
+    }
+  }
+  pap-third-step-signup-form,
+  pap-map,
+  pap-form-location {
+    width: 100%;
+  }
+
+  .footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+  }
 }

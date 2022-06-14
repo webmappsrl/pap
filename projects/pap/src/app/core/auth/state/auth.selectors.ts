@@ -7,5 +7,5 @@ export const isVerified = createSelector(
   selectAuthState,
   state => state != null && state.isVerified,
 );
-
+export const user = createSelector(selectAuthState, state => state.user);
 export const error = createSelector(selectAuthState, state => state != null && state.error);

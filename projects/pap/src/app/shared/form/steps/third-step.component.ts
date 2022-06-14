@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
@@ -9,7 +10,7 @@ import {FormGroup} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {AppState} from '../../../core/core.state';
-import {currentZone} from '../../../shared/map/state/map.selectors';
+import {currentZone} from '../../map/state/map.selectors';
 import {FormProvider} from '../form-provider';
 import {currentUserTypes} from '../state/sign-up.selectors';
 
@@ -45,7 +46,7 @@ import {currentUserTypes} from '../state/sign-up.selectors';
       <ng-template #noUserTypes>
         <ion-label>non ci sono tipi utente associati a questa zona</ion-label>
       </ng-template>
-      <ion-grid>
+      <ion-grid *ngIf="buttons">
         <ion-row>
           <ion-col class="ion-align-self-start">
           <ion-button (click)="prev.emit()"  expand="full" >
@@ -69,10 +70,13 @@ import {currentUserTypes} from '../state/sign-up.selectors';
 export class thirdStepSignupComponent {
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
+  @Input() buttons = true;
 
   thirdStep: FormGroup = this._formProvider.getForm().get('thirdStep') as FormGroup;
   confiniZone$: Observable<any> = this._store.select(currentZone);
   userTypes$: Observable<any> = this._store.select(currentUserTypes);
 
-  constructor(private _formProvider: FormProvider, private _store: Store<AppState>) {}
+  constructor(private _formProvider: FormProvider, private _store: Store<AppState>) {
+    this.userTypes$.subscribe(v => console.log(v));
+  }
 }

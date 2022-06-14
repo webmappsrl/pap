@@ -1,9 +1,15 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {select, Store} from '@ngrx/store';
+import {BehaviorSubject, map, Observable, Subscription} from 'rxjs';
 import {AppState} from '../../core/core.state';
+import {FormProvider} from '../../shared/form/form-provider';
+import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 import {showButtons} from '../../shared/header/state/header.actions';
+import {loadConfiniZone} from '../../shared/map/state/map.actions';
+import {ConfirmedValidator} from '../sign-up/sign-up.component';
 import {toggleEdit} from './state/settings.actions';
-import {selectSettingsState} from './state/settings.selectors';
+import {settingView} from './state/settings.selectors';
 
 @Component({
   selector: 'pap-settings',
@@ -11,25 +17,45 @@ import {selectSettingsState} from './state/settings.selectors';
   styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  providers: [{provide: FormProvider, useExisting: SettingsComponent}],
 })
 export class SettingsComponent implements OnInit {
-  settingsView$ = this._store.pipe(select(selectSettingsState));
-  profile: any = {};
+  settingsView$ = this._store.pipe(select(settingView));
+  settingsForm: FormGroup;
+  settingsFormSub: Subscription = Subscription.EMPTY;
+  currentStep = 'firstStep';
 
-  appVersion = '1.2.3';
-
-  languages = [
-    {
-      label: 'Inglese',
-      value: 'en',
-    },
-    {
-      label: 'Italiano',
-      value: 'it',
-    },
-  ];
-
-  constructor(private _store: Store<AppState>) {}
+  step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  constructor(private _store: Store<AppState>, fb: FormBuilder) {
+    this._store.dispatch(loadConfiniZone());
+    this._store.dispatch(loadUserTypes());
+    this.settingsForm = fb.group({
+      firstStep: fb.group({
+        name: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+      }),
+      secondStep: fb.group(
+        {
+          password: ['', [Validators.required, Validators.minLength(8)]],
+          password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
+        },
+        {
+          validator: ConfirmedValidator('password', 'password_confirmation'),
+        },
+      ),
+      thirdStep: fb.group({
+        location: ['', [Validators.required]],
+        user_type_id: ['', [Validators.required]],
+        zone_id: [''],
+      }),
+    });
+    this.settingsFormSub = this.settingsView$.subscribe(sv => {
+      this.settingsForm.controls['firstStep'].setValue({
+        name: sv.user?.name ?? '',
+        email: sv.user?.email ?? '',
+      });
+    });
+  }
 
   ngOnInit(): void {
     this._store.dispatch(showButtons({show: false}));
@@ -37,5 +63,22 @@ export class SettingsComponent implements OnInit {
 
   edit(value: boolean) {
     this._store.dispatch(toggleEdit());
+  }
+
+  update() {
+    const res = {
+      ...this.settingsForm.controls['firstStep'].value,
+      ...this.settingsForm.controls['secondStep'].value,
+      ...this.settingsForm.controls['thirdStep'].value,
+    };
+    console.log(res);
+  }
+  isDisabled(): boolean {
+    const ctrl = this.settingsForm.controls[this.currentStep];
+
+    return !ctrl.valid;
+  }
+  getForm() {
+    return this.settingsForm;
   }
 }

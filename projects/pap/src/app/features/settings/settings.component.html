@@ -1,72 +1,47 @@
 <ng-container *ngIf="settingsView$|async as settingsView">
+  <ion-header><pap-header></pap-header></ion-header>
 
-    <ion-header><pap-header></pap-header></ion-header>
+  <ion-content padding class="pap-settings">
+    <ion-segment [(ngModel)]="currentStep">
+      <ion-segment-button value="firstStep" (click)="step$.next(0)">
+        <ion-label>Nome e Email</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="secondStep" (click)="step$.next(1)">
+        <ion-label>Password</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="thirdStep" (click)="step$.next(2)">
+        <ion-label>Posizione</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
-    <ion-content padding class="pap-settings">
-        <ion-list>
-            <ion-list-header>
-                <ion-icon class="pap-settings-editicon" name="pencil" *ngIf="!settingsView.editMode"
-                    (click)="edit(true)"></ion-icon>
-                <ion-icon class="pap-settings-editicon" name="checkmark-circle-outline" *ngIf="settingsView.editMode"
-                    (click)="edit(false)"></ion-icon>
-                <ion-label>Profilo</ion-label>
-            </ion-list-header>
-            <ion-item>
-                <ion-label position="fixed">Nome</ion-label>
-                <ion-input [(ngModel)]="profile.firstName" required [disabled]="!settingsView.editMode"
-                    placeholder="Inserire il nome">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="fixed">Cognome</ion-label>
-                <ion-input [(ngModel)]="profile.lastName" required [disabled]="!settingsView.editMode"
-                    placeholder="Inserire il Cognome">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="fixed">Email</ion-label>
-                <ion-input [value]="profile.email" type="email" required [disabled]="true"
-                    placeholder="Inserire la propria Email"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="fixed">Posizione</ion-label>
-            </ion-item>
-            <ion-item>
-                <ion-label position="fixed">Indirizzo</ion-label>
-                <ion-textarea [value]="profile.address" [disabled]="true" placeholder="Indirizzo di riferimento">
-                </ion-textarea>
-            </ion-item>
-            <ion-item>
-                <ion-label position="fixed">Area</ion-label>
-                <ion-textarea [value]="profile.area" required [disabled]="true" placeholder="Area di appartenenza">
-                </ion-textarea>
-            </ion-item>
-            <ion-item>
-                <ion-label position="fixed">Tipo di utenza</ion-label>
-                <ion-input [value]="profile.userType" required [disabled]="true" placeholder="Domestica o commerciale">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label>Notifiche push</ion-label>
-                <ion-toggle [value]="profile.notification" [disabled]="!settingsView.editMode" slot="end"></ion-toggle>
-            </ion-item>
-        </ion-list>
-        <ion-list>
-            <ion-radio-group [value]="profile.language">
-                <ion-list-header>
-                    <ion-label>Cambia lingua
-                    </ion-label>
-                </ion-list-header>
-                <ion-item *ngFor="let lang of languages">
-                    <ion-label>{{lang.label}}</ion-label>
-                    <ion-radio slot="end" [value]="lang.value"></ion-radio>
-                </ion-item>
-            </ion-radio-group>
-        </ion-list>
-        <div class="pap-settings-version">
-            Versione {{appVersion}}
-        </div>
-
-    </ion-content>
-
+    <form [formGroup]="(settingsForm)!">
+      <ion-list>
+        <ng-container [ngSwitch]="step$|async">
+          <pap-first-step-signup-form
+            *ngSwitchCase="0"
+            [buttons]="false"
+          ></pap-first-step-signup-form>
+          <pap-second-step-signup-form
+            *ngSwitchCase="1"
+            [buttons]="false"
+          ></pap-second-step-signup-form>
+          <pap-third-step-signup-form
+            *ngSwitchCase="2"
+            [buttons]="false"
+          ></pap-third-step-signup-form>
+        </ng-container>
+      </ion-list>
+      <ion-grid class="footer">
+        <ion-row>
+          <ion-col class="ion-align-self-start"> </ion-col>
+          <ion-col class="ion-align-self-center" size="8">
+            <ion-button expand="full" [disabled]="isDisabled()">
+              <ion-icon color="light" name="save"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col class="ion-align-self-end"> </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-content>
 </ng-container>

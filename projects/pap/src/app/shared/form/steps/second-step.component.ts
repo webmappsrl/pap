@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
@@ -31,7 +32,7 @@ import {FormProvider} from '../form-provider';
       <ion-item *ngIf="secondStep.controls['password_confirmation'].errors as errors">
         <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
       </ion-item>
-      <ion-grid>
+      <ion-grid *ngIf="buttons">
         <ion-row>
           <ion-col class="ion-align-self-start">
             <ion-button (click)="prev.emit()"  expand="full" >
@@ -56,5 +57,6 @@ export class secondStepSignupComponent {
   secondStep: FormGroup = this._formProvider.getForm().get('secondStep') as FormGroup;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
+  @Input() buttons = true;
   constructor(private _formProvider: FormProvider) {}
 }

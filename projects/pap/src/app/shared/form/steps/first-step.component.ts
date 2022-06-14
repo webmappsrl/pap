@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
@@ -25,7 +26,7 @@ import {FormProvider} from '../form-provider';
       <ion-item *ngIf="firstStep.controls['email'].errors as errors">
         <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
       </ion-item>
-      <ion-grid>
+      <ion-grid *ngIf="buttons">
         <ion-row>
           <ion-col size="8">
           </ion-col>
@@ -45,6 +46,7 @@ import {FormProvider} from '../form-provider';
 export class firstStepSignupComponent {
   firstStep: FormGroup = this._formProvider.getForm().get('firstStep') as FormGroup;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  @Input() buttons = true;
 
   constructor(private _formProvider: FormProvider) {}
 }

@@ -7,8 +7,8 @@ import {loadSignUps} from '../../core/auth/state/auth.actions';
 import {error, selectAuthState} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {loadConfiniZone} from '../../shared/map/state/map.actions';
-import {FormProvider} from './form-provider';
-import {loadUserTypes} from './state/sign-up.actions';
+import {FormProvider} from '../../shared/form/form-provider';
+import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 export function ConfirmedValidator(controlName: string, matchingControlName: string) {
   return (formGroup: FormGroup) => {
     const control = formGroup.controls[controlName];

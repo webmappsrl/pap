@@ -22,7 +22,11 @@ import {FormEffects} from './form/state/form.effects';
 import {HeaderEffects} from './header/state/header.effects';
 import {SelectComponent} from './form/select/select.component';
 import {PapDatePipe} from './pipes/pap-date.pipe';
-
+import {firstStepSignupComponent} from './form/steps/first-step.component';
+import {secondStepSignupComponent} from './form/steps/second-step.component';
+import {thirdStepSignupComponent} from './form/steps/third-step.component';
+import * as fromSignUp from './form/state/sign-up.reducer';
+import {SignUpEffects} from './form/state/sign-up.effects';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -31,6 +35,9 @@ import {PapDatePipe} from './pipes/pap-date.pipe';
     InputTypePipe,
     InputPatternPipe,
     FormComponent,
+    firstStepSignupComponent,
+    secondStepSignupComponent,
+    thirdStepSignupComponent,
     LocationComponent,
     RecapComponent,
     ImagePickerComponent,
@@ -48,6 +55,8 @@ import {PapDatePipe} from './pipes/pap-date.pipe';
     EffectsModule.forFeature([HeaderEffects]),
     StoreModule.forFeature(fromForm.ticketFeatureKey, fromForm.reducer),
     EffectsModule.forFeature([FormEffects]),
+    StoreModule.forFeature(fromSignUp.signUpFeatureKey, fromSignUp.reducer),
+    EffectsModule.forFeature([SignUpEffects]),
     TranslateModule.forRoot(),
   ],
   exports: [
@@ -69,6 +78,9 @@ import {PapDatePipe} from './pipes/pap-date.pipe';
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
+    firstStepSignupComponent,
+    secondStepSignupComponent,
+    thirdStepSignupComponent,
   ],
 })
 export class SharedModule {}
