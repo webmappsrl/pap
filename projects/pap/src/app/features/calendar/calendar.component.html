@@ -19,11 +19,11 @@
         lines="none"
       >
         <ion-label slot="start" class="pap-calendar-date">
-          <div class="pap-calendar-monthday">{{item.key|date: 'd' }}</div>
-          <div class="pap-calendar-monthname">{{item.key|date: 'MMMM' }}</div>
+          <div class="pap-calendar-monthday">{{item.key|papDate: 'd' }}</div>
+          <div class="pap-calendar-monthname">{{item.key|papDate: 'MMMM' }}</div>
         </ion-label>
         <div>
-          <div class="pap-calendar-weekday">{{item.key|date: 'EEEE' }}</div>
+          <div class="pap-calendar-weekday">{{item.key|papDate: 'EEEE' }}</div>
           <div div *ngFor="let trash of item.value" class="pap-calendar-event">
             <div class="pap-calendar-time">{{trash.start_time}} - {{trash.stop_time}}</div>
             <div>

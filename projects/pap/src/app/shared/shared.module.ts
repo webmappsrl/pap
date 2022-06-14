@@ -21,6 +21,7 @@ import {InputPatternPipe} from './form/input-pattern.pipe';
 import {FormEffects} from './form/state/form.effects';
 import {HeaderEffects} from './header/state/header.effects';
 import {SelectComponent} from './form/select/select.component';
+import {PapDatePipe} from './pipes/pap-date.pipe';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {SelectComponent} from './form/select/select.component';
     RecapComponent,
     ImagePickerComponent,
     SelectComponent,
+    PapDatePipe,
   ],
   imports: [
     CommonModule,
@@ -66,6 +68,7 @@ import {SelectComponent} from './form/select/select.component';
     RecapComponent,
     ImagePickerComponent,
     SelectComponent,
+    PapDatePipe,
   ],
 })
 export class SharedModule {}
