@@ -67,6 +67,7 @@ export class HomeEffects {
             icon: 'list',
             url: 'reports',
             action: buttonAction.NAVIGATION,
+            disabled: true,
           },
           {
             label: 'Richiedi Informazioni',

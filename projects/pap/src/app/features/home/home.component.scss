@@ -32,15 +32,14 @@ pap-home {
         font-size: 0.7em;
         color: var(--ion-color-primary);
       }
-
-      .pap-home-button-disabled {
-        &-icon {
-          color: #666666;
-          border: 2px solid #666666;
-        }
-        &-label {
-          color: #666666;
-        }
+    }
+    .pap-home-button-disabled {
+      .pap-home-button-image {
+        color: #666666;
+        border: 2px solid #666666;
+      }
+      .pap-home-button-label {
+        color: #666666;
       }
     }
   }
