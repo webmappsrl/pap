@@ -69,14 +69,12 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   clickOnMap(ev: LeafletMouseEvent) {
-    const coords: [number, number] = [ev.latlng.lng, ev.latlng.lat];
+    const coords: [number, number] = [ev.latlng.lat, ev.latlng.lng];
     this._store.dispatch(setMarker({coords}));
     this.genericClickEvt.emit(coords);
   }
 
   makeMarkers(features: GeoJson[]): void {
-    // TODO remove old markers?
-
     for (const feature of features) {
       const lon = feature.geometry.coordinates[0];
       const lat = feature.geometry.coordinates[1];
@@ -135,8 +133,6 @@ export class MapComponent implements OnInit, OnDestroy {
       MAP_OPTIONS.START_ZOOM,
     );
     tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: MAP_OPTIONS.MAX_ZOOM,
       minZoom: MAP_OPTIONS.MIN_ZOM,
     }).addTo(this.map);

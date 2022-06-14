@@ -34,7 +34,7 @@ export class LocationService {
   getAddress(coordinates: number[]) {
     return this._http
       .get(
-        `https://nominatim.openstreetmap.org/reverse?lat=${coordinates[1]}&lon=${coordinates[0]}&format=json`,
+        `https://nominatim.openstreetmap.org/reverse?lat=${coordinates[0]}&lon=${coordinates[1]}&format=json`,
       )
       .pipe(
         map((response: any) => {
