@@ -3,5 +3,9 @@ import * as fromAuth from './auth.reducer';
 
 export const selectAuthState = createFeatureSelector<fromAuth.AuthState>(fromAuth.authFeatureKey);
 export const isLogged = createSelector(selectAuthState, state => state != null && state.isLogged);
+export const isVerified = createSelector(
+  selectAuthState,
+  state => state != null && state.isVerified,
+);
 
 export const error = createSelector(selectAuthState, state => state != null && state.error);

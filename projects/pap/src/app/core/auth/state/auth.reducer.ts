@@ -6,12 +6,14 @@ export const authFeatureKey = 'auth';
 
 export interface AuthState {
   isLogged: boolean;
+  isVerified: boolean;
   user?: User;
   error?: string;
 }
 
 export const initialState: AuthState = {
   isLogged: false,
+  isVerified: false,
 };
 
 export const reducer = createReducer(
@@ -22,6 +24,7 @@ export const reducer = createReducer(
     ...state,
     user: action.user,
     isLogged: true,
+    isVerified: action.user.email_verified_at != null ? true : false,
   })),
   on(AuthActions.loadAuthsFailure, (state, action) => {
     localStorage.removeItem('access_token');
@@ -29,6 +32,7 @@ export const reducer = createReducer(
       ...state,
       user: undefined,
       isLogged: false,
+      isVerified: false,
       error: undefined,
     };
   }),
@@ -37,6 +41,7 @@ export const reducer = createReducer(
     return {
       ...state,
       isLogged: false,
+      isVerified: false,
       error: undefined,
     };
   }),
@@ -45,6 +50,7 @@ export const reducer = createReducer(
     return {
       ...state,
       isLogged: true,
+      isVerified: action.user.email_verified_at != null ? true : false,
       error: undefined,
     };
   }),
@@ -54,6 +60,7 @@ export const reducer = createReducer(
       ...state,
       user: undefined,
       isLogged: false,
+      isVerified: false,
       error: action.error.error.message,
     };
   }),
@@ -63,6 +70,7 @@ export const reducer = createReducer(
     return {
       ...state,
       isLogged: true,
+      isVerified: action.user.email_verified_at != null ? true : false,
       error: undefined,
     };
   }),
@@ -72,6 +80,7 @@ export const reducer = createReducer(
       ...state,
       user: undefined,
       isLogged: false,
+      isVerified: false,
       error: action.error.error.message,
     };
   }),
