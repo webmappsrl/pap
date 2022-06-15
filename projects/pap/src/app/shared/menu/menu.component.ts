@@ -10,8 +10,8 @@ import {MenuController, ModalController, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
 import {selectHomeState} from '../../features/home/state/home.selectors';
-import {selectHeaderState} from './state/header.selectors';
-import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
+import {selectMenuState} from './state/menu.selectors';
+import {closeMenu, loadMenu, openMenu} from './state/menu.actions';
 import {buttonAction} from '../../features/home/home.model';
 import {AppState} from '../../core/core.state';
 
@@ -20,17 +20,17 @@ interface ActionEvt {
   url?: string;
 }
 @Component({
-  selector: 'pap-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: 'pap-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent implements OnDestroy {
+export class MenuComponent implements OnDestroy {
   private _actionEVT$: EventEmitter<ActionEvt> = new EventEmitter<ActionEvt>();
   private _actionEVTSub: Subscription = Subscription.EMPTY;
 
-  headerView$ = this._store.pipe(select(selectHeaderState));
+  menuView$ = this._store.pipe(select(selectMenuState));
   homeView$ = this._store.pipe(select(selectHomeState));
 
   @Input() startButton: boolean = false;
@@ -55,7 +55,7 @@ export class HeaderComponent implements OnDestroy {
         this._navCtrl.navigateForward(evt.url);
       }
     });
-    this._store.dispatch(loadHeaders());
+    this._store.dispatch(loadMenu());
   }
 
   public action(action: string, url?: string): void {

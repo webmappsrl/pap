@@ -1,0 +1,26 @@
+<ng-container *ngIf="(menuView$|async)?.header as view">
+  <ion-menu
+    side="start"
+    menuId="mainmenu"
+    contentId="main"
+    class="pap-menu"
+    (ionDidClose)="closedMenu()"
+  >
+    <ion-header>
+      <ion-toolbar class="pap-menu-header" color="primary">
+        <ion-title class="pap-menu-title">MENU</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list *ngIf="homeView$|async as homeView">
+        <ion-item
+          *ngFor="let button of homeView.buttons"
+          class="pap-menu-item"
+          (click)="action(button.action,button.url)"
+        >
+          {{button.label}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+</ng-container>

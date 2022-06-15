@@ -2,39 +2,19 @@
   <ion-toolbar class="pap-header">
     <ion-buttons slot="start">
       <ion-back-button class="back-button"></ion-back-button>
-      <ion-button (click)="closeModal()" *ngIf="modal" class="modal">
+      <ion-menu-button color="white" *ngIf="startButton"></ion-menu-button>
+      <ion-button (click)="closeModal()" *ngIf="modal" class="modal" color="white">
         <ion-icon name="close-outline"></ion-icon>
-      </ion-button>
-      <ion-button *ngIf="view.buttonStart && startButton" class="{{view.buttonStart.class}}  pap-header-button"
-        (click)="action(view.buttonStart.action,view.buttonStart.url)">
-        <ion-icon slot="icon-only" [name]="view.buttonStart.icon"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title class="pap-header-title">
       <span *ngIf="view.label">{{view.label}}</span>
       <img *ngIf="view.img" class="pap-header-img" src="{{view.img}}" />
     </ion-title>
-    <ion-buttons slot="end">
-      <ion-button *ngIf="view.buttonEnd && endButton" class="{{view.buttonEnd.class}} pap-header-button"
-        (click)="action(view.buttonEnd.action,view.buttonEnd.url)">
-        <ion-icon slot="icon-only" [name]="view.buttonEnd.icon"></ion-icon>
+    <ion-buttons slot="end" *ngIf="endButton">
+      <ion-button color="white" (click)="action('navigation','settings')">
+        <ion-icon slot="icon-only" name="settings"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-
-  <ion-menu side="start" menuId="mainmenu" contentId="main" class="pap-header-menu" (ionDidClose)="closedMenu()">
-    <ion-header>
-      <ion-toolbar class="pap-header-menu-header">
-        <ion-title class="pap-header-menu-title">{{view.label}}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list *ngIf="homeView$|async as homeView">
-        <ion-item *ngFor="let button of homeView.buttons" class="pap-header-menu-item"
-          (click)="action(button.action,button.url)">
-          {{button.label}}
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
 </ng-container>

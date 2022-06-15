@@ -1,15 +1,24 @@
-<pap-header [startButton]="true" [endButton]="true"></pap-header>
+<ion-header>
+  <pap-header [startButton]="true" [endButton]="true"></pap-header>
+</ion-header>
+<pap-menu></pap-menu>
 <ion-content padding class="pap-home">
   <ion-grid>
     <ion-row>
       <ng-container *ngIf="homeView$|async as view">
         <ng-container *ngFor="let button of view.buttons">
           <ion-col *ngIf="!button.hideInHome" size="4">
-            <div class="ripple-parent pap-home-button {{button.class}}"
+            <div
+              class="ripple-parent pap-home-button {{button.class}}"
               [ngClass]="{'pap-home-button-disabled':button.disabled,'ion-activatable':!button.disabled}"
-              (click)="!button.disabled && action(button.action,button.url)">
+              (click)="!button.disabled && action(button.action,button.url)"
+            >
               <div class="pap-home-button-image">
-                <ion-icon *ngIf="button.icon" name="{{button.icon}}" class="pap-home-button-image-icon">
+                <ion-icon
+                  *ngIf="button.icon"
+                  name="{{button.icon}}"
+                  class="pap-home-button-image-icon"
+                >
                 </ion-icon>
                 <img *ngIf="button.img" class="pap-home-button-image-img" src="{{button.img}}" />
               </div>

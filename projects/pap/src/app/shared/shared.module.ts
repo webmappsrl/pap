@@ -27,9 +27,11 @@ import {secondStepSignupComponent} from './form/steps/second-step.component';
 import {thirdStepSignupComponent} from './form/steps/third-step.component';
 import * as fromSignUp from './form/state/sign-up.reducer';
 import {SignUpEffects} from './form/state/sign-up.effects';
+import {MenuComponent} from './menu/menu.component';
 @NgModule({
   declarations: [
     HeaderComponent,
+    MenuComponent,
     ErrorFormHandlerComponent,
     MapComponent,
     InputTypePipe,
@@ -68,6 +70,7 @@ import {SignUpEffects} from './form/state/sign-up.effects';
     HttpClientModule,
     HeaderComponent,
     MapComponent,
+    MenuComponent,
     ErrorFormHandlerComponent,
     TranslateModule,
     InputTypePipe,

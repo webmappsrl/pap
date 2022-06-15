@@ -1,6 +1,7 @@
 pap-header {
-  ion-button.modal {
-    display: block;
+  ion-button,
+  ion-button.modal,
+  ion-menu-button {
     color: #fff;
     font-size: 1.3rem;
   }
@@ -16,21 +17,8 @@ pap-header {
       text-align: center;
       color: var(--ion-color-secondary-contrast);
     }
-    &-image {
-    }
   }
-  .pap-header-menu {
-    &-header {
-      --background: var(--ion-color-primary);
-    }
-    &-title {
-      text-align: center;
-      color: var(--ion-color-secondary-contrast);
-    }
 
-    .pap-header-menu-item {
-    }
-  }
   ion-item {
     pointer-events: auto !important;
   }

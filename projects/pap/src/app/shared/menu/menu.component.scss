@@ -1,0 +1,12 @@
+pap-menu {
+  ion-button,
+  ion-menu-button,
+  pap-menu-title {
+    color: #fff;
+    font-size: 1.3rem;
+  }
+
+  ion-item {
+    pointer-events: auto !important;
+  }
+}
