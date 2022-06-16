@@ -20,12 +20,14 @@ export const reducer = createReducer(
   initialState,
 
   on(AuthActions.loadAuths, state => state),
-  on(AuthActions.loadAuthsSuccess, (state, action) => ({
-    ...state,
-    user: action.user,
-    isLogged: true,
-    isVerified: action.user.email_verified_at != null ? true : false,
-  })),
+  on(AuthActions.loadAuthsSuccess, (state, action) => {
+    return {
+      ...state,
+      user: action.user,
+      isLogged: true,
+      isVerified: action.user.email_verified_at != null ? true : false,
+    };
+  }),
   on(AuthActions.loadAuthsFailure, (state, action) => {
     localStorage.removeItem('access_token');
     return {
@@ -50,7 +52,7 @@ export const reducer = createReducer(
     return {
       ...state,
       isLogged: true,
-      isVerified: action.user.email_verified_at != null ? true : false,
+      isVerified: action.user.data.email_verified_at != null ? true : false,
       error: undefined,
     };
   }),
