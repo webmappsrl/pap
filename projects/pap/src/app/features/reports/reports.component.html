@@ -1,0 +1,28 @@
+<ion-header>
+  <pap-header></pap-header>
+</ion-header>
+<ion-content>
+  <ion-list *ngIf="reportsView$|async as reports">
+    <ion-item *ngFor="let report of reports" class="pap-reports-item" (click)="openDetail(report)">
+      <ion-label slot="start" class="pap-reports-date">
+        <div class="pap-reports-monthday">{{report.created_at|papDate: 'd' }}</div>
+        <div class="pap-reports-monthname">{{report.created_at|papDate: 'MMMM' }}</div>
+      </ion-label>
+      <ion-avatar>
+        <img [src]="report.image" />
+      </ion-avatar>
+      <ion-label slot="end">
+        <span>Ticket {{report.ticket_type}}</span>
+        <div
+          class="pap-reports-item"
+          *ngIf="report.trashType as trashType"
+          (click)="openTrashTypeDetail(trashType, $event)"
+        >
+          <ion-icon slot="end" style="color:{{trashType.color}}" name="ellipse"></ion-icon>
+          {{trashType.name}}
+        </div>
+        <p>{{report.note}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

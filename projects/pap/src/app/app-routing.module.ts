@@ -68,6 +68,11 @@ const routes: Routes = [
     loadChildren: () => import('./features/calendar/calendar.module').then(m => m.CalendarModule),
   },
   {
+    path: 'reports',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./features/reports/reports.module').then(m => m.ReportsModule),
+  },
+  {
     path: '**',
     redirectTo: 'home', // all no defined route redirect to home
   },

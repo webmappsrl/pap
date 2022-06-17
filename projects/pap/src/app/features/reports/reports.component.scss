@@ -1,0 +1,37 @@
+pap-reports {
+  background-color: red;
+  .pap-reports-item {
+    margin-bottom: 15px;
+    .pap-user-type {
+      border-radius: 25px;
+      color: white;
+      padding: 4px;
+      margin-left: 10px;
+      margin-right: 10px;
+      width: min-content;
+      display: block;
+      right: 0;
+      position: absolute;
+      top: 0;
+    }
+    .pap-reports-date {
+      max-width: 70px;
+      color: var(--ion-color-primary);
+      font-weight: 300;
+      font-size: 50px;
+      text-align: center;
+      overflow: visible;
+
+      .pap-reports-monthname {
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+    }
+    .pap-reports-weekday {
+      font-size: 0.9em;
+      font-weight: 600;
+      font-style: italic;
+    }
+  }
+}
