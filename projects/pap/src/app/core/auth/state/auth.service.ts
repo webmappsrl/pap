@@ -47,4 +47,18 @@ export class AuthService {
       },
     );
   }
+
+  update(updates: any) {
+    return this._http.post(
+      `${env.api}/api/user`,
+      {
+        ...updates,
+      },
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+      },
+    );
+  }
 }

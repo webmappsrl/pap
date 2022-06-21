@@ -20,6 +20,7 @@
           <pap-first-step-signup-form
             *ngSwitchCase="0"
             [buttons]="false"
+            [disable]="['email']"
           ></pap-first-step-signup-form>
           <pap-second-step-signup-form
             *ngSwitchCase="1"
@@ -35,7 +36,7 @@
         <ion-row>
           <ion-col class="ion-align-self-start"> </ion-col>
           <ion-col class="ion-align-self-center" size="8">
-            <ion-button expand="full" [disabled]="isDisabled()">
+            <ion-button expand="full" [disabled]="isDisabled()" (click)="update()">
               <ion-icon color="light" name="save"></ion-icon>
             </ion-button>
           </ion-col>
@@ -44,4 +45,9 @@
       </ion-grid>
     </form>
   </ion-content>
+  <ion-list>
+    <ion-item *ngIf="error$|async as error">
+      <ion-label color="danger">{{error}}</ion-label>
+    </ion-item>
+  </ion-list>
 </ng-container>

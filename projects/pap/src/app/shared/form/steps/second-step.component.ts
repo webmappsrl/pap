@@ -14,7 +14,7 @@ import {FormProvider} from '../form-provider';
       <form [formGroup]="secondStep">
       <ion-item>
         <ion-label position="stacked" position="fixed">Password</ion-label>
-        <ion-input required formControlName="password" placeholder="Inserire la password">
+        <ion-input required formControlName="password" placeholder="Inserire la password" type="password">
         </ion-input>
       </ion-item>
       <ion-item *ngIf="secondStep.controls['password'].errors as errors">
@@ -26,6 +26,7 @@ import {FormProvider} from '../form-provider';
           required
           formControlName="password_confirmation"
           placeholder="Inserire la password"
+          type="password"
         >
         </ion-input>
       </ion-item>

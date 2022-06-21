@@ -21,7 +21,7 @@ import {FormProvider} from '../form-provider';
       </ion-item>
       <ion-item>
         <ion-label position="stacked" position="fixed">Email</ion-label>
-        <ion-input formControlName="email" required placeholder="Inserire la email"> </ion-input>
+        <ion-input formControlName="email" required placeholder="Inserire la email" [disabled]="disable.indexOf('email')> -1"> </ion-input>
       </ion-item>
       <ion-item *ngIf="firstStep.controls['email'].errors as errors">
         <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
@@ -47,6 +47,7 @@ export class firstStepSignupComponent {
   firstStep: FormGroup = this._formProvider.getForm().get('firstStep') as FormGroup;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Input() buttons = true;
+  @Input() disable: string[] = [];
 
   constructor(private _formProvider: FormProvider) {}
 }

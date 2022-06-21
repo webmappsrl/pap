@@ -18,3 +18,10 @@ export const loadSignUpsFailure = createAction(
   '[Auth] Load SignUps Failure',
   props<{error: any}>(),
 );
+
+export const UpdateUser = createAction(
+  '[Auth] Update User',
+  props<{updates: {[key: string]: any}}>(),
+);
+export const UpdateUserSuccess = createAction('[Auth] Update User Success', props<{user: any}>());
+export const UpdateUserFailure = createAction('[Auth] Update User Failure', props<{error: any}>());

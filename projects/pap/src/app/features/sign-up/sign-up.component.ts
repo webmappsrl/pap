@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertController, NavController} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
 import {BehaviorSubject, filter, Observable, Subscription, switchMap} from 'rxjs';
 import {loadSignUps} from '../../core/auth/state/auth.actions';
@@ -41,12 +41,7 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
   signUpForm: FormGroup;
   step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  constructor(
-    fb: FormBuilder,
-    private _store: Store<AppState>,
-    private _navCtrl: NavController,
-    private _alertCtrl: AlertController,
-  ) {
+  constructor(fb: FormBuilder, private _store: Store<AppState>, private _navCtrl: NavController) {
     super();
     this._store.dispatch(loadConfiniZone());
     this._store.dispatch(loadUserTypes());
@@ -74,18 +69,6 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
       .pipe(
         select(selectAuthState),
         filter(v => v.isLogged),
-        switchMap(_ =>
-          this._alertCtrl.create({
-            header: 'Registrazione avvenuta con successo',
-            message:
-              'Gentile utente ti abbiamo inviato una email per consentirci di verificare la email con cui ti sei registrato',
-            buttons: ['ok'],
-          }),
-        ),
-        switchMap(alert => {
-          alert.present();
-          return alert.onWillDismiss();
-        }),
       )
       .subscribe(val => {
         this._navCtrl.navigateRoot('home');

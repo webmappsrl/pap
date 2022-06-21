@@ -2,6 +2,8 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@an
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {select, Store} from '@ngrx/store';
 import {BehaviorSubject, map, Observable, Subscription} from 'rxjs';
+import {UpdateUser} from '../../core/auth/state/auth.actions';
+import {error} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {FormProvider} from '../../shared/form/form-provider';
 import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
@@ -23,6 +25,7 @@ export class SettingsComponent implements OnInit {
   settingsView$ = this._store.pipe(select(settingView));
   settingsForm: FormGroup;
   settingsFormSub: Subscription = Subscription.EMPTY;
+  error$: Observable<string | false | undefined> = this._store.select(error);
   currentStep = 'firstStep';
 
   step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
@@ -54,6 +57,11 @@ export class SettingsComponent implements OnInit {
         name: sv.user?.name ?? '',
         email: sv.user?.email ?? '',
       });
+      this.settingsForm.controls['thirdStep'].setValue({
+        location: sv.user?.location ?? undefined,
+        zone_id: sv.user?.zone_id ?? undefined,
+        user_type_id: sv.user?.user_type_id ?? undefined,
+      });
     });
   }
 
@@ -66,12 +74,25 @@ export class SettingsComponent implements OnInit {
   }
 
   update() {
-    const res = {
-      ...this.settingsForm.controls['firstStep'].value,
-      ...this.settingsForm.controls['secondStep'].value,
-      ...this.settingsForm.controls['thirdStep'].value,
-    };
-    console.log(res);
+    let updates: {[key: string]: any} | null = {};
+    switch (this.currentStep) {
+      case 'firstStep':
+        updates['name'] = this.settingsForm.controls['firstStep'].value['name'];
+        break;
+      case 'secondStep':
+        updates = this.settingsForm.controls['secondStep'].value;
+        this.settingsForm.controls['secondStep'].reset();
+        break;
+      case 'thirdStep':
+        updates = this.settingsForm.controls['thirdStep'].value;
+        break;
+      default:
+        updates = null;
+        console.log('error');
+    }
+    if (updates != null) {
+      this._store.dispatch(UpdateUser({updates}));
+    }
   }
   isDisabled(): boolean {
     const ctrl = this.settingsForm.controls[this.currentStep];

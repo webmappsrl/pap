@@ -86,4 +86,23 @@ export const reducer = createReducer(
       error: action.error.error.message,
     };
   }),
+  on(AuthActions.UpdateUser, state => state),
+  on(AuthActions.UpdateUserSuccess, (state, action) => {
+    return {
+      ...state,
+      isLogged: true,
+      isVerified: action.user.email_verified_at != null ? true : false,
+      error: undefined,
+      user: action.user.data.user,
+    };
+  }),
+  on(AuthActions.UpdateUserFailure, (state, action) => {
+    return {
+      ...state,
+      user: undefined,
+      isLogged: false,
+      isVerified: false,
+      error: action.error.error.message,
+    };
+  }),
 );
