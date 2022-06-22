@@ -13,7 +13,7 @@
         <ion-note class="pap-form-recap-note" *ngSwitchCase="'text'">
           {{form.controls[item.type].value}}
         </ion-note>
-        <ion-note class="pap-form-recap-note" *ngSwitchCase="'select'">
+        <ion-note class="pap-form-recap-note" *ngSwitchCase="'trash_type_id'">
           {{(currentTrashBookType$|async)?.name}}
         </ion-note>
         <ion-note class="pap-form-recap-note" *ngSwitchCase="'location'">

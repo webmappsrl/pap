@@ -26,14 +26,14 @@
           {{phone}}
         </ion-note>
       </ion-item>
-      <ion-accordion-group [value]="['location']">
+      <ion-accordion-group *ngIf="rep.location as loc" [value]="['location']">
         <ion-accordion value="location">
           <ion-item slot="header" color="light">
             <ion-label>LOCATION</ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">
             <div class="map">
-              <pap-map *ngIf="rep.location as loc" [positionMarker]="loc"></pap-map>
+              <pap-map [positionMarker]="loc"></pap-map>
             </div>
           </div>
         </ion-accordion>

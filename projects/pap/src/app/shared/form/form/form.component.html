@@ -152,11 +152,17 @@
   </ng-template>
 </ion-modal>
 <ion-modal [isOpen]="(formSuccess$|async)">
-  <ion-content>
-    <ion-label>
-      Gentile utente la informiamo che il ticket è stato inviato correttamente. La ricontatteremo al
-      piu presto
-    </ion-label>
+  <ng-template>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>sengnalazione presa in carico</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        Gentile utente la informiamo che il ticket è stato inviato correttamente. La ricontatteremo
+        al piu presto
+      </ion-card-content>
+    </ion-card>
     <div class="pap-form-footer">
       <div class="pap-form-buttons">
         <div class="pap-form-buttonblock">
@@ -166,5 +172,5 @@
         </div>
       </div>
     </div>
-  </ion-content>
+  </ng-template>
 </ion-modal>
