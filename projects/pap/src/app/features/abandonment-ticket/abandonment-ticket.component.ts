@@ -25,7 +25,7 @@ export class AbandonmentTicketComponent {
       },
       {
         label: 'Scegli il tipo di abbandono:',
-        type: 'select',
+        type: 'trash_type_id',
         required: true,
         recap: 'Servizio',
       },

@@ -25,7 +25,7 @@ export class TicketReservationComponent {
       },
       {
         label: 'Scegli il tipo di servizio da prenotare:',
-        type: 'select',
+        type: 'trash_type_id',
         required: true,
         recap: 'Servizio',
       },

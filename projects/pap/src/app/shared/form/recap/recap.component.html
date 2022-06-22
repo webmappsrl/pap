@@ -3,7 +3,9 @@
     {{'Ricapitolando'|translate}}
   </ion-label>
   <ng-container *ngFor="let item of steps$|async">
-    <ion-item *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''">
+    <ion-item
+      *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''"
+    >
       <ion-label class="pap-form-recap-label">
         {{(item.recap||'') | translate}}
       </ion-label>
@@ -26,7 +28,12 @@
         <ng-container *ngSwitchCase="'image'">
           <img [src]="form.controls[item.type].value" />
         </ng-container>
-        <ion-note class="pap-form-recap-note" *ngSwitchDefault class="pap-form-recap-note" slot="end">
+        <ion-note
+          class="pap-form-recap-note"
+          *ngSwitchDefault
+          class="pap-form-recap-note"
+          slot="end"
+        >
           {{'messages.notInserted' | translate}}
         </ion-note>
       </ng-container>

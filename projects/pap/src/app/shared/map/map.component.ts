@@ -48,6 +48,9 @@ export class MapComponent implements OnInit, OnDestroy {
   @Output() genericClickEvt: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   @Input() set markers(value: GeoJson[]) {
+    if (this.map == null) {
+      this.initMap();
+    }
     this.makeMarkers(value);
   }
 
@@ -90,12 +93,17 @@ export class MapComponent implements OnInit, OnDestroy {
     this.map.remove();
   }
   ngOnInit(): void {
-    this.initMap();
+    if (this.map == null) {
+      this.initMap();
+    }
   }
 
   makePositionMarker(coords: number[]) {
     if (this.myPositionMarker) {
       this.myPositionMarker.remove();
+    }
+    if (this.map == null) {
+      this.initMap();
     }
     if (this.map != null) {
       this.myPositionMarker = marker(latLng(coords[0], coords[1]), {

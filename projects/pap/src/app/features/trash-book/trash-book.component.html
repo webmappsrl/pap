@@ -19,7 +19,7 @@
         <ion-icon
           slot="start"
           *ngIf="item"
-          style="color:{{(item.trashBookType?.color)}}"
+          [ngStyle]="{color:item.trashBookType?.color}"
           [name]="item.trashBookType?.color
                      ?'ellipse':'ellipse-outline'"
         >

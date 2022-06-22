@@ -25,7 +25,7 @@ export class ReportTicketComponent {
       },
       {
         label: 'Scegli il tipo di servizio che non ha funzionato:',
-        type: 'select',
+        type: 'trash_type_id',
         required: true,
         recap: 'Servizio',
       },

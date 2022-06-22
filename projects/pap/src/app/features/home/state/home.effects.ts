@@ -20,7 +20,7 @@ export class HomeEffects {
             hideInHome: true,
           },
           {
-            label: 'Company',
+            label: 'ESA',
             img: 'assets/icons/logo-e.png',
             url: 'info',
             action: buttonAction.NAVIGATION,

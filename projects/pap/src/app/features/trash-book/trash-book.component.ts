@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../core/core.state';
@@ -14,7 +14,7 @@ import {TrashBookRow} from './trash-book-model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class TrashBookComponent {
+export class TrashBookComponent implements OnDestroy {
   trashBookView$ = this._store.pipe(select(selectTrashBookState));
   constructor(private _store: Store<AppState>, private _navCtrl: NavController) {
     this._store.dispatch(showButtons({show: false}));
@@ -27,5 +27,8 @@ export class TrashBookComponent {
   buttonClick(item: TrashBookRow) {
     this._store.dispatch(setTrashBookDetail({trashBookDetail: item}));
     this._navCtrl.navigateForward('trashbook/detail');
+  }
+  ngOnDestroy(): void {
+    this._store.dispatch(filterTrashBooks({filter: ''}));
   }
 }

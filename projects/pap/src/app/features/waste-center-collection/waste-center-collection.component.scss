@@ -1,28 +1,2 @@
 pap-waste-center-collection {
 }
-
-// MUST BE OUT OF COMPONENT
-.pap-waste-center-alert {
-  .pap-waste-center-alert-btn {
-    margin: 0px;
-    text-align: center;
-    .alert-button-inner {
-      text-align: center;
-      display: inline;
-    }
-  }
-
-  .pap-waste-center-alert-btn-nav {
-    width: 50%;
-  }
-  .pap-waste-center-alert-btn-web {
-    width: 30%;
-  }
-  .pap-waste-center-alert-btn-ok {
-    width: 20%;
-  }
-  .alert-button-group-vertical {
-    flex-direction: row;
-    padding: 0;
-  }
-}
