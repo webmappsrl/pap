@@ -38,7 +38,7 @@ export class InfoTicketComponent implements OnInit {
     step: [
       {
         label:
-          "Questo serivizio ti permette di richiedere informazioni direttamente a {{companyName}}. Al termine ti verrà assegnato un codice della richiesta e verrà inviata una email a {{companyName}}: verrai ricontattato appena possibile. Clicca sul bottone ' >          ' per iniziare.",
+          "Questo serivizio ti permette di richiedere informazioni direttamente a ESA. Al termine ti verrà assegnato un codice della richiesta e verrà inviata una email a ESA: verrai ricontattato appena possibile. Clicca sul bottone ' >          ' per iniziare.",
         type: 'label',
         required: false,
         translationsObj: {
@@ -48,7 +48,7 @@ export class InfoTicketComponent implements OnInit {
         },
       },
       {
-        label: 'Scrivi qui le informazioni che vorresti richiedere a {{companyName}}',
+        label: 'Scrivi qui le informazioni che vorresti richiedere a ESA',
         type: 'note',
         required: true,
         value: '',

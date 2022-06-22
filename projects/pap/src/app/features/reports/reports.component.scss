@@ -1,5 +1,4 @@
 pap-reports {
-  background-color: red;
   .pap-reports-item {
     margin-bottom: 15px;
     .pap-user-type {
@@ -32,6 +31,13 @@ pap-reports {
       font-size: 0.9em;
       font-weight: 600;
       font-style: italic;
+    }
+  }
+  ion-card {
+    img {
+      padding: 25px;
+      display: block;
+      width: 100%;
     }
   }
 }

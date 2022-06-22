@@ -35,7 +35,7 @@
                 <ion-icon
                   class="trash-book-details-icon"
                   slot="end"
-                  style="color:{{trashType?.color}}"
+                  [ngStyle]="{color:trashType?.color}"
                   name="ellipse"
                 ></ion-icon>
                 {{trashType.name}}

@@ -9,6 +9,7 @@ import {ReportsDetailComponent} from './reports-detail.component';
 import {loadReportss} from './state/reports.actions';
 import {Ticket} from './state/reports.effects';
 import {selectReports} from './state/reports.selectors';
+import {skip} from 'rxjs';
 
 @Component({
   selector: 'pap-reports',
@@ -18,7 +19,7 @@ import {selectReports} from './state/reports.selectors';
   encapsulation: ViewEncapsulation.None,
 })
 export class ReportsComponent {
-  reportsView$ = this._store.pipe(select(selectReports));
+  reportsView$ = this._store.pipe(select(selectReports), skip(1));
 
   constructor(private _store: Store<AppState>, private _modalCtrl: ModalController) {
     this._store.dispatch(loadReportss());
