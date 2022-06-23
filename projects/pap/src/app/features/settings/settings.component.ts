@@ -6,9 +6,7 @@ import {UpdateUser} from '../../core/auth/state/auth.actions';
 import {error} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {FormProvider} from '../../shared/form/form-provider';
-import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 import {showButtons} from '../../shared/header/state/header.actions';
-import {loadConfiniZone} from '../../shared/map/state/map.actions';
 import {ConfirmedValidator} from '../sign-up/sign-up.component';
 import {toggleEdit} from './state/settings.actions';
 import {settingView} from './state/settings.selectors';
@@ -30,8 +28,6 @@ export class SettingsComponent implements OnInit {
 
   step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   constructor(private _store: Store<AppState>, fb: FormBuilder) {
-    this._store.dispatch(loadConfiniZone());
-    this._store.dispatch(loadUserTypes());
     this.settingsForm = fb.group({
       firstStep: fb.group({
         name: ['', [Validators.required]],

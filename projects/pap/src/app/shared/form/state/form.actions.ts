@@ -8,5 +8,5 @@ export const sendTicketFailure = createAction('[Ticket] send Ticket Failure', pr
 export const resetTicket = createAction('[Ticket] reset Ticket Failure');
 export const currentTrashBookType = createAction(
   '[Ticket] set currentTrashBookType',
-  props<{currentTrashBookType: TrashBookType}>(),
+  props<{currentTrashBookType: TrashBookType | undefined}>(),
 );

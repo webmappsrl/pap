@@ -10,15 +10,17 @@ import {FormGroup} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {AppState} from '../../../core/core.state';
+import {loadConfiniZone} from '../../map/state/map.actions';
 import {currentZone} from '../../map/state/map.selectors';
 import {FormProvider} from '../form-provider';
+import {loadUserTypes} from '../state/sign-up.actions';
 import {currentUserTypes} from '../state/sign-up.selectors';
 
 @Component({
   template: `
       <form [formGroup]="thirdStep">
       <ion-item>
-        <pap-form-location formControlName="location"> </pap-form-location>
+        <pap-form-location formControlName="location" (ngModelChange)="reset()"> </pap-form-location>
       </ion-item>
       <ion-item *ngIf="thirdStep.controls['location'].errors as errors">
         <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
@@ -77,6 +79,11 @@ export class thirdStepSignupComponent {
   userTypes$: Observable<any> = this._store.select(currentUserTypes);
 
   constructor(private _formProvider: FormProvider, private _store: Store<AppState>) {
-    this.userTypes$.subscribe(v => console.log(v));
+    this._store.dispatch(loadConfiniZone());
+    this._store.dispatch(loadUserTypes());
+  }
+
+  reset(): void {
+    this.thirdStep.controls['user_type_id'].reset();
   }
 }

@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  ViewEncapsulation,
+} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AppState} from '@capacitor/app';
 import {Store} from '@ngrx/store';
@@ -37,12 +43,20 @@ export class SelectComponent implements ControlValueAccessor {
   onTouched = () => {};
   touched = false;
   disabled = false;
-  constructor(private _store: Store<AppState>) {}
-  writeValue(obj: TrashBookType): void {
+  constructor(private _store: Store<AppState>, private _cdr: ChangeDetectorRef) {}
+  writeValue(obj: TrashBookType | number): void {
+    if (typeof obj === 'number') {
+      const currentObj = this.options$.value.filter(f => f.id === obj);
+      obj = (currentObj.length > 0 ? currentObj[0] : undefined) as TrashBookType;
+    }
     if (obj) {
       this.select = obj.id;
       this._store.dispatch(currentTrashBookType({currentTrashBookType: obj}));
       this.onChange(obj.id);
+    } else {
+      this.select = -1;
+      this._store.dispatch(currentTrashBookType({currentTrashBookType: undefined}));
+      this._cdr.detectChanges();
     }
   }
 
