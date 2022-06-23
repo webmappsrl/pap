@@ -1,10 +1,13 @@
 <div class="pap-form-location">
-  <pap-map class=" pap-form-location-map" (genericClickEvt)="mapClick($event)" [positionMarker]="myPosition"
-    [center]="myPosition">
+  <pap-map
+    class=" pap-form-location-map"
+    (genericClickEvt)="mapClick($event)"
+    [positionMarker]="(myPosition$|async)!"
+    [center]="(myPosition$|async)!"
+  >
   </pap-map>
 
-  <div class="pap-form-location-padding">
-  </div>
+  <div class="pap-form-location-padding"></div>
 
   <div class="pap-form-location-infocontainer">
     <ion-button expand="block" fill="outline" (click)="getLocation()">

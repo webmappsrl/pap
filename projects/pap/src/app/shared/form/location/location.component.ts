@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AppState} from '@capacitor/app';
 import {select, Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {setMarker} from '../../map/state/map.actions';
 import {currentAddress} from '../../map/state/map.selectors';
 import {LocationService} from '../../services/location.service';
@@ -22,17 +22,17 @@ import {LocationService} from '../../services/location.service';
   ],
 })
 export class LocationComponent implements ControlValueAccessor {
-  public myPosition: number[] = [];
+  myPosition$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
   public myPositionString: string = '';
   onChange = (location: number) => {};
   onTouched = () => {};
   touched = false;
   disabled = false;
-  location: [number, number] | [] = [];
   currentAddress$: Observable<string | undefined> = this._store.pipe(select(currentAddress));
   constructor(private locationService: LocationService, private _store: Store<AppState>) {}
   writeValue(coords: any): void {
-    this.location = coords;
+    this.myPosition$.next(coords);
+    this._store.dispatch(setMarker({coords}));
     this.onChange(coords);
   }
 
@@ -66,7 +66,7 @@ export class LocationComponent implements ControlValueAccessor {
 
   setPosition(coords: number[]) {
     this.writeValue(coords);
-    this.myPosition = coords;
+    this.myPosition$.next(coords);
     this.locationService.getAddress(coords).subscribe(
       res => {
         this.setAddress(res as string);

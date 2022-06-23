@@ -61,7 +61,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   @Input() set center(value: number[]) {
-    if (value) {
+    if (value != null && value.length === 2) {
       this.centerToPoint(value);
     }
   }
