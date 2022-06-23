@@ -5,10 +5,11 @@ import {select, Store} from '@ngrx/store';
 import {map, Observable, Subscription, switchMap, tap, zip} from 'rxjs';
 import {AppState} from '../core.state';
 import {isLogged, isVerified} from './state/auth.selectors';
+import {environment as env} from 'projects/pap/src/environments/environment';
 
 const NO_LOGGED: AlertOptions = {
   header: 'Non sei loggato',
-  message: 'solo se loggato puoi accedere a questa pagina',
+  message: `solo se loggato puoi accedere a questa pagina`,
   buttons: [
     {
       text: 'login',
@@ -17,6 +18,10 @@ const NO_LOGGED: AlertOptions = {
     {
       text: 'registrati',
       role: 'sign-up',
+    },
+    {
+      text: 'password dimenticata?',
+      role: 'forgot-password',
     },
     'annulla',
   ],
@@ -48,6 +53,10 @@ export class AuthGuard implements CanActivate, OnDestroy {
       )
       .subscribe(res => {
         if (res && res.role) {
+          if (res.role === 'forgot-password') {
+            const url = `${env.api}/password/reset`;
+            window.open(url, '_system');
+          }
           this._navCtrl.navigateForward(res.role);
         }
       });
