@@ -47,6 +47,20 @@ export class AuthEffects {
     );
   });
 
+  logout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.logout),
+      switchMap(_ =>
+        this._authSvc.logout().pipe(
+          map(user => AuthActions.loadAuthsSuccess({user})),
+          catchError(error => {
+            return of(AuthActions.loadAuthsFailure({error}));
+          }),
+        ),
+      ),
+    );
+  });
+
   loadSignin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.loadSignIns),

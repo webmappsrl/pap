@@ -14,6 +14,7 @@ import {selectMenuState} from './state/menu.selectors';
 import {closeMenu, loadMenu, openMenu} from './state/menu.actions';
 import {buttonAction} from '../../features/home/home.model';
 import {AppState} from '../../core/core.state';
+import {logout} from '../../core/auth/state/auth.actions';
 
 interface ActionEvt {
   action: string;
@@ -60,6 +61,10 @@ export class MenuComponent implements OnDestroy {
 
   public action(action: string, url?: string): void {
     this._actionEVT$.emit({action, url});
+  }
+  logout(): void {
+    this._store.dispatch(logout());
+    this.closedMenu();
   }
 
   public closedMenu(): void {

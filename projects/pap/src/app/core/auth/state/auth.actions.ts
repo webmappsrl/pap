@@ -32,3 +32,5 @@ export const resendEmailFailure = createAction(
   '[Auth] Resend Email Failure',
   props<{error: any}>(),
 );
+
+export const logout = createAction('[Auth] logout');

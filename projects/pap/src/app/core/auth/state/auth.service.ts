@@ -12,6 +12,10 @@ export class AuthService {
   getUser(): Observable<any> {
     return this._http.get(`${env.api}/api/user`);
   }
+  logout(): Observable<any> {
+    localStorage.removeItem('access_token');
+    return this.getUser();
+  }
 
   getAlert(error: any): void {
     window.alert(JSON.stringify(error));

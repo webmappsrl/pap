@@ -38,6 +38,7 @@ export const reducer = createReducer(
       error: undefined,
     };
   }),
+  on(AuthActions.logout, state => state),
   on(AuthActions.loadSignIns, (state, action) => {
     localStorage.removeItem('access_token');
     return {
