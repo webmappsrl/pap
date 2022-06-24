@@ -52,9 +52,9 @@ export class AuthEffects {
       ofType(AuthActions.logout),
       switchMap(_ =>
         this._authSvc.logout().pipe(
-          map(user => AuthActions.loadAuthsSuccess({user})),
+          map(user => AuthActions.loadSignInsSuccess({user})),
           catchError(error => {
-            return of(AuthActions.loadAuthsFailure({error}));
+            return of(AuthActions.loadSignInsFailure({error}));
           }),
         ),
       ),

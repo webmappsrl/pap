@@ -2,7 +2,7 @@ import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {AlertController, AlertOptions, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {map, Observable, skip, Subscription, switchMap, tap, timer, zip} from 'rxjs';
+import {map, Observable, skip, Subscription, switchMap, tap, delay, zip} from 'rxjs';
 import {AppState} from '../core.state';
 import {isLogged, isVerified, user} from './state/auth.selectors';
 import {environment as env} from 'projects/pap/src/environments/environment';
@@ -75,9 +75,15 @@ export class AuthGuard implements CanActivate, OnDestroy {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    this._store.dispatch(loadAuths());
-    return timer(200).pipe(
-      switchMap(_ => this._store.pipe(select(user))),
+    const usr$ = this._store.pipe(delay(300), select(user));
+    const isVerified$ = this._store.pipe(select(isVerified));
+    return isVerified$.pipe(
+      tap(isV => {
+        if (isV === false) {
+          this._store.dispatch(loadAuths());
+        }
+      }),
+      switchMap(isV => usr$),
       map(user => {
         const isL = user != null;
         const isV = user?.email_verified_at != null;
