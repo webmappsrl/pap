@@ -15,6 +15,7 @@ import {closeMenu, loadMenu, openMenu} from './state/menu.actions';
 import {buttonAction} from '../../features/home/home.model';
 import {AppState} from '../../core/core.state';
 import {logout} from '../../core/auth/state/auth.actions';
+import {isLogged} from '../../core/auth/state/auth.selectors';
 
 interface ActionEvt {
   action: string;
@@ -33,6 +34,7 @@ export class MenuComponent implements OnDestroy {
 
   menuView$ = this._store.pipe(select(selectMenuState));
   homeView$ = this._store.pipe(select(selectHomeState));
+  isLogged$ = this._store.pipe(select(isLogged));
 
   @Input() startButton: boolean = false;
   @Input() endButton: boolean = false;

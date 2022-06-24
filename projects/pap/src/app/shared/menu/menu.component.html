@@ -20,7 +20,9 @@
         >
           {{button.label}}
         </ion-item>
-        <ion-item class="pap-menu-item" (click)="logout()"> logout </ion-item>
+        <ion-item *ngIf="(isLogged$|async)" class="pap-menu-item" (click)="logout()">
+          logout
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
