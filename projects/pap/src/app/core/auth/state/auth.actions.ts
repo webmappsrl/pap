@@ -25,3 +25,10 @@ export const UpdateUser = createAction(
 );
 export const UpdateUserSuccess = createAction('[Auth] Update User Success', props<{user: any}>());
 export const UpdateUserFailure = createAction('[Auth] Update User Failure', props<{error: any}>());
+
+export const resendEmail = createAction('[Auth] Resend Email');
+export const resendEmailSuccess = createAction('[Auth] Resend Email Success', props<{res: any}>());
+export const resendEmailFailure = createAction(
+  '[Auth] Resend Email Failure',
+  props<{error: any}>(),
+);

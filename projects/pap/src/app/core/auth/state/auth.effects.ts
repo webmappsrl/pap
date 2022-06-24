@@ -23,6 +23,11 @@ const SUCESSFULLY_REGISTRATION: AlertOptions = {
   message: 'avvenuta con successo',
   buttons: ['ok'],
 };
+const SUCESSFULLY_RESEND: AlertOptions = {
+  header: 'EMAIL SPEDITA',
+  message: 'ti abbiamo inviato una nuova mail',
+  buttons: ['ok'],
+};
 @Injectable()
 export class AuthEffects {
   private _alertEVT: EventEmitter<AlertOptions> = new EventEmitter<AlertOptions>();
@@ -87,6 +92,23 @@ export class AuthEffects {
           }),
           catchError(error => {
             return of(AuthActions.UpdateUserFailure({error}));
+          }),
+        ),
+      ),
+    );
+  });
+
+  resendEmail$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.resendEmail),
+      switchMap(action =>
+        this._authSvc.resendEmail().pipe(
+          map(res => {
+            this._alertEVT.emit(SUCESSFULLY_RESEND);
+            return AuthActions.resendEmailSuccess({res});
+          }),
+          catchError(error => {
+            return of(AuthActions.resendEmailFailure({error}));
           }),
         ),
       ),

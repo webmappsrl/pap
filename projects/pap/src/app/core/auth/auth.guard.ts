@@ -2,10 +2,11 @@ import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {AlertController, AlertOptions, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {map, Observable, Subscription, switchMap, tap, zip} from 'rxjs';
+import {map, Observable, skip, Subscription, switchMap, tap, zip} from 'rxjs';
 import {AppState} from '../core.state';
-import {isLogged, isVerified} from './state/auth.selectors';
+import {isLogged, isVerified, user} from './state/auth.selectors';
 import {environment as env} from 'projects/pap/src/environments/environment';
+import {loadAuths, resendEmail} from './state/auth.actions';
 
 const NO_LOGGED: AlertOptions = {
   header: 'Non sei loggato',
@@ -30,7 +31,13 @@ const NO_LOGGED: AlertOptions = {
 const NO_VERIFIED: AlertOptions = {
   header: 'Email non verificata',
   message: 'devi ancora accettare la mail che ti abbiamo inviato',
-  buttons: ['ok'],
+  buttons: [
+    {
+      text: 'rispedisci email',
+      role: 'resend',
+    },
+    'ok',
+  ],
 };
 @Injectable({
   providedIn: 'root',
@@ -56,8 +63,11 @@ export class AuthGuard implements CanActivate, OnDestroy {
           if (res.role === 'forgot-password') {
             const url = `${env.api}/password/reset`;
             window.open(url, '_system');
+          } else if (res.role === 'resend') {
+            this._store.dispatch(resendEmail());
+          } else {
+            this._navCtrl.navigateForward(res.role);
           }
-          this._navCtrl.navigateForward(res.role);
         }
       });
   }
@@ -65,9 +75,12 @@ export class AuthGuard implements CanActivate, OnDestroy {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    this._store.dispatch(loadAuths());
     const isLogged$ = this._store.pipe(select(isLogged));
     const isVerified$ = this._store.pipe(select(isVerified));
-    return zip([isLogged$, isVerified$]).pipe(
+    return this._store.pipe(select(user)).pipe(
+      skip(1),
+      switchMap(_ => zip([isLogged$, isVerified$])),
       map(([isL, isV]) => {
         if (!isL) {
           this._alertEVT.emit(NO_LOGGED);

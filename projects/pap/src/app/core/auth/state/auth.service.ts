@@ -61,4 +61,12 @@ export class AuthService {
       },
     );
   }
+
+  resendEmail() {
+    return this._http.get(`${env.api}/api/email/resend`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    });
+  }
 }
