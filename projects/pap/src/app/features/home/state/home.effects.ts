@@ -1,10 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, concatMap} from 'rxjs/operators';
-import {of} from 'rxjs';
-
 import * as HomeActions from './home.actions';
+
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {catchError, concatMap, map} from 'rxjs/operators';
+
+import {Injectable} from '@angular/core';
 import {buttonAction} from '../home.model';
+import {of} from 'rxjs';
 
 @Injectable()
 export class HomeEffects {
@@ -51,7 +52,7 @@ export class HomeEffects {
             action: buttonAction.NAVIGATION,
           },
           {
-            label: 'Attiva segnalazione',
+            label: 'segnala mancato ritiro',
             icon: 'create',
             url: 'report-ticket',
             action: buttonAction.NAVIGATION,
