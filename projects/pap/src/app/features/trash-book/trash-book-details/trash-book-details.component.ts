@@ -49,4 +49,7 @@ export class TrashBookDetailsComponent {
   openCalendar(): void {
     this.navController.navigateForward('calendar');
   }
+  openWasteCenterCollection(): void {
+    this.navController.navigateForward('waste-center-collection');
+  }
 }

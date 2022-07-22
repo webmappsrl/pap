@@ -43,10 +43,13 @@
 
     <ion-item lines="full" *ngIf="view.collection_center">
       <ion-label class="trash-book-details-label" slot="start">Centro di raccolta:</ion-label>
-      <ion-label class="trash-book-details-value" slot="end">
-        --
-        <ion-icon name="navigate-circle-outline"></ion-icon>
-      </ion-label>
+      <ion-button
+        class="trash-book-details-button"
+        slot="end"
+        (click)="openWasteCenterCollection()"
+      >
+        centri raccolta
+      </ion-button>
     </ion-item>
 
     <ion-item lines="full" *ngIf="view.delivery">
