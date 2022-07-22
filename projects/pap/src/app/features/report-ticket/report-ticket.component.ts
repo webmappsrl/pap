@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+
 import {NavController} from '@ionic/angular';
 import {TicketFormConf} from '../../shared/models/form.model';
 
@@ -19,7 +20,7 @@ export class ReportTicketComponent {
     step: [
       {
         label:
-          'Questo servizio ti permette di segnalare ad ESA un eventuale malfunzionamento. Al termine ti verrà assegnato un codice e verrà inviata una email a ESA: verrai ricontattato in caso di necessità. Clicca sul bottone “Procedi” per iniziare.',
+          'Questo servizio ti permette di segnalare ad ESA un mancato mancato ritiro del servizio di raccolta porta a porta. Al termine ti verrà assegnato un codice e verrà inviata una email a ESA: verrai ricontattato in caso di necessità. Clicca sul bottone “Procedi” per iniziare.',
         type: 'label',
         required: false,
       },
