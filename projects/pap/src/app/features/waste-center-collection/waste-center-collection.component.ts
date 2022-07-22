@@ -75,7 +75,12 @@ export class WasteCenterCollectionComponent {
     if (feature?.properties?.picture_url) {
       body += `<ion-img src="${feature?.properties?.picture_url}"></ion-img>`;
     }
-    body += `<ion-label>${feature?.properties?.description}</ion-label>`;
+    if (feature?.properties?.description != null) {
+      body += `<ion-label>${feature?.properties?.description}</ion-label>`;
+    }
+    if (feature?.properties?.orario != null) {
+      body += `<br><br><ion-label color="danger">${feature?.properties?.orario}</ion-label>`;
+    }
     return body;
   }
 
