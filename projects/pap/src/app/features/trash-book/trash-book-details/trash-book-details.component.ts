@@ -1,12 +1,13 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {ModalController, NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
+
 import {AppState} from '../../../core/core.state';
-import {currentTrashBookType} from '../../../shared/form/state/form.actions';
-import {showButtons} from '../../../shared/header/state/header.actions';
-import {selectedTrashBookDetail} from '../state/trash-book.selectors';
 import {TrashBookType} from '../trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book-type/trash-book-type.component';
+import {currentTrashBookType} from '../../../shared/form/state/form.actions';
+import {selectedTrashBookDetail} from '../state/trash-book.selectors';
+import {showButtons} from '../../../shared/header/state/header.actions';
 
 @Component({
   selector: 'pap-trash-book-details',
@@ -26,7 +27,14 @@ export class TrashBookDetailsComponent {
     this._store.dispatch(showButtons({show: false}));
   }
 
-  info(tbType: TrashBookType | undefined) {
+  book(tbType: TrashBookType | undefined): void {
+    if (tbType) {
+      this._store.dispatch(currentTrashBookType({currentTrashBookType: tbType}));
+    }
+    this.navController.navigateForward('ticket-reservation');
+  }
+
+  info(tbType: TrashBookType | undefined): void {
     if (tbType) {
       const modal = this._modalController
         .create({
@@ -38,10 +46,7 @@ export class TrashBookDetailsComponent {
     }
   }
 
-  book(tbType: TrashBookType | undefined) {
-    if (tbType) {
-      this._store.dispatch(currentTrashBookType({currentTrashBookType: tbType}));
-    }
-    this.navController.navigateForward('ticket-reservation');
+  openCalendar(): void {
+    this.navController.navigateForward('calendar');
   }
 }

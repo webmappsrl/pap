@@ -15,14 +15,30 @@
       <ion-label class="trash-book-details-value ion-text-wrap" slot="end">
         {{view.trashBookType?.name}}
       </ion-label>
-      <ion-icon class="trash-book-details-icon" slot="end" style="color:{{view.trashBookType?.color}}"
-        name="information-circle" (click)="info(view.trashBookType)"></ion-icon>
+      <ion-icon
+        class="trash-book-details-icon"
+        slot="end"
+        [ngStyle]="{color:view.trashBookType?.color}"
+        name="information-circle"
+        (click)="info(view.trashBookType)"
+      ></ion-icon>
     </ion-item>
 
-    <ion-item lines="full" *ngIf="view.pap">
+    <ion-item lines="full">
       <ion-label class="trash-book-details-label" slot="start">PAP</ion-label>
-      <ion-label class="trash-book-details-value  ion-text-wrap" slot="end">{{view.pap ? 'Non
-        pianificato':'pianificato'}}</ion-label>
+      <ion-button
+        class="trash-book-details-button"
+        slot="end"
+        *ngIf="view.pap;else noPap"
+        (click)="openCalendar()"
+      >
+        calendario
+      </ion-button>
+      <ng-template #noPap>
+        <ion-label class="trash-book-details-value  ion-text-wrap" slot="end">
+          non pianificato
+        </ion-label>
+      </ng-template>
     </ion-item>
 
     <ion-item lines="full" *ngIf="view.collection_center">
@@ -35,13 +51,16 @@
 
     <ion-item lines="full" *ngIf="view.delivery">
       <ion-label class="trash-book-details-label" slot="start">Ingombranti/RAEE</ion-label>
-      <ion-button class="trash-book-details-button" slot="end" (click)="book(view.trashBookType)"> Prenota ora
+      <ion-button class="trash-book-details-button" slot="end" (click)="book(view.trashBookType)">
+        Prenota ora
       </ion-button>
     </ion-item>
 
     <ion-item lines="full" *ngIf="view.where">
       <ion-label class="trash-book-details-label" slot="start">Dove lo getto</ion-label>
-      <ion-label class="trash-book-details-value  ion-text-wrap" slot="end">{{view.where}}</ion-label>
+      <ion-label class="trash-book-details-value  ion-text-wrap" slot="end">
+        {{view.where}}
+      </ion-label>
     </ion-item>
-  </ion-content>`
+  </ion-content>
 </ng-container>
