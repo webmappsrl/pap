@@ -20,7 +20,7 @@ export class ReportTicketComponent {
     step: [
       {
         label:
-          'Questo servizio ti permette di segnalare ad ESA un mancato mancato ritiro del servizio di raccolta porta a porta. Al termine ti verrà assegnato un codice e verrà inviata una email a ESA: verrai ricontattato in caso di necessità. Clicca sul bottone “Procedi” per iniziare.',
+          'Questo servizio ti permette di segnalare ad ESA un mancato ritiro del servizio di raccolta porta a porta. Al termine ti verrà assegnato un codice e verrà inviata una email a ESA: verrai ricontattato in caso di necessità. Clicca sul bottone “Procedi” per iniziare.',
         type: 'label',
         required: false,
       },
