@@ -2,7 +2,7 @@
   "defaultProject": "core",
   "projects": {
     "core": {
-      "name": "core",
+      "name": "portAPPorta ESA",
       "integrations": {
         "cordova": {},
         "capacitor": {}
