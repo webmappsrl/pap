@@ -1,4 +1,5 @@
 import {createAction, props} from '@ngrx/store';
+
 import {User} from '../auth.model';
 
 export const loadAuths = createAction('[Auth] Load Auths');
@@ -32,5 +33,6 @@ export const resendEmailFailure = createAction(
   '[Auth] Resend Email Failure',
   props<{error: any}>(),
 );
+export const deleteUser = createAction('[Auth] Delete user');
 
 export const logout = createAction('[Auth] logout');

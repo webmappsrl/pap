@@ -1,7 +1,8 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 import {Injectable} from '@angular/core';
-import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable} from 'rxjs';
+import {environment as env} from 'projects/pap/src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +10,16 @@ import {Observable} from 'rxjs';
 export class AuthService {
   constructor(private _http: HttpClient) {}
 
-  getUser(): Observable<any> {
-    return this._http.get(`${env.api}/api/user`);
-  }
-  logout(): Observable<any> {
-    localStorage.removeItem('access_token');
-    return this.getUser();
+  delete() {
+    return this._http.get(`${env.api}/api/delete`);
   }
 
   getAlert(error: any): void {
     window.alert(JSON.stringify(error));
+  }
+
+  getUser(): Observable<any> {
+    return this._http.get(`${env.api}/api/user`);
   }
 
   login(credential: any) {
@@ -37,6 +38,11 @@ export class AuthService {
     );
   }
 
+  logout(): Observable<any> {
+    localStorage.removeItem('access_token');
+    return this.getUser();
+  }
+
   register(credential: any) {
     return this._http.post(
       `${env.api}/api/register`,
@@ -52,6 +58,14 @@ export class AuthService {
     );
   }
 
+  resendEmail() {
+    return this._http.get(`${env.api}/api/email/resend`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    });
+  }
+
   update(updates: any) {
     return this._http.post(
       `${env.api}/api/user`,
@@ -64,13 +78,5 @@ export class AuthService {
         }),
       },
     );
-  }
-
-  resendEmail() {
-    return this._http.get(`${env.api}/api/email/resend`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    });
   }
 }

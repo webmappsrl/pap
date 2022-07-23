@@ -1,16 +1,23 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, switchMap, tap} from 'rxjs/operators';
-import {of, Subscription} from 'rxjs';
-
 import * as AuthActions from './auth.actions';
-import {AuthService} from './auth.service';
+
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {AlertController, AlertOptions} from '@ionic/angular';
+import {EventEmitter, Injectable} from '@angular/core';
+import {Subscription, of} from 'rxjs';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
+
 import {AppState} from '../../core.state';
+import {AuthService} from './auth.service';
 import {Store} from '@ngrx/store';
+
 const SUCESSFULLY_UPDATE: AlertOptions = {
   header: 'Aggiornamento avvenuto con successo',
   message: 'i dati relativi al tuo profilo sono stati aggiornati',
+  buttons: ['ok'],
+};
+const SUCESSFULLY_DELETE: AlertOptions = {
+  header: 'Utente eliminato con successo',
+  message: 'i dati relativi al tuo profilo sono stati eliminati',
   buttons: ['ok'],
 };
 const SUCESSFULLY_LOGIN: AlertOptions = {
@@ -102,6 +109,23 @@ export class AuthEffects {
         this._authSvc.update(action.updates).pipe(
           map(user => {
             this._alertEVT.emit(SUCESSFULLY_UPDATE);
+            return AuthActions.UpdateUserSuccess({user});
+          }),
+          catchError(error => {
+            return of(AuthActions.UpdateUserFailure({error}));
+          }),
+        ),
+      ),
+    );
+  });
+
+  deleteUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.deleteUser),
+      switchMap(action =>
+        this._authSvc.delete().pipe(
+          map(user => {
+            this._alertEVT.emit(SUCESSFULLY_DELETE);
             return AuthActions.UpdateUserSuccess({user});
           }),
           catchError(error => {

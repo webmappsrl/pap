@@ -1,15 +1,16 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {ModalController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
-import {parse} from 'date-fns';
+import {Store, select} from '@ngrx/store';
+
 import {AppState} from '../../core/core.state';
-import {showButtons} from '../../shared/header/state/header.actions';
-import {setTrashBookType} from '../trash-book/state/trash-book.actions';
+import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
+import {ModalController} from '@ionic/angular';
 import {TrashBookType} from '../trash-book/trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book/trash-book-type/trash-book-type.component';
 import {loadCalendars} from './state/calendar.actions';
+import {parse} from 'date-fns';
 import {selectCalendarState} from './state/calendar.selectors';
-import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
+import {setTrashBookType} from '../trash-book/state/trash-book.actions';
+import {showButtons} from '../../shared/header/state/header.actions';
 
 @Component({
   selector: 'pap-calendar',
@@ -41,6 +42,6 @@ export class CalendarComponent {
   }
 
   openLink(): void {
-    this._inAppBrowser.create('HTTP://www.google.com');
+    this._inAppBrowser.create('https://www.esaspa.it/index.php/rifiuti-ingombranti.html');
   }
 }

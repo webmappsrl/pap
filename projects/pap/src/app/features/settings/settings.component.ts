@@ -1,15 +1,25 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {BehaviorSubject, Observable, Subscription, map} from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {select, Store} from '@ngrx/store';
-import {BehaviorSubject, map, Observable, Subscription} from 'rxjs';
-import {UpdateUser} from '../../core/auth/state/auth.actions';
-import {error} from '../../core/auth/state/auth.selectors';
+import {Store, select} from '@ngrx/store';
+import {UpdateUser, deleteUser, logout} from '../../core/auth/state/auth.actions';
+
+import {AlertController} from '@ionic/angular';
 import {AppState} from '../../core/core.state';
-import {FormProvider} from '../../shared/form/form-provider';
-import {showButtons} from '../../shared/header/state/header.actions';
 import {ConfirmedValidator} from '../sign-up/sign-up.component';
-import {toggleEdit} from './state/settings.actions';
+import {FormProvider} from '../../shared/form/form-provider';
+import {error} from '../../core/auth/state/auth.selectors';
 import {settingView} from './state/settings.selectors';
+import {showButtons} from '../../shared/header/state/header.actions';
+import {switchMap} from 'rxjs/operators';
+import {toggleEdit} from './state/settings.actions';
 
 @Component({
   selector: 'pap-settings',
@@ -19,15 +29,20 @@ import {settingView} from './state/settings.selectors';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: FormProvider, useExisting: SettingsComponent}],
 })
-export class SettingsComponent implements OnInit {
-  settingsView$ = this._store.pipe(select(settingView));
-  settingsForm: FormGroup;
-  settingsFormSub: Subscription = Subscription.EMPTY;
-  error$: Observable<string | false | undefined> = this._store.select(error);
+export class SettingsComponent implements OnInit, OnDestroy {
   currentStep = 'firstStep';
-
+  error$: Observable<string | false | undefined> = this._store.select(error);
+  settingsForm: FormGroup;
+  private _settingsFormSub: Subscription = Subscription.EMPTY;
+  settingsView$ = this._store.pipe(select(settingView));
   step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  constructor(private _store: Store<AppState>, fb: FormBuilder) {
+  private _alertSub: Subscription = Subscription.EMPTY;
+  private _alertEVT: EventEmitter<void> = new EventEmitter<void>();
+  constructor(
+    private _alertCtrl: AlertController,
+    private _store: Store<AppState>,
+    fb: FormBuilder,
+  ) {
     this.settingsForm = fb.group({
       firstStep: fb.group({
         name: ['', [Validators.required]],
@@ -48,7 +63,7 @@ export class SettingsComponent implements OnInit {
         zone_id: [''],
       }),
     });
-    this.settingsFormSub = this.settingsView$.subscribe(sv => {
+    this._settingsFormSub = this.settingsView$.subscribe(sv => {
       this.settingsForm.controls['firstStep'].setValue({
         name: sv.user?.name ?? '',
         email: sv.user?.email ?? '',
@@ -59,14 +74,65 @@ export class SettingsComponent implements OnInit {
         user_type_id: sv.user?.user_type_id ?? undefined,
       });
     });
+
+    this._alertSub = this._alertEVT
+      .pipe(
+        switchMap(_ =>
+          this._alertCtrl.create({
+            header: 'Vuoi eliminare il tuo account?',
+            message: 'questa operazione è irreversibile una volta eseguita',
+            buttons: [
+              {
+                text: 'ok',
+                role: 'ok',
+              },
+              {
+                text: 'annulla',
+                role: 'annulla',
+              },
+            ],
+          }),
+        ),
+        switchMap(alert => {
+          alert.present();
+          return alert.onWillDismiss();
+        }),
+      )
+      .subscribe(val => {
+        if (val != null && val.role != null && val.role === 'ok') {
+          this._store.dispatch(deleteUser());
+          setTimeout(() => {
+            this._store.dispatch(logout());
+          }, 300);
+        }
+      });
   }
 
-  ngOnInit(): void {
-    this._store.dispatch(showButtons({show: false}));
+  delete(): void {
+    this._alertEVT.emit();
   }
 
   edit(value: boolean) {
     this._store.dispatch(toggleEdit());
+  }
+
+  getForm() {
+    return this.settingsForm;
+  }
+
+  isDisabled(): boolean {
+    const ctrl = this.settingsForm.controls[this.currentStep];
+
+    return !ctrl.valid;
+  }
+
+  ngOnDestroy(): void {
+    this._settingsFormSub.unsubscribe();
+    this._alertSub.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this._store.dispatch(showButtons({show: false}));
   }
 
   update() {
@@ -89,13 +155,5 @@ export class SettingsComponent implements OnInit {
     if (updates != null) {
       this._store.dispatch(UpdateUser({updates}));
     }
-  }
-  isDisabled(): boolean {
-    const ctrl = this.settingsForm.controls[this.currentStep];
-
-    return !ctrl.valid;
-  }
-  getForm() {
-    return this.settingsForm;
   }
 }

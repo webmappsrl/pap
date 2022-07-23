@@ -33,6 +33,15 @@
         </ng-container>
       </ion-list>
       <ion-grid class="footer">
+        <ion-row *ngIf="currentStep === 'firstStep'">
+          <ion-col class="ion-align-self-start"> </ion-col>
+          <ion-col class="ion-align-self-center" size="8">
+            <ion-button expand="full" color="danger" (click)="delete()">
+              elimina account
+            </ion-button>
+          </ion-col>
+          <ion-col class="ion-align-self-end"> </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col class="ion-align-self-start"> </ion-col>
           <ion-col class="ion-align-self-center" size="8">

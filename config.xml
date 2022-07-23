@@ -102,6 +102,18 @@
         <splash height="1242" src="resources/ios/splash/Default-Landscape-2688h~iphone.png" width="2688" />
         <splash height="1792" src="resources/ios/splash/Default-1792h~iphone.png" width="828" />
         <splash height="828" src="resources/ios/splash/Default-Landscape-1792h~iphone.png" width="1792" />
+        <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
+            <string>The app needs camera usage to let you take picture to use in the report feature</string>
+        </config-file>
+        <config-file parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
+            <string>The app needs photo library usage to let you select picture to use in the report feature</string>
+        </config-file>
+        <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
+            <string>The app needs location usage to show it in the map and to provide you the right calendar service</string>
+        </config-file>
+        <config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist">
+            <string>The app needs location usage to show it in the map and to provide you the right calendar service</string>
+        </config-file>
     </platform>
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
     <plugin name="cordova-plugin-device" spec="2.0.2" />
@@ -109,16 +121,5 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^5.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-camera" spec="^6.0.0" />
-    <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
-        <string>The app needs camera usage to let you take picture to use in the report feature</string>
-    </config-file>
-    <config-file parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
-        <string>The app needs photo library usage to let you select picture to use in the report feature</string>
-    </config-file>
-    <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
-        <string>The app needs location usage to show it in the map and to provide you the right calendar service</string>
-    </config-file>
-    <config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist">
-        <string>The app needs location usage to show it in the map and to provide you the right calendar service</string>
-    </config-file>
+
 </widget>

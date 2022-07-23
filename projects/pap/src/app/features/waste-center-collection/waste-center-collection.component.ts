@@ -86,7 +86,7 @@ export class WasteCenterCollectionComponent {
 
   navigate(feature: WasteCenterCollectionFeature) {
     window.open(
-      'http://maps.google.com/maps?daddr=' +
+      'https://maps.google.com/maps?daddr=' +
         feature.geometry.coordinates[1] +
         ',' +
         feature.geometry.coordinates[0] +
