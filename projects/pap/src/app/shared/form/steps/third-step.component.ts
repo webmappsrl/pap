@@ -6,20 +6,22 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+
 import {AppState} from '../../../core/core.state';
-import {loadConfiniZone} from '../../map/state/map.actions';
-import {currentZone} from '../../map/state/map.selectors';
+import {FormGroup} from '@angular/forms';
 import {FormProvider} from '../form-provider';
-import {loadUserTypes} from '../state/sign-up.actions';
+import {Observable} from 'rxjs';
+import {Store} from '@ngrx/store';
 import {currentUserTypes} from '../state/sign-up.selectors';
+import {currentZone} from '../../map/state/map.selectors';
+import {loadConfiniZone} from '../../map/state/map.actions';
+import {loadUserTypes} from '../state/sign-up.actions';
 
 @Component({
   template: `
       <form [formGroup]="thirdStep">
-      <ion-item>
+        <div class="scrollable">
+        <ion-item>
         <pap-form-location formControlName="location" (ngModelChange)="reset()"> </pap-form-location>
       </ion-item>
       <ion-item *ngIf="thirdStep.controls['location'].errors as errors">
@@ -48,6 +50,8 @@ import {currentUserTypes} from '../state/sign-up.selectors';
       <ng-template #noUserTypes>
         <ion-label>non ci sono tipi utente associati a questa zona</ion-label>
       </ng-template>
+        </div>
+
       <ion-grid *ngIf="buttons">
         <ion-row>
           <ion-col class="ion-align-self-start">
