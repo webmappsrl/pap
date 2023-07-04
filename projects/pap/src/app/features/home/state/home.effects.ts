@@ -21,12 +21,6 @@ export class HomeEffects {
             hideInHome: true,
           },
           {
-            label: 'ESA',
-            img: 'assets/icons/logo-e.png',
-            url: 'info',
-            action: buttonAction.NAVIGATION,
-          },
-          {
             label: 'Calendario',
             icon: 'calendar',
             url: 'calendar',
@@ -41,7 +35,7 @@ export class HomeEffects {
           },
           {
             label: 'Prenota servizio',
-            icon: 'checkmark',
+            icon: 'call',
             url: 'ticket-reservation',
             action: buttonAction.NAVIGATION,
           },
@@ -80,6 +74,12 @@ export class HomeEffects {
             url: 'settings',
             action: buttonAction.NAVIGATION,
             hideInHome: true,
+          },
+          {
+            label: 'ESA',
+            img: 'assets/icons/logo-e.png',
+            url: 'info',
+            action: buttonAction.NAVIGATION,
           },
         ]).pipe(
           map(buttons => HomeActions.yHomesSuccess({buttons})),

@@ -9,7 +9,7 @@ pap-header {
     ion-back-button.back-button {
       color: var(--ion-color-secondary-contrast);
     }
-    --background: var(--ion-color-primary);
+    --background: #4B8D40;
     &-button {
       color: var(--ion-color-secondary-contrast);
     }
@@ -17,9 +17,12 @@ pap-header {
       text-align: center;
       color: var(--ion-color-secondary-contrast);
     }
+    &-img {
+      max-width: 60%;
+    }
   }
-
   ion-item {
     pointer-events: auto !important;
   }
+  
 }

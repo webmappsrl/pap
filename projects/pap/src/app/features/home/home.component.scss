@@ -12,8 +12,7 @@ pap-home {
         display: inline-block;
         line-height: 70px;
         border-radius: 37px;
-        color: var(--ion-color-primary);
-        border: 2px solid var(--ion-color-primary);
+        color: #4B8D40;
 
         &-icon,
         &-img {
@@ -25,12 +24,14 @@ pap-home {
           height: 34px;
         }
       }
-
-      &-label {
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 0.7em;
-        color: var(--ion-color-primary);
+      ion-label {
+        font-size: 20px;
+        color: #4B8D40;
+        ;
+        width: 355.07px;
+        margin-left: 4.93px;
+        padding: 0px, 0px, 0px, 16px;
+        gap: 32px;
       }
     }
     .pap-home-button-disabled {
@@ -42,5 +43,34 @@ pap-home {
         color: #666666;
       }
     }
+    .pap-home-button{
+      text-align: center;
+      padding-bottom: 0px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      justify-content: flex-start;
+    }
+    .pap-home-button-image-img {
+      filter: brightness(0.9) sepia(1) hue-rotate(60deg) saturate(3);
+  }
+  }
+  ion-grid{
+    display: table;
+  }
+  ion-item{
+    --highlight-color: transparent;
+  --highlight-color-focused: transparent;
+    width: 100%;
+    height: 48px;
+    left: 4.93px;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1
+  }
+  ion-list {
+    width: 100%;
+    margin-left: -30px;
   }
 }
