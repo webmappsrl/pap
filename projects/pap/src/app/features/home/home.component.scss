@@ -51,12 +51,10 @@ pap-home {
       align-items: baseline;
       justify-content: flex-start;
     }
-    .pap-home-button-image-img {
-      filter: brightness(0.9) sepia(1) hue-rotate(60deg) saturate(3);
-    }
   }
   ion-grid {
     display: table;
+    margin-top: 30px;
   }
   ion-item {
     --highlight-color: transparent;

@@ -9,7 +9,7 @@ import {buttonAction} from '../../../features/home/home.model';
 
 const headermock: menuButton = {
   // label: 'portAPPorta',
-  img: 'assets/images/header-logo.svg',
+  img: 'assets/images/header-portapporta-1.svg',
   showBack: false,
   buttonStart: {
     label: '',

@@ -35,7 +35,7 @@ export class HomeEffects {
           },
           {
             label: 'Prenota servizio',
-            icon: 'call',
+            img: 'assets/icons/logo-call.png',
             url: 'ticket-reservation',
             action: buttonAction.NAVIGATION,
           },
@@ -47,25 +47,25 @@ export class HomeEffects {
           },
           {
             label: 'segnala mancato ritiro',
-            icon: 'create',
+            icon: 'alert-circle',
             url: 'report-ticket',
             action: buttonAction.NAVIGATION,
           },
           {
             label: 'Rifiutario',
-            icon: 'clipboard',
+            icon: 'document-text',
             url: 'trashbook',
             action: buttonAction.NAVIGATION,
           },
           {
             label: 'Le mie segnalazioni',
-            icon: 'list',
+            icon: 'archive',
             url: 'reports',
             action: buttonAction.NAVIGATION,
           },
           {
             label: 'Richiedi Informazioni',
-            icon: 'information',
+            icon: 'information-circle',
             url: 'info-ticket',
             action: buttonAction.NAVIGATION,
           },
@@ -77,7 +77,7 @@ export class HomeEffects {
           },
           {
             label: 'ESA',
-            img: 'assets/icons/logo-e.png',
+            img: 'assets/icons/logo-ersu.png',
             url: 'info',
             action: buttonAction.NAVIGATION,
           },
