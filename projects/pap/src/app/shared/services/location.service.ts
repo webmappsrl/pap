@@ -21,16 +21,6 @@ const MAP = {
 export class LocationService {
   constructor(private _http: HttpClient) {}
 
-  isInsideMap(latLng: number[]) {
-    console.log('------- ~ LocationService ~ isInsideMap ~ latLng', latLng, MAP.bounds);
-    return (
-      latLng[0] >= MAP.bounds.southWest.lat &&
-      latLng[0] <= MAP.bounds.northEast.lat &&
-      latLng[1] >= MAP.bounds.southWest.lng &&
-      latLng[1] <= MAP.bounds.northEast.lng
-    );
-  }
-
   getAddress(coordinates: number[]) {
     return this._http
       .get(
@@ -45,6 +35,16 @@ export class LocationService {
   }
 
   getConfiniZone(): Observable<any> {
-    return this._http.get(`${env.api}/api/c/4/zones.geojson`);
+    return this._http.get(`${env.api}/api/c/${env.companyId}/zones.geojson`);
+  }
+
+  isInsideMap(latLng: number[]) {
+    console.log('------- ~ LocationService ~ isInsideMap ~ latLng', latLng, MAP.bounds);
+    return (
+      latLng[0] >= MAP.bounds.southWest.lat &&
+      latLng[0] <= MAP.bounds.northEast.lat &&
+      latLng[1] >= MAP.bounds.southWest.lng &&
+      latLng[1] <= MAP.bounds.northEast.lng
+    );
   }
 }

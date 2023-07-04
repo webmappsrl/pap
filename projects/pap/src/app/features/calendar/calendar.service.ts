@@ -12,7 +12,7 @@ export class CalendarService {
   constructor(private _http: HttpClient) {}
 
   getCalendar(): Observable<Calendar> {
-    return (this._http.get(`${env.api}/api/c/4/calendar`) as Observable<any>).pipe(
+    return (this._http.get(`${env.api}/api/c/${env.companyId}/calendar`) as Observable<any>).pipe(
       map(r => r.data as Calendar),
     );
   }

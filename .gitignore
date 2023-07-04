@@ -46,3 +46,7 @@ Thumbs.db
 
 # secrets
 api.keys.ts
+
+instances/
+
+.env

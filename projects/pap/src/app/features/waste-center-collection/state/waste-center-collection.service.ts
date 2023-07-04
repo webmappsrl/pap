@@ -12,7 +12,7 @@ export class WasteCenterCollectionService {
 
   getWasteCenterCollection(): Observable<WasteCenterCollectionFeature[]> {
     return this._http
-      .get(`${env.api}/api/c/4/waste_collection_centers.geojson`)
+      .get(`${env.api}/api/c/${env.companyId}/waste_collection_centers.geojson`)
       .pipe(map((data: any) => data.features)) as Observable<WasteCenterCollectionFeature[]>;
   }
 }

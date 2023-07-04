@@ -10,6 +10,6 @@ export class UserTypesService {
   constructor(private _http: HttpClient) {}
 
   getUserTypes(): Observable<any> {
-    return this._http.get(`${env.api}/api/c/4/user_types.json`);
+    return this._http.get(`${env.api}/api/c/${env.companyId}/user_types.json`);
   }
 }
