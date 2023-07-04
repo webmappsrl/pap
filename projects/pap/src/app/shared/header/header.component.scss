@@ -9,7 +9,7 @@ pap-header {
     ion-back-button.back-button {
       color: var(--ion-color-secondary-contrast);
     }
-    --background: #4B8D40;
+    --background: var(--ion-color-primary);
     &-button {
       color: var(--ion-color-secondary-contrast);
     }
@@ -24,5 +24,4 @@ pap-header {
   ion-item {
     pointer-events: auto !important;
   }
-  
 }
