@@ -23,6 +23,11 @@
                 >
                 </ion-icon>
                 <img *ngIf="button.img" class="pap-home-button-image-img" src="{{button.img}}" />
+                <ion-icon
+                  *ngIf="button.svg"
+                  class="pap-home-button-image-img"
+                  [src]="button.svg"
+                ></ion-icon>
               </div>
               <ion-item lines="inset" class="pap-home-button-label-item">
                 <ion-label class="pap-home-button-label">{{button.label}}</ion-label>

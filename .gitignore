@@ -48,5 +48,5 @@ Thumbs.db
 api.keys.ts
 
 instances/
-icons/
+/icons/
 .env

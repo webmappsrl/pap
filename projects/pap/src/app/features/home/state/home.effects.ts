@@ -35,7 +35,7 @@ export class HomeEffects {
           },
           {
             label: 'Servizi',
-            img: 'assets/icons/logo-call.png',
+            svg: 'assets/icons/logo-call.svg',
             url: 'ticket-reservation',
             action: buttonAction.ACTION,
             buttons: [

@@ -7,6 +7,7 @@ export interface buttonInfo {
   hideInMenu?: boolean;
   icon?: string;
   img?: string;
+  svg?: string;
   label: string;
   url?: string;
 }
