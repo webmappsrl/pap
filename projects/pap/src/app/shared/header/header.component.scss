@@ -17,6 +17,7 @@ pap-header {
   }
   .sc-ion-buttons-md-s .button-has-icon-only.button-clear {
     margin-left: -57px;
+    margin-right: -20px;
     width: auto;
   }
   .pap-header {
@@ -32,6 +33,10 @@ pap-header {
     &-title {
       text-align: center;
       color: var(--ion-color-secondary-contrast);
+    }
+    .sc-ion-buttons-md-s ion-icon[slot=icon-only]{
+      width: 60px;  
+      height: 60px;
     }
   }
   ion-item {

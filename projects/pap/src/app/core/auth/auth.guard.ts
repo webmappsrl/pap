@@ -10,10 +10,11 @@ import {loadAuths, resendEmail} from './state/auth.actions';
 
 const NO_LOGGED: AlertOptions = {
   header: 'Non sei loggato',
-  message: `solo se loggato puoi accedere a questa pagina`,
+  message: `Puoi accedere a questa pagina dopo aver effettuato il login o la registrazione`,
+  cssClass: 'pap-alert-login',
   buttons: [
     {
-      text: 'login',
+      text: 'accedi',
       role: 'sign-in',
     },
     {
@@ -24,7 +25,10 @@ const NO_LOGGED: AlertOptions = {
       text: 'password dimenticata?',
       role: 'forgot-password',
     },
-    'annulla',
+    {
+      text: 'X',
+      role: 'cancel',
+    },
   ],
 };
 
