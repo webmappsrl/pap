@@ -8,8 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "try": "ng lint",
-    "resources": "capacitor-resources -p android,ios"
+    "try": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -64,6 +63,7 @@
     "@angular-eslint/template-parser": "13.2.1",
     "@angular/cli": "~13.3.5",
     "@angular/compiler-cli": "~13.3.0",
+    "@capacitor/assets": "^2.0.4",
     "@capacitor/cli": "3.5.1",
     "@ionic/angular-toolkit": "latest",
     "@types/gulp": "^4.0.13",
