@@ -5,26 +5,27 @@ pap-header {
     color: #fff;
     font-size: 1.3rem;
   }
-  ion-menu-button{
+  ion-menu-button {
     display: none;
   }
-  ion-toolbar{
+  ion-toolbar {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     align-content: stretch;
   }
-  .sc-ion-buttons-md-s .button-has-icon-only.button-clear{
+  .sc-ion-buttons-md-s .button-has-icon-only.button-clear {
     margin-left: -57px;
     width: auto;
   }
   .pap-header {
-  height: 56px;
+    height: 56px;
+    --background: var(--ion-color-primary);
+
     ion-back-button.back-button {
       color: var(--ion-color-secondary-contrast);
     }
-    --background: var(--ion-color-custom-header);
     &-button {
       color: var(--ion-color-secondary-contrast);
     }
