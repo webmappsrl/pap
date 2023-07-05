@@ -22,7 +22,7 @@ pap-header {
   }
   .pap-header {
     height: 56px;
-    --background: var(--ion-color-primary);
+    --background: var(--ion-color-secondary);
 
     ion-back-button.back-button {
       color: var(--ion-color-secondary-contrast);
@@ -34,8 +34,8 @@ pap-header {
       text-align: center;
       color: var(--ion-color-secondary-contrast);
     }
-    .sc-ion-buttons-md-s ion-icon[slot=icon-only]{
-      width: 60px;  
+    .sc-ion-buttons-md-s ion-icon[slot='icon-only'] {
+      width: 60px;
       height: 60px;
     }
   }
