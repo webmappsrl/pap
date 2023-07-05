@@ -34,22 +34,44 @@ export class HomeEffects {
             hideInMenu: true,
           },
           {
-            label: 'Prenota servizio',
+            label: 'Servizi',
             img: 'assets/icons/logo-call.png',
             url: 'ticket-reservation',
-            action: buttonAction.NAVIGATION,
-          },
-          {
-            label: 'Segnala abbandono',
-            icon: 'chatbubbles',
-            url: 'abandonment-ticket',
-            action: buttonAction.NAVIGATION,
-          },
-          {
-            label: 'segnala mancato ritiro',
-            icon: 'alert-circle',
-            url: 'report-ticket',
-            action: buttonAction.NAVIGATION,
+            action: buttonAction.ACTION,
+            buttons: [
+              {
+                text: 'Prenota un servizio',
+                icon: 'checkmark',
+                data: {
+                  action: 'ticket-reservation',
+                },
+              },
+              {
+                text: 'Segnala abbandono',
+                icon: 'chatbubbles',
+                data: {
+                  action: 'abandonment-ticket',
+                },
+              },
+              {
+                text: 'segnala mancato ritiro',
+                icon: 'alert-circle',
+                data: {
+                  action: 'report-ticket',
+                },
+              },
+              {
+                text: 'Richiedi Informazioni',
+                icon: 'information-circle',
+                data: {
+                  action: 'info-ticket',
+                },
+              },
+              {
+                text: 'close',
+                role: 'cancel',
+              },
+            ],
           },
           {
             label: 'Rifiutario',
@@ -63,12 +85,7 @@ export class HomeEffects {
             url: 'reports',
             action: buttonAction.NAVIGATION,
           },
-          {
-            label: 'Richiedi Informazioni',
-            icon: 'information-circle',
-            url: 'info-ticket',
-            action: buttonAction.NAVIGATION,
-          },
+
           {
             label: 'Impostazioni',
             url: 'settings',
