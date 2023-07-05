@@ -5,71 +5,16 @@ import * as fsExtra from 'fs-extra';
 import axios from 'axios';
 import {exec} from 'child_process';
 import {CapacitorConfig} from '@capacitor/cli';
-const variables = `:root {
-	--ion-color-primary: #eb445a;
-	--ion-color-primary-rgb: 235,68,90;
-	--ion-color-primary-contrast: #ffffff;
-	--ion-color-primary-contrast-rgb: 255,255,255;
-	--ion-color-primary-shade: #cf3c4f;
-	--ion-color-primary-tint: #ed576b;
 
-	--ion-color-secondary: #5260ff;
-	--ion-color-secondary-rgb: 82,96,255;
-	--ion-color-secondary-contrast: #ffffff;
-	--ion-color-secondary-contrast-rgb: 255,255,255;
-	--ion-color-secondary-shade: #4854e0;
-	--ion-color-secondary-tint: #6370ff;
-
-	--ion-color-tertiary: #5260ff;
-	--ion-color-tertiary-rgb: 82,96,255;
-	--ion-color-tertiary-contrast: #ffffff;
-	--ion-color-tertiary-contrast-rgb: 255,255,255;
-	--ion-color-tertiary-shade: #4854e0;
-	--ion-color-tertiary-tint: #6370ff;
-
-	--ion-color-success: #2dd36f;
-	--ion-color-success-rgb: 45,211,111;
-	--ion-color-success-contrast: #000000;
-	--ion-color-success-contrast-rgb: 0,0,0;
-	--ion-color-success-shade: #28ba62;
-	--ion-color-success-tint: #42d77d;
-
-	--ion-color-warning: #ffc409;
-	--ion-color-warning-rgb: 255,196,9;
-	--ion-color-warning-contrast: #000000;
-	--ion-color-warning-contrast-rgb: 0,0,0;
-	--ion-color-warning-shade: #e0ac08;
-	--ion-color-warning-tint: #ffca22;
-
-	--ion-color-danger: #eb445a;
-	--ion-color-danger-rgb: 235,68,90;
-	--ion-color-danger-contrast: #ffffff;
-	--ion-color-danger-contrast-rgb: 255,255,255;
-	--ion-color-danger-shade: #cf3c4f;
-	--ion-color-danger-tint: #ed576b;
-
-	--ion-color-medium: #92949c;
-	--ion-color-medium-rgb: 146,148,156;
-	--ion-color-medium-contrast: #000000;
-	--ion-color-medium-contrast-rgb: 0,0,0;
-	--ion-color-medium-shade: #808289;
-	--ion-color-medium-tint: #9d9fa6;
-
-	--ion-color-light: #f4f5f8;
-	--ion-color-light-rgb: 244,245,248;
-	--ion-color-light-contrast: #000000;
-	--ion-color-light-contrast-rgb: 0,0,0;
-	--ion-color-light-shade: #d7d8da;
-	--ion-color-light-tint: #f5f6f9;
-
-}`;
 interface Config {
   id: number;
   name: string;
   resources: {
     icon: string;
     splash: string;
+    variables: string;
   };
+  sku: string;
 }
 const jsonEditor = require('gulp-json-editor');
 // Carica le variabili d'ambiente dal file .env
@@ -91,12 +36,12 @@ gulp.task('build', async () => {
 
     const config: Config = await getConfig(apiUrl);
     console.log('Configurazione ottenuta:', config);
-    const sku = deploy.sku;
+    const sku = config.sku;
     console.log('Sku:', sku);
 
     createFolder(instancePath);
     const capacitorConfig: CapacitorConfig = {
-      appId: sku,
+      appId: config.sku,
       appName: config.name,
       webDir: 'dist/pap/',
       bundledWebRuntime: false,
@@ -133,7 +78,7 @@ gulp.task('build', async () => {
       environmentProdPath,
       `export const environment = ${JSON.stringify(environment)}`,
     );
-    await writeFile(variablesConfigPath, variables);
+    await writeFile(variablesConfigPath, config.resources.variables);
     await ionicBuild(capacitorConfigPath, instancePath);
     await ionicBuildIos(capacitorConfigPath, instancePath);
     await ionicPlathforms(config.resources);
