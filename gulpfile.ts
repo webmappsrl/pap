@@ -13,6 +13,9 @@ interface Config {
     icon: string;
     splash: string;
     variables: string;
+    logo: string;
+    header_image: string;
+    footer_image: string;
   };
   sku: string;
 }
@@ -21,6 +24,7 @@ interface Paths {
   capacitorConfigPath: string;
   companyId: string;
   devVariablesConfigPath: string;
+  environmentDevPath: string;
   environmentProdPath: string;
   instancePath: string;
   variablesConfigPath: string;
@@ -67,6 +71,7 @@ gulp.task('build', async () => {
     const environment = {
       production: true,
       companyId: companyId,
+      config,
       api: 'https://portapporta.webmapp.it',
       //api: 'http://127.0.0.1:8000/',
       GOOOGLEAPIKEY: '',
@@ -83,7 +88,7 @@ gulp.task('build', async () => {
     );
     await writeFile(
       paths.environmentProdPath,
-      `export const environment = ${JSON.stringify(environment)}`,
+      `export const environment = ${JSON.stringify(environment).replace(/"([^"]+)":/g, '$1:')}`,
     );
     await writeFile(paths.variablesConfigPath, config.resources.variables);
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
@@ -107,7 +112,10 @@ gulp.task('serve', async () => {
   const companyId = process.argv[4];
   const paths: Paths = getPaths(companyId);
   const config: Config = await getConfig(paths.apiUrl);
+
+  await setDevEnvironment(paths, config);
   await writeFile(paths.devVariablesConfigPath, config.resources.variables);
+  await setAssets(config);
   await execCmd(`ionic serve`);
 });
 
@@ -123,6 +131,42 @@ gulp.task('init', async () => {
 // Task predefinito
 gulp.task('default', gulp.series('build'));
 
+async function setDevEnvironment(paths: Paths, config: Config): Promise<void> {
+  const environment = {
+    production: true,
+    companyId: paths.companyId,
+    config,
+    api: 'https://portapporta.webmapp.it',
+    //api: 'http://127.0.0.1:8000/',
+    GOOOGLEAPIKEY: '',
+  };
+
+  await writeFile(
+    paths.environmentDevPath,
+    `export const environment = ${JSON.stringify(environment).replace(/"([^"]+)":/g, '$1:')}`,
+  );
+}
+async function setProdEnvironment(paths: Paths, config: Config): Promise<void> {
+  const environment = {
+    production: true,
+    companyId: paths.companyId,
+    config,
+    api: 'https://portapporta.webmapp.it',
+    //api: 'http://127.0.0.1:8000/',
+    GOOOGLEAPIKEY: '',
+  };
+
+  await writeFile(
+    paths.environmentProdPath,
+    `export const environment = ${JSON.stringify(environment).replace(/"([^"]+)":/g, '$1:')}`,
+  );
+}
+
+async function setAssets(config: Config): Promise<void> {
+  await download(config.resources.logo, `projects/pap/src/assets/icons/logo.png`);
+  await download(config.resources.header_image, `projects/pap/src/assets/images/header.png`);
+  await download(config.resources.header_image, `projects/pap/src/assets/images/footer.png`);
+}
 function execCmd(cmd: string): Promise<void> {
   return new Promise((resolve, reject) => {
     console.log(`${cmd}: START`);
@@ -147,6 +191,7 @@ function getPaths(companyId: string): Paths {
     variablesConfigPath: `projects/pap/src/theme/variables.scss`,
     devVariablesConfigPath: `projects/pap/src/theme/dev-variables.scss`,
     environmentProdPath: `projects/pap/src/environments/environment.prod.ts`,
+    environmentDevPath: `projects/pap/src/environments/environment.ts`,
   };
 }
 // Funzione per effettuare il login e ottenere il token di autenticazione

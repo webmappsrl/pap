@@ -6,6 +6,7 @@ import {catchError, concatMap, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {buttonAction} from '../home.model';
 import {of} from 'rxjs';
+import {environment} from 'projects/pap/src/environments/environment';
 
 @Injectable()
 export class HomeEffects {
@@ -93,8 +94,8 @@ export class HomeEffects {
             hideInHome: true,
           },
           {
-            label: 'ESA',
-            img: 'assets/icons/logo-ersu.png',
+            label: environment.config.name,
+            img: 'assets/icons/logo.png',
             url: 'info',
             action: buttonAction.NAVIGATION,
           },
