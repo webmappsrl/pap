@@ -50,3 +50,5 @@ api.keys.ts
 instances/
 /icons/
 .env
+
+projects/pap/src/theme/dev-variables.scss

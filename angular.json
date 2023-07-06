@@ -74,6 +74,9 @@
               },
               {
                 "input": "projects/pap/src/theme/variables.scss"
+              },
+              {
+                "input": "projects/pap/src/theme/dev-variables.scss"
               }
             ],
             "scripts": []

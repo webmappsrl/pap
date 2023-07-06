@@ -16,6 +16,15 @@ interface Config {
   };
   sku: string;
 }
+interface Paths {
+  apiUrl: string;
+  capacitorConfigPath: string;
+  companyId: string;
+  devVariablesConfigPath: string;
+  environmentProdPath: string;
+  instancePath: string;
+  variablesConfigPath: string;
+}
 const jsonEditor = require('gulp-json-editor');
 // Carica le variabili d'ambiente dal file .env
 dotenv.config();
@@ -23,23 +32,21 @@ dotenv.config();
 // Task per il build e il deploy dell'app
 gulp.task('build', async () => {
   try {
-    const appId = process.argv[4];
-    const apiUrl = `https://portapporta.webmapp.it/api/c/${appId}/config.json`;
-    const instancePath = `./instances/${appId}`;
-    const capacitorConfigPath = `${instancePath}/capacitor-config.json`;
-    const variablesConfigPath = `projects/pap/src/theme/variables.scss`;
-    const environmentProdPath = `projects/pap/src/environments/environment.prod.ts`;
-    const deploys = await readJsonFile('deploys.json');
-    const deploy = deploys[appId];
-    const oldVariables = await readFileContent(variablesConfigPath);
+    const companyId = process.argv[4];
+    const paths: Paths = getPaths(companyId);
+
+    const oldVariables = await readFileContent(paths.variablesConfigPath);
+
+    const devVariables = await readFileContent(paths.devVariablesConfigPath);
+    await execCmd(`rm -rf ${paths.devVariablesConfigPath}`);
     const oldCapacitorConfig = await readFileContent('capacitor.config.ts');
 
-    const config: Config = await getConfig(apiUrl);
+    const config: Config = await getConfig(paths.apiUrl);
     console.log('Configurazione ottenuta:', config);
     const sku = config.sku;
     console.log('Sku:', sku);
 
-    createFolder(instancePath);
+    createFolder(paths.instancePath);
     const capacitorConfig: CapacitorConfig = {
       appId: config.sku,
       appName: config.name,
@@ -59,42 +66,89 @@ gulp.task('build', async () => {
     };
     const environment = {
       production: true,
-      companyId: appId,
+      companyId: companyId,
       api: 'https://portapporta.webmapp.it',
       //api: 'http://127.0.0.1:8000/',
       GOOOGLEAPIKEY: '',
     };
 
-    await writeFile(capacitorConfigPath, JSON.stringify(capacitorConfig));
+    await writeFile(paths.capacitorConfigPath, JSON.stringify(capacitorConfig));
     await writeFile(
       'capacitor.config.ts',
-      `import {CapacitorConfig} from '@capacitor/cli';
-
+      `
+      import {CapacitorConfig} from '@capacitor/cli';
       const capacitorConfig: CapacitorConfig = ${JSON.stringify(capacitorConfig)}
-    
-    export default capacitorConfig;`,
+      export default capacitorConfig;
+      `,
     );
     await writeFile(
-      environmentProdPath,
+      paths.environmentProdPath,
       `export const environment = ${JSON.stringify(environment)}`,
     );
-    await writeFile(variablesConfigPath, config.resources.variables);
-    await ionicBuild(capacitorConfigPath, instancePath);
-    await ionicBuildIos(capacitorConfigPath, instancePath);
+    await writeFile(paths.variablesConfigPath, config.resources.variables);
+    await writeFile(paths.devVariablesConfigPath, config.resources.variables);
+    await ionicBuild(paths.capacitorConfigPath, paths.instancePath);
+    await ionicBuildIos(paths.capacitorConfigPath, paths.instancePath);
     await ionicPlathforms(config.resources);
     await ionicCapSync();
 
-    await writeFile(variablesConfigPath, oldVariables);
+    await writeFile(paths.variablesConfigPath, oldVariables);
     await writeFile('capacitor.config.ts', oldCapacitorConfig);
-    await moveFoldersToInstance(instancePath);
+    await writeFile(paths.devVariablesConfigPath, devVariables);
+    await moveFoldersToInstance(paths.instancePath);
     console.log('Build completed successfully.');
   } catch (err) {
     console.error('An error occurred during the build:', err);
     throw err;
   }
 });
+
+gulp.task('serve', async () => {
+  const companyId = process.argv[4];
+  const paths: Paths = getPaths(companyId);
+  const config: Config = await getConfig(paths.apiUrl);
+  await writeFile(paths.devVariablesConfigPath, config.resources.variables);
+  await execCmd(`ionic serve`);
+});
+
+gulp.task('init', async () => {
+  await execCmd(`rm -rf android`);
+  await execCmd(`rm -rf ios`);
+  await execCmd(`rm -rf resources`);
+  await execCmd(`rm -rf icons`);
+  await execCmd(`npx cap add ios`);
+  await execCmd(`cd ios/App && pod install`);
+  await execCmd(`npx cap add android`);
+});
 // Task predefinito
 gulp.task('default', gulp.series('build'));
+
+function execCmd(cmd: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    console.log(`${cmd}: START`);
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        console.error(stderr);
+        console.log(`${cmd}: ERROR`);
+        reject();
+      }
+      console.log(`${cmd}: DONE`);
+      resolve();
+    });
+  });
+}
+function getPaths(companyId: string): Paths {
+  const instancePath = `./instances/${companyId}`;
+  return {
+    companyId,
+    instancePath,
+    apiUrl: `https://portapporta.webmapp.it/api/c/${companyId}/config.json`,
+    capacitorConfigPath: `${instancePath}/capacitor-config.json`,
+    variablesConfigPath: `projects/pap/src/theme/variables.scss`,
+    devVariablesConfigPath: `projects/pap/src/theme/dev-variables.scss`,
+    environmentProdPath: `projects/pap/src/environments/environment.prod.ts`,
+  };
+}
 // Funzione per effettuare il login e ottenere il token di autenticazione
 async function loginAndGetAuthToken(email: string, password: string): Promise<string> {
   const loginUrl = 'https://portapporta.webmapp.it/api/login'; // URL di login dell'API
@@ -254,8 +308,9 @@ const ionicCapSync = (): Promise<void> => {
     });
   });
 };
-const writeFile = (path: string, file: string): Promise<void> => {
+const writeFile = (path: string, file: string | null): Promise<void> => {
   return new Promise((resolve, reject) => {
+    if (file == null) reject();
     console.log(`${path}: START`);
     try {
       fs.writeFileSync(path, file);
@@ -304,7 +359,7 @@ async function readFileContent(filePath: string) {
     return data;
   } catch (err) {
     console.error('Errore durante la lettura del file:', err);
-    throw err;
+    return null;
   }
 }
 
