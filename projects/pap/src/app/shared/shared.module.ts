@@ -28,9 +28,11 @@ import {thirdStepSignupComponent} from './form/steps/third-step.component';
 import * as fromSignUp from './form/state/sign-up.reducer';
 import {SignUpEffects} from './form/state/sign-up.effects';
 import {MenuComponent} from './menu/menu.component';
+import {FooterComponent} from './footer/footer.component';
 @NgModule({
   declarations: [
     HeaderComponent,
+    FooterComponent,
     MenuComponent,
     ErrorFormHandlerComponent,
     MapComponent,
@@ -63,6 +65,7 @@ import {MenuComponent} from './menu/menu.component';
   ],
   exports: [
     CommonModule,
+    FooterComponent,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,

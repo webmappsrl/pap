@@ -52,3 +52,9 @@ instances/
 .env
 
 projects/pap/src/theme/dev-variables.scss
+
+projects/pap/src/assets/images/footer.png
+
+projects/pap/src/assets/images/header.png
+
+projects/pap/src/assets/icons/logo.png

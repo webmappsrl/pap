@@ -165,7 +165,7 @@ async function setProdEnvironment(paths: Paths, config: Config): Promise<void> {
 async function setAssets(config: Config): Promise<void> {
   await download(config.resources.logo, `projects/pap/src/assets/icons/logo.png`);
   await download(config.resources.header_image, `projects/pap/src/assets/images/header.png`);
-  await download(config.resources.header_image, `projects/pap/src/assets/images/footer.png`);
+  await download(config.resources.footer_image, `projects/pap/src/assets/images/footer.png`);
 }
 function execCmd(cmd: string): Promise<void> {
   return new Promise((resolve, reject) => {

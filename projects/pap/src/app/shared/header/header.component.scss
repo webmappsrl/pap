@@ -1,4 +1,16 @@
 pap-header {
+  ion-toolbar {
+    ion-title {
+      img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto;
+      }
+    }
+  }
   ion-button,
   ion-button.modal,
   ion-menu-button {
@@ -21,7 +33,6 @@ pap-header {
     width: auto;
   }
   .pap-header {
-    height: 56px;
     --background: var(--ion-color-secondary);
 
     ion-back-button.back-button {
