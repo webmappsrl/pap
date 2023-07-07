@@ -1,0 +1,14 @@
+pap-form-status {
+  width: 80%;
+  ion-icon {
+    color: var(--ion-color-primary);
+  }
+  ion-grid {
+    max-width: 70%;
+    width: fit-content;
+    ion-col {
+      margin: auto;
+      text-align: center;
+    }
+  }
+}

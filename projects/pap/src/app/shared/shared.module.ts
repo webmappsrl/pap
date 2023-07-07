@@ -29,6 +29,7 @@ import * as fromSignUp from './form/state/sign-up.reducer';
 import {SignUpEffects} from './form/state/sign-up.effects';
 import {MenuComponent} from './menu/menu.component';
 import {FooterComponent} from './footer/footer.component';
+import {FormStatusComponent} from './form/status/status.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -43,6 +44,7 @@ import {FooterComponent} from './footer/footer.component';
     secondStepSignupComponent,
     thirdStepSignupComponent,
     LocationComponent,
+    FormStatusComponent,
     RecapComponent,
     ImagePickerComponent,
     SelectComponent,
@@ -81,6 +83,7 @@ import {FooterComponent} from './footer/footer.component';
     FormComponent,
     LocationComponent,
     RecapComponent,
+    FormStatusComponent,
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,

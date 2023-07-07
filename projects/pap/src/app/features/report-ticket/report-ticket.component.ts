@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
 
 import {NavController} from '@ionic/angular';
 import {TicketFormConf} from '../../shared/models/form.model';
+import {environment} from 'projects/pap/src/environments/environment';
 
 @Component({
   selector: 'pap-report-ticket',
@@ -14,13 +15,12 @@ export class ReportTicketComponent {
   public form: TicketFormConf = {
     ticketType: 'report',
     cancel: 'Sicuro di voler cancellare la prenotazione?',
-    finalMessage:
-      'La tua richiesta è stata inoltrata correttamente a ESA: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ESA. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”',
+    finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
     pages: 5,
+    label: 'Segnalazione mancato ritiro',
     step: [
       {
-        label:
-          'Questo servizio ti permette di segnalare ad ESA un mancato ritiro del servizio di raccolta porta a porta. Al termine ti verrà assegnato un codice e verrà inviata una email a ESA: verrai ricontattato in caso di necessità. Clicca sul bottone “Procedi” per iniziare.',
+        label: `Questo servizio ti permette di segnalare ad ${environment.config.name} un mancato ritiro del servizio di raccolta porta a porta. Al termine ti verrà assegnato un codice e verrà inviata una email a ${environment.config.name}: verrai ricontattato in caso di necessità. Clicca sul bottone “Procedi” per iniziare.`,
         type: 'label',
         required: false,
       },

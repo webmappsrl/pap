@@ -8,6 +8,11 @@
         *ngIf="ticketFormConf.step && ticketFormConf.step[0] &&(recap$|async) === false"
       >
         <div class="pap-form-content">
+          <ng-container *ngIf="ticketFormConf.label as label">
+            <div [ngClass]="{'pap-form-first-step' : (pos$|async)===0}">
+              {{ label }}
+            </div>
+          </ng-container>
           <ion-label class="pap-form-label" *ngIf="currentStep.label != null">
             {{ currentStep.label }}
           </ion-label>
@@ -70,60 +75,18 @@
       <ng-container *ngIf="formError$|async as error">
         <ion-label color="danger">{{error}}</ion-label>
       </ng-container>
+
       <div class="pap-form-footer">
-        <div class="pap-form-page" *ngIf="ticketFormConf.pages">
-          {{ pos$.value + 1 }}/{{ ticketFormConf.pages }}
-        </div>
-        <div class="pap-form-buttons">
-          <div class="pap-form-buttonblock">
-            <ion-button class="pap-form-button" type="button" color="light" (click)="close()">
-              {{ "annulla" | translate }}
-            </ion-button>
-            <ion-button
-              class="pap-form-button"
-              type="button"
-              *ngIf="pos$.value !== 0"
-              color="light"
-              (click)="backStep()"
-            >
-              <ion-icon name="chevron-back"></ion-icon>
-            </ion-button>
-          </div>
-          <div class="pap-form-buttonblock">
-            <ion-button
-              class="pap-form-button"
-              type="button"
-              [disabled]="!isValid(currentStep)"
-              (click)="nextStep()"
-              *ngIf="pos$.value +1 < ticketFormConf.step.length"
-              color="primary"
-            >
-              <ion-icon color="light" name="chevron-forward"></ion-icon>
-            </ion-button>
-            <ng-container *ngIf="recap$|async as recap; else recapt">
-              <ion-button
-                class="pap-form-button"
-                type="submit"
-                (click)="sendData()"
-                *ngIf="(recap$|async) === true"
-                color="primary"
-              >
-                <ion-icon color="light" name="checkmark"></ion-icon>
-              </ion-button>
-            </ng-container>
-            <ng-template #recapt>
-              <ion-button
-                class="pap-form-button"
-                type="submit"
-                (click)="recap()"
-                *ngIf="(recap$|async) === false && pos$.value + 1 === ticketFormConf.step.length"
-                color="primary"
-              >
-                <ion-icon color="light" name="checkmark"></ion-icon>
-              </ion-button>
-            </ng-template>
-          </div>
-        </div>
+        <pap-form-status
+          [form]="ticketForm"
+          [currentStep]="currentStep"
+          [conf]="ticketFormConf"
+          [pos]="pos$|async"
+          (nextEvt)="nextStep()"
+          (backEvt)="backStep()"
+          (sendDataEvt)="sendData()"
+          (undoEvt)="close()"
+        ></pap-form-status>
       </div>
     </ng-container>
   </ng-container>

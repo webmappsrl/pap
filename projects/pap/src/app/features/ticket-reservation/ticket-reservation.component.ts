@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {TicketFormConf} from '../../shared/models/form.model';
+import {environment} from 'projects/pap/src/environments/environment';
 
 @Component({
   selector: 'pap-ticket-reservation',
@@ -12,14 +13,13 @@ import {TicketFormConf} from '../../shared/models/form.model';
 export class TicketReservationComponent {
   public form: TicketFormConf = {
     ticketType: 'reservation',
+    label: 'Prenotazione Servizio',
     cancel: 'Sicuro di voler cancellare la prenotazione?',
-    finalMessage:
-      'La tua richiesta è stata inoltrata correttamente a ESA: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ESA. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”',
+    finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
     pages: 6,
     step: [
       {
-        label:
-          'Questo serivizio ti permette di inviare una richiesta di prenotazione di un servizio ESA. Al termine della segnalazione ti verrà assegnato un codice della segnalazione e verrà inviata una email a ESA: verrai ricontattato concordare i dettagli della prenotazione. Clicca sul bottone “Procedi” per iniziare.',
+        label: `Questo serivizio ti permette di inviare una richiesta di prenotazione di un servizio ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice della segnalazione e verrà inviata una email a ${environment.config.name}: verrai ricontattato concordare i dettagli della prenotazione. Clicca sul bottone “Procedi” per iniziare.`,
         type: 'label',
         required: false,
       },
@@ -60,11 +60,11 @@ export class TicketReservationComponent {
 
   constructor(private navController: NavController) {}
 
-  formFilled(event: any) {
-    this.form = event;
-  }
-
   exitPage() {
     this.navController.pop();
+  }
+
+  formFilled(event: any) {
+    this.form = event;
   }
 }
