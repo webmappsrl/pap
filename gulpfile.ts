@@ -5,7 +5,7 @@ import * as fsExtra from 'fs-extra';
 import axios from 'axios';
 import {exec} from 'child_process';
 import {CapacitorConfig} from '@capacitor/cli';
-const api = 'https://portapporta.webmapp.it';
+const api = 'https://dev.portapporta.webmapp.it';
 interface Config {
   id: number;
   name: string;
