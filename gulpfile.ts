@@ -5,7 +5,7 @@ import * as fsExtra from 'fs-extra';
 import axios from 'axios';
 import {exec} from 'child_process';
 import {CapacitorConfig} from '@capacitor/cli';
-
+const api = 'https://portapporta.webmapp.it';
 interface Config {
   id: number;
   name: string;
@@ -72,8 +72,7 @@ gulp.task('build', async () => {
       production: true,
       companyId: companyId,
       config,
-      api: 'https://portapporta.webmapp.it',
-      //api: 'http://127.0.0.1:8000/',
+      api,
       GOOOGLEAPIKEY: '',
     };
 
@@ -136,7 +135,7 @@ async function setDevEnvironment(paths: Paths, config: Config): Promise<void> {
     production: true,
     companyId: paths.companyId,
     config,
-    api: 'https://portapporta.webmapp.it',
+    api,
     //api: 'http://127.0.0.1:8000/',
     GOOOGLEAPIKEY: '',
   };
@@ -151,7 +150,7 @@ async function setProdEnvironment(paths: Paths, config: Config): Promise<void> {
     production: true,
     companyId: paths.companyId,
     config,
-    api: 'https://portapporta.webmapp.it',
+    api,
     //api: 'http://127.0.0.1:8000/',
     GOOOGLEAPIKEY: '',
   };
@@ -186,7 +185,7 @@ function getPaths(companyId: string): Paths {
   return {
     companyId,
     instancePath,
-    apiUrl: `https://portapporta.webmapp.it/api/c/${companyId}/config.json`,
+    apiUrl: `${api}/api/c/${companyId}/config.json`,
     capacitorConfigPath: `${instancePath}/capacitor-config.json`,
     variablesConfigPath: `projects/pap/src/theme/variables.scss`,
     devVariablesConfigPath: `projects/pap/src/theme/dev-variables.scss`,
@@ -196,7 +195,7 @@ function getPaths(companyId: string): Paths {
 }
 // Funzione per effettuare il login e ottenere il token di autenticazione
 async function loginAndGetAuthToken(email: string, password: string): Promise<string> {
-  const loginUrl = 'https://portapporta.webmapp.it/api/login'; // URL di login dell'API
+  const loginUrl = `${api}/api/login`; // URL di login dell'API
   const authData = {
     email,
     password,
