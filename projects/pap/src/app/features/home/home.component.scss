@@ -13,12 +13,10 @@ pap-home {
         line-height: 70px;
         border-radius: 37px;
         color: var(--ion-color-primary);
-
         &-icon,
         &-img {
           vertical-align: middle;
         }
-
         &-icon {
           width: 34px;
           height: 34px;
@@ -74,23 +72,22 @@ pap-home {
     width: 100%;
     margin-left: -30px;
   }
-}
-
-.action-sheet-group-cancel {
-  position: absolute;
-  bottom: 216px;
-  right: 0;
-  width: 63px;
-}
-.action-sheet-button {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.13) !important;
-  border-bottom-left-radius: 83px;
-  border-bottom-style: ridge;
-  --border-color: var(
-    --ion-item-border-color,
-    var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13)))
-  );
-}
-.action-sheet-cancel {
-  border-bottom: unset !important;
+  .action-sheet-group-cancel {
+    position: absolute;
+    bottom: 216px;
+    right: 0;
+    width: 63px;
+  }
+  .action-sheet-button {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.13) !important;
+    border-bottom-left-radius: 83px;
+    border-bottom-style: ridge;
+    --border-color: var(
+      --ion-item-border-color,
+      var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13)))
+    );
+  }
+  .action-sheet-cancel {
+    border-bottom: unset !important;
+  }
 }
