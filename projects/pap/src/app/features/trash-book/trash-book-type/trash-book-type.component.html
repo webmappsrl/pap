@@ -3,47 +3,56 @@
 </ion-header>
 
 <ion-content padding class="trash-book-type">
-  <h1 class="trash-book-type-title">
-    {{ trashBookType?.name }}
-  </h1>
+  <ion-card class="trash-book-type pap-card pap-card-book-type-1">
+    <h1 class="trash-book-type-title">
+      {{ trashBookType?.name }}
+    </h1>
 
-  <div class="trash-book-type-content">{{trashBookType?.description}}</div>
-  <h2 *ngIf="trashBookType?.howto" class="trash-book-type-subtitle">{{'Come'|translate}}</h2>
-  <div *ngIf="trashBookType?.howto" class="trash-book-type-content">
-    {{trashBookType?.howto}}
-  </div>
+    <div class="trash-book-type-content">{{trashBookType?.description}}</div>
+  </ion-card>
 
-
-  <h2 *ngIf="trashBookType?.allowed || trashBookType?.notallowed" class="trash-book-type-subtitle">{{'Cosa'|translate}}
-  </h2>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6">
-        <ion-list>
+  <ion-card class="trash-book-type pap-card pap-card-book-type-2">
+    <h2 *ngIf="trashBookType?.howto" class="trash-book-type-subtitle">{{'Come'|translate}}</h2>
+    <div *ngIf="trashBookType?.howto" class="trash-book-type-content">
+      {{trashBookType?.howto}}
+    </div>
+    <h2
+      *ngIf="trashBookType?.allowed || trashBookType?.notallowed"
+      class="trash-book-type-subtitle"
+    >
+      {{'Cosa'|translate}}
+    </h2>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
           <ion-list-header>
             <ion-label class="trash-book-type-icon-container">
-              <ion-icon name="checkmark-circle" color="success" class="trash-book-type-icon-allowed">
-              </ion-icon>
+              <ion-icon name="checkmark-circle" class="trash-book-type-icon-allowed"> </ion-icon>
             </ion-label>
           </ion-list-header>
-          <ion-item class="trash-book-type-allowedornot " *ngFor="let item of trashBookType?.allowed">
-            <ion-label class="ion-text-wrap">{{item}}</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-      <ion-col size="6">
-        <ion-list>
+          <ul>
+            <li *ngFor="let item of trashBookType?.allowed">
+              {{item}}
+            </li>
+          </ul>
+        </ion-col>
+        <ion-col size="6">
           <ion-list-header>
             <ion-label class="trash-book-type-icon-container">
               <ion-icon name="close-circle" color="danger" class="trash-book-type-icon-notallowed">
               </ion-icon>
             </ion-label>
           </ion-list-header>
-          <ion-item class="trash-book-type-allowedornot " *ngFor="let item of trashBookType?.notallowed">
-            <ion-label class="ion-text-wrap">{{item}}</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          <ul>
+            <li *ngFor="let item of trashBookType?.notallowed">
+              {{item}}
+            </li>
+          </ul>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </ion-content>
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>

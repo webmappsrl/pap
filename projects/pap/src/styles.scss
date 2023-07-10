@@ -29,13 +29,13 @@ body {
 
 /************ auth guard NO_LOGGED ***************/
 .pap-alert-login {
-  .alert-wrapper.sc-ion-alert-md{
+  .alert-wrapper.sc-ion-alert-md {
     border-radius: 30px;
   }
-  .alert-title.sc-ion-alert-md{
+  .alert-title.sc-ion-alert-md {
     font-weight: 600;
   }
-  .alert-button.sc-ion-alert-md{
+  .alert-button.sc-ion-alert-md {
     border: 2px solid;
     border-radius: 30px;
     line-height: 10px;
@@ -43,7 +43,7 @@ body {
     --height: 34px;
     margin: 5px;
   }
-  .alert-button-inner.sc-ion-alert-md{
+  .alert-button-inner.sc-ion-alert-md {
     justify-content: center;
   }
   .alert-button-group.sc-ion-alert-md {
@@ -87,10 +87,26 @@ body {
     align-self: auto;
   }
   .alert-button-group.sc-ion-alert-md > :nth-child(4) {
-  border: unset;  
-  position: absolute;
-  top: 5px;
-  left: 230px;
-  font-size: 20px;
+    border: unset;
+    position: absolute;
+    top: 5px;
+    left: 230px;
+    font-size: 20px;
+  }
+}
+/************ end auth guard NO_LOGGED ***************/
+
+.pap-card {
+  --background: var(--ion-color-light);
+  display: grid;
+  max-width: 93%;
+  height: 80%;
+  overflow-y: auto;
+  margin: auto !important;
+  top: 15px;
+  box-shadow: 0px 2px 3px 0px #00000033;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }

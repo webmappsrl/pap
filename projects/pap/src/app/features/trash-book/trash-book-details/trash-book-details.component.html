@@ -3,68 +3,83 @@
 </ion-header>
 <ng-container *ngIf="trashBookDetailsView$|async as view">
   <ion-content padding class="trash-book-details ion-padding">
-    <!-- <div id="types-path">
+    <ion-card class="pap-card">
+      <!-- <div id="types-path">
             <a (click)="dismiss()">{{ pageData.path }}</a> > {{ data.name }}
           </div> -->
-    <h1 class="trash-book-details-title">
-      {{ view.name }}
-    </h1>
+      <h1 class="trash-book-details-title">
+        {{ view.name }}
+      </h1>
 
-    <ion-item lines="full" *ngIf="view.trashBookType?.name">
-      <ion-label class="trash-book-details-label" slot="start">Che rifiuto è:</ion-label>
-      <ion-label class="trash-book-details-value ion-text-wrap" slot="end">
-        {{view.trashBookType?.name}}
-      </ion-label>
-      <ion-icon
-        class="trash-book-details-icon"
-        slot="end"
-        [ngStyle]="{color:view.trashBookType?.color}"
-        name="information-circle"
-        (click)="info(view.trashBookType)"
-      ></ion-icon>
-    </ion-item>
-
-    <ion-item lines="full">
-      <ion-label class="trash-book-details-label" slot="start">PAP</ion-label>
-      <ion-button
-        class="trash-book-details-button"
-        slot="end"
-        *ngIf="view.pap;else noPap"
-        (click)="openCalendar()"
-      >
-        calendario
-      </ion-button>
-      <ng-template #noPap>
-        <ion-label class="trash-book-details-value  ion-text-wrap" slot="end">
-          non pianificato
+      <ion-item lines="full" *ngIf="view.trashBookType?.name">
+        <ion-label class="trash-book-details-label" slot="start">Che rifiuto è:</ion-label>
+        <ion-icon slot="start" [ngStyle]="{color:view.trashBookType?.color}" name="ellipse">
+        </ion-icon>
+        <ion-label class="trash-book-details-value ion-text-wrap" slot="start">
+          {{view.trashBookType?.name}}
         </ion-label>
-      </ng-template>
-    </ion-item>
+        <ion-icon
+          size="large"
+          class="trash-book-details-icon"
+          slot="end"
+          name="information-circle"
+          (click)="info(view.trashBookType)"
+        ></ion-icon>
+      </ion-item>
 
-    <ion-item lines="full" *ngIf="view.collection_center">
-      <ion-label class="trash-book-details-label" slot="start">Centro di raccolta:</ion-label>
-      <ion-button
-        class="trash-book-details-button"
-        slot="end"
-        (click)="openWasteCenterCollection()"
-      >
-        centri raccolta
-      </ion-button>
-    </ion-item>
+      <ion-item lines="full">
+        <ion-label class="trash-book-details-label" slot="start">PAP</ion-label>
+        <ion-button
+          shape="round"
+          fill="outline"
+          class="trash-book-details-button"
+          slot="end"
+          *ngIf="view.pap;else noPap"
+          (click)="openCalendar()"
+        >
+          calendario
+        </ion-button>
 
-    <ion-item lines="full" *ngIf="view.delivery">
-      <ion-label class="trash-book-details-label" slot="start">Ingombranti/RAEE</ion-label>
-      <ion-button class="trash-book-details-button" slot="end" (click)="book(view.trashBookType)">
-        Prenota ora
-      </ion-button>
-    </ion-item>
+        <ng-template #noPap>
+          <ion-label class="trash-book-details-value  ion-text-wrap" slot="end">
+            non pianificato
+          </ion-label>
+        </ng-template>
+      </ion-item>
 
-    <ion-item lines="full" *ngIf="view.where">
-      <ion-label class="trash-book-details-label" slot="start">Dove lo getto</ion-label>
-      <ion-label class="trash-book-details-value  ion-text-wrap" slot="end">
-        {{view.where}}
-      </ion-label>
-    </ion-item>
+      <ion-item lines="full" *ngIf="view.collection_center">
+        <ion-label class="trash-book-details-label" slot="start">Centro di raccolta</ion-label>
+        <ion-button
+          shape="round"
+          fill="outline"
+          class="trash-book-details-button"
+          slot="end"
+          (click)="openWasteCenterCollection()"
+        >
+          Vedi
+        </ion-button>
+      </ion-item>
+
+      <ion-item lines="full" *ngIf="view.delivery">
+        <ion-label class="trash-book-details-label" slot="start">Ritiro ingombranti</ion-label>
+        <ion-button
+          shape="round"
+          fill="outline"
+          class="trash-book-details-button"
+          slot="end"
+          (click)="book(view.trashBookType)"
+        >
+          Prenota
+        </ion-button>
+      </ion-item>
+
+      <ion-item lines="full" *ngIf="view.where">
+        <ion-label class="trash-book-details-label" slot="start">Dove lo getto</ion-label>
+        <ion-label class="trash-book-details-value  ion-text-wrap" slot="end">
+          {{view.where}}
+        </ion-label>
+      </ion-item>
+    </ion-card>
   </ion-content>
 </ng-container>
 <ion-footer collapse="fade">
