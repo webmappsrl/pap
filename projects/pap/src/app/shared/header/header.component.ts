@@ -14,6 +14,7 @@ import {selectHeaderState} from './state/header.selectors';
 import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {buttonAction} from '../../features/home/home.model';
 import {AppState} from '../../core/core.state';
+import {isLogged} from '../../core/auth/state/auth.selectors';
 
 interface ActionEvt {
   action: string;
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnDestroy {
 
   headerView$ = this._store.pipe(select(selectHeaderState));
   homeView$ = this._store.pipe(select(selectHomeState));
+  isLogged$ = this._store.pipe(select(isLogged));
 
   @Input() startButton: boolean = false;
   @Input() endButton: boolean = false;

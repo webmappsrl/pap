@@ -20,7 +20,7 @@ const headermock: headerInfo = {
     label: '',
     action: buttonAction.NAVIGATION,
     url: 'settings',
-    icon: 'settings',
+    icon: 'person-circle',
   },
   isMenuOpen: false,
 };
