@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {Store, select} from '@ngrx/store';
 import {UpdateUser, deleteUser, logout} from '../../core/auth/state/auth.actions';
 
@@ -32,7 +32,7 @@ import {toggleEdit} from './state/settings.actions';
 export class SettingsComponent implements OnInit, OnDestroy {
   currentStep = 'firstStep';
   error$: Observable<string | false | undefined> = this._store.select(error);
-  settingsForm: FormGroup;
+  settingsForm: UntypedFormGroup;
   private _settingsFormSub: Subscription = Subscription.EMPTY;
   settingsView$ = this._store.pipe(select(settingView));
   step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   constructor(
     private _alertCtrl: AlertController,
     private _store: Store<AppState>,
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
   ) {
     this.settingsForm = fb.group({
       firstStep: fb.group({

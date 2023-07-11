@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {AppState} from '@capacitor/app';
 import {select, Store} from '@ngrx/store';
 import {TranslateService} from '@ngx-translate/core';
@@ -17,7 +17,7 @@ import {currentTrashBookType} from '../state/form.selectors';
   encapsulation: ViewEncapsulation.None,
 })
 export class RecapComponent {
-  @Input() form!: FormGroup;
+  @Input() form!: UntypedFormGroup;
   @Input() set conf(c: TicketFormConf) {
     const recapSteps = c.step.filter(s => s.recap != null);
     this.steps$.next(recapSteps);

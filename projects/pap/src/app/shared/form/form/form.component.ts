@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {AlertController, IonInput, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
 import {BehaviorSubject, map, Observable, switchMap, withLatestFrom} from 'rxjs';
@@ -46,7 +46,7 @@ export class FormComponent {
         validators.push(Validators.required);
       }
 
-      const formControl = new FormControl('', validators);
+      const formControl = new UntypedFormControl('', validators);
       this.ticketForm.addControl(step.type, formControl);
       this.trashBookTypesOpts$ = this._store.pipe(
         select(trashBookTypes),
@@ -55,13 +55,13 @@ export class FormComponent {
         ),
       );
     });
-    const ticketTypeControl = new FormControl(ticketFormConf.ticketType);
+    const ticketTypeControl = new UntypedFormControl(ticketFormConf.ticketType);
     this.ticketForm.addControl('ticket_type', ticketTypeControl);
   }
 
   pos$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   recap$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  ticketForm: FormGroup = new FormGroup({});
+  ticketForm: UntypedFormGroup = new UntypedFormGroup({});
   ticketFormConf$: BehaviorSubject<TicketFormConf | null> =
     new BehaviorSubject<TicketFormConf | null>(null);
   alertEvt$: EventEmitter<any> = new EventEmitter<any>();

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 import {AppState} from '../../../core/core.state';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {FormProvider} from '../form-provider';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
@@ -78,7 +78,7 @@ export class thirdStepSignupComponent {
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
   @Input() buttons = true;
 
-  thirdStep: FormGroup = this._formProvider.getForm().get('thirdStep') as FormGroup;
+  thirdStep: UntypedFormGroup = this._formProvider.getForm().get('thirdStep') as UntypedFormGroup;
   confiniZone$: Observable<any> = this._store.select(currentZone);
   userTypes$: Observable<any> = this._store.select(currentUserTypes);
 
