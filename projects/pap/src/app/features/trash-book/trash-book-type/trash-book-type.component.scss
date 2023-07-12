@@ -55,12 +55,5 @@ pap-trash-book-type {
     .trash-book-type-icon-allowed {
       color: var(--ion-color-primary-tint) !important;
     }
-    > ion-card.trash-book-type.pap-card.pap-card-book-type-2.md.hydrated
-      > ion-grid
-      > ion-row
-      > ion-col
-      ion-list {
-      background-color: var(--ion-color-light) !important;
-    }
   }
 }

@@ -1,9 +1,8 @@
 pap-form-picture-picker {
-    .pap-form-picturepicker-img {
-        height: 60vh;
-        margin: 0 auto;
-    }
-    .pap-form-picturepicker-button {
-        margin-top: 15px;
-    }
+  display: flex;
+  flex-direction: column;
+  .pap-form-picturepicker-img {
+    height: 60vh;
+    margin: 0 auto;
+  }
 }

@@ -42,14 +42,14 @@ export class HomeEffects {
             buttons: [
               {
                 text: 'Prenota un servizio',
-                icon: 'checkmark',
+                icon: 'create',
                 data: {
                   action: 'ticket-reservation',
                 },
               },
               {
                 text: 'Segnala abbandono',
-                icon: 'chatbubbles',
+                icon: 'trash-bin',
                 data: {
                   action: 'abandonment-ticket',
                 },
@@ -69,7 +69,7 @@ export class HomeEffects {
                 },
               },
               {
-                text: 'close',
+                text: 'CHIUDI',
                 role: 'cancel',
               },
             ],

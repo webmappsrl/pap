@@ -61,6 +61,7 @@ pap-home {
   ion-item {
     --highlight-color: transparent;
     --highlight-color-focused: transparent;
+    --background: var(--ion-color-primary-contrast);
     width: 100%;
     height: 48px;
     left: 4.93px;
@@ -69,8 +70,12 @@ pap-home {
     flex-grow: 1;
   }
   ion-list {
+    --background: var(--ion-color-primary-contrast);
     width: 100%;
     margin-left: -30px;
+  }
+  .list-md {
+    background-color: var(--ion-color-primary-contrast);
   }
   .action-sheet-group-cancel {
     position: absolute;

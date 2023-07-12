@@ -1,6 +1,22 @@
 pap-header {
+  --background: var(--ion-color-secondary);
   ion-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
+    --background: var(--ion-color-secondary);
+    ion-back-button.back-button {
+      color: var(--ion-color-primary-contrast);
+    }
+    .sc-ion-buttons-md-s ion-icon[slot='icon-only'] {
+      width: 60px;
+      height: 60px;
+    }
     ion-title {
+      text-align: center;
+      color: var(--ion-color-secondary-contrast);
       img {
         position: absolute;
         left: 0;
@@ -12,43 +28,17 @@ pap-header {
     }
   }
   ion-button,
-  ion-button.modal,
-  ion-menu-button {
+  ion-button.modal {
     color: #fff;
     font-size: 1.3rem;
   }
   ion-menu-button {
     display: none;
   }
-  ion-toolbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    align-content: stretch;
-  }
   .sc-ion-buttons-md-s .button-has-icon-only.button-clear {
     margin-left: -57px;
     margin-right: -20px;
     width: auto;
-  }
-  .pap-header {
-    --background: var(--ion-color-secondary);
-
-    ion-back-button.back-button {
-      color: var(--ion-color-primary-contrast);
-    }
-    &-button {
-      color: var(--ion-color-secondary-contrast);
-    }
-    &-title {
-      text-align: center;
-      color: var(--ion-color-secondary-contrast);
-    }
-    .sc-ion-buttons-md-s ion-icon[slot='icon-only'] {
-      width: 60px;
-      height: 60px;
-    }
   }
   ion-item {
     pointer-events: auto !important;

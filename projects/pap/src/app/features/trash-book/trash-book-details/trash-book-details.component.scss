@@ -16,21 +16,14 @@ pap-trash-book-details {
       text-align: right;
       font-size: 0.9rem;
     }
-    ion-label.trash-book-details-value {
-      text-align: right;
-      font-size: 0.9rem;
-    }
     ion-card {
       height: 314px;
-    }
-  }
-  ion-content {
-    ion-card {
-      ion-item:nth-child(3) > ion-button {
-        font-size: 13px;
+      ion-item:nth-child(3) {
+        ion-button {
+          font-size: 13px;
+        }
       }
       ion-item {
-        --background: var(--ion-color-light);
         display: flow-root;
       }
       ion-item:nth-child(2) {
@@ -48,51 +41,54 @@ pap-trash-book-details {
         align-content: stretch;
         -webkit-align-items: flex-start;
         align-items: flex-start;
-      }
-      ion-item:nth-child(2) > ion-icon:nth-child(2) {
-        -webkit-order: 0;
-        order: 0;
-        -webkit-flex: 0 1 auto;
-        flex: 0 1 auto;
-        -webkit-align-self: auto;
-        align-self: center;
+        ion-icon:nth-child(2) {
+          -webkit-order: 0;
+          order: 0;
+          -webkit-flex: 0 1 auto;
+          flex: 0 1 auto;
+          -webkit-align-self: auto;
+          align-self: center;
+        }
+        ion-label.trash-book-details-value {
+          text-align: right;
+          font-size: 0.9rem;
+          max-width: fit-content;
+          -webkit-order: 0;
+          order: 0;
+          -webkit-flex: 1 1 auto;
+          flex: 1 1 auto;
+          -webkit-align-self: center;
+          align-self: center;
+        }
+        ion-icon.trash-book-details-icon {
+          color: var(--ion-color-primary);
+          width: 36.34px;
+          height: 36.34px;
+          -webkit-order: 0;
+          order: 0;
+          -webkit-flex: 0 1 auto;
+          flex: 0 1 auto;
+          -webkit-align-self: center;
+          align-self: center;
+        }
       }
       ion-item:nth-child(4) {
         order: 1;
       }
-      ion-item:nth-child(2)
-        > ion-label.trash-book-details-label.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
-        display: none;
+      ion-item:nth-child(2) {
+        ion-label.trash-book-details-label {
+          display: none;
+        }
       }
-      ion-item:nth-child(2)
-        > ion-label.trash-book-details-value.ion-text-wrap.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
-        max-width: fit-content;
-        -webkit-order: 0;
-        order: 0;
-        -webkit-flex: 1 1 auto;
-        flex: 1 1 auto;
-        -webkit-align-self: center;
-        align-self: center;
-      }
-      ion-item:nth-child(2) > ion-icon.trash-book-details-icon.md.icon-large.hydrated {
-        color: var(--ion-color-primary);
-        width: 36.34px;
-        height: 36.34px;
-        -webkit-order: 0;
-        order: 0;
-        -webkit-flex: 0 1 auto;
-        flex: 0 1 auto;
-        -webkit-align-self: center;
-        align-self: center;
-      }
-      ion-item:nth-child(3)
-        > ion-label.trash-book-details-value.ion-text-wrap.sc-ion-label-md-h.sc-ion-label-md-s.md.hydrated {
-        -webkit-order: 0;
-        order: 0;
-        -webkit-flex: 0 1 100%;
-        flex: 0 1 100%;
-        -webkit-align-self: center;
-        align-self: center;
+      ion-item:nth-child(3) {
+        ion-label.trash-book-details-value {
+          -webkit-order: 0;
+          order: 0;
+          -webkit-flex: 0 1 100%;
+          flex: 0 1 100%;
+          -webkit-align-self: center;
+          align-self: center;
+        }
       }
     }
   }

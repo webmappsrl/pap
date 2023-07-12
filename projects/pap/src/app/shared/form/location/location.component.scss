@@ -3,6 +3,7 @@ pap-form-location {
     position: relative;
   }
   .pap-form-location-map {
+    margin-top: 10px;
     height: 350px;
   }
 
@@ -19,5 +20,20 @@ pap-form-location {
     margin: 0;
     font-size: 18px;
     font-weight: bold;
+  }
+  div.pap-form-location-infocontainer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    ion-button {
+      width: 248.41px;
+      height: 36px;
+      align-self: center;
+    }
+    h2 {
+      color: var(--ion-color-medium-contrast);
+      font-size: 16px;
+      font-weight: 500;
+    }
   }
 }
