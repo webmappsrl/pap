@@ -16,15 +16,9 @@ export class HomeEffects {
       concatMap(() =>
         of([
           {
-            label: 'Centro notifiche',
-            url: 'notification',
-            action: buttonAction.NAVIGATION,
-            hideInHome: true,
-          },
-          {
-            label: 'Calendario',
-            icon: 'calendar',
-            url: 'calendar',
+            label: environment.config.name,
+            img: 'assets/icons/logo.png',
+            url: 'info',
             action: buttonAction.NAVIGATION,
           },
           {
@@ -75,15 +69,27 @@ export class HomeEffects {
             ],
           },
           {
-            label: 'Rifiutario',
-            icon: 'document-text',
-            url: 'trashbook',
+            label: 'Calendari',
+            icon: 'calendar',
+            url: 'calendar',
             action: buttonAction.NAVIGATION,
           },
           {
-            label: 'Le mie segnalazioni',
+            label: 'I miei ticket',
             icon: 'archive',
             url: 'reports',
+            action: buttonAction.NAVIGATION,
+          },
+          {
+            label: 'Centro notifiche',
+            url: 'notification',
+            action: buttonAction.NAVIGATION,
+            hideInHome: true,
+          },
+          {
+            label: 'Rifiutario',
+            icon: 'document-text',
+            url: 'trashbook',
             action: buttonAction.NAVIGATION,
           },
 
@@ -92,12 +98,6 @@ export class HomeEffects {
             url: 'settings',
             action: buttonAction.NAVIGATION,
             hideInHome: true,
-          },
-          {
-            label: environment.config.name,
-            img: 'assets/icons/logo.png',
-            url: 'info',
-            action: buttonAction.NAVIGATION,
           },
         ]).pipe(
           map(buttons => HomeActions.yHomesSuccess({buttons})),

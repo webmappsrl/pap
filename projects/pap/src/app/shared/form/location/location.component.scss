@@ -4,11 +4,11 @@ pap-form-location {
   }
   .pap-form-location-map {
     margin-top: 10px;
-    height: 350px;
+    height: 274px;
   }
 
   .pap-form-location-padding {
-    height: 350px;
+    height: 310px;
   }
 
   .pap-form-location-skeleton {
@@ -29,11 +29,16 @@ pap-form-location {
       width: 248.41px;
       height: 36px;
       align-self: center;
+      margin-top: -37px;
     }
     h2 {
       color: var(--ion-color-medium-contrast);
       font-size: 16px;
       font-weight: 500;
+    }
+    span {
+      margin-bottom: -15px;
+      text-align: start;
     }
   }
 }

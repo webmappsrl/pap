@@ -1,6 +1,9 @@
 pap-reports {
   .pap-reports-item {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     .pap-user-type {
       border-radius: 25px;
       color: white;
@@ -13,6 +16,24 @@ pap-reports {
       position: absolute;
       top: 0;
     }
+    .pap-reports-label-date {
+      flex: 1 1 auto;
+      align-self: flex-start;
+    }
+    .pap-reports-label-info {
+      order: -1;
+      margin-left: 0px;
+      span {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 18.75px;
+      }
+      p {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 16.41px;
+      }
+    }
     .pap-reports-date {
       max-width: 70px;
       color: var(--ion-color-primary);
@@ -20,12 +41,27 @@ pap-reports {
       font-size: 50px;
       text-align: center;
       overflow: visible;
+      display: flex;
+      flex-direction: column;
+      .pap-reports-monthday {
+        font-weight: 400;
+        font-size: 18px;
+        text-transform: uppercase;
+        align-self: center;
+        color: var(--ion-color-secondary-contrast);
+      }
 
       .pap-reports-monthname {
-        font-weight: 700;
-        font-size: 14px;
+        font-weight: 400;
+        font-size: 18px;
         text-transform: uppercase;
+        text-transform: uppercase;
+        align-self: flex-start;
+        color: var(--ion-color-secondary-contrast);
       }
+    }
+    .input-wrapper {
+      flex: 0 1 auto;
     }
     .pap-reports-weekday {
       font-size: 0.9em;
@@ -36,8 +72,20 @@ pap-reports {
   ion-card {
     img {
       padding: 25px;
-      display: block;
+      display: none;
       width: 100%;
     }
+    ion-list {
+      margin-top: -170px !important;
+    }
+  }
+  ion-card-title {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 23.44px;
+    padding: 16px;
+  }
+  .input-wrapper {
+    flex: 0 1 0% !important;
   }
 }
