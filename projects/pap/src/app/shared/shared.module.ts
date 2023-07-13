@@ -28,6 +28,7 @@ import {thirdStepSignupComponent} from './form/steps/third-step.component';
 import * as fromSignUp from './form/state/sign-up.reducer';
 import {SignUpEffects} from './form/state/sign-up.effects';
 import {MenuComponent} from './menu/menu.component';
+import {NotificationService} from './services/notification.service';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -61,6 +62,7 @@ import {MenuComponent} from './menu/menu.component';
     EffectsModule.forFeature([SignUpEffects]),
     TranslateModule.forRoot(),
   ],
+  providers: [NotificationService],
   exports: [
     CommonModule,
     RouterModule,

@@ -14,8 +14,11 @@ import {AuthInterceptor} from './auth.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {TrashBookEffects} from '../features/trash-book/state/trash-book.effects';
 import * as fromTrashBook from '../features/trash-book/state/trash-book.reducer';
+import * as fromCalendar from '../features/calendar/state/calendar.reducer';
 import * as fromMap from '../shared/map/state/map.reducer';
+
 import {MapEffects} from '../shared/map/state/map.effects';
+import {CalendarEffects} from '../features/calendar/state/calendar.effects';
 @NgModule({
   declarations: [LayoutComponent],
   imports: [
@@ -26,8 +29,10 @@ import {MapEffects} from '../shared/map/state/map.effects';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forRoot(reducers, {}),
     StoreModule.forFeature(fromTrashBook.trashBookFeatureKey, fromTrashBook.reducer),
+    StoreModule.forFeature(fromCalendar.calendarFeatureKey, fromCalendar.reducer),
+    StoreModule.forFeature(fromTrashBook.trashBookFeatureKey, fromTrashBook.reducer),
     StoreModule.forFeature(fromMap.mapFeatureKey, fromMap.reducer),
-    EffectsModule.forRoot([LayoutEffects, TrashBookEffects, MapEffects]),
+    EffectsModule.forRoot([LayoutEffects, TrashBookEffects, MapEffects, CalendarEffects]),
     IonicModule.forRoot(),
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
