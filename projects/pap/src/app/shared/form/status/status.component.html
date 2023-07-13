@@ -1,7 +1,12 @@
 <ion-grid>
   <ion-row>
     <ion-col size="2">
-      <ion-button shape="round" [hidden]="pos === 0" (click)="this.backEvt.emit()">
+      <ion-button
+        class="pap-status-back-button"
+        shape="round"
+        [hidden]="pos === 0"
+        (click)="this.backEvt.emit()"
+      >
         <ion-icon color="light" name="chevron-back"></ion-icon>
       </ion-button>
     </ion-col>

@@ -22,12 +22,8 @@ pap-form-status {
     .pap-status-cancel-icon {
       width: 144px !important;
     }
-    ion-row:nth-child(1) {
-      ion-col:nth-child(1) {
-        ion-button {
-          margin-left: -40px;
-        }
-      }
+    .pap-status-back-button {
+      margin-left: -40px;
     }
   }
 }

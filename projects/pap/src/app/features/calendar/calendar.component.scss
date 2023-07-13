@@ -7,11 +7,11 @@ pap-calendar {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-      div.pap-calendar-trash {
+      .pap-calendar-trash {
         flex: 1 1 auto;
         align-self: flex-start;
       }
-      div.pap-calendar-info-icon {
+      .pap-calendar-info-icon {
         flex: 0 1 auto;
         align-self: auto;
       }

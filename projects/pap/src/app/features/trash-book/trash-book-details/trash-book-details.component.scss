@@ -18,15 +18,23 @@ pap-trash-book-details {
     }
     ion-card {
       height: 314px;
-      ion-item:nth-child(3) {
-        ion-button {
+      .trash-book-details-calendar {
+        .trash-book-details-button {
           font-size: 13px;
+        }
+        .trash-book-details-value {
+          -webkit-order: 0;
+          order: 0;
+          -webkit-flex: 0 1 100%;
+          flex: 0 1 100%;
+          -webkit-align-self: center;
+          align-self: center;
         }
       }
       ion-item {
         display: flow-root;
       }
-      ion-item:nth-child(2) {
+      .trash-book-details-type {
         order: 2;
         margin-bottom: 52px;
         display: -webkit-flex;
@@ -41,7 +49,7 @@ pap-trash-book-details {
         align-content: stretch;
         -webkit-align-items: flex-start;
         align-items: flex-start;
-        ion-icon:nth-child(2) {
+        .trash-book-details-icon-color {
           -webkit-order: 0;
           order: 0;
           -webkit-flex: 0 1 auto;
@@ -49,7 +57,7 @@ pap-trash-book-details {
           -webkit-align-self: auto;
           align-self: center;
         }
-        ion-label.trash-book-details-value {
+        .trash-book-details-value {
           text-align: right;
           font-size: 0.9rem;
           max-width: fit-content;
@@ -60,7 +68,7 @@ pap-trash-book-details {
           -webkit-align-self: center;
           align-self: center;
         }
-        ion-icon.trash-book-details-icon {
+        .trash-book-details-icon {
           color: var(--ion-color-primary);
           width: 36.34px;
           height: 36.34px;
@@ -71,24 +79,12 @@ pap-trash-book-details {
           -webkit-align-self: center;
           align-self: center;
         }
-      }
-      ion-item:nth-child(4) {
-        order: 1;
-      }
-      ion-item:nth-child(2) {
-        ion-label.trash-book-details-label {
+        .trash-book-details-label {
           display: none;
         }
       }
-      ion-item:nth-child(3) {
-        ion-label.trash-book-details-value {
-          -webkit-order: 0;
-          order: 0;
-          -webkit-flex: 0 1 100%;
-          flex: 0 1 100%;
-          -webkit-align-self: center;
-          align-self: center;
-        }
+      .trash-book-details-collection-center {
+        order: 1;
       }
     }
   }

@@ -126,8 +126,8 @@ ion-card {
 /************ end auth guard NO_LOGGED ***************/
 
 /************ start action sheet home Servizi ***************/
-ion-action-sheet.sc-ion-action-sheet-md-h {
-  div.action-sheet-wrapper.ion-overlay-wrapper.sc-ion-action-sheet-md {
+.pap-form-selector {
+  .action-sheet-wrapper {
     div {
       display: flex;
       flex-direction: column;
@@ -141,7 +141,7 @@ ion-action-sheet.sc-ion-action-sheet-md-h {
           line-height: 23.44px;
         }
       }
-      div:nth-child(1) {
+      .action-sheet-group {
         display: flex;
         flex-direction: column;
         button {
@@ -152,26 +152,26 @@ ion-action-sheet.sc-ion-action-sheet-md-h {
             }
           }
         }
-        button:nth-child(2) {
-          border-top: 1px solid;
-          border-top-color: var(--ion-color-light);
-        }
-        button:nth-child(n + 2):nth-last-child(-n + 5) {
+        .action-sheet-button {
           border-bottom: 1px solid;
           border-bottom-color: var(--ion-color-light);
         }
       }
-      div.action-sheet-group.action-sheet-group-cancel.sc-ion-action-sheet-md {
-        // CHIUDI
-        flex: 0 1 auto;
-        align-self: flex-end;
-        position: absolute;
-        bottom: 208px;
-        right: 0px;
-        width: 85px;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16.41px;
+      .action-sheet-group-cancel {
+        .action-sheet-button {
+          // CHIUDI
+          flex: 0 1 auto;
+          align-self: flex-end;
+          position: absolute;
+          bottom: 208px;
+          right: 0px;
+          width: 85px;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16.41px;
+          border-top: 0px solid;
+          border-bottom: 0px solid;
+        }
       }
     }
   }
@@ -179,10 +179,10 @@ ion-action-sheet.sc-ion-action-sheet-md-h {
 /************ end action sheet home Servizi ***************/
 
 /************ start action sheet image-picker ***************/
-ion-action-sheet.pap-image-picker-action-sheet {
-  div.action-sheet-wrapper.ion-overlay-wrapper.sc-ion-action-sheet-md {
+.pap-image-picker-action-sheet {
+  .action-sheet-wrapper {
     div {
-      div.action-sheet-group.action-sheet-group-cancel.sc-ion-action-sheet-md {
+      .action-sheet-group {
         // CHIUDI
         align-self: stretch;
         position: unset;
