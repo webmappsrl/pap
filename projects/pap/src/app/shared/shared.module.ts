@@ -28,7 +28,7 @@ import {thirdStepSignupComponent} from './form/steps/third-step.component';
 import * as fromSignUp from './form/state/sign-up.reducer';
 import {SignUpEffects} from './form/state/sign-up.effects';
 import {MenuComponent} from './menu/menu.component';
-import {NotificationService} from './services/notification.service';
+import {LocalNotificationService} from './services/local-notification.service';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -62,7 +62,7 @@ import {NotificationService} from './services/notification.service';
     EffectsModule.forFeature([SignUpEffects]),
     TranslateModule.forRoot(),
   ],
-  providers: [NotificationService],
+  providers: [LocalNotificationService],
   exports: [
     CommonModule,
     RouterModule,

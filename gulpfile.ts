@@ -67,6 +67,11 @@ gulp.task('build', async () => {
           SplashScreenDelay: '3000',
         },
       },
+      plugins: {
+        PushNotifications: {
+          presentationOptions: ['badge', 'sound', 'alert'],
+        },
+      },
     };
     const environment = {
       production: true,
@@ -123,6 +128,7 @@ gulp.task('init', async () => {
   await execCmd(`rm -rf ios`);
   await execCmd(`rm -rf resources`);
   await execCmd(`rm -rf icons`);
+  await execCmd(`npm install --force`);
   await execCmd(`npx cap add ios`);
   await execCmd(`cd ios/App && pod install`);
   await execCmd(`npx cap add android`);

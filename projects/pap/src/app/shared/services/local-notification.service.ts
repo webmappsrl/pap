@@ -14,7 +14,7 @@ import {selectCalendarState} from '../../features/calendar/state/calendar.select
 @Injectable({
   providedIn: 'root',
 })
-export class NotificationService {
+export class LocalNotificationService {
   calendarView$ = this._store.pipe(select(selectCalendarState));
 
   constructor(private _store: Store<AppState>) {
