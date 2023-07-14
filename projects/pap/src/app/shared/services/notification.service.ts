@@ -4,12 +4,12 @@ import {
   LocalNotifications,
   ScheduleOptions,
 } from '@capacitor/local-notifications';
-import {CalendarRow} from '../../features/calendar/calendar.model';
 import {Store, select} from '@ngrx/store';
-import {AppState} from '../../core/core.state';
-import {selectCalendarState} from '../../features/calendar/state/calendar.selectors';
-import {filter} from 'rxjs';
 import {format, subHours} from 'date-fns';
+import {filter} from 'rxjs';
+import {AppState} from '../../core/core.state';
+import {CalendarRow} from '../../features/calendar/calendar.model';
+import {selectCalendarState} from '../../features/calendar/state/calendar.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,8 @@ export class NotificationService {
   calendarView$ = this._store.pipe(select(selectCalendarState));
 
   constructor(private _store: Store<AppState>) {
-    this._requestPermissions();
-    this._scheduleNotifications();
+    this._initLocalNotifications();
+    this._scheduleLocalNotifications();
   }
 
   private _getBodyNotificationFromCalendarRows(calendarRow: CalendarRow): string {
@@ -34,11 +34,11 @@ export class NotificationService {
     return body;
   }
 
-  private async _requestPermissions(): Promise<void> {
+  private async _initLocalNotifications(): Promise<void> {
     await LocalNotifications.requestPermissions();
   }
 
-  private async _scheduleNotifications(): Promise<void> {
+  private async _scheduleLocalNotifications(): Promise<void> {
     setTimeout(() => {
       this.calendarView$
         .pipe(filter(p => p != null && p.calendar != null))
