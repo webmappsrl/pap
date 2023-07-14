@@ -23,7 +23,7 @@
           class="pap-reports-item"
           (click)="openDetail(report)"
         >
-          <ion-label class="pap-reports-label-date" slot="start" class="pap-reports-date">
+          <ion-label slot="start" class="pap-reports-date">
             <div class="pap-reports-monthday">{{report.created_at|papDate: 'd' }}</div>
             <div class="pap-reports-monthname">{{report.created_at|papDate: 'MMMM' }}</div>
           </ion-label>
