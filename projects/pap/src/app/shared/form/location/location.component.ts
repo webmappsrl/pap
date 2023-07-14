@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {AppState} from '@capacitor/app';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {AppState} from '../../../core/core.state';
 import {setMarker} from '../../map/state/map.actions';
 import {currentAddress} from '../../map/state/map.selectors';
 import {LocationService} from '../../services/location.service';
@@ -22,18 +22,43 @@ import {LocationService} from '../../services/location.service';
   ],
 })
 export class LocationComponent implements ControlValueAccessor {
+  currentAddress$: Observable<string | undefined> = this._store.pipe(select(currentAddress));
+  disabled = false;
   myPosition$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
   public myPositionString: string = '';
   onChange = (location: number) => {};
   onTouched = () => {};
   touched = false;
-  disabled = false;
-  currentAddress$: Observable<string | undefined> = this._store.pipe(select(currentAddress));
+
   constructor(private locationService: LocationService, private _store: Store<AppState>) {}
-  writeValue(coords: any): void {
-    this.myPosition$.next(coords);
-    this._store.dispatch(setMarker({coords}));
-    this.onChange(coords);
+
+  addressOnChange(event: any) {
+    if (event?.target && typeof event.target.value === 'string') {
+      this.setAddress(event.target.value);
+    }
+  }
+
+  async getLocation() {
+    try {
+      navigator.geolocation.getCurrentPosition(location => {
+        const coords = [location.coords.latitude, location.coords.longitude] as [number, number];
+        this._store.dispatch(setMarker({coords}));
+        this.writeValue(coords);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  mapClick(ev: number[]) {
+    this.setPosition(ev);
+  }
+
+  markAsTouched() {
+    if (!this.touched) {
+      this.onTouched();
+      this.touched = true;
+    }
   }
 
   registerOnChange(onChange: any) {
@@ -44,24 +69,8 @@ export class LocationComponent implements ControlValueAccessor {
     this.onTouched = onTouched;
   }
 
-  markAsTouched() {
-    if (!this.touched) {
-      this.onTouched();
-      this.touched = true;
-    }
-  }
-
   setAddress(address: string) {
     this.myPositionString = address;
-  }
-
-  addressOnChange(event: any) {
-    if (event?.target && typeof event.target.value === 'string') {
-      this.setAddress(event.target.value);
-    }
-  }
-  mapClick(ev: number[]) {
-    this.setPosition(ev);
   }
 
   setPosition(coords: number[]) {
@@ -77,15 +86,9 @@ export class LocationComponent implements ControlValueAccessor {
     );
   }
 
-  async getLocation() {
-    try {
-      navigator.geolocation.getCurrentPosition(location => {
-        const coords = [location.coords.latitude, location.coords.longitude] as [number, number];
-        this._store.dispatch(setMarker({coords}));
-        this.writeValue(coords);
-      });
-    } catch (error) {
-      console.error(error);
-    }
+  writeValue(coords: any): void {
+    this.myPosition$.next(coords);
+    this._store.dispatch(setMarker({coords}));
+    this.onChange(coords);
   }
 }

@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {AlertController, NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {AppState} from '../../core/core.state';
 import {loadWasteCenterCollections} from './state/waste-center-collection.actions';
 import {selectWasteCenterCollectionState} from './state/waste-center-collection.selectors';

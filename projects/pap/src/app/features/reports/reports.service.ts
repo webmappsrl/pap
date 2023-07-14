@@ -1,8 +1,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {map, Observable} from 'rxjs';
-import {Ticket} from '../../shared/form/model';
 import {environment as env} from 'projects/pap/src/environments/environment';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Ticket} from '../../shared/form/model';
 @Injectable({
   providedIn: 'root',
 })

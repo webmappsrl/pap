@@ -5,8 +5,8 @@ import {
   ScheduleOptions,
 } from '@capacitor/local-notifications';
 import {Store, select} from '@ngrx/store';
-import {format, subHours} from 'date-fns';
-import {filter} from 'rxjs';
+import {subHours} from 'date-fns';
+import {filter} from 'rxjs/operators';
 import {AppState} from '../../core/core.state';
 import {CalendarRow} from '../../features/calendar/calendar.model';
 import {selectCalendarState} from '../../features/calendar/state/calendar.selectors';
@@ -18,8 +18,8 @@ export class LocalNotificationService {
   calendarView$ = this._store.pipe(select(selectCalendarState));
 
   constructor(private _store: Store<AppState>) {
-    this._initLocalNotifications();
-    this._scheduleLocalNotifications();
+    this._initNotifications();
+    this._scheduleNotifications();
   }
 
   private _getBodyNotificationFromCalendarRows(calendarRow: CalendarRow): string {
@@ -34,11 +34,11 @@ export class LocalNotificationService {
     return body;
   }
 
-  private async _initLocalNotifications(): Promise<void> {
+  private async _initNotifications(): Promise<void> {
     await LocalNotifications.requestPermissions();
   }
 
-  private async _scheduleLocalNotifications(): Promise<void> {
+  private async _scheduleNotifications(): Promise<void> {
     setTimeout(() => {
       this.calendarView$
         .pipe(filter(p => p != null && p.calendar != null))
@@ -69,12 +69,7 @@ export class LocalNotificationService {
                   allowWhileIdle: true,
                 },
               });
-              console.log(
-                `${format(at, 'dd/MM/yyyy HH:mm:ss')}: ${body} alle notifica inviata alle ${format(
-                  at,
-                  'dd/MM/yyyy HH:mm:ss',
-                )}`,
-              );
+              // console.log(`${format(at, 'dd/MM/yyyy HH:mm:ss')}: ${body} alle notifica inviata alle ${format(at, 'dd/MM/yyyy HH:mm:ss',)}`);
             });
           });
           let options: ScheduleOptions = {

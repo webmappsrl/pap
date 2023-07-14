@@ -1,9 +1,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {map, Observable, of} from 'rxjs';
 import {environment as env} from 'projects/pap/src/environments/environment';
-import {Calendar, CalendarRow} from './calendar.model';
-import {TrashBookType} from '../trash-book/trash-book-model';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Calendar} from './calendar.model';
 
 @Injectable({
   providedIn: 'root',

@@ -1,11 +1,25 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, of, switchMap} from 'rxjs';
+import {of} from 'rxjs';
+import {catchError, map, switchMap} from 'rxjs/operators';
 import {LocationService} from '../../services/location.service';
 import * as MapActions from './map.actions';
 
 @Injectable()
 export class MapEffects {
+  loadConfiniZone$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(MapActions.loadConfiniZone),
+      switchMap(_ =>
+        this._locationSvc.getConfiniZone().pipe(
+          map(data => MapActions.loadConfiniZoneSuccess({data})),
+          catchError(error => {
+            return of(MapActions.loadConfiniZoneFailure({error}));
+          }),
+        ),
+      ),
+    );
+  });
   setMarker$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(MapActions.setMarker),
@@ -20,18 +34,5 @@ export class MapEffects {
     );
   });
 
-  loadConfiniZone$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(MapActions.loadConfiniZone),
-      switchMap(_ =>
-        this._locationSvc.getConfiniZone().pipe(
-          map(data => MapActions.loadConfiniZoneSuccess({data})),
-          catchError(error => {
-            return of(MapActions.loadConfiniZoneFailure({error}));
-          }),
-        ),
-      ),
-    );
-  });
   constructor(private actions$: Actions, private _locationSvc: LocationService) {}
 }
