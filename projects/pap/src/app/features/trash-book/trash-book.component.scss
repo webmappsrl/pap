@@ -30,12 +30,6 @@ pap-trash-book {
       font-size: 20px;
       line-height: 23.44px;
     }
-    .list-md {
-      background-color: var(--ion-color-light);
-    }
-    ion-item {
-      --background: var(--ion-color-light);
-    }
     .item.sc-ion-label-md-h,
     .item .sc-ion-label-md-h {
       font-weight: 400;
@@ -43,7 +37,7 @@ pap-trash-book {
       margin-left: 0px;
     }
   }
-}
-pap-trash-book > ion-content > ion-card > ion-card-content > ion-list > ion-item > ion-icon {
-  font-size: 27px;
+  ion-icon {
+    font-size: 27px;
+  }
 }

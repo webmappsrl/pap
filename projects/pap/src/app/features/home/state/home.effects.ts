@@ -16,15 +16,9 @@ export class HomeEffects {
       concatMap(() =>
         of([
           {
-            label: 'Centro notifiche',
-            url: 'notification',
-            action: buttonAction.NAVIGATION,
-            hideInHome: true,
-          },
-          {
-            label: 'Calendario',
-            icon: 'calendar',
-            url: 'calendar',
+            label: environment.config.name,
+            img: 'assets/icons/logo.png',
+            url: 'info',
             action: buttonAction.NAVIGATION,
           },
           {
@@ -42,14 +36,14 @@ export class HomeEffects {
             buttons: [
               {
                 text: 'Prenota un servizio',
-                icon: 'checkmark',
+                icon: 'create',
                 data: {
                   action: 'ticket-reservation',
                 },
               },
               {
                 text: 'Segnala abbandono',
-                icon: 'chatbubbles',
+                icon: 'trash-bin',
                 data: {
                   action: 'abandonment-ticket',
                 },
@@ -69,21 +63,33 @@ export class HomeEffects {
                 },
               },
               {
-                text: 'close',
+                text: 'CHIUDI',
                 role: 'cancel',
               },
             ],
           },
           {
-            label: 'Rifiutario',
-            icon: 'document-text',
-            url: 'trashbook',
+            label: 'Calendari',
+            icon: 'calendar',
+            url: 'calendar',
             action: buttonAction.NAVIGATION,
           },
           {
-            label: 'Le mie segnalazioni',
+            label: 'I miei ticket',
             icon: 'archive',
             url: 'reports',
+            action: buttonAction.NAVIGATION,
+          },
+          {
+            label: 'Centro notifiche',
+            url: 'notification',
+            action: buttonAction.NAVIGATION,
+            hideInHome: true,
+          },
+          {
+            label: 'Rifiutario',
+            icon: 'document-text',
+            url: 'trashbook',
             action: buttonAction.NAVIGATION,
           },
 
@@ -92,12 +98,6 @@ export class HomeEffects {
             url: 'settings',
             action: buttonAction.NAVIGATION,
             hideInHome: true,
-          },
-          {
-            label: environment.config.name,
-            img: 'assets/icons/logo.png',
-            url: 'info',
-            action: buttonAction.NAVIGATION,
           },
         ]).pipe(
           map(buttons => HomeActions.yHomesSuccess({buttons})),

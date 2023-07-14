@@ -10,12 +10,12 @@
   <div class="pap-form-location-padding"></div>
 
   <div class="pap-form-location-infocontainer">
-    <ion-button expand="block" fill="outline" (click)="getLocation()">
-      <ion-icon slot="start" name="pin"></ion-icon>
+    <ion-button expand="block" fill="outline" shape="round" (click)="getLocation()">
+      <ion-icon slot="start" name="location-sharp"></ion-icon>
       {{ 'La mia posizione' | translate }}
     </ion-button>
-    <ng-container *ngIf="currentAddress$|async as currentAddress; else skeleton">
-      <h2 class="pap-form-location-title">{{ 'indirizzo'| translate }}:</h2>
+    <ng-container *ngIf="currentAddress$|async as currentAddress">
+      <h2 class="pap-form-location-title">{{ 'Indirizzo'| translate }}:</h2>
       <span>{{currentAddress}}</span>
     </ng-container>
     <ng-template #skeleton>

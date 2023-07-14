@@ -1,7 +1,12 @@
 <ion-grid>
   <ion-row>
     <ion-col size="2">
-      <ion-button [disabled]="pos === 0" (click)="this.backEvt.emit()">
+      <ion-button
+        class="pap-status-back-button"
+        shape="round"
+        [hidden]="pos === 0"
+        (click)="this.backEvt.emit()"
+      >
         <ion-icon color="light" name="chevron-back"></ion-icon>
       </ion-button>
     </ion-col>
@@ -15,13 +20,25 @@
     </ion-col>
     <ion-col size="2">
       <ion-button
+        shape="round"
         (click)="this.nextEvt.emit()"
         [disabled]="!(isValid$|async)"
-        *ngIf="pos+1 < conf.step.length"
+        *ngIf="pos+1 < conf.step.length && pos+1 !== conf.step.length - 1"
       >
         <ion-icon color="light" name="chevron-forward"></ion-icon>
       </ion-button>
+
       <ion-button
+        shape="round"
+        (click)="this.nextEvt.emit()"
+        [disabled]="!(isValid$|async)"
+        *ngIf="pos+1 < conf.step.length && pos+1 === conf.step.length - 1"
+      >
+        <ion-icon name="checkmark-sharp"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        shape="round"
         (click)="this.sendDataEvt.emit()"
         [disabled]="!(isValid$|async)"
         *ngIf="pos+1 === conf.step.length"
@@ -32,7 +49,14 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-button fill="outline" (click)="this.undoEvt.emit()"> Annulla </ion-button>
+      <ion-button
+        class="pap-status-cancel-icon"
+        fill="outline"
+        shape="round"
+        (click)="this.undoEvt.emit()"
+      >
+        Annulla
+      </ion-button>
     </ion-col>
   </ion-row>
 </ion-grid>

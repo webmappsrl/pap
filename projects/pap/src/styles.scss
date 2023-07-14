@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+/************ start global style ***************/
 body {
   margin-top: constant(safe-area-inset-top);
   margin-top: env(safe-area-inset-top);
@@ -7,6 +8,38 @@ body {
   position: relative;
   overflow: hidden;
 }
+ion-card {
+  display: grid;
+  max-width: 93%;
+  height: 80%;
+  overflow-y: auto;
+  margin: auto !important;
+  top: 15px;
+  box-shadow: 0px 2px 3px 0px #00000033;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+ion-button {
+  height: 29px;
+  font-weight: 500;
+  font-size: 14px;
+  width: 105px;
+}
+ion-list,
+ion-item,
+ion-card {
+  --background: var(--ion-color-light);
+}
+.list-md {
+  background-color: var(--ion-color-light);
+}
+ion-footer {
+  height: 70px;
+  position: unset;
+}
+/************ end global style ***************/
 
 /**************** font *************/
 
@@ -27,7 +60,7 @@ body {
   height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 }
 
-/************ auth guard NO_LOGGED ***************/
+/************ start auth guard NO_LOGGED ***************/
 .pap-alert-login {
   .alert-wrapper.sc-ion-alert-md {
     border-radius: 30px;
@@ -96,17 +129,73 @@ body {
 }
 /************ end auth guard NO_LOGGED ***************/
 
-.pap-card {
-  --background: var(--ion-color-light);
-  display: grid;
-  max-width: 93%;
-  height: 80%;
-  overflow-y: auto;
-  margin: auto !important;
-  top: 15px;
-  box-shadow: 0px 2px 3px 0px #00000033;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
+/************ start action sheet home Servizi ***************/
+.pap-form-selector {
+  .action-sheet-wrapper {
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      div {
+        div {
+          // Servizi
+          align-self: flex-start;
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 23.44px;
+        }
+      }
+      .action-sheet-group {
+        display: flex;
+        flex-direction: column;
+        button {
+          span {
+            ion-icon {
+              color: var(--ion-color-primary);
+              font-size: 37px;
+            }
+          }
+        }
+        .action-sheet-button {
+          border-bottom: 1px solid;
+          border-bottom-color: var(--ion-color-light);
+        }
+      }
+      .action-sheet-group-cancel {
+        .action-sheet-button {
+          // CHIUDI
+          flex: 0 1 auto;
+          align-self: flex-end;
+          position: absolute;
+          bottom: 208px;
+          right: 0px;
+          width: 85px;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16.41px;
+          border-top: 0px solid;
+          border-bottom: 0px solid;
+        }
+      }
+    }
   }
 }
+/************ end action sheet home Servizi ***************/
+
+/************ start action sheet image-picker ***************/
+.pap-image-picker-action-sheet {
+  .action-sheet-wrapper {
+    div {
+      .action-sheet-group {
+        // CHIUDI
+        align-self: stretch;
+        position: unset;
+        width: auto;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16.41px;
+      }
+    }
+  }
+}
+/************ end action sheet image-picker ***************/

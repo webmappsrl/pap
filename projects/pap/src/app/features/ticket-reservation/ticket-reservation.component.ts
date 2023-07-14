@@ -13,7 +13,7 @@ import {environment} from 'projects/pap/src/environments/environment';
 export class TicketReservationComponent {
   public form: TicketFormConf = {
     ticketType: 'reservation',
-    label: 'Prenotazione Servizio',
+    label: 'Prenotazione di un servizio',
     cancel: 'Sicuro di voler cancellare la prenotazione?',
     finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
     pages: 6,
@@ -30,20 +30,19 @@ export class TicketReservationComponent {
         recap: 'Servizio',
       },
       {
-        label: '',
+        label: 'Seleziona il luogo:',
         type: 'location',
         required: true,
         recap: 'Indirizzo',
       },
       {
-        label:
-          'Puoi aggiungere una foto: ci aiuterà a capire meglio il rifiuto che dobbiamo ritirare',
+        label: 'Puoi aggiungere una foto: ci aiuterà a capire meglio la situazione',
         type: 'image',
         required: false,
         recap: 'Immagine',
       },
       {
-        label: 'Se lo ritieni opportuno puoi inserire delle note',
+        label: 'Se lo ritieni opportuno, puoi inserire delle note',
         type: 'note',
         required: false,
         recap: 'Note',

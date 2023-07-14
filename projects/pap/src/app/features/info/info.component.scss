@@ -1,8 +1,14 @@
 pap-info {
-    .pap-info-body {
-        padding: 30px 10px;
-        text-align: justify;
-        text-justify: inter-word;
-        line-height: 1.5rem;
-    }
+  .pap-info-body {
+    padding: 30px 10px;
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 16.41px;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--ion-color-secondary-contrast);
+  }
+  ion-card {
+    height: 570px;
+  }
 }

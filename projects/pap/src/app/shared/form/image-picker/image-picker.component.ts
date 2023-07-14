@@ -66,17 +66,18 @@ export class ImagePickerComponent implements ControlValueAccessor {
 
   public imageSheet(): void {
     let actionSheet = this._actionSheetCtrl.create({
+      cssClass: 'pap-image-picker-action-sheet',
       buttons: [
         {
-          text: 'chiudi',
+          text: 'Chiudi',
           role: 'cancel',
         },
         {
-          text: 'camera',
+          text: 'Camera',
           handler: () => this.getImage(0),
         },
         {
-          text: 'galleria',
+          text: 'Galleria',
           handler: () => this.getImage(1),
         },
       ],

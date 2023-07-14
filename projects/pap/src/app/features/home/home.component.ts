@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
     if (button.action === buttonAction.ACTION && button.buttons != null) {
       from(
         this._actionSheetCtrl.create({
+          cssClass: 'pap-form-selector',
           header: button.label,
           buttons: button.buttons,
           backdropDismiss: true,

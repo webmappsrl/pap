@@ -11,9 +11,14 @@
         {{ view.name }}
       </h1>
 
-      <ion-item lines="full" *ngIf="view.trashBookType?.name">
+      <ion-item class="trash-book-details-type" lines="full" *ngIf="view.trashBookType?.name">
         <ion-label class="trash-book-details-label" slot="start">Che rifiuto è:</ion-label>
-        <ion-icon slot="start" [ngStyle]="{color:view.trashBookType?.color}" name="ellipse">
+        <ion-icon
+          class="trash-book-details-icon-color"
+          slot="start"
+          [ngStyle]="{color:view.trashBookType?.color}"
+          name="ellipse"
+        >
         </ion-icon>
         <ion-label class="trash-book-details-value ion-text-wrap" slot="start">
           {{view.trashBookType?.name}}
@@ -27,7 +32,7 @@
         ></ion-icon>
       </ion-item>
 
-      <ion-item lines="full">
+      <ion-item class="trash-book-details-calendar" lines="full">
         <ion-label class="trash-book-details-label" slot="start">PAP</ion-label>
         <ion-button
           shape="round"
@@ -47,7 +52,11 @@
         </ng-template>
       </ion-item>
 
-      <ion-item lines="full" *ngIf="view.collection_center">
+      <ion-item
+        class="trash-book-details-collection-center"
+        lines="full"
+        *ngIf="view.collection_center"
+      >
         <ion-label class="trash-book-details-label" slot="start">Centro di raccolta</ion-label>
         <ion-button
           shape="round"

@@ -1,54 +1,44 @@
-pap-header {
-  ion-toolbar {
-    ion-title {
-      img {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
-        margin: auto;
-      }
-    }
+.pap-header {
+  --background: var(--ion-color-secondary);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: stretch;
+  height: 70px;
+  .back-button {
+    color: var(--ion-color-primary-contrast);
   }
-  ion-button,
-  ion-button.modal,
-  ion-menu-button {
-    color: #fff;
+  .pap-header-buttons {
+    margin-right: 10px;
+    color: var(--ion-color-primary-contrast);
     font-size: 1.3rem;
+  }
+  .pap-header-button {
+    margin-right: -20px !important;
+    width: 80px !important;
+  }
+  .pap-header-icons {
+    width: 60px;
+    height: 60px;
+  }
+  .pap-header-title {
+    text-align: center;
+    color: var(--ion-color-secondary-contrast);
+    display: contents;
+    .pap-header-img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      margin: auto;
+      width: 230px;
+    }
   }
   ion-menu-button {
     display: none;
-  }
-  ion-toolbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    align-content: stretch;
-  }
-  .sc-ion-buttons-md-s .button-has-icon-only.button-clear {
-    margin-left: -57px;
-    margin-right: -20px;
-    width: auto;
-  }
-  .pap-header {
-    --background: var(--ion-color-secondary);
-
-    ion-back-button.back-button {
-      color: var(--ion-color-primary-contrast);
-    }
-    &-button {
-      color: var(--ion-color-secondary-contrast);
-    }
-    &-title {
-      text-align: center;
-      color: var(--ion-color-secondary-contrast);
-    }
-    .sc-ion-buttons-md-s ion-icon[slot='icon-only'] {
-      width: 60px;
-      height: 60px;
-    }
   }
   ion-item {
     pointer-events: auto !important;
