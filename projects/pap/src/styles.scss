@@ -39,6 +39,9 @@ ion-footer {
   height: 70px;
   position: unset;
 }
+.alert-wrapper {
+  border-radius: 30px !important;
+}
 /************ end global style ***************/
 
 /**************** font *************/
@@ -62,24 +65,19 @@ ion-footer {
 
 /************ start auth guard NO_LOGGED ***************/
 .pap-alert-login {
-  .alert-wrapper.sc-ion-alert-md {
-    border-radius: 30px;
-  }
-  .alert-title.sc-ion-alert-md {
+  .alert-title {
     font-weight: 600;
   }
-  .alert-button.sc-ion-alert-md {
+  .alert-button {
+    --width: 90px;
+    --height: 34px;
     border: 2px solid;
     border-radius: 30px;
     line-height: 10px;
-    --width: 90px;
-    --height: 34px;
     margin: 5px;
-  }
-  .alert-button-inner.sc-ion-alert-md {
     justify-content: center;
   }
-  .alert-button-group.sc-ion-alert-md {
+  .alert-button-group {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: row;
@@ -94,37 +92,40 @@ ion-footer {
     align-items: flex-start;
     padding: 20px;
     margin-top: -15px;
-  }
-  .alert-button-group.sc-ion-alert-md > :nth-child(1) {
-    -webkit-order: 0;
-    order: 0;
-    -webkit-flex: 0 1 40%;
-    flex: 0 1 40%;
-    -webkit-align-self: auto;
-    align-self: auto;
-  }
-  .alert-button-group.sc-ion-alert-md > :nth-child(2) {
-    -webkit-order: 0;
-    order: 0;
-    -webkit-flex: 0 1 50%;
-    flex: 0 1 50%;
-    -webkit-align-self: auto;
-    align-self: auto;
-  }
-  .alert-button-group.sc-ion-alert-md > :nth-child(3) {
-    -webkit-order: 0;
-    order: 0;
-    -webkit-flex: 1 1 100%;
-    flex: 1 1 100%;
-    -webkit-align-self: auto;
-    align-self: auto;
-  }
-  .alert-button-group.sc-ion-alert-md > :nth-child(4) {
-    border: unset;
-    position: absolute;
-    top: 5px;
-    left: 230px;
-    font-size: 20px;
+    .alert-button-role-sign-in {
+      -webkit-order: 0;
+      order: 0;
+      -webkit-flex: 0 1 40%;
+      flex: 0 1 40%;
+      -webkit-align-self: auto;
+      align-self: auto;
+    }
+    .alert-button-role-sign-up {
+      -webkit-order: 0;
+      order: 0;
+      -webkit-flex: 0 1 50%;
+      flex: 0 1 50%;
+      -webkit-align-self: auto;
+      align-self: auto;
+    }
+    .alert-button-role-forgot-password {
+      -webkit-order: 0;
+      order: 0;
+      -webkit-flex: 1 1 100%;
+      flex: 1 1 100%;
+      -webkit-align-self: auto;
+      align-self: auto;
+    }
+    .alert-button-role-cancel {
+      border: unset;
+      position: absolute;
+      top: 5px;
+      left: 230px;
+      font-size: 20px;
+    }
+    span {
+      justify-content: center;
+    }
   }
 }
 /************ end auth guard NO_LOGGED ***************/
@@ -199,3 +200,36 @@ ion-footer {
   }
 }
 /************ end action sheet image-picker ***************/
+
+/************ start pap-status-alert ***************/
+.pap-status-alert {
+  .alert-wrapper {
+    width: 283px;
+    .alert-button-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .alert-button {
+        border: 2px solid;
+        border-radius: 30px;
+        line-height: 10px;
+        --width: 90px;
+        --height: 34px;
+        margin: 5px;
+      }
+      .alert-button-role-cancel {
+        flex: 0 1 44%;
+        align-self: flex-start;
+      }
+      .alert-button-role-ok {
+        flex: 0 1 33%;
+        align-self: flex-start;
+        background-color: var(--ion-color-primary);
+        color: var(--ion-color-primary-contrast);
+      }
+      span {
+        justify-content: center;
+      }
+    }
+  }
+}

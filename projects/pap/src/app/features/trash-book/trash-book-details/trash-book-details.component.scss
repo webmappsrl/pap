@@ -29,10 +29,17 @@ pap-trash-book-details {
           flex: 0 1 100%;
           -webkit-align-self: center;
           align-self: center;
+          text-align: right;
         }
       }
       ion-item {
-        display: flow-root;
+        display: contents;
+        .trash-book-details-label {
+          flex: 0 1 auto;
+        }
+      }
+      .item-has-start-slot {
+        display: inline-table !important;
       }
       .trash-book-details-type {
         order: 2;
@@ -64,9 +71,10 @@ pap-trash-book-details {
           -webkit-order: 0;
           order: 0;
           -webkit-flex: 1 1 auto;
-          flex: 1 1 auto;
+          flex: 0 1 60%;
           -webkit-align-self: center;
           align-self: center;
+          text-align: left;
         }
         .trash-book-details-icon {
           color: var(--ion-color-primary);
