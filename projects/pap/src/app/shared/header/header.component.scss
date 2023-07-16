@@ -7,8 +7,12 @@
   align-items: center;
   align-content: stretch;
   height: 70px;
-  .back-button {
+  .back-button,
+  .modal {
     color: var(--ion-color-primary-contrast);
+  }
+  .modal {
+    width: 40px;
   }
   .pap-header-buttons {
     margin-right: 10px;
@@ -17,7 +21,7 @@
   }
   .pap-header-button {
     margin-right: -20px !important;
-    width: 80px !important;
+    width: 84px !important;
   }
   .pap-header-icons {
     width: 60px;

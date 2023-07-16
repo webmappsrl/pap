@@ -18,9 +18,14 @@
           slot="start"
           [ngStyle]="{color:view.trashBookType?.color}"
           name="ellipse"
+          (click)="info(view.trashBookType)"
         >
         </ion-icon>
-        <ion-label class="trash-book-details-value ion-text-wrap" slot="start">
+        <ion-label
+          class="trash-book-details-value ion-text-wrap"
+          slot="start"
+          (click)="info(view.trashBookType)"
+        >
           {{view.trashBookType?.name}}
         </ion-label>
         <ion-icon

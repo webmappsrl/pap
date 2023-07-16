@@ -4,8 +4,9 @@ pap-form-status {
     color: var(--ion-color-primary);
   }
   ion-grid {
-    max-width: 70%;
-    width: fit-content;
+    max-width: fit-content;
+    padding-right: 50px;
+    padding-left: 50px;
     ion-col {
       margin: auto;
       text-align: center;

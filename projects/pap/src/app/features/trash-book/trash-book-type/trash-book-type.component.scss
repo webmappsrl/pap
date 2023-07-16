@@ -43,6 +43,17 @@ pap-trash-book-type {
     }
     .pap-card-book-type-1 {
       height: auto;
+      display: flex;
+      flex-direction: column;
+      .trash-book-type-title {
+        flex: 0 1 30%;
+        align-self: stretch;
+        padding-right: 10px;
+      }
+      .trash-book-type-content {
+        flex: 0 1 70%;
+        align-self: stretch;
+      }
     }
     .pap-card-book-type-2 {
       height: auto;
