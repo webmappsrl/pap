@@ -5,7 +5,7 @@ import {
   ScheduleOptions,
 } from '@capacitor/local-notifications';
 import {Store, select} from '@ngrx/store';
-import {subHours} from 'date-fns';
+import {differenceInCalendarDays, subHours} from 'date-fns';
 import {filter} from 'rxjs/operators';
 import {AppState} from '../../core/core.state';
 import {CalendarRow} from '../../features/calendar/calendar.model';
@@ -46,32 +46,34 @@ export class LocalNotificationService {
           const calendar = calendarView.calendar!;
           const calendarDates = Object.keys(calendar);
           const notifications: LocalNotificationSchema[] = [];
-          calendarDates.forEach(calendarDate => {
-            const calendarRows: CalendarRow[] = calendar![calendarDate];
-            const currentDate = new Date();
-            currentDate.setMinutes(currentDate.getMinutes() + 1);
-            const atDate = new Date(calendarDate);
+          calendarDates
+            .filter(cDate => differenceInCalendarDays(new Date(cDate), new Date()) > 0)
+            .forEach(calendarDate => {
+              const calendarRows: CalendarRow[] = calendar![calendarDate];
+              const currentDate = new Date();
+              currentDate.setMinutes(currentDate.getMinutes() + 1);
+              const atDate = new Date(calendarDate);
 
-            calendarRows.forEach(calendarRow => {
-              const startHour = +calendarRow.start_time.split(':')[0];
-              const startMinute = +calendarRow.start_time.split(':')[1];
-              const startDate = atDate.setHours(startHour, startMinute);
-              const at = subHours(startDate, 7);
-              const body = this._getBodyNotificationFromCalendarRows(calendarRow);
-              notifications.push({
-                id: +`${at.getTime()}`.toString().slice(0, 8),
-                title: 'Raccolta differenziata',
-                body,
-                largeBody: 'largeBody della notifica',
-                summaryText: 'summaryText della notifica',
-                schedule: {
-                  at,
-                  allowWhileIdle: true,
-                },
+              calendarRows.forEach(calendarRow => {
+                const startHour = +calendarRow.start_time.split(':')[0];
+                const startMinute = +calendarRow.start_time.split(':')[1];
+                const startDate = atDate.setHours(startHour, startMinute);
+                const at = subHours(startDate, 7);
+                const body = this._getBodyNotificationFromCalendarRows(calendarRow);
+                notifications.push({
+                  id: +`${at.getTime()}`.toString().slice(0, 8),
+                  title: 'Raccolta differenziata',
+                  body,
+                  largeBody: 'largeBody della notifica',
+                  summaryText: 'summaryText della notifica',
+                  schedule: {
+                    at,
+                    allowWhileIdle: true,
+                  },
+                });
+                // console.log(`${format(at, 'dd/MM/yyyy HH:mm:ss')}: ${body} alle notifica inviata alle ${format(at, 'dd/MM/yyyy HH:mm:ss',)}`);
               });
-              // console.log(`${format(at, 'dd/MM/yyyy HH:mm:ss')}: ${body} alle notifica inviata alle ${format(at, 'dd/MM/yyyy HH:mm:ss',)}`);
             });
-          });
           let options: ScheduleOptions = {
             notifications,
           };
