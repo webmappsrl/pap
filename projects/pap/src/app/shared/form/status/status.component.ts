@@ -32,7 +32,6 @@ export class FormStatusComponent implements OnInit {
   }
   @Input() conf!: any;
   @Input() pos: any;
-  @Input() label!: string | undefined;
 
   @Output() nextEvt: EventEmitter<void> = new EventEmitter();
   @Output() backEvt: EventEmitter<void> = new EventEmitter();
@@ -54,7 +53,7 @@ export class FormStatusComponent implements OnInit {
   }
 
   async presentAlert() {
-    const headerText = this.label ? `Vuoi annullare ${this.label}?` : `Vuoi annullare?`;
+    const headerText = this.conf.label ? `Vuoi annullare ${this.conf.label}?` : `Vuoi annullare?`;
     const alert = await this.alertController.create({
       cssClass: 'pap-status-alert',
       header: headerText,
