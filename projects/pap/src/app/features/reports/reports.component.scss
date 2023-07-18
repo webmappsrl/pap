@@ -1,6 +1,7 @@
 pap-reports {
   .pap-reports-item {
-    margin-bottom: 15px;
+    margin-bottom: 4px;
+    margin-top: 4px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -79,11 +80,22 @@ pap-reports {
       margin-top: -170px !important;
     }
   }
+  ion-card-header {
+    margin-top: 150px;
+    flex: 0 1 auto;
+    align-self: stretch;
+  }
   ion-card-title {
     font-size: 22px;
     font-weight: 500;
     line-height: 23.44px;
     padding: 16px;
+    position: absolute;
+    bottom: 130px;
+    left: 4px;
+  }
+  ion-icon {
+    margin-right: 5px;
   }
   .input-wrapper {
     flex: 0 1 0% !important;

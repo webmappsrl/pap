@@ -3,13 +3,14 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import {FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {AlertController, IonInput, NavController} from '@ionic/angular';
 import {select, Store} from '@ngrx/store';
-import {BehaviorSubject, map, Observable, switchMap, withLatestFrom} from 'rxjs';
+import {BehaviorSubject, map, Observable, switchMap, Subscription, filter} from 'rxjs';
 import {AppState} from '../../../core/core.state';
 import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
@@ -29,7 +30,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class FormComponent {
+export class FormComponent implements OnDestroy {
   @ViewChild('focusInput') focusInput!: IonInput;
   formError$: Observable<any> = this._store.pipe(select(ticketError));
   formSuccess$: Observable<any> = this._store.pipe(select(ticketSuccess));
@@ -38,6 +39,7 @@ export class FormComponent {
     select(currentTrashBookType),
   );
   trashBookTypesOpts$!: Observable<TrashBookType[]>;
+  private _ticketSub: Subscription = Subscription.EMPTY;
   @Input() set ticketFormConf(ticketFormConf: TicketFormConf) {
     this.ticketFormConf$.next(ticketFormConf);
     ticketFormConf.step.forEach(step => {
@@ -60,7 +62,6 @@ export class FormComponent {
   }
 
   pos$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  recap$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   ticketForm: FormGroup = new FormGroup({});
   ticketFormConf$: BehaviorSubject<TicketFormConf | null> =
     new BehaviorSubject<TicketFormConf | null>(null);
@@ -72,10 +73,45 @@ export class FormComponent {
     private _alertCtrl: AlertController,
   ) {
     this.alertEvt$.pipe(switchMap(obj => this._alertCtrl.create(obj)));
+    this._ticketSub = this.formSuccess$
+      .pipe(
+        filter(v => v != null),
+        switchMap(success => {
+          const header = `${
+            success ? 'Prenotazione avvenuta con successo' : 'Errore nella prenotazione'
+          }`;
+          const message = `${
+            success
+              ? 'Puoi visualizzarla nella sezione "i miei ticket".'
+              : "Si è verificato un errore durante l'invio del tuo ticket. Per favore, prova di nuovo"
+          }`;
+          return this._alertCtrl.create({
+            cssClass: `pap-status-alert-${success ? 'confirmation' : 'erro'}`,
+            header,
+            message,
+            buttons: [
+              {
+                text: 'X',
+                role: 'close',
+                cssClass: `pap-status-alert-${success ? 'confirmation' : 'error'}-close`,
+              },
+            ],
+          });
+        }),
+        switchMap(alert => {
+          alert.present();
+          return alert.onDidDismiss();
+        }),
+      )
+      .subscribe(_ => {
+        this.close();
+      });
   }
-  log(val: any) {
-    console.log(val);
+
+  ngOnDestroy(): void {
+    this._ticketSub.unsubscribe();
   }
+
   backStep(): void {
     if (this.pos$.value === 0) this.close();
     else {
@@ -86,8 +122,6 @@ export class FormComponent {
 
   close(): void {
     this._store.dispatch(resetTicket());
-    console.log('close form');
-    this.recap$.next(false);
     setTimeout(() => {
       this._navCtrl.navigateRoot('home');
     }, 200);
@@ -111,12 +145,7 @@ export class FormComponent {
     }, 100);
   }
 
-  recap(): void {
-    this.recap$.next(true);
-  }
-
   sendData(): void {
-    this.recap$.next(false);
     this._store.dispatch(sendTicket({ticket: this.ticketForm.value}));
   }
 }

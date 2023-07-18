@@ -37,6 +37,9 @@ pap-trash-book-details {
         .trash-book-details-label {
           flex: 0 1 auto;
         }
+        ion-button {
+          margin-left: 19px;
+        }
       }
       .item-has-start-slot {
         display: inline-table !important;

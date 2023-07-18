@@ -54,6 +54,11 @@ export class TicketReservationComponent {
         required: false,
         recap: 'Telefono',
       },
+      {
+        label: '',
+        type: 'recap',
+        required: false,
+      },
     ],
   };
 
