@@ -6,6 +6,7 @@ import {catchError, concatMap, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {buttonAction} from '../home.model';
 import {of} from 'rxjs';
+import {environment} from 'projects/pap/src/environments/environment';
 
 @Injectable()
 export class HomeEffects {
@@ -15,21 +16,9 @@ export class HomeEffects {
       concatMap(() =>
         of([
           {
-            label: 'Centro notifiche',
-            url: 'notification',
-            action: buttonAction.NAVIGATION,
-            hideInHome: true,
-          },
-          {
-            label: 'ESA',
-            img: 'assets/icons/logo-e.png',
+            label: environment.config.name,
+            img: 'assets/icons/logo.png',
             url: 'info',
-            action: buttonAction.NAVIGATION,
-          },
-          {
-            label: 'Calendario',
-            icon: 'calendar',
-            url: 'calendar',
             action: buttonAction.NAVIGATION,
           },
           {
@@ -40,41 +29,70 @@ export class HomeEffects {
             hideInMenu: true,
           },
           {
-            label: 'Prenota servizio',
-            icon: 'checkmark',
+            label: 'Servizi',
+            svg: 'assets/icons/logo-call.svg',
             url: 'ticket-reservation',
+            action: buttonAction.ACTION,
+            buttons: [
+              {
+                text: 'Prenota un servizio',
+                icon: 'create',
+                data: {
+                  action: 'ticket-reservation',
+                },
+              },
+              {
+                text: 'Segnala abbandono',
+                icon: 'trash-bin',
+                data: {
+                  action: 'abandonment-ticket',
+                },
+              },
+              {
+                text: 'segnala mancato ritiro',
+                icon: 'alert-circle',
+                data: {
+                  action: 'report-ticket',
+                },
+              },
+              {
+                text: 'Richiedi Informazioni',
+                icon: 'information-circle',
+                data: {
+                  action: 'info-ticket',
+                },
+              },
+              {
+                text: 'CHIUDI',
+                role: 'cancel',
+              },
+            ],
+          },
+          {
+            label: 'Calendari',
+            icon: 'calendar',
+            url: 'calendar',
             action: buttonAction.NAVIGATION,
           },
           {
-            label: 'Segnala abbandono',
-            icon: 'chatbubbles',
-            url: 'abandonment-ticket',
-            action: buttonAction.NAVIGATION,
-          },
-          {
-            label: 'segnala mancato ritiro',
-            icon: 'create',
-            url: 'report-ticket',
-            action: buttonAction.NAVIGATION,
-          },
-          {
-            label: 'Rifiutario',
-            icon: 'clipboard',
-            url: 'trashbook',
-            action: buttonAction.NAVIGATION,
-          },
-          {
-            label: 'Le mie segnalazioni',
-            icon: 'list',
+            label: 'I miei ticket',
+            icon: 'archive',
             url: 'reports',
             action: buttonAction.NAVIGATION,
           },
           {
-            label: 'Richiedi Informazioni',
-            icon: 'information',
-            url: 'info-ticket',
+            label: 'Centro notifiche',
+            url: 'notification',
+            action: buttonAction.NAVIGATION,
+            hideInHome: true,
+          },
+          {
+            label: 'Rifiutario',
+            icon: 'document-text',
+            url: 'trashbook',
             action: buttonAction.NAVIGATION,
           },
+
           {
             label: 'Impostazioni',
             url: 'settings',

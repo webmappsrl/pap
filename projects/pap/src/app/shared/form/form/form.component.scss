@@ -1,77 +1,100 @@
 pap-form {
+  width: 90%;
+  margin: auto auto;
+  --ion-item-background: var(--ion-color-light);
+  .pap-form-first-step {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 23px;
+    letter-spacing: 0px;
+    text-align: left;
+    color: var(--ion-color-medium-contrast);
+    margin-bottom: 15px;
+  }
+  .pap-form-content {
+    padding: 25px;
+    padding-bottom: 15px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    .pap-form-label {
+      text-align: justify;
+      color: var(--ion-color-secondary-contrast);
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 23.44px;
+    }
+  }
+  .pap-form-toggle {
+    width: 30px;
+    margin: 50px auto;
+  }
+  .pap-form-input {
+    font-size: 1.3em;
+  }
+  .pap-form-textarea {
+    font-size: 1.1em;
+    padding: 10px;
+  }
+  .pap-form-checkbox {
     width: 90%;
-    margin: auto auto;
-
-    .pap-form-content {
-        padding: 25px;
-        padding-bottom: 15px;
-        .pap-form-label {
-            line-height: 28px;
-            font-size: 20px;
-            font-weight: 300;
-            text-align: justify;
-        }
+    margin: 30px auto;
+    ion-checkbox {
+      width: auto;
+      margin: 8px;
+      float: left;
     }
-    .pap-form-toggle {
-        width: 30px;
-        margin: 50px auto;
+    ion-label {
+      display: inline;
+      font-size: 1.2em;
     }
+  }
+  .pap-form-label-first-step {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--ion-color-medium-shade);
+  }
+  .pap-form-content .pap-form-label {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23.44px;
+  }
+  ion-card {
+    height: auto;
+    form {
+      div {
+        margin-bottom: 10px;
 
-    .pap-form-input {
-        font-size: 1.3em;
-        border-left: 1px solid var(--ion-color-primary);
-    }
-
-    .pap-form-textarea {
-        font-size: 1.1em;
-        padding: 10px;
-        border-left: 1px solid var(--ion-color-primary);
-    }
-
-    .pap-form-textarea > textarea:focus {
-        //  border-left: 1px solid color($colors, secondary, base);
-    }
-
-    .pap-form-checkbox {
-        width: 90%;
-        margin: 30px auto;
-        ion-checkbox {
-            width: auto;
-            margin: 8px;
-            float: left;
-        }
-
-        ion-label {
-            display: inline;
-            font-size: 1.2em;
-        }
-    }
-}
-
-.pap-form-footer {
-    text-align: center;
-    .pap-form-page {
-        text-align: center;
-        color: #999999;
-        font-size: 1.1em;
-    }
-    .pap-form-buttons {
-        display: flex;
-        justify-content: space-between;
-        padding: 15px;
-        .pap-form-buttonblock {
-            display: flex;
-            height: 100%;
-            .pap-form-button {
-                margin: 4px;
-                font-size: 1.2em;
-                height: 40px;
-                display: inline-block;
-                align-self: flex-end;
-                ion-icon {
-                    font-size: 1.5em;
-                }
+        ion-textarea {
+          div {
+            textarea {
+              margin-left: -15px !important;
             }
+          }
         }
+        pap-form-image-picker {
+          display: flex;
+          flex-direction: column;
+          .pap-form-picturepicker-button {
+            margin-top: 15px;
+            width: 240px;
+            align-self: center;
+          }
+          ion-icon {
+            font-size: 24px;
+          }
+        }
+      }
     }
+  }
+  .pap-form-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  pap-map {
+    padding: 15px;
+  }
 }

@@ -1,16 +1,19 @@
 export interface buttonInfo {
   action: buttonAction;
-  url?: string;
-  icon?: string;
-  img?: string;
-  label: string;
-  disabled?: boolean;
+  buttons?: any[];
   class?: string;
+  disabled?: boolean;
   hideInHome?: boolean;
   hideInMenu?: boolean;
+  icon?: string;
+  img?: string;
+  svg?: string;
+  label: string;
+  url?: string;
 }
 
 export enum buttonAction {
   NAVIGATION = 'navigation',
   OPENMENU = 'open-menu',
+  ACTION = 'action',
 }

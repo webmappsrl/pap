@@ -1,19 +1,34 @@
 <ng-container *ngIf="(headerView$|async)?.header as view">
   <ion-toolbar class="pap-header">
     <ion-buttons slot="start">
-      <ion-back-button class="back-button"></ion-back-button>
+      <ion-back-button class="back-button" size="large"></ion-back-button>
       <ion-menu-button color="white" *ngIf="startButton"></ion-menu-button>
       <ion-button (click)="closeModal()" *ngIf="modal" class="modal" color="white">
-        <ion-icon name="close-outline"></ion-icon>
+        <ion-icon name="arrow-back-outline" size="large"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title class="pap-header-title">
       <span *ngIf="view.label">{{view.label}}</span>
       <img *ngIf="view.img" class="pap-header-img" src="{{view.img}}" />
     </ion-title>
-    <ion-buttons slot="end" *ngIf="endButton">
-      <ion-button color="white" (click)="action('navigation','settings')">
-        <ion-icon slot="icon-only" name="settings"></ion-icon>
+    <ion-buttons class="pap-header-buttons" slot="end" *ngIf="endButton">
+      <ion-button class="pap-header-button" color="white" (click)="action('navigation','settings')">
+        <ng-container *ngIf="(isLogged$|async)===false">
+          <ion-icon
+            class="pap-header-icons"
+            slot="icon-only"
+            name="log-in-outline"
+            size="large"
+          ></ion-icon>
+        </ng-container>
+        <ng-container *ngIf="(isLogged$|async)===true">
+          <ion-icon
+            class="pap-header-icons"
+            slot="icon-only"
+            [name]="view.buttonEnd?.icon"
+            size="large"
+          ></ion-icon>
+        </ng-container>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

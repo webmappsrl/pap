@@ -3,7 +3,12 @@
 </ion-header>
 <ng-container *ngIf="infoView$|async as view">
   <ion-content class="ion-padding pap-info">
-    <ion-img [src]="view.imageUrl"></ion-img>
-    <div [innerHTML]="view.pageBody" class="ion-padding-top pap-info-body"></div>
+    <ion-card>
+      <ion-img [src]="view.imageUrl"></ion-img>
+      <div [innerHTML]="view.pageBody" class="ion-padding-top pap-info-body"></div>
+    </ion-card>
   </ion-content>
 </ng-container>
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>

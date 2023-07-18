@@ -1,0 +1,43 @@
+pap-trash-book {
+  ion-card {
+    ion-card-header {
+      padding-left: 0;
+      padding-right: 0;
+      padding-top: 50px;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      --background: var(--ion-color-light);
+      ion-searchbar {
+        --box-shadow: 0px 1px 2px 0px #00000040 !important;
+        .searchbar-search-icon.sc-ion-searchbar-md {
+          transform: translateX(12px);
+          width: 22px;
+          height: 22px;
+        }
+        input::placeholder {
+          transform: translateX(20px);
+        }
+        .searchbar-input.sc-ion-searchbar-md {
+          --background: var(--ion-color-light);
+        }
+      }
+    }
+    ion-label {
+      margin-left: 30px;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 23.44px;
+    }
+    .item.sc-ion-label-md-h,
+    .item .sc-ion-label-md-h {
+      font-weight: 400;
+      line-height: 16.41px;
+      margin-left: 0px;
+    }
+  }
+  ion-icon {
+    font-size: 27px;
+  }
+}

@@ -9,6 +9,7 @@ import {TicketFormConf} from '../../shared/models/form.model';
 import {ReportService} from '../../shared/services/report.service';
 import {loadInfoTickets, sendReportInfoTickets} from './state/info-ticket.actions';
 import {selectInfoTicketState} from './state/info-ticket.selectors';
+import {environment} from 'projects/pap/src/environments/environment';
 
 @Component({
   selector: 'pap-info-ticket',
@@ -29,11 +30,11 @@ export class InfoTicketComponent implements OnInit {
         companyName: 'APP.company',
       },
     },
+    label: 'Richiesta informazioni',
     pages: 3,
     step: [
       {
-        label:
-          "Questo serivizio ti permette di richiedere informazioni direttamente a ESA. Al termine ti verrà assegnato un codice della richiesta e verrà inviata una email a ESA: verrai ricontattato appena possibile. Clicca sul bottone ' >          ' per iniziare.",
+        label: `Questo serivizio ti permette di richiedere informazioni direttamente a ${environment.config.name}. Al termine ti verrà assegnato un codice della richiesta e verrà inviata una email a ${environment.config.name}: verrai ricontattato appena possibile. Clicca sul bottone ' >          ' per iniziare.`,
         type: 'label',
         required: false,
         translationsObj: {
@@ -43,7 +44,7 @@ export class InfoTicketComponent implements OnInit {
         },
       },
       {
-        label: 'Scrivi qui le informazioni che vorresti richiedere a ESA',
+        label: `Scrivi qui le informazioni che vorresti richiedere a ${environment.config.name}`,
         type: 'note',
         required: true,
         value: '',
@@ -61,6 +62,11 @@ export class InfoTicketComponent implements OnInit {
         required: false,
         value: '',
         recap: 'Telefono',
+      },
+      {
+        label: '',
+        type: 'recap',
+        required: false,
       },
     ],
   };

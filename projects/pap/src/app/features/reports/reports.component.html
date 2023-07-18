@@ -2,52 +2,61 @@
   <pap-header></pap-header>
 </ion-header>
 <ion-content>
-  <ng-container *ngIf="reportsView$|async as reports">
-    <ion-grid>
-      <ion-row>
-        <ion-col> </ion-col>
-        <ion-col size="8" class="ion-align-self-center">
-          <img src="/assets/images/logo.jpg" />
-        </ion-col>
-        <ion-col> </ion-col>
-      </ion-row>
-      <ion-row> </ion-row>
-    </ion-grid>
-    <ion-list>
-      <ion-item
-        *ngFor="let report of reports"
-        class="pap-reports-item"
-        (click)="openDetail(report)"
-      >
-        <ion-label slot="start" class="pap-reports-date">
-          <div class="pap-reports-monthday">{{report.created_at|papDate: 'd' }}</div>
-          <div class="pap-reports-monthname">{{report.created_at|papDate: 'MMMM' }}</div>
-        </ion-label>
-        <ion-avatar *ngIf="report.image as img">
-          <img [src]="img" />
-        </ion-avatar>
-        <ion-label slot="end">
-          <span>Ticket {{report.ticket_type}}</span>
-          <div
-            class="pap-reports-item"
-            *ngIf="report.trashType as trashType"
-            (click)="openTrashTypeDetail(trashType, $event)"
-          >
-            <ion-icon slot="end" [ngStyle]="{color:trashType.color}" name="ellipse"></ion-icon>
-            {{trashType.name}}
-          </div>
-          <p>{{report.note}}</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-    <ion-grid *ngIf="reports.length === 0">
-      <ion-row>
-        <ion-col> </ion-col>
-        <ion-col size="10" class="ion-align-self-center">
-          <ion-label>Non hai effettuato nessuna segnalazione al momento.</ion-label>
-        </ion-col>
-        <ion-col> </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ng-container>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>I miei ticket</ion-card-title>
+    </ion-card-header>
+    <ng-container *ngIf="reportsView$|async as reports">
+      <ion-grid>
+        <ion-row>
+          <ion-col> </ion-col>
+          <ion-col size="8" class="ion-align-self-center">
+            <img src="/assets/images/logo.jpg" />
+          </ion-col>
+          <ion-col> </ion-col>
+        </ion-row>
+        <ion-row> </ion-row>
+      </ion-grid>
+      <ion-list>
+        <pre>{{reports|json}}</pre>
+        <ion-item
+          *ngFor="let report of reports"
+          class="pap-reports-item"
+          (click)="openDetail(report)"
+        >
+          <ion-label slot="start" class="pap-reports-date">
+            <div class="pap-reports-monthday">{{report.created_at|papDate: 'd' }}</div>
+            <div class="pap-reports-monthname">{{report.created_at|papDate: 'MMMM' }}</div>
+          </ion-label>
+          <ion-avatar *ngIf="report.image as img">
+            <img [src]="img" />
+          </ion-avatar>
+          <ion-label class="pap-reports-label-info" slot="end">
+            <span>Ticket {{report.ticket_type}}</span>
+            <div
+              class="pap-reports-item"
+              *ngIf="report.trashType as trashType"
+              (click)="openTrashTypeDetail(trashType, $event)"
+            >
+              <ion-icon slot="end" [ngStyle]="{color:trashType.color}" name="ellipse"></ion-icon>
+              {{trashType.name}}
+            </div>
+            <p>{{report.note}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-grid *ngIf="reports.length === 0">
+        <ion-row>
+          <ion-col> </ion-col>
+          <ion-col size="10" class="ion-align-self-center">
+            <ion-label>Non hai effettuato nessuna segnalazione al momento.</ion-label>
+          </ion-col>
+          <ion-col> </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </ion-card>
 </ion-content>
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>

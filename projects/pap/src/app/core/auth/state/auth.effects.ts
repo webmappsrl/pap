@@ -22,7 +22,7 @@ const SUCESSFULLY_DELETE: AlertOptions = {
 };
 const SUCESSFULLY_LOGIN: AlertOptions = {
   header: 'LOGIN',
-  message: 'avvenuto con successo',
+  message: 'Log in effettuato',
   buttons: ['ok'],
 };
 const SUCESSFULLY_REGISTRATION: AlertOptions = {

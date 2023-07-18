@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+/************ start global style ***************/
 body {
   margin-top: constant(safe-area-inset-top);
   margin-top: env(safe-area-inset-top);
@@ -7,6 +8,41 @@ body {
   position: relative;
   overflow: hidden;
 }
+ion-card {
+  display: grid;
+  max-width: 93%;
+  height: 80%;
+  overflow-y: auto;
+  margin: auto !important;
+  top: 15px;
+  box-shadow: 0px 2px 3px 0px #00000033;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+ion-button {
+  height: 29px;
+  font-weight: 500;
+  font-size: 14px;
+  width: 105px;
+}
+ion-list,
+ion-item,
+ion-card {
+  --background: var(--ion-color-light);
+}
+.list-md {
+  background-color: var(--ion-color-light);
+}
+ion-footer {
+  height: 70px;
+  position: unset;
+}
+.alert-wrapper {
+  border-radius: 30px !important;
+}
+/************ end global style ***************/
 
 /**************** font *************/
 
@@ -26,3 +62,197 @@ body {
   height: calc(100% - constant(safe-area-inset-top));
   height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 }
+
+/************ start auth guard NO_LOGGED ***************/
+.pap-alert-login {
+  .alert-title {
+    font-weight: 600;
+  }
+  .alert-button {
+    --width: 90px;
+    --height: 34px;
+    border: 2px solid;
+    border-radius: 30px;
+    line-height: 10px;
+    margin: 5px;
+    justify-content: center;
+  }
+  .alert-button-group {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    -webkit-align-content: flex-start;
+    align-content: flex-start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+    margin-top: -15px;
+    .alert-button-role-sign-in {
+      -webkit-order: 0;
+      order: 0;
+      -webkit-flex: 0 1 40%;
+      flex: 0 1 40%;
+      -webkit-align-self: auto;
+      align-self: auto;
+    }
+    .alert-button-role-sign-up {
+      -webkit-order: 0;
+      order: 0;
+      -webkit-flex: 0 1 50%;
+      flex: 0 1 50%;
+      -webkit-align-self: auto;
+      align-self: auto;
+    }
+    .alert-button-role-forgot-password {
+      -webkit-order: 0;
+      order: 0;
+      -webkit-flex: 1 1 100%;
+      flex: 1 1 100%;
+      -webkit-align-self: auto;
+      align-self: auto;
+    }
+    .alert-button-role-cancel {
+      border: unset;
+      position: absolute;
+      top: 5px;
+      left: 230px;
+      font-size: 20px;
+    }
+    span {
+      justify-content: center;
+    }
+  }
+}
+/************ end auth guard NO_LOGGED ***************/
+
+/************ start action sheet home Servizi ***************/
+.pap-form-selector {
+  .action-sheet-wrapper {
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      div {
+        div {
+          // Servizi
+          align-self: flex-start;
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 23.44px;
+        }
+      }
+      .action-sheet-group {
+        display: flex;
+        flex-direction: column;
+        button {
+          span {
+            ion-icon {
+              color: var(--ion-color-primary);
+              font-size: 37px;
+            }
+          }
+        }
+        .action-sheet-button {
+          border-bottom: 1px solid;
+          border-bottom-color: var(--ion-color-light);
+        }
+      }
+      .action-sheet-group-cancel {
+        .action-sheet-button {
+          // CHIUDI
+          flex: 0 1 auto;
+          align-self: flex-end;
+          position: absolute;
+          bottom: 208px;
+          right: 0px;
+          width: 85px;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16.41px;
+          border-top: 0px solid;
+          border-bottom: 0px solid;
+        }
+      }
+    }
+  }
+}
+/************ end action sheet home Servizi ***************/
+
+/************ start action sheet image-picker ***************/
+.pap-image-picker-action-sheet {
+  .action-sheet-wrapper {
+    div {
+      .action-sheet-group {
+        // CHIUDI
+        align-self: stretch;
+        position: unset;
+        width: auto;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16.41px;
+      }
+    }
+  }
+}
+/************ end action sheet image-picker ***************/
+
+/************ start pap-status-alert ***************/
+.pap-status-alert {
+  .alert-wrapper {
+    width: 283px;
+    .alert-button-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .alert-button {
+        border: 2px solid;
+        border-radius: 30px;
+        line-height: 10px;
+        --width: 90px;
+        --height: 34px;
+        margin: 5px;
+      }
+      .alert-button-role-cancel {
+        flex: 0 1 44%;
+        align-self: flex-start;
+      }
+      .alert-button-role-ok {
+        flex: 0 1 33%;
+        align-self: flex-start;
+        background-color: var(--ion-color-primary);
+        color: var(--ion-color-primary-contrast);
+      }
+      span {
+        justify-content: center;
+      }
+    }
+  }
+}
+/************ end pap-status-alert ***************/
+
+/************ start pap-status-alert-confirmation ***************/
+.pap-status-alert-confirmation {
+  .pap-status-alert-confirmation-close {
+    position: absolute;
+    top: 0px;
+    margin-right: -2px;
+    font-size: 20px;
+  }
+}
+/************ end pap-status-alert-confirmation ***************/
+
+/************ start pap-status-alert-confirmation ***************/
+.pap-status-alert-error {
+  .pap-status-alert-error-close {
+    position: absolute;
+    top: 0px;
+    margin-right: -2px;
+    font-size: 20px;
+  }
+}
+/************ end pap-status-alert-confirmation ***************/

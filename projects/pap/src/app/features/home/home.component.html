@@ -1,17 +1,17 @@
 <ion-header>
   <pap-header [startButton]="true" [endButton]="true"></pap-header>
 </ion-header>
-<pap-menu></pap-menu>
+
 <ion-content padding class="pap-home">
   <ion-grid>
-    <ion-row>
+    <ion-list>
       <ng-container *ngIf="homeView$|async as view">
         <ng-container *ngFor="let button of view.buttons">
-          <ion-col *ngIf="!button.hideInHome" size="4">
+          <ion-item *ngIf="!button.hideInHome" size="4">
             <div
               class="ripple-parent pap-home-button {{button.class}}"
               [ngClass]="{'pap-home-button-disabled':button.disabled,'ion-activatable':!button.disabled}"
-              (click)="!button.disabled && action(button.action,button.url)"
+              (click)="!button.disabled && action(button)"
             >
               <div class="pap-home-button-image">
                 <ion-icon
@@ -21,13 +21,23 @@
                 >
                 </ion-icon>
                 <img *ngIf="button.img" class="pap-home-button-image-img" src="{{button.img}}" />
+                <ion-icon
+                  *ngIf="button.svg"
+                  class="pap-home-button-image-img"
+                  [src]="button.svg"
+                ></ion-icon>
               </div>
-              <p class="pap-home-button-label">{{button.label}}</p>
+              <ion-item lines="inset" class="pap-home-button-label-item">
+                <ion-label class="pap-home-button-label">{{button.label}}</ion-label>
+              </ion-item>
               <ion-ripple-effect type="unbounded"></ion-ripple-effect>
             </div>
-          </ion-col>
+          </ion-item>
         </ng-container>
       </ng-container>
-    </ion-row>
+    </ion-list>
   </ion-grid>
 </ion-content>
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>

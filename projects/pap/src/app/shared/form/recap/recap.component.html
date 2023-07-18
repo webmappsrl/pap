@@ -1,42 +1,39 @@
-<ion-list>
-  <ion-label class="pap-form-recap-title">
-    {{'Ricapitolando'|translate}}
-  </ion-label>
+<h1 class="pap-form-recap-title">
+  {{'Riepilogo'|translate}}
+</h1>
+<ul>
   <ng-container *ngFor="let item of steps$|async">
-    <ion-item
-      *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''"
-    >
-      <ion-label class="pap-form-recap-label">
+    <li *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''">
+      <span class="pap-form-recap-label">
         {{(item.recap||'') | translate}}
-      </ion-label>
-      <ng-container [ngSwitch]="item.type">
-        <ion-note class="pap-form-recap-note" *ngSwitchCase="'text'">
-          {{form.controls[item.type].value}}
-        </ion-note>
-        <ion-note class="pap-form-recap-note" *ngSwitchCase="'trash_type_id'">
-          {{(currentTrashBookType$|async)?.name}}
-        </ion-note>
-        <ion-note class="pap-form-recap-note" *ngSwitchCase="'location'">
-          {{currentAddress$|async}}
-        </ion-note>
-        <ion-note class="pap-form-recap-note" *ngSwitchCase="'phone'">
-          {{form.controls[item.type].value}}
-        </ion-note>
-        <ion-note class="pap-form-recap-note" *ngSwitchCase="'note'">
-          {{form.controls[item.type].value}}
-        </ion-note>
-        <ng-container *ngSwitchCase="'image'">
-          <img [src]="form.controls[item.type].value" />
-        </ng-container>
-        <ion-note
-          class="pap-form-recap-note"
-          *ngSwitchDefault
-          class="pap-form-recap-note"
-          slot="end"
-        >
-          {{'messages.notInserted' | translate}}
-        </ion-note>
-      </ng-container>
-    </ion-item>
+      </span>
+      <ul>
+        <li class="pap-form-recap-note-internal">
+          <ng-container [ngSwitch]="item.type">
+            <ion-note class="pap-form-recap-note" *ngSwitchCase="'text'">
+              {{form.controls[item.type].value}}
+            </ion-note>
+            <ion-note class="pap-form-recap-note" *ngSwitchCase="'trash_type_id'">
+              {{(currentTrashBookType$|async)?.name}}
+            </ion-note>
+            <ion-note class="pap-form-recap-note" *ngSwitchCase="'location'">
+              {{currentAddress$|async}}
+            </ion-note>
+            <ion-note class="pap-form-recap-note" *ngSwitchCase="'phone'">
+              {{form.controls[item.type].value}}
+            </ion-note>
+            <ion-note class="pap-form-recap-note" *ngSwitchCase="'note'">
+              {{form.controls[item.type].value}}
+            </ion-note>
+            <ng-container *ngSwitchCase="'image'">
+              <img [src]="form.controls[item.type].value" />
+            </ng-container>
+            <ion-note class="pap-form-recap-note" *ngSwitchDefault class="pap-form-recap-note">
+              {{'messages.notInserted' | translate}}
+            </ion-note>
+          </ng-container>
+        </li>
+      </ul>
+    </li>
   </ng-container>
-</ion-list>
+</ul>

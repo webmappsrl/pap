@@ -1,24 +1,49 @@
-pap-header {
-  ion-button,
-  ion-button.modal,
-  ion-menu-button {
-    color: #fff;
+.pap-header {
+  --background: var(--ion-color-secondary);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: stretch;
+  height: 70px;
+  .back-button,
+  .modal {
+    color: var(--ion-color-primary-contrast);
+  }
+  .modal {
+    width: 40px;
+  }
+  .pap-header-buttons {
+    margin-right: 10px;
+    color: var(--ion-color-primary-contrast);
     font-size: 1.3rem;
   }
-  .pap-header {
-    ion-back-button.back-button {
-      color: var(--ion-color-secondary-contrast);
-    }
-    --background: var(--ion-color-primary);
-    &-button {
-      color: var(--ion-color-secondary-contrast);
-    }
-    &-title {
-      text-align: center;
-      color: var(--ion-color-secondary-contrast);
+  .pap-header-button {
+    margin-right: -20px !important;
+    width: 84px !important;
+  }
+  .pap-header-icons {
+    width: 60px;
+    height: 60px;
+  }
+  .pap-header-title {
+    text-align: center;
+    color: var(--ion-color-secondary-contrast);
+    display: contents;
+    .pap-header-img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      margin: auto;
+      width: 230px;
     }
   }
-
+  ion-menu-button {
+    display: none;
+  }
   ion-item {
     pointer-events: auto !important;
   }

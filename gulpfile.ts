@@ -95,6 +95,7 @@ gulp.task('build', async () => {
       paths.environmentProdPath,
       `export const environment = ${JSON.stringify(environment).replace(/"([^"]+)":/g, '$1:')}`,
     );
+
     await writeFile(paths.variablesConfigPath, config.resources.variables);
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
     await download(

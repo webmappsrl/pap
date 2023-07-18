@@ -13,25 +13,27 @@ pap-home {
         line-height: 70px;
         border-radius: 37px;
         color: var(--ion-color-primary);
-        border: 2px solid var(--ion-color-primary);
-
         &-icon,
         &-img {
           vertical-align: middle;
         }
-
         &-icon {
           width: 34px;
           height: 34px;
         }
       }
-
-      &-label {
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 0.7em;
+      ion-label {
+        font-size: 20px;
         color: var(--ion-color-primary);
+        width: 355.07px;
+        margin-left: 4.93px;
+        padding: 0px, 0px, 0px, 16px;
+        gap: 32px;
       }
+    }
+    .pap-home-button-image-img {
+      width: 36px;
+      height: 36px;
     }
     .pap-home-button-disabled {
       .pap-home-button-image {
@@ -42,5 +44,55 @@ pap-home {
         color: #666666;
       }
     }
+    .pap-home-button {
+      text-align: center;
+      padding-bottom: 0px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      justify-content: flex-start;
+    }
+  }
+  ion-grid {
+    display: table;
+    margin-top: 30px;
+  }
+  ion-item {
+    --highlight-color: transparent;
+    --highlight-color-focused: transparent;
+    --background: var(--ion-color-primary-contrast);
+    width: 100%;
+    height: 48px;
+    left: 4.93px;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+  }
+  ion-list {
+    --background: var(--ion-color-primary-contrast);
+    width: 100%;
+    margin-left: -30px;
+  }
+  .list-md {
+    background-color: var(--ion-color-primary-contrast);
+  }
+  .action-sheet-group-cancel {
+    position: absolute;
+    bottom: 216px;
+    right: 0;
+    width: 63px;
+  }
+  .action-sheet-button {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.13) !important;
+    border-bottom-left-radius: 83px;
+    border-bottom-style: ridge;
+    --border-color: var(
+      --ion-item-border-color,
+      var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13)))
+    );
+  }
+  .action-sheet-cancel {
+    border-bottom: unset !important;
   }
 }

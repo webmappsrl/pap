@@ -9,7 +9,7 @@ import {buttonAction} from '../../../features/home/home.model';
 
 const headermock: headerInfo = {
   // label: 'portAPPorta',
-  img: 'assets/images/header-logo.svg',
+  img: 'assets/images/header.png',
   showBack: false,
   buttonStart: {
     label: '',
@@ -20,7 +20,7 @@ const headermock: headerInfo = {
     label: '',
     action: buttonAction.NAVIGATION,
     url: 'settings',
-    icon: 'settings',
+    icon: 'person-circle',
   },
   isMenuOpen: false,
 };
@@ -38,7 +38,6 @@ export class HeaderEffects {
       ),
     );
   });
-
   showButtons$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(HeaderActions.showButtons),

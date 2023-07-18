@@ -30,9 +30,12 @@ import {MenuComponent} from './menu/menu.component';
 import {PapDatePipe} from './pipes/pap-date.pipe';
 import {BroadcastNotificationService} from './services/broadcast-notification.service';
 import {LocalNotificationService} from './services/local-notification.service';
+import {FooterComponent} from './footer/footer.component';
+import {FormStatusComponent} from './form/status/status.component';
 @NgModule({
   declarations: [
     HeaderComponent,
+    FooterComponent,
     MenuComponent,
     ErrorFormHandlerComponent,
     MapComponent,
@@ -43,6 +46,7 @@ import {LocalNotificationService} from './services/local-notification.service';
     secondStepSignupComponent,
     thirdStepSignupComponent,
     LocationComponent,
+    FormStatusComponent,
     RecapComponent,
     ImagePickerComponent,
     SelectComponent,
@@ -66,6 +70,7 @@ import {LocalNotificationService} from './services/local-notification.service';
   providers: [LocalNotificationService, BroadcastNotificationService],
   exports: [
     CommonModule,
+    FooterComponent,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
@@ -81,6 +86,7 @@ import {LocalNotificationService} from './services/local-notification.service';
     FormComponent,
     LocationComponent,
     RecapComponent,
+    FormStatusComponent,
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
