@@ -17,7 +17,11 @@ import {AppState} from '../../core/core.state';
 export class SignInComponent {
   public signInForm: UntypedFormGroup;
   error$: Observable<string | false | undefined> = this._store.select(error);
-  constructor(fb: UntypedFormBuilder, private _store: Store<AppState>, private _navCtrl: NavController) {
+  constructor(
+    fb: UntypedFormBuilder,
+    private _store: Store<AppState>,
+    private _navCtrl: NavController,
+  ) {
     this.signInForm = fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
