@@ -18,9 +18,10 @@ export interface TicketFormStep {
   recap?: string;
   required: boolean;
   translationsObj?: any;
-  type: TicketFieldTypes | FormFieldTypes;
+  type: TicketFieldTypes | FormFieldTypes | 'recap';
   value?: any;
 }
+
 export type FormFieldTypes = 'label' | 'select';
 export interface TicketFormOption {
   label: string;

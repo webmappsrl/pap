@@ -6,7 +6,7 @@
         <form
           [formGroup]="ticketForm"
           class="pap-form"
-          *ngIf="ticketFormConf.step && ticketFormConf.step[0] &&(recap$|async) === false"
+          *ngIf="ticketFormConf.step && ticketFormConf.step[0]"
         >
           <div class="pap-form-content">
             <ng-container *ngIf="ticketFormConf.label as label">
@@ -69,7 +69,6 @@
                 [formControlName]="currentStep.type"
                 [selected]="currentTrashbookType$|async"
                 [options]="(trashBookTypesOpts$|async)??[]"
-                (ngModelChange)="log($event)"
               ></pap-form-select>
               <pap-form-image-picker
                 *ngSwitchCase="'image'"
@@ -77,6 +76,11 @@
                 [formControlName]="currentStep.type"
               >
               </pap-form-image-picker>
+              <pap-form-recap
+                *ngSwitchCase="'recap'"
+                [form]="ticketForm"
+                [conf]="(ticketFormConf$|async)!"
+              ></pap-form-recap>
             </ng-container>
             <ion-item *ngIf="ticketForm.controls[currentStep.type].errors as errors">
               <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
@@ -98,61 +102,9 @@
           (backEvt)="backStep()"
           (sendDataEvt)="sendData()"
           (undoEvt)="close()"
+          (closeEvt)="close()"
         ></pap-form-status>
       </div>
     </ng-container>
   </ng-container>
 </ng-template>
-<ion-modal [isOpen]="recap$|async">
-  <ng-template>
-    <pap-form-recap
-      *ngIf="recap$|async"
-      [form]="ticketForm"
-      [conf]="(ticketFormConf$|async)!"
-    ></pap-form-recap>
-    <div class="pap-form-footer">
-      <div class="pap-form-buttons">
-        <div class="pap-form-buttonblock">
-          <ion-button
-            class="pap-form-button"
-            fill="outline"
-            shape="round"
-            type="button"
-            color="light"
-            (click)="close()"
-          >
-            {{ "annulla" | translate }}
-          </ion-button>
-        </div>
-        <div class="pap-form-buttonblock">
-          <ion-button class="pap-form-button" type="submit" (click)="sendData()" color="primary">
-            <ion-icon color="light" name="checkmark"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-</ion-modal>
-<ion-modal [isOpen]="(formSuccess$|async)">
-  <ng-template>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>segnalazione presa in carico</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-        Gentile utente la informiamo che il ticket è stato inviato correttamente. La ricontatteremo
-        al piu presto
-      </ion-card-content>
-    </ion-card>
-    <div class="pap-form-footer">
-      <div class="pap-form-buttons">
-        <div class="pap-form-buttonblock">
-          <ion-button class="pap-form-button" type="submit" (click)="close()" color="secondary">
-            <ion-icon color="light" name="checkmark"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-</ion-modal>

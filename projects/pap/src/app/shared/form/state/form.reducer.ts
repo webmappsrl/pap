@@ -31,6 +31,7 @@ export const reducer = createReducer(
       ...state,
       error: action.err,
       loading: false,
+      success: false,
     };
   }),
   on(TicketActions.resetTicket, (state, action) => {
@@ -38,7 +39,7 @@ export const reducer = createReducer(
       ...state,
       error: undefined,
       currentTrashBookType: undefined,
-      success: false,
+      success: undefined,
       loading: false,
     };
   }),

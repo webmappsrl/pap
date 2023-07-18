@@ -48,6 +48,11 @@ export class ReportTicketComponent {
         required: false,
         recap: 'Note',
       },
+      {
+        label: '',
+        type: 'recap',
+        required: false,
+      },
     ],
   };
 

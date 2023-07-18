@@ -68,6 +68,11 @@ export class InfoTicketComponent implements OnInit {
         value: '',
         recap: 'Telefono',
       },
+      {
+        label: '',
+        type: 'recap',
+        required: false,
+      },
     ],
   };
 

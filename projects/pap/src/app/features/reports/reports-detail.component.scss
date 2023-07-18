@@ -3,4 +3,47 @@ pap-reports-detail {
     height: 200px;
     position: relative;
   }
+  ion-card {
+    height: auto;
+    ion-label {
+      font-weight: 500;
+      line-height: 30px;
+    }
+    ion-item {
+      margin: -15px;
+    }
+    ion-accordion-group {
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+    ion-accordion {
+      div {
+        background-color: var(--ion-color-light);
+      }
+    }
+    pap-map {
+      margin: 8px;
+      .leaflet-top {
+        div {
+          position: absolute;
+        }
+      }
+    }
+  }
+  .pap-reports-detail-inner-list {
+    li {
+      list-style: none;
+    }
+    li:before {
+      content: '\2022'; /* Unicode for bullet point */
+<<<<<<< refs/remotes/pap/style_i_miei_ticket
+      color: black;
+=======
+      color: var(--ion-color-light-contrast);
+>>>>>>> style(i miei ticket): implements
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+  }
 }

@@ -16,7 +16,7 @@ import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {currentAddress} from '../../map/state/map.selectors';
 import {TicketFormConf, TicketFormStep} from '../../models/form.model';
 import {currentTrashBookType} from '../state/form.selectors';
-import {AlertController} from '@ionic/angular'; // importa AlertController
+import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'pap-form-status',
@@ -37,6 +37,7 @@ export class FormStatusComponent implements OnInit {
   @Output() backEvt: EventEmitter<void> = new EventEmitter();
   @Output() sendDataEvt: EventEmitter<void> = new EventEmitter();
   @Output() undoEvt: EventEmitter<void> = new EventEmitter();
+  @Output() closeEvt: EventEmitter<void> = new EventEmitter();
   isValid$: Observable<boolean> = of(false);
   currentStep$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
@@ -69,6 +70,26 @@ export class FormStatusComponent implements OnInit {
           handler: () => {
             this.undoEvt.emit();
           },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async presentConfirmation() {
+    this.sendDataEvt.emit();
+    this.closeEvt.emit();
+
+    const alert = await this.alertController.create({
+      cssClass: 'pap-status-alert-confirmation',
+      header: 'Prenotazione avvenuta con successo',
+      message: 'Puoi visualizzarla nella sezione "i miei ticket".',
+      buttons: [
+        {
+          text: 'X',
+          role: 'close',
+          cssClass: 'pap-status-alert-confirmation-close',
         },
       ],
     });

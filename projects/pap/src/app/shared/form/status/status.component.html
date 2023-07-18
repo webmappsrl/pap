@@ -39,7 +39,7 @@
 
       <ion-button
         shape="round"
-        (click)="this.sendDataEvt.emit()"
+        (click)="presentConfirmation()"
         [disabled]="!(isValid$|async)"
         *ngIf="pos+1 === conf.step.length"
       >
