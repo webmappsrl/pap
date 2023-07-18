@@ -6,10 +6,11 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {AlertController, IonInput, NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
-import {BehaviorSubject, map, Observable, switchMap, withLatestFrom} from 'rxjs';
+import {Store, select} from '@ngrx/store';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 import {AppState} from '../../../core/core.state';
 import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
@@ -30,14 +31,6 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export class FormComponent {
-  @ViewChild('focusInput') focusInput!: IonInput;
-  formError$: Observable<any> = this._store.pipe(select(ticketError));
-  formSuccess$: Observable<any> = this._store.pipe(select(ticketSuccess));
-  formLoading$: Observable<boolean> = this._store.pipe(select(ticketLoading));
-  currentTrashbookType$: Observable<TrashBookType | undefined> = this._store.pipe(
-    select(currentTrashBookType),
-  );
-  trashBookTypesOpts$!: Observable<TrashBookType[]>;
   @Input() set ticketFormConf(ticketFormConf: TicketFormConf) {
     this.ticketFormConf$.next(ticketFormConf);
     ticketFormConf.step.forEach(step => {
@@ -46,7 +39,7 @@ export class FormComponent {
         validators.push(Validators.required);
       }
 
-      const formControl = new FormControl('', validators);
+      const formControl = new UntypedFormControl('', validators);
       this.ticketForm.addControl(step.type, formControl);
       this.trashBookTypesOpts$ = this._store.pipe(
         select(trashBookTypes),
@@ -55,16 +48,25 @@ export class FormComponent {
         ),
       );
     });
-    const ticketTypeControl = new FormControl(ticketFormConf.ticketType);
+    const ticketTypeControl = new UntypedFormControl(ticketFormConf.ticketType);
     this.ticketForm.addControl('ticket_type', ticketTypeControl);
   }
 
+  @ViewChild('focusInput') focusInput!: IonInput;
+
+  alertEvt$: EventEmitter<any> = new EventEmitter<any>();
+  currentTrashbookType$: Observable<TrashBookType | undefined> = this._store.pipe(
+    select(currentTrashBookType),
+  );
+  formError$: Observable<any> = this._store.pipe(select(ticketError));
+  formLoading$: Observable<boolean> = this._store.pipe(select(ticketLoading));
+  formSuccess$: Observable<any> = this._store.pipe(select(ticketSuccess));
   pos$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   recap$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  ticketForm: FormGroup = new FormGroup({});
+  ticketForm: UntypedFormGroup = new UntypedFormGroup({});
   ticketFormConf$: BehaviorSubject<TicketFormConf | null> =
     new BehaviorSubject<TicketFormConf | null>(null);
-  alertEvt$: EventEmitter<any> = new EventEmitter<any>();
+  trashBookTypesOpts$!: Observable<TrashBookType[]>;
 
   constructor(
     private _store: Store<AppState>,
@@ -73,9 +75,7 @@ export class FormComponent {
   ) {
     this.alertEvt$.pipe(switchMap(obj => this._alertCtrl.create(obj)));
   }
-  log(val: any) {
-    console.log(val);
-  }
+
   backStep(): void {
     if (this.pos$.value === 0) this.close();
     else {
@@ -97,6 +97,10 @@ export class FormComponent {
     const formControlName = currentStep.type;
     const formControl = this.ticketForm.controls[formControlName];
     return !formControl.invalid;
+  }
+
+  log(val: any) {
+    console.log(val);
   }
 
   nextStep(): void {

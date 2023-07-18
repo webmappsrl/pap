@@ -6,7 +6,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {UntypedFormGroup} from '@angular/forms';
 import {FormProvider} from '../form-provider';
 
 @Component({
@@ -44,7 +44,7 @@ import {FormProvider} from '../form-provider';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class firstStepSignupComponent {
-  firstStep: FormGroup = this._formProvider.getForm().get('firstStep') as FormGroup;
+  firstStep: UntypedFormGroup = this._formProvider.getForm().get('firstStep') as UntypedFormGroup;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Input() buttons = true;
   @Input() disable: string[] = [];

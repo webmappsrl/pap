@@ -1,4 +1,3 @@
-import {BehaviorSubject, Observable, Subscription, map} from 'rxjs';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,19 +6,20 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {Store, select} from '@ngrx/store';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {UpdateUser, deleteUser, logout} from '../../core/auth/state/auth.actions';
 
 import {AlertController} from '@ionic/angular';
-import {AppState} from '../../core/core.state';
-import {ConfirmedValidator} from '../sign-up/sign-up.component';
-import {FormProvider} from '../../shared/form/form-provider';
-import {error} from '../../core/auth/state/auth.selectors';
-import {settingView} from './state/settings.selectors';
-import {showButtons} from '../../shared/header/state/header.actions';
 import {switchMap} from 'rxjs/operators';
+import {error} from '../../core/auth/state/auth.selectors';
+import {AppState} from '../../core/core.state';
+import {FormProvider} from '../../shared/form/form-provider';
+import {showButtons} from '../../shared/header/state/header.actions';
+import {ConfirmedValidator} from '../sign-up/sign-up.component';
 import {toggleEdit} from './state/settings.actions';
+import {settingView} from './state/settings.selectors';
 
 @Component({
   selector: 'pap-settings',
@@ -30,18 +30,20 @@ import {toggleEdit} from './state/settings.actions';
   providers: [{provide: FormProvider, useExisting: SettingsComponent}],
 })
 export class SettingsComponent implements OnInit, OnDestroy {
+  private _alertEVT: EventEmitter<void> = new EventEmitter<void>();
+  private _alertSub: Subscription = Subscription.EMPTY;
+  private _settingsFormSub: Subscription = Subscription.EMPTY;
+
   currentStep = 'firstStep';
   error$: Observable<string | false | undefined> = this._store.select(error);
-  settingsForm: FormGroup;
-  private _settingsFormSub: Subscription = Subscription.EMPTY;
+  settingsForm: UntypedFormGroup;
   settingsView$ = this._store.pipe(select(settingView));
   step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  private _alertSub: Subscription = Subscription.EMPTY;
-  private _alertEVT: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(
     private _alertCtrl: AlertController,
     private _store: Store<AppState>,
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
   ) {
     this.settingsForm = fb.group({
       firstStep: fb.group({

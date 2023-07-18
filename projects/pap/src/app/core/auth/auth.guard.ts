@@ -1,12 +1,13 @@
 import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {AlertController, AlertOptions, NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
-import {map, Observable, skip, Subscription, switchMap, tap, delay, zip} from 'rxjs';
-import {AppState} from '../core.state';
-import {isLogged, isVerified, user} from './state/auth.selectors';
+import {Store, select} from '@ngrx/store';
 import {environment as env} from 'projects/pap/src/environments/environment';
+import {Observable, Subscription} from 'rxjs';
+import {delay, map, switchMap, tap} from 'rxjs/operators';
+import {AppState} from '../core.state';
 import {loadAuths, resendEmail} from './state/auth.actions';
+import {isVerified, user} from './state/auth.selectors';
 
 const NO_LOGGED: AlertOptions = {
   header: 'Non sei loggato',
@@ -45,6 +46,7 @@ const NO_VERIFIED: AlertOptions = {
 export class AuthGuard implements CanActivate, OnDestroy {
   private _alertEVT: EventEmitter<AlertOptions> = new EventEmitter<AlertOptions>();
   private _alertSub: Subscription = Subscription.EMPTY;
+
   constructor(
     private _store: Store<AppState>,
     private _alertCtrl: AlertController,
@@ -71,6 +73,7 @@ export class AuthGuard implements CanActivate, OnDestroy {
         }
       });
   }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
@@ -97,6 +100,7 @@ export class AuthGuard implements CanActivate, OnDestroy {
       }),
     );
   }
+
   ngOnDestroy(): void {
     this._alertSub.unsubscribe();
   }

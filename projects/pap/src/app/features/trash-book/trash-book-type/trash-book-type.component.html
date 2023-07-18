@@ -4,17 +4,17 @@
 
 <ion-content padding class="trash-book-type">
   <h1 class="trash-book-type-title">
-    {{ trashBookType?.name }}
+    {{ trashBookType.name }}
   </h1>
 
-  <div class="trash-book-type-content">{{trashBookType?.description}}</div>
+  <div class="trash-book-type-content">{{trashBookType.description}}</div>
   <h2 *ngIf="trashBookType?.howto" class="trash-book-type-subtitle">{{'Come'|translate}}</h2>
   <div *ngIf="trashBookType?.howto" class="trash-book-type-content">
-    {{trashBookType?.howto}}
+    {{trashBookType.howto}}
   </div>
 
-
-  <h2 *ngIf="trashBookType?.allowed || trashBookType?.notallowed" class="trash-book-type-subtitle">{{'Cosa'|translate}}
+  <h2 *ngIf="trashBookType?.allowed || trashBookType?.notallowed" class="trash-book-type-subtitle">
+    {{'Cosa'|translate}}
   </h2>
   <ion-grid>
     <ion-row>
@@ -22,11 +22,18 @@
         <ion-list>
           <ion-list-header>
             <ion-label class="trash-book-type-icon-container">
-              <ion-icon name="checkmark-circle" color="success" class="trash-book-type-icon-allowed">
+              <ion-icon
+                name="checkmark-circle"
+                color="success"
+                class="trash-book-type-icon-allowed"
+              >
               </ion-icon>
             </ion-label>
           </ion-list-header>
-          <ion-item class="trash-book-type-allowedornot " *ngFor="let item of trashBookType?.allowed">
+          <ion-item
+            class="trash-book-type-allowedornot "
+            *ngFor="let item of trashBookType?.allowed"
+          >
             <ion-label class="ion-text-wrap">{{item}}</ion-label>
           </ion-item>
         </ion-list>
@@ -39,7 +46,10 @@
               </ion-icon>
             </ion-label>
           </ion-list-header>
-          <ion-item class="trash-book-type-allowedornot " *ngFor="let item of trashBookType?.notallowed">
+          <ion-item
+            class="trash-book-type-allowedornot "
+            *ngFor="let item of trashBookType?.notallowed"
+          >
             <ion-label class="ion-text-wrap">{{item}}</ion-label>
           </ion-item>
         </ion-list>

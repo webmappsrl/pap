@@ -1,13 +1,12 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
-import {first} from 'rxjs';
+import {Store, select} from '@ngrx/store';
+import {first} from 'rxjs/operators';
 import {AuthService} from '../../core/auth/state/auth.service';
 import {AppState} from '../../core/core.state';
 import {ApiTicketType} from '../../shared/models/apimodels';
 import {TicketFormConf} from '../../shared/models/form.model';
 import {ReportService} from '../../shared/services/report.service';
-import {selectInfoState} from '../info/state/info.selectors';
 import {loadInfoTickets, sendReportInfoTickets} from './state/info-ticket.actions';
 import {selectInfoTicketState} from './state/info-ticket.selectors';
 
@@ -19,11 +18,7 @@ import {selectInfoTicketState} from './state/info-ticket.selectors';
   encapsulation: ViewEncapsulation.None,
 })
 export class InfoTicketComponent implements OnInit {
-  infoTicketView$ = this._store.pipe(select(selectInfoTicketState));
-
   public end = false;
-  public privacyCheck: boolean = false;
-
   public formConf: TicketFormConf = {
     ticketType: 'info',
     cancel: 'Uscendo perderai tutti i dati inseriti. Sicuro di volerlo fare?',
@@ -69,6 +64,8 @@ export class InfoTicketComponent implements OnInit {
       },
     ],
   };
+  infoTicketView$ = this._store.pipe(select(selectInfoTicketState));
+  public privacyCheck: boolean = false;
 
   constructor(
     private navController: NavController,
@@ -77,20 +74,20 @@ export class InfoTicketComponent implements OnInit {
     private reportService: ReportService,
   ) {}
 
-  ngOnInit(): void {
-    this._store.dispatch(loadInfoTickets());
+  exitPage() {
+    this.navController.pop();
   }
 
   formFilled(event: any) {
     this.end = true;
   }
 
-  openForm() {
-    this.end = !this.end;
+  ngOnInit(): void {
+    this._store.dispatch(loadInfoTickets());
   }
 
-  exitPage() {
-    this.navController.pop();
+  openForm() {
+    this.end = !this.end;
   }
 
   saveData() {

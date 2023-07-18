@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {Store, select} from '@ngrx/store';
 
 import {AppState} from '../../core/core.state';
@@ -21,13 +21,13 @@ import {showButtons} from '../../shared/header/state/header.actions';
 })
 export class CalendarComponent {
   calendarView$ = this._store.pipe(select(selectCalendarState));
+
   constructor(
     private _store: Store<AppState>,
     private _modalController: ModalController,
     private _inAppBrowser: InAppBrowser,
   ) {
     this._store.dispatch(showButtons({show: false}));
-    this._store.dispatch(loadCalendars());
   }
 
   info(tbType: TrashBookType) {

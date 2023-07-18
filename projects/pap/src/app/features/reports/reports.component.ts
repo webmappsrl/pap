@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
+import {skip} from 'rxjs/operators';
 import {AppState} from '../../core/core.state';
 import {setTrashBookType} from '../trash-book/state/trash-book.actions';
 import {TrashBookType} from '../trash-book/trash-book-model';
@@ -9,7 +10,6 @@ import {ReportsDetailComponent} from './reports-detail.component';
 import {loadReportss} from './state/reports.actions';
 import {Ticket} from './state/reports.effects';
 import {selectReports} from './state/reports.selectors';
-import {skip} from 'rxjs';
 
 @Component({
   selector: 'pap-reports',

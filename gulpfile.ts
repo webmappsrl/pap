@@ -16,6 +16,8 @@ interface Config {
     logo: string;
     header_image: string;
     footer_image: string;
+    push_notification_plist_url: string;
+    push_notification_json_url: string;
   };
   sku: string;
 }
@@ -40,7 +42,6 @@ gulp.task('build', async () => {
     const paths: Paths = getPaths(companyId);
 
     const oldVariables = await readFileContent(paths.variablesConfigPath);
-
     const devVariables = await readFileContent(paths.devVariablesConfigPath);
     await execCmd(`rm -rf ${paths.devVariablesConfigPath}`);
     const oldCapacitorConfig = await readFileContent('capacitor.config.ts');
@@ -49,7 +50,7 @@ gulp.task('build', async () => {
     console.log('Configurazione ottenuta:', config);
     const sku = config.sku;
     console.log('Sku:', sku);
-
+    await execCmd(`rm -rf ${paths.instancePath}`);
     createFolder(paths.instancePath);
     const capacitorConfig: CapacitorConfig = {
       appId: config.sku,
@@ -65,6 +66,11 @@ gulp.task('build', async () => {
           SplashShowOnlyFirstTime: 'false',
           SplashScreen: 'screen',
           SplashScreenDelay: '3000',
+        },
+      },
+      plugins: {
+        PushNotifications: {
+          presentationOptions: ['badge', 'sound', 'alert'],
         },
       },
     };
@@ -91,8 +97,14 @@ gulp.task('build', async () => {
     );
     await writeFile(paths.variablesConfigPath, config.resources.variables);
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
-    await ionicBuild(paths.capacitorConfigPath, paths.instancePath);
-    await ionicBuildIos(paths.capacitorConfigPath, paths.instancePath);
+    await download(
+      config.resources.push_notification_plist_url,
+      `ios/App/App/GoogleService-Info.plist`,
+    );
+    await download(config.resources.push_notification_json_url, `android/app/google-services.json`);
+    await ionicBuild();
+    await ionicBuildIos();
+    await ionicBuildIAndroid();
     await ionicPlathforms(config.resources);
     await ionicCapSync();
 
@@ -123,6 +135,7 @@ gulp.task('init', async () => {
   await execCmd(`rm -rf ios`);
   await execCmd(`rm -rf resources`);
   await execCmd(`rm -rf icons`);
+  await execCmd(`npm install --force`);
   await execCmd(`npx cap add ios`);
   await execCmd(`cd ios/App && pod install`);
   await execCmd(`npx cap add android`);
@@ -271,7 +284,7 @@ const createFolder = (path: string): void => {
   }
 };
 
-const ionicBuild = (capacitorConfigPath: string, instancePath: string): Promise<void> => {
+const ionicBuild = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     const cmd = `ionic  build --prod`;
     console.log(`${cmd}: START`);
@@ -290,7 +303,7 @@ const ionicBuild = (capacitorConfigPath: string, instancePath: string): Promise<
   });
 };
 
-const ionicBuildIos = (capacitorConfigPath: string, instancePath: string): Promise<void> => {
+const ionicBuildIos = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     const cmd = `ionic  build ios --prod`;
     console.log(`${cmd}: START`);
@@ -307,13 +320,28 @@ const ionicBuildIos = (capacitorConfigPath: string, instancePath: string): Promi
     });
   });
 };
-
+const ionicBuildIAndroid = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const cmd = `ionic  build android --prod`;
+    console.log(`${cmd}: START`);
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        console.error('Errore durante la build di Ionic:', error);
+        console.log(`${cmd}: ERROR`);
+        reject();
+      }
+      console.log(stdout);
+      console.error(stderr);
+      console.log(`${cmd}: DONE`);
+      resolve();
+    });
+  });
+};
 const ionicPlathforms = (resources: {icon: string; splash: string}): Promise<void> => {
   return new Promise((resolve, reject) => {
     createFolder('resources');
     createFolder('android');
     createFolder('ios');
-    createFolder('ios/');
     download(resources.icon, `resources/icon.png`);
     download(resources.icon, `resources/icon-only.png`);
     download(resources.icon, `resources/icon-foreground.png`);
@@ -371,27 +399,27 @@ const writeFile = (path: string, file: string | null): Promise<void> => {
 const moveFoldersToInstance = (instancePath: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
-      fsExtra.copy('./dist/pap', `${instancePath}/www`);
+      fsExtra.copy('./dist/pap', `${instancePath}/www`, {overwrite: true});
     } catch (error) {
       console.log(error);
     }
     try {
-      fsExtra.copy('./android', `${instancePath}/android`);
+      fsExtra.copy('./android', `${instancePath}/android`, {overwrite: true});
     } catch (error) {
       console.log(error);
     }
     try {
-      fsExtra.copy('./ios', `${instancePath}/ios`);
+      fsExtra.copy('./ios', `${instancePath}/ios`, {overwrite: true});
     } catch (error) {
       console.log(error);
     }
     try {
-      fsExtra.copy('./node_modules', `${instancePath}/node_modules`);
+      fsExtra.copy('./node_modules', `${instancePath}/node_modules`, {overwrite: true});
     } catch (error) {
       console.log(error);
     }
     try {
-      fsExtra.copy('./resources', `${instancePath}/resources`);
+      fsExtra.copy('./resources', `${instancePath}/resources`, {overwrite: true});
     } catch (error) {
       console.log(error);
     }

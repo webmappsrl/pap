@@ -1,16 +1,17 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
-import {BehaviorSubject, filter, Observable, Subscription, switchMap} from 'rxjs';
+import {Store, select} from '@ngrx/store';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {filter} from 'rxjs/operators';
 import {loadSignUps} from '../../core/auth/state/auth.actions';
 import {error, selectAuthState} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
-import {loadConfiniZone} from '../../shared/map/state/map.actions';
 import {FormProvider} from '../../shared/form/form-provider';
 import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
+import {loadConfiniZone} from '../../shared/map/state/map.actions';
 export function ConfirmedValidator(controlName: string, matchingControlName: string) {
-  return (formGroup: FormGroup) => {
+  return (formGroup: UntypedFormGroup) => {
     const control = formGroup.controls[controlName];
     const matchingControl = formGroup.controls[matchingControlName];
     if (
@@ -38,10 +39,14 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
   private _isLoggesSub: Subscription = Subscription.EMPTY;
 
   error$: Observable<string | false | undefined> = this._store.select(error);
-  signUpForm: FormGroup;
+  signUpForm: UntypedFormGroup;
   step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  constructor(fb: FormBuilder, private _store: Store<AppState>, private _navCtrl: NavController) {
+  constructor(
+    fb: UntypedFormBuilder,
+    private _store: Store<AppState>,
+    private _navCtrl: NavController,
+  ) {
     super();
     this._store.dispatch(loadConfiniZone());
     this._store.dispatch(loadUserTypes());
@@ -75,7 +80,7 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
       });
   }
 
-  getForm() {
+  getForm(): UntypedFormGroup {
     return this.signUpForm;
   }
 
