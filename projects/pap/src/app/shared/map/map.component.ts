@@ -1,3 +1,4 @@
+import {environment} from 'projects/pap/src/environments/environment';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -28,10 +29,10 @@ import {setMarker} from './state/map.actions';
 const DEFAULT_CENTER_ZOOM = 12;
 
 const MAP_OPTIONS = {
-  MAX_ZOOM: 18,
-  MIN_ZOM: 10,
-  START_ZOOM: 10,
-  START_COORD: [42.7666, 10.28333],
+  MAX_ZOOM: environment.config.resources.max_zoom ?? 18,
+  MIN_ZOM: environment.config.resources.min_zoom ?? 10,
+  DEFAULT_ZOOM: environment.config.resources.default_zoom ?? 10,
+  LOCATION: environment.config.resources.location ?? [42.7666, 10.28333],
 };
 
 @Component({
@@ -42,10 +43,11 @@ const MAP_OPTIONS = {
   encapsulation: ViewEncapsulation.None,
 })
 export class MapComponent implements OnInit, OnDestroy {
-  myPositionMarker!: any;
-  map!: Map;
-  @Output() markerClickEvt: EventEmitter<GeoJson> = new EventEmitter<GeoJson>();
-  @Output() genericClickEvt: EventEmitter<number[]> = new EventEmitter<number[]>();
+  @Input() set center(value: number[]) {
+    if (value != null && value.length === 2) {
+      this.centerToPoint(value);
+    }
+  }
 
   @Input() set markers(value: GeoJson[]) {
     if (this.map == null) {
@@ -60,21 +62,44 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
-  @Input() set center(value: number[]) {
-    if (value != null && value.length === 2) {
-      this.centerToPoint(value);
-    }
-  }
+  @Output() genericClickEvt: EventEmitter<number[]> = new EventEmitter<number[]>();
+  @Output() markerClickEvt: EventEmitter<GeoJson> = new EventEmitter<GeoJson>();
+
+  map!: Map;
+  myPositionMarker!: any;
 
   constructor(private _store: Store<AppState>) {}
-  clickedMarker(_: LeafletEvent, feature: GeoJson) {
-    this.markerClickEvt.emit(feature);
+
+  centerToPoint(coord: number[]) {
+    if (this.map != null) {
+      const zoom = this.map.getZoom();
+      this.map.setView(latLng(coord[0], coord[1]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
+    }
   }
 
   clickOnMap(ev: LeafletMouseEvent) {
     const coords: [number, number] = [ev.latlng.lat, ev.latlng.lng];
     this._store.dispatch(setMarker({coords}));
     this.genericClickEvt.emit(coords);
+  }
+
+  clickedMarker(_: LeafletEvent, feature: GeoJson) {
+    this.markerClickEvt.emit(feature);
+  }
+
+  getIcon(type: string): Icon {
+    let imgUrl = '/assets/icons/pin_poi.png';
+    if (type == 'position') {
+      imgUrl = '/assets/images/marker-icon-2x.png';
+    }
+
+    return icon({
+      iconUrl: imgUrl,
+      shadowUrl: '/assets/images/marker-shadow.png',
+      iconSize: type == 'position' ? [25, 41] : [40, 40],
+      iconAnchor: [12.5, 41],
+      popupAnchor: [-3, -76],
+    });
   }
 
   makeMarkers(features: GeoJson[]): void {
@@ -85,16 +110,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
       myMarker.on('click', e => this.clickedMarker(e, feature));
       myMarker.addTo(this.map);
-    }
-  }
-
-  ngOnDestroy() {
-    this.map.clearAllEventListeners;
-    this.map.remove();
-  }
-  ngOnInit(): void {
-    if (this.map == null) {
-      this.initMap();
     }
   }
 
@@ -113,32 +128,21 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
-  getIcon(type: string): Icon {
-    let imgUrl = '/assets/icons/pin_poi.png';
-    if (type == 'position') {
-      imgUrl = '/assets/images/marker-icon-2x.png';
-    }
-
-    return icon({
-      iconUrl: imgUrl,
-      shadowUrl: '/assets/images/marker-shadow.png',
-      iconSize: type == 'position' ? [25, 41] : [40, 40],
-      iconAnchor: [12.5, 41],
-      popupAnchor: [-3, -76],
-    });
+  ngOnDestroy() {
+    this.map.clearAllEventListeners;
+    this.map.remove();
   }
 
-  centerToPoint(coord: number[]) {
-    if (this.map != null) {
-      const zoom = this.map.getZoom();
-      this.map.setView(latLng(coord[0], coord[1]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
+  ngOnInit(): void {
+    if (this.map == null) {
+      this.initMap();
     }
   }
 
   private initMap(): void {
     this.map = map('map').setView(
-      MAP_OPTIONS.START_COORD as LatLngExpression,
-      MAP_OPTIONS.START_ZOOM,
+      MAP_OPTIONS.LOCATION as LatLngExpression,
+      MAP_OPTIONS.DEFAULT_ZOOM,
     );
     tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: MAP_OPTIONS.MAX_ZOOM,
