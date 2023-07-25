@@ -17,9 +17,34 @@ pap-settings {
   }
 
   .footer {
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+  ion-row {
+    width: 300px;
+  }
+  ion-button {
+    width: auto;
+    height: 36px;
+  }
+  ion-segment {
+    height: 70px;
+  }
+  ion-card {
+    display: flow-root;
+    height: fit-content;
+  }
+  pap-form-location {
+    .pap-form-location-infocontainer {
+      ion-button {
+        margin-top: -15px;
+      }
+    }
   }
 }

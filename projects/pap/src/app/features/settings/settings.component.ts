@@ -11,7 +11,7 @@ import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {UpdateUser, deleteUser, logout} from '../../core/auth/state/auth.actions';
 
-import {AlertController} from '@ionic/angular';
+import {AlertController, NavController} from '@ionic/angular';
 import {switchMap} from 'rxjs/operators';
 import {error} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
@@ -43,6 +43,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   constructor(
     private _alertCtrl: AlertController,
     private _store: Store<AppState>,
+    private _navCtrl: NavController,
     fb: UntypedFormBuilder,
   ) {
     this.settingsForm = fb.group({
@@ -104,10 +105,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
         if (val != null && val.role != null && val.role === 'ok') {
           this._store.dispatch(deleteUser());
           setTimeout(() => {
-            this._store.dispatch(logout());
+            this.logout();
           }, 300);
         }
       });
+  }
+
+  logout(): void {
+    this._store.dispatch(logout());
+    this._navCtrl.navigateForward('home');
   }
 
   delete(): void {

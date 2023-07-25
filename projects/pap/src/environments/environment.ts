@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  companyId: '4',
+  companyId: '1',
   config: {
-    id: 4,
+    id: 1,
     name: 'Ersu',
     sku: 'it.netseven.portapporta',
     resources: {
@@ -17,6 +17,10 @@ export const environment = {
         'https://dev.portapporta.webmapp.it/storage/resources/1/GoogleService-Info.plist',
       push_notification_json_url:
         'https://dev.portapporta.webmapp.it/storage/resources/1/google-services.json',
+      min_zoom: 10,
+      max_zoom: 17,
+      default_zoom: 10,
+      location: [42.775747392, 10.261648893],
     },
   },
   api: 'https://dev.portapporta.webmapp.it',
