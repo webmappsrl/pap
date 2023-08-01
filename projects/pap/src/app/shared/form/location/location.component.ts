@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
@@ -28,6 +29,12 @@ import {LocationService} from '../../services/location.service';
   ],
 })
 export class LocationComponent implements ControlValueAccessor {
+  @Output() addressEVT: EventEmitter<any> = new EventEmitter<any>();
+  @Input() set position(pos: number[]) {
+    this.writeValue(pos);
+    this.editMode = false;
+  }
+  editMode = true;
   currentAddress$: Observable<string | undefined> = this._store.pipe(select(currentAddress));
   disabled = false;
   myPosition$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
@@ -35,7 +42,7 @@ export class LocationComponent implements ControlValueAccessor {
   onChange = (location: number) => {};
   onTouched = () => {};
   touched = false;
-  @Output() addressEVT: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(private locationService: LocationService, private _store: Store<AppState>) {}
 
   addressOnChange(event: any) {
@@ -85,6 +92,10 @@ export class LocationComponent implements ControlValueAccessor {
     this.locationService.getAddress(coords).subscribe(
       res => {
         this.setAddress(res as string);
+        this.addressEVT.emit({
+          location: coords,
+          address: res,
+        });
       },
       (error: any) => {
         this.setAddress(`${coords[0]} ${coords[1]}`);
@@ -93,12 +104,10 @@ export class LocationComponent implements ControlValueAccessor {
   }
 
   writeValue(coords: any): void {
-    this.myPosition$.next(coords);
-    this._store.dispatch(setMarker({coords}));
-    this.onChange(coords);
-    this.addressEVT.emit({
-      location: coords,
-      address: this.myPositionString,
-    });
+    if (coords != null) {
+      this.myPosition$.next(coords);
+      this._store.dispatch(setMarker({coords}));
+      this.onChange(coords);
+    }
   }
 }

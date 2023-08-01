@@ -71,6 +71,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.settingsForm.controls['firstStep'].setValue({
         name: sv.user?.name ?? '',
         email: sv.user?.email ?? '',
+        addresses: [],
       });
       this.settingsForm.controls['thirdStep'].setValue({
         location: sv.user?.location ?? undefined,
@@ -112,11 +113,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
       });
   }
 
-  logout(): void {
-    this._store.dispatch(logout());
-    this._navCtrl.navigateForward('home');
-  }
-
   delete(): void {
     this._alertEVT.emit();
   }
@@ -135,6 +131,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
     return !ctrl.valid;
   }
 
+  logout(): void {
+    this._store.dispatch(logout());
+    this._navCtrl.navigateForward('home');
+  }
+
   ngOnDestroy(): void {
     this._settingsFormSub.unsubscribe();
     this._alertSub.unsubscribe();
@@ -149,6 +150,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     switch (this.currentStep) {
       case 'firstStep':
         updates['name'] = this.settingsForm.controls['firstStep'].value['name'];
+        updates['addresses'] = this.settingsForm.controls['firstStep'].value['addresses'];
         break;
       case 'secondStep':
         updates = this.settingsForm.controls['secondStep'].value;

@@ -32,6 +32,7 @@ import {BroadcastNotificationService} from './services/broadcast-notification.se
 import {LocalNotificationService} from './services/local-notification.service';
 import {FooterComponent} from './footer/footer.component';
 import {FormStatusComponent} from './form/status/status.component';
+import {LocationModalComponent} from './form/location/location.modal';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -46,6 +47,7 @@ import {FormStatusComponent} from './form/status/status.component';
     secondStepSignupComponent,
     thirdStepSignupComponent,
     LocationComponent,
+    LocationModalComponent,
     FormStatusComponent,
     RecapComponent,
     ImagePickerComponent,
