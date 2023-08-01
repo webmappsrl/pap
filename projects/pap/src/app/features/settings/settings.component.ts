@@ -50,6 +50,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       firstStep: fb.group({
         name: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
+        addresses: fb.array([]),
       }),
       secondStep: fb.group(
         {

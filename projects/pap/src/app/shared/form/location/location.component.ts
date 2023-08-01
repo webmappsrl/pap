@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -29,7 +35,7 @@ export class LocationComponent implements ControlValueAccessor {
   onChange = (location: number) => {};
   onTouched = () => {};
   touched = false;
-
+  @Output() addressEVT: EventEmitter<any> = new EventEmitter<any>();
   constructor(private locationService: LocationService, private _store: Store<AppState>) {}
 
   addressOnChange(event: any) {
@@ -90,5 +96,9 @@ export class LocationComponent implements ControlValueAccessor {
     this.myPosition$.next(coords);
     this._store.dispatch(setMarker({coords}));
     this.onChange(coords);
+    this.addressEVT.emit({
+      location: coords,
+      address: this.myPositionString,
+    });
   }
 }
