@@ -5,7 +5,8 @@ import * as fsExtra from 'fs-extra';
 import axios from 'axios';
 import {exec} from 'child_process';
 import {CapacitorConfig} from '@capacitor/cli';
-const api = 'https://dev.portapporta.webmapp.it';
+const api = 'https://dev.portapporta.webmapp.it/api';
+// const api = 'http://127.0.0.1:8000/api';
 interface Config {
   id: number;
   name: string;
@@ -199,7 +200,7 @@ function getPaths(companyId: string): Paths {
   return {
     companyId,
     instancePath,
-    apiUrl: `${api}/api/c/${companyId}/config.json`,
+    apiUrl: `${api}/c/${companyId}/config.json`,
     capacitorConfigPath: `${instancePath}/capacitor-config.json`,
     variablesConfigPath: `projects/pap/src/theme/variables.scss`,
     devVariablesConfigPath: `projects/pap/src/theme/dev-variables.scss`,
@@ -209,7 +210,7 @@ function getPaths(companyId: string): Paths {
 }
 // Funzione per effettuare il login e ottenere il token di autenticazione
 async function loginAndGetAuthToken(email: string, password: string): Promise<string> {
-  const loginUrl = `${api}/api/login`; // URL di login dell'API
+  const loginUrl = `${api}/login`; // URL di login dell'API
   const authData = {
     email,
     password,

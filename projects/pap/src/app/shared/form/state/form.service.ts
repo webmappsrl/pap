@@ -11,6 +11,6 @@ export class TicketService {
   constructor(private _http: HttpClient) {}
 
   sendTicket(ticket: Ticket): Observable<any> {
-    return this._http.post(`${env.api}/api/c/${company_id}/ticket`, ticket);
+    return this._http.post(`${env.api}/c/${company_id}/ticket`, ticket);
   }
 }

@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {FormControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {UpdateUser, deleteUser, logout} from '../../core/auth/state/auth.actions';
@@ -46,38 +46,42 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private _navCtrl: NavController,
     fb: UntypedFormBuilder,
   ) {
-    this.settingsForm = fb.group({
-      firstStep: fb.group({
-        name: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
-        addresses: fb.array([]),
-      }),
-      secondStep: fb.group(
-        {
-          password: ['', [Validators.required, Validators.minLength(8)]],
-          password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
-        },
-        {
-          validator: ConfirmedValidator('password', 'password_confirmation'),
-        },
-      ),
-      thirdStep: fb.group({
-        location: ['', [Validators.required]],
-        user_type_id: ['', [Validators.required]],
-        zone_id: [''],
-      }),
-    });
     this._settingsFormSub = this.settingsView$.subscribe(sv => {
-      this.settingsForm.controls['firstStep'].setValue({
-        name: sv.user?.name ?? '',
-        email: sv.user?.email ?? '',
-        addresses: [],
-      });
-      this.settingsForm.controls['thirdStep'].setValue({
-        location: sv.user?.location ?? undefined,
-        zone_id: sv.user?.zone_id ?? undefined,
-        user_type_id: sv.user?.user_type_id ?? undefined,
-      });
+      try {
+        const addressFormArray = fb.array([]);
+        (sv.user?.addresses ?? []).forEach(address => {
+          addressFormArray.push(
+            fb.group({
+              address: new FormControl(address.address, Validators.required),
+              location: new FormControl(address.location, Validators.required),
+            }),
+          );
+        });
+
+        this.settingsForm = fb.group({
+          firstStep: fb.group({
+            name: [sv.user?.name ?? '', [Validators.required]],
+            email: [sv.user?.email ?? '', [Validators.required, Validators.email]],
+            addresses: addressFormArray,
+          }),
+          secondStep: fb.group(
+            {
+              password: ['', [Validators.required, Validators.minLength(8)]],
+              password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
+            },
+            {
+              validator: ConfirmedValidator('password', 'password_confirmation'),
+            },
+          ),
+          thirdStep: fb.group({
+            location: [sv.user?.location ?? '', [Validators.required]],
+            zone_id: [sv.user?.zone_id ?? '', [Validators.required]],
+            user_type_id: [sv.user?.user_type_id ?? '', [Validators.required]],
+          }),
+        });
+      } catch (e) {
+        console.error(e);
+      }
     });
 
     this._alertSub = this._alertEVT

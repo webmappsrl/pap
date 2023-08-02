@@ -36,7 +36,7 @@ export class LocationService {
   }
 
   getConfiniZone(): Observable<any> {
-    return this._http.get(`${env.api}/api/c/${env.companyId}/zones.geojson`);
+    return this._http.get(`${env.api}/c/${env.companyId}/zones.geojson`);
   }
 
   isInsideMap(latLng: number[]) {

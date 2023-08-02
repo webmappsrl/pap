@@ -45,7 +45,7 @@ const MAP_OPTIONS = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class MapComponent implements OnDestroy {
+export class MapComponent implements OnInit, OnDestroy {
   static index = 0;
 
   @Input() set center(value: number[]) {
@@ -67,6 +67,7 @@ export class MapComponent implements OnDestroy {
     }
   }
 
+  @Input() edit = true;
   @Output() genericClickEvt: EventEmitter<number[]> = new EventEmitter<number[]>();
   @Output() markerClickEvt: EventEmitter<GeoJson> = new EventEmitter<GeoJson>();
 
@@ -81,7 +82,9 @@ export class MapComponent implements OnDestroy {
   ) {
     MapComponent.index += 1;
     setTimeout(() => {
-      this.initMap();
+      if (this.map == null) {
+        this.initMap();
+      }
     }, 500);
   }
 
@@ -146,6 +149,17 @@ export class MapComponent implements OnDestroy {
   ngOnDestroy() {
     this.map.clearAllEventListeners;
     this.map.remove();
+  }
+
+  ngOnInit(): void {
+    if (this.edit === false) {
+      this.map.dragging.disable();
+      this.map.scrollWheelZoom.disable();
+      this.map.touchZoom.disable();
+      this.map.doubleClickZoom.disable();
+      this.map.boxZoom.disable();
+      this.map.keyboard.disable();
+    }
   }
 
   private initMap(): void {
