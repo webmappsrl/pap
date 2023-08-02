@@ -29,12 +29,12 @@ import {LocationService} from '../../services/location.service';
   ],
 })
 export class LocationComponent implements ControlValueAccessor {
-  @Output() addressEVT: EventEmitter<any> = new EventEmitter<any>();
   @Input() set position(pos: number[]) {
     this.writeValue(pos);
-    this.editMode = false;
   }
-  editMode = true;
+
+  @Output() addressEVT: EventEmitter<any> = new EventEmitter<any>();
+
   currentAddress$: Observable<string | undefined> = this._store.pipe(select(currentAddress));
   disabled = false;
   myPosition$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);

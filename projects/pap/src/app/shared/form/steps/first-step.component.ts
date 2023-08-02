@@ -39,14 +39,6 @@ export class firstStepSignupComponent {
     private _cdr: ChangeDetectorRef,
   ) {}
 
-  removeAddress(index: number): void {
-    this.addresses.removeAt(index);
-  }
-
-  setLocation(event: any): void {
-    console.log(event);
-  }
-
   openModalLocation() {
     from(
       this._modalCtrl.create({
@@ -70,5 +62,13 @@ export class firstStepSignupComponent {
         this.addresses.push(modalForm);
         this._cdr.detectChanges();
       });
+  }
+
+  removeAddress(index: number): void {
+    this.addresses.removeAt(index);
+  }
+
+  setLocation(event: any): void {
+    console.log(event);
   }
 }

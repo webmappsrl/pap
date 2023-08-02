@@ -1,12 +1,15 @@
 import {environment} from 'projects/pap/src/environments/environment';
 import {
+  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
 import {GeoJson} from '../../features/waste-center-collection/waste-center-collection-model';
@@ -42,7 +45,9 @@ const MAP_OPTIONS = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class MapComponent implements OnInit, OnDestroy {
+export class MapComponent implements OnDestroy {
+  static index = 0;
+
   @Input() set center(value: number[]) {
     if (value != null && value.length === 2) {
       this.centerToPoint(value);
@@ -66,9 +71,19 @@ export class MapComponent implements OnInit, OnDestroy {
   @Output() markerClickEvt: EventEmitter<GeoJson> = new EventEmitter<GeoJson>();
 
   map!: Map;
+  mapId = `map-${MapComponent.index}`;
   myPositionMarker!: any;
 
-  constructor(private _store: Store<AppState>) {}
+  constructor(
+    private _store: Store<AppState>,
+    private _renderer: Renderer2,
+    private _el: ElementRef,
+  ) {
+    MapComponent.index += 1;
+    setTimeout(() => {
+      this.initMap();
+    }, 500);
+  }
 
   centerToPoint(coord: number[]) {
     if (this.map != null) {
@@ -133,14 +148,12 @@ export class MapComponent implements OnInit, OnDestroy {
     this.map.remove();
   }
 
-  ngOnInit(): void {
-    if (this.map == null) {
-      this.initMap();
-    }
-  }
-
   private initMap(): void {
-    this.map = map('map').setView(
+    const mapDiv = this._renderer.createElement('div');
+    this._renderer.setAttribute(mapDiv, 'id', this.mapId);
+    this._renderer.setStyle(mapDiv, 'height', '100%');
+    this._renderer.appendChild(this._el.nativeElement, mapDiv);
+    this.map = map(this.mapId).setView(
       MAP_OPTIONS.LOCATION as LatLngExpression,
       MAP_OPTIONS.DEFAULT_ZOOM,
     );
