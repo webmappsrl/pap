@@ -1,20 +1,8 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
-    </ion-buttons>
-    <ion-title>aggiungi indirizzo</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="confirm()" [strong]="true" [disabled]="modalForm.invalid"
-        >Confirm</ion-button
-      >
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-header><pap-header></pap-header></ion-header>
 <ion-content class="ion-padding">
   <ion-card [formGroup]="modalForm">
     <ion-item>
-      <ion-label position="stacked">Inserisci l'indirizzo</ion-label>
+      <ion-label position="stacked">Seleziona il tuo indirizzo</ion-label>
       <ion-input type="text" formControlName="address" placeholder="Indirizzo"></ion-input>
     </ion-item>
     <ion-item>
@@ -22,4 +10,24 @@
       </pap-form-location>
     </ion-item>
   </ion-card>
+  <div>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" shape="round" fill="outline">Annulla</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button
+        (click)="confirm()"
+        [strong]="true"
+        [disabled]="modalForm.invalid"
+        color="primary"
+        shape="round"
+        fill="solid"
+        >Salva</ion-button
+      >
+    </ion-buttons>
+  </div>
 </ion-content>
+
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>

@@ -17,6 +17,8 @@ import {from} from 'rxjs';
 @Component({
   templateUrl: './first-step.component.html',
   selector: 'pap-first-step-signup-form',
+  styleUrls: ['./first-step.component.scss'],
+
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
