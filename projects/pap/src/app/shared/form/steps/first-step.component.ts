@@ -15,8 +15,8 @@ import {LocationModalComponent} from '../location/location.modal';
 import {map, switchMap, take} from 'rxjs/operators';
 import {from} from 'rxjs';
 @Component({
-  templateUrl: './first-step.component.html',
   selector: 'pap-first-step-signup-form',
+  templateUrl: './first-step.component.html',
   styleUrls: ['./first-step.component.scss'],
 
   encapsulation: ViewEncapsulation.None,
@@ -45,6 +45,7 @@ export class firstStepSignupComponent {
     from(
       this._modalCtrl.create({
         component: LocationModalComponent,
+        cssClass: 'pap-location-modal',
       }),
     )
       .pipe(

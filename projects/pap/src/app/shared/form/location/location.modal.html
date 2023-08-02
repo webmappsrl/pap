@@ -2,17 +2,26 @@
 <ion-content class="ion-padding">
   <ion-card [formGroup]="modalForm">
     <ion-item>
-      <ion-label position="stacked">Seleziona il tuo indirizzo</ion-label>
-      <ion-input type="text" formControlName="address" placeholder="Indirizzo"></ion-input>
+      <ion-label class="pap-location-modal-address-label" position="stacked"
+        >Seleziona il tuo indirizzo</ion-label
+      >
+      <ion-input
+        class="pap-location-modal-address-input"
+        type="text"
+        formControlName="address"
+        placeholder="Indirizzo"
+      ></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item lines="none">
       <pap-form-location formControlName="location" (addressEVT)="setAddess($event)">
       </pap-form-location>
     </ion-item>
   </ion-card>
-  <div>
+  <div class="pap-location-modal-buttons">
     <ion-buttons slot="start">
-      <ion-button (click)="cancel()" shape="round" fill="outline">Annulla</ion-button>
+      <ion-button (click)="cancel()" color="primary" shape="round" fill="outline"
+        >Annulla</ion-button
+      >
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button

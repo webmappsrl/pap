@@ -26,9 +26,7 @@ pap-settings {
     flex-wrap: wrap;
     align-content: center;
   }
-  ion-row {
-    width: 300px;
-  }
+
   ion-button {
     width: auto;
     height: 36px;
@@ -38,7 +36,8 @@ pap-settings {
   }
   ion-card {
     display: flow-root;
-    height: fit-content;
+    max-height: 88% !important;
+    overflow: unset !important;
   }
   pap-form-location {
     .pap-form-location-infocontainer {

@@ -19,7 +19,7 @@
   <ion-item *ngIf="firstStep.controls['email'].errors as errors">
     <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
   </ion-item>
-  <ion-item class="pap-first-step-signup-form-add-address">
+  <ion-item lines="none" class="pap-first-step-signup-form-add-address">
     <ion-col></ion-col>
     <ion-col>
       <ion-button (click)="openModalLocation()" expand="block" shape="round"
@@ -39,7 +39,7 @@
     </ion-row>
   </ion-grid>
   <span formArrayName="addresses">
-    <div>
+    <div class="pap-first-step-signup-form-address-container">
       <ion-item *ngFor="let viewAddress of addresses.controls; let idx=index">
         <ion-grid [fixed]="true">
           <ion-row
@@ -48,9 +48,10 @@
             ></ion-row
           >
           <ion-row>
-            <ion-col class="pap-first-step-signup-form-address-col"
+            <ion-col
               ><ion-label
-                class="pap-first-step-signup-form-address"
+                class="pap-first-step-signup-form-view-address"
+                text-wrap
                 >{{viewAddress?.value?.address}}</ion-label
               ></ion-col
             >
@@ -70,6 +71,7 @@
                 (click)="removeAddress(idx)"
                 expand="block"
                 color="danger"
+                *ngIf="addresses.controls.length > 1"
               >
                 <ion-icon name="trash-sharp"></ion-icon> </ion-button
             ></ion-col>
