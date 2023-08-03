@@ -54,6 +54,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
             fb.group({
               address: new FormControl(address.address, Validators.required),
               location: new FormControl(address.location, Validators.required),
+              id: new FormControl(address.id, Validators.required),
             }),
           );
         });

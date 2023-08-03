@@ -19,7 +19,7 @@ export const environment = {
       min_zoom: 10,
       max_zoom: 17,
       default_zoom: 10,
-      location: [43.312298196, 10.517654009],
+      location: [43.308816364, 10.519718304],
     },
   },
   api: 'http://127.0.0.1:8000/api/v1',

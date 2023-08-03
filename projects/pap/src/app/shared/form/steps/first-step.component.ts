@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {FormArray, FormBuilder, UntypedFormGroup} from '@angular/forms';
 import {FormProvider} from '../form-provider';
-import {IonModal, ModalController} from '@ionic/angular';
+import {AlertController, IonModal, ModalController} from '@ionic/angular';
 import {LocationModalComponent} from '../location/location.modal';
 import {map, switchMap, take} from 'rxjs/operators';
 import {Observable, from} from 'rxjs';
@@ -19,6 +19,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../../core/core.state';
 import {loadConfiniZone} from '../../map/state/map.actions';
 import {currentZone} from '../../map/state/map.selectors';
+import {SettingsService} from '../../../features/settings/state/settings.service';
 @Component({
   selector: 'pap-first-step-signup-form',
   templateUrl: './first-step.component.html',
@@ -46,6 +47,8 @@ export class firstStepSignupComponent {
     private _formBuilder: FormBuilder,
     private _cdr: ChangeDetectorRef,
     private _store: Store<AppState>,
+    private _settingsSvc: SettingsService,
+    private _alertCtrl: AlertController,
   ) {
     this._store.dispatch(loadConfiniZone());
   }
@@ -64,21 +67,83 @@ export class firstStepSignupComponent {
           return m.onDidDismiss();
         }),
         map(res => res.data),
+        switchMap(address => this._settingsSvc.createAddress(address)),
+        map(res => {
+          if (res.success) {
+            return res.data.address;
+          } else {
+            return null;
+          }
+        }),
+        map(address => {
+          if (address == null) {
+            return this._alertCtrl.create({
+              header: 'Salvataggio fallito',
+              message: 'riprova in un secondo momento',
+              buttons: ['ok'],
+            });
+          } else {
+            const modalForm = this._formBuilder.group({
+              address: '',
+              location: [],
+              zone_id: '',
+            });
+            modalForm.setValue({
+              address: address.address,
+              location: address.location,
+              zone_id: address,
+            });
+            this.addresses.push(modalForm);
+            this._cdr.detectChanges();
+            return this._alertCtrl.create({
+              header: 'Salvataggio avvenuto con successo',
+              message: 'il nuovo indirizzo è stato correttamente salvato',
+              buttons: ['ok'],
+            });
+          }
+        }),
       )
-      .subscribe(address => {
-        const modalForm = this._formBuilder.group({
-          address: '',
-          location: [],
-          zone_id: '',
-        });
-        modalForm.setValue(address);
-        this.addresses.push(modalForm);
-        this._cdr.detectChanges();
+      .subscribe(async alert => {
+        (await alert).present();
       });
   }
 
-  removeAddress(index: number): void {
-    this.addresses.removeAt(index);
+  deleteAddress(index: number): void {
+    const currentAddressValue = this.addresses.value[index];
+    if (currentAddressValue.id != null) {
+      this._settingsSvc
+        .deleteAddress(currentAddressValue.id)
+        .pipe(
+          take(1),
+          map(res => {
+            if (res.success) {
+              return res.data.address;
+            } else {
+              return null;
+            }
+          }),
+          map(address => {
+            if (address == null) {
+              return this._alertCtrl.create({
+                header: 'Cancellazione fallita',
+                message: 'riprova in un secondo momento',
+                buttons: ['ok'],
+              });
+            } else {
+              this.addresses.removeAt(index);
+              this._cdr.detectChanges();
+              return this._alertCtrl.create({
+                header: 'Cancellazione avvenuta con successo',
+                message: "L'indirizzo è stato correttamente cancellato",
+                buttons: ['ok'],
+              });
+            }
+          }),
+        )
+        .subscribe(async alert => {
+          (await alert).present();
+        });
+    }
   }
 
   setLocation(event: any): void {
