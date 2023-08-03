@@ -12,6 +12,7 @@ import {FormComponent} from './form/form/form.component';
 import {ImagePickerComponent} from './form/image-picker/image-picker.component';
 import {InputPatternPipe} from './form/input-pattern.pipe';
 import {InputTypePipe} from './form/input-type.pipe';
+import {GetZoneFromLocationPipe} from './form/get-zone-from-location.pipe';
 import {LocationComponent} from './form/location/location.component';
 import {RecapComponent} from './form/recap/recap.component';
 import {SelectComponent} from './form/select/select.component';
@@ -53,6 +54,7 @@ import {LocationModalComponent} from './form/location/location.modal';
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
+    GetZoneFromLocationPipe,
   ],
   imports: [
     CommonModule,
@@ -95,6 +97,7 @@ import {LocationModalComponent} from './form/location/location.modal';
     firstStepSignupComponent,
     secondStepSignupComponent,
     thirdStepSignupComponent,
+    GetZoneFromLocationPipe,
   ],
 })
 export class SharedModule {}

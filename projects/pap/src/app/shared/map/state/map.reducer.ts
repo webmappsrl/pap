@@ -26,7 +26,7 @@ export const reducer = createReducer(
   on(MapActions.loadMapsFailure, (state, action) => state),
   on(MapActions.setMarker, (state, action) => ({
     ...state,
-    currentMarkerCoords: [action.coords[1], action.coords[0]],
+    currentMarkerCoords: [action.coords[0], action.coords[1]],
     currentMarkerAddress: undefined,
   })),
   on(MapActions.setCurrentMarkerSuccess, (state, action) => ({

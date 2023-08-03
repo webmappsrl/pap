@@ -44,7 +44,10 @@
         <ion-grid [fixed]="true">
           <ion-row
             ><ion-col
-              ><ion-label>Indirizzo {{idx+1}}:</ion-label></ion-col
+              ><ion-label>Indirizzo {{idx+1}}:</ion-label>
+              <ion-label
+                >{{viewAddress.value.location|getZoneFromLocation:(confiniZone$|async)}}</ion-label
+              ></ion-col
             ></ion-row
           >
           <ion-row>

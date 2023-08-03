@@ -91,12 +91,12 @@ export class MapComponent implements OnInit, OnDestroy {
   centerToPoint(coord: number[]) {
     if (this.map != null) {
       const zoom = this.map.getZoom();
-      this.map.setView(latLng(coord[0], coord[1]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
+      this.map.setView(latLng(coord[1], coord[0]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
     }
   }
 
   clickOnMap(ev: LeafletMouseEvent) {
-    const coords: [number, number] = [ev.latlng.lat, ev.latlng.lng];
+    const coords: [number, number] = [ev.latlng.lng, ev.latlng.lat];
     this._store.dispatch(setMarker({coords}));
     this.genericClickEvt.emit(coords);
   }
@@ -139,7 +139,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.initMap();
     }
     if (this.map != null) {
-      this.myPositionMarker = marker(latLng(coords[0], coords[1]), {
+      this.myPositionMarker = marker(latLng(coords[1], coords[0]), {
         icon: this.getIcon('position'),
       });
       this.myPositionMarker.addTo(this.map);

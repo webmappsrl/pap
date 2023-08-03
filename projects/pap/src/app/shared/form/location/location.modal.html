@@ -1,20 +1,25 @@
 <ion-header><pap-header></pap-header></ion-header>
 <ion-content class="ion-padding">
   <ion-card [formGroup]="modalForm">
+    <ion-card-header>
+      <ion-card-title>Seleziona il tuo indirizzo</ion-card-title>
+      <ng-container *ngIf="(confiniZone$|async) as zone; else noValidZone">
+        <ion-card-subtitle>{{zone.properties.label}}</ion-card-subtitle>
+      </ng-container>
+    </ion-card-header>
     <ion-item>
-      <ion-label class="pap-location-modal-address-label" position="stacked"
-        >Seleziona il tuo indirizzo</ion-label
-      >
-      <ion-input
-        class="pap-location-modal-address-input"
-        type="text"
-        formControlName="address"
-        placeholder="Indirizzo"
-      ></ion-input>
+      <ion-input type="text" formControlName="address" placeholder="Indirizzo"></ion-input>
     </ion-item>
     <ion-item lines="none">
       <pap-form-location formControlName="location" (addressEVT)="setAddess($event)">
       </pap-form-location>
+      <ng-container></ng-container>
+      <input
+        hidden
+        required
+        formControlName="zone_id"
+        [ngModel]="(confiniZone$|async)?.properties.id??undefined"
+      />
     </ion-item>
   </ion-card>
   <div class="pap-location-modal-buttons">
@@ -36,7 +41,12 @@
     </ion-buttons>
   </div>
 </ion-content>
-
+<ng-template #noValidZone>
+  <ion-card-subtitle *ngIf="!modalForm.controls['location'].errors" color="danger"
+    >seleziona una zona valida</ion-card-subtitle
+  >
+  <input hidden required formControlName="zone_id" />
+</ng-template>
 <ion-footer collapse="fade">
   <pap-footer></pap-footer>
 </ion-footer>

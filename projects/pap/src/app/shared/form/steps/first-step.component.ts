@@ -1,3 +1,4 @@
+import {confiniZone} from './../../map/state/map.selectors';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -13,7 +14,11 @@ import {FormProvider} from '../form-provider';
 import {IonModal, ModalController} from '@ionic/angular';
 import {LocationModalComponent} from '../location/location.modal';
 import {map, switchMap, take} from 'rxjs/operators';
-import {from} from 'rxjs';
+import {Observable, from} from 'rxjs';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../core/core.state';
+import {loadConfiniZone} from '../../map/state/map.actions';
+import {currentZone} from '../../map/state/map.selectors';
 @Component({
   selector: 'pap-first-step-signup-form',
   templateUrl: './first-step.component.html',
@@ -32,6 +37,7 @@ export class firstStepSignupComponent {
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild(IonModal) modal!: IonModal;
 
+  confiniZone$: Observable<any> = this._store.select(confiniZone);
   firstStep: UntypedFormGroup = this._formProvider.getForm().get('firstStep') as UntypedFormGroup;
 
   constructor(
@@ -39,7 +45,10 @@ export class firstStepSignupComponent {
     private _modalCtrl: ModalController,
     private _formBuilder: FormBuilder,
     private _cdr: ChangeDetectorRef,
-  ) {}
+    private _store: Store<AppState>,
+  ) {
+    this._store.dispatch(loadConfiniZone());
+  }
 
   openModalLocation() {
     from(
@@ -60,6 +69,7 @@ export class firstStepSignupComponent {
         const modalForm = this._formBuilder.group({
           address: '',
           location: [],
+          zone_id: '',
         });
         modalForm.setValue(address);
         this.addresses.push(modalForm);

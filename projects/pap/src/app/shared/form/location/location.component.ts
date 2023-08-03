@@ -54,7 +54,7 @@ export class LocationComponent implements ControlValueAccessor {
   async getLocation() {
     try {
       navigator.geolocation.getCurrentPosition(location => {
-        const coords = [location.coords.latitude, location.coords.longitude] as [number, number];
+        const coords = [location.coords.longitude, location.coords.latitude] as [number, number];
         this._store.dispatch(setMarker({coords}));
         this.writeValue(coords);
       });
