@@ -1,4 +1,5 @@
 pap-settings {
+  height: 100vh;
   .pap-settings {
     --padding-bottom: 80px;
     &-editicon {
@@ -45,5 +46,9 @@ pap-settings {
         margin-top: -15px;
       }
     }
+  }
+  .pap-first-step-signup-form-address-container,
+  .scrollable {
+    overflow-y: auto;
   }
 }

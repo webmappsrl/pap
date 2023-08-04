@@ -1,0 +1,40 @@
+<form [formGroup]="thirdStep">
+  <div class="scrollable">
+    <ion-item-group *ngFor="let zone of calendarSettings$|async">
+      <ion-card-header>
+        <ion-card-title>{{zone.label}}</ion-card-title>
+      </ion-card-header>
+
+      <ng-container *ngFor="let address of zone.addresses">
+        <ion-item-divider>
+          <h5>
+            {{address.address}}
+          </h5>
+        </ion-item-divider>
+        <ion-item *ngFor="let userType of zone.avalaible_user_types">
+          <ion-label>
+            {{userType.label.it}}
+          </ion-label>
+          <ion-checkbox></ion-checkbox>
+          <ion-icon name="star-sharp"></ion-icon>
+        </ion-item>
+      </ng-container>
+    </ion-item-group>
+  </div>
+
+  <ion-grid *ngIf="buttons">
+    <ion-row>
+      <ion-col class="ion-align-self-start">
+        <ion-button (click)="prev.emit()" expand="full">
+          <ion-icon name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="ion-align-self-center"></ion-col>
+      <ion-col class="ion-align-self-end">
+        <ion-button [disabled]="thirdStep.invalid" (click)="next.emit()" expand="full">
+          <ion-icon color="light" name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
