@@ -9,6 +9,10 @@ import {Address} from '../settings.model';
 export class SettingsService {
   constructor(private _http: HttpClient) {}
 
+  calendarSettings(): Observable<any> {
+    return this._http.get(`${env.api}/address/index`);
+  }
+
   createAddress(address: Address): Observable<any> {
     return this._http.post(`${env.api}/address/create`, address);
   }

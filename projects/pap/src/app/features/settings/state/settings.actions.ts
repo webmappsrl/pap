@@ -13,3 +13,15 @@ export const loadSettingssFailure = createAction(
 );
 
 export const toggleEdit = createAction('[Settings] Toggle edit');
+
+export const loadCalendarSettings = createAction('[Settings] Load Calendar Settings');
+
+export const loadCalendarSettingsSuccess = createAction(
+  '[Settings] Load Calendar Settings Success',
+  props<{data: any}>(),
+);
+
+export const loadCalendarSettingsFailure = createAction(
+  '[Settings] Load  Calenadar Settings Failure',
+  props<{error: any}>(),
+);

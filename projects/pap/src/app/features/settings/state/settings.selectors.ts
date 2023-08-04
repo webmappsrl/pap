@@ -9,3 +9,8 @@ export const selectSettingsState = createFeatureSelector<fromSettings.SettingsSt
 export const settingView = createSelector(selectSettingsState, user, (settings, user) => {
   return {...settings, user};
 });
+
+export const calendarSettings = createSelector(
+  selectSettingsState,
+  state => state.calendarSettings,
+);
