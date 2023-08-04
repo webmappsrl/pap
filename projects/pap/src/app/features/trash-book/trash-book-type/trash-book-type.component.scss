@@ -66,5 +66,8 @@ pap-trash-book-type {
     .trash-book-type-icon-allowed {
       color: var(--ion-color-primary-tint) !important;
     }
+    ion-list-header {
+      padding-inline-start: unset !important;
+    }
   }
 }
