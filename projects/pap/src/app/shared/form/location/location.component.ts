@@ -105,7 +105,7 @@ export class LocationComponent implements ControlValueAccessor {
   }
 
   writeValue(coords: any): void {
-    if (coords != null) {
+    if (coords != null && coords.length > 0) {
       this.myPosition$.next(coords);
       this._store.dispatch(setMarker({coords}));
       this.onChange(coords);

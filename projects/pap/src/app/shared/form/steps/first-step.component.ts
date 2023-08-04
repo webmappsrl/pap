@@ -27,6 +27,8 @@ import {AppState} from '../../../core/core.state';
 import {loadConfiniZone} from '../../map/state/map.actions';
 import {currentZone} from '../../map/state/map.selectors';
 import {SettingsService} from '../../../features/settings/state/settings.service';
+import {loadCalendarSettings} from '../../../features/settings/state/settings.actions';
+import {loadAuths} from '../../../core/auth/state/auth.actions';
 @Component({
   selector: 'pap-first-step-signup-form',
   templateUrl: './first-step.component.html',
@@ -100,6 +102,8 @@ export class firstStepSignupComponent implements OnInit {
         )
         .subscribe(async alert => {
           (await alert).present();
+          this._store.dispatch(loadAuths());
+          this._store.dispatch(loadCalendarSettings());
         });
     }
   }
@@ -165,6 +169,7 @@ export class firstStepSignupComponent implements OnInit {
       )
       .subscribe(async alert => {
         (await alert).present();
+        this._store.dispatch(loadAuths());
       });
   }
 
