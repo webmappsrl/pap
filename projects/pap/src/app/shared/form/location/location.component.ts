@@ -32,6 +32,7 @@ export class LocationComponent implements ControlValueAccessor {
   @Input() set position(pos: number[]) {
     this.writeValue(pos);
   }
+  @Input() features: any[];
 
   @Output() addressEVT: EventEmitter<any> = new EventEmitter<any>();
 

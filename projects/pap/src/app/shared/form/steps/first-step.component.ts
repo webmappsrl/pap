@@ -13,7 +13,7 @@ import {FormArray, FormBuilder, UntypedFormGroup} from '@angular/forms';
 import {FormProvider} from '../form-provider';
 import {AlertController, IonModal, ModalController} from '@ionic/angular';
 import {LocationModalComponent} from '../location/location.modal';
-import {map, switchMap, take} from 'rxjs/operators';
+import {filter, map, switchMap, take} from 'rxjs/operators';
 import {Observable, from} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../core/core.state';
@@ -54,14 +54,19 @@ export class firstStepSignupComponent {
   }
 
   openModalLocation() {
-    from(
-      this._modalCtrl.create({
-        component: LocationModalComponent,
-        cssClass: 'pap-location-modal',
-      }),
-    )
+    this.confiniZone$
       .pipe(
+        filter(f => f != null && f.length > 0),
         take(1),
+        switchMap(features => {
+          return this._modalCtrl.create({
+            component: LocationModalComponent,
+            componentProps: {
+              features,
+            },
+            cssClass: 'pap-location-modal',
+          });
+        }),
         switchMap(m => {
           m.present();
           return m.onDidDismiss();

@@ -11,7 +11,11 @@
       <ion-input type="text" formControlName="address" placeholder="Indirizzo"></ion-input>
     </ion-item>
     <ion-item lines="none">
-      <pap-form-location formControlName="location" (addressEVT)="setAddess($event)">
+      <pap-form-location
+        formControlName="location"
+        (addressEVT)="setAddess($event)"
+        [features]="features"
+      >
       </pap-form-location>
       <ng-container></ng-container>
       <input

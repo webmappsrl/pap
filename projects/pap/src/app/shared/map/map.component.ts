@@ -1,3 +1,4 @@
+import {confiniZone} from './state/map.selectors';
 import {environment} from 'projects/pap/src/environments/environment';
 import {
   AfterContentInit,
@@ -24,6 +25,7 @@ import {
   LeafletMouseEvent,
   latLng,
   Icon,
+  geoJson,
 } from 'leaflet';
 import {AppState} from '@capacitor/app';
 import {Store} from '@ngrx/store';
@@ -64,6 +66,12 @@ export class MapComponent implements OnInit, OnDestroy {
   @Input() set positionMarker(value: number[]) {
     if (value) {
       this.makePositionMarker(value);
+    }
+  }
+
+  @Input() set featureCollection(features: any[]) {
+    if (features.length > 0) {
+      geoJson(features).addTo(this.map);
     }
   }
 

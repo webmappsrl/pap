@@ -65,6 +65,7 @@
                 [positionMarker]="viewAddress.value.location"
                 [center]="viewAddress.value.location"
                 [edit]="false"
+                [featureCollection]="confiniZone$|async"
               >
               </pap-map>
             </ion-col>

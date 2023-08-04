@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {ModalController} from '@ionic/angular';
@@ -20,15 +20,12 @@ export class LocationModalComponent {
     location: [[], [Validators.required]],
   });
 
+  features: any[];
   constructor(
     private _modalCtrl: ModalController,
     private _formBuilder: FormBuilder,
     private _store: Store<AppState>,
-  ) {
-    this.confiniZone$.subscribe(zone => {
-      console.log(zone);
-    });
-  }
+  ) {}
 
   cancel() {
     return this._modalCtrl.dismiss(null, 'cancel');
