@@ -5,11 +5,18 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {FormArray, FormBuilder, UntypedFormGroup} from '@angular/forms';
+import {
+  ControlContainer,
+  FormArray,
+  FormBuilder,
+  FormGroupDirective,
+  UntypedFormGroup,
+} from '@angular/forms';
 import {FormProvider} from '../form-provider';
 import {AlertController, IonModal, ModalController} from '@ionic/angular';
 import {LocationModalComponent} from '../location/location.modal';
@@ -24,11 +31,16 @@ import {SettingsService} from '../../../features/settings/state/settings.service
   selector: 'pap-first-step-signup-form',
   templateUrl: './first-step.component.html',
   styleUrls: ['./first-step.component.scss'],
-
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useExisting: FormGroupDirective,
+    },
+  ],
 })
-export class firstStepSignupComponent {
+export class firstStepSignupComponent implements OnInit {
   get addresses() {
     return this.firstStep.get('addresses') as FormArray;
   }
@@ -39,7 +51,7 @@ export class firstStepSignupComponent {
   @ViewChild(IonModal) modal!: IonModal;
 
   confiniZone$: Observable<any> = this._store.select(confiniZone);
-  firstStep: UntypedFormGroup = this._formProvider.getForm().get('firstStep') as UntypedFormGroup;
+  firstStep: UntypedFormGroup;
 
   constructor(
     private _formProvider: FormProvider,
@@ -49,8 +61,51 @@ export class firstStepSignupComponent {
     private _store: Store<AppState>,
     private _settingsSvc: SettingsService,
     private _alertCtrl: AlertController,
+    private _parent: FormGroupDirective,
   ) {
     this._store.dispatch(loadConfiniZone());
+  }
+
+  deleteAddress(index: number): void {
+    const currentAddressValue = this.addresses.value[index];
+    if (currentAddressValue.id != null) {
+      this._settingsSvc
+        .deleteAddress(currentAddressValue.id)
+        .pipe(
+          take(1),
+          map(res => {
+            if (res.success) {
+              return res.data.address;
+            } else {
+              return null;
+            }
+          }),
+          map(address => {
+            if (address == null) {
+              return this._alertCtrl.create({
+                header: 'Cancellazione fallita',
+                message: 'riprova in un secondo momento',
+                buttons: ['ok'],
+              });
+            } else {
+              this.addresses.removeAt(index);
+              this._cdr.detectChanges();
+              return this._alertCtrl.create({
+                header: 'Cancellazione avvenuta con successo',
+                message: "L'indirizzo è stato correttamente cancellato",
+                buttons: ['ok'],
+              });
+            }
+          }),
+        )
+        .subscribe(async alert => {
+          (await alert).present();
+        });
+    }
+  }
+
+  ngOnInit(): void {
+    this.firstStep = this._parent.form.get('firstStep') as UntypedFormGroup;
   }
 
   openModalLocation() {
@@ -111,44 +166,6 @@ export class firstStepSignupComponent {
       .subscribe(async alert => {
         (await alert).present();
       });
-  }
-
-  deleteAddress(index: number): void {
-    const currentAddressValue = this.addresses.value[index];
-    if (currentAddressValue.id != null) {
-      this._settingsSvc
-        .deleteAddress(currentAddressValue.id)
-        .pipe(
-          take(1),
-          map(res => {
-            if (res.success) {
-              return res.data.address;
-            } else {
-              return null;
-            }
-          }),
-          map(address => {
-            if (address == null) {
-              return this._alertCtrl.create({
-                header: 'Cancellazione fallita',
-                message: 'riprova in un secondo momento',
-                buttons: ['ok'],
-              });
-            } else {
-              this.addresses.removeAt(index);
-              this._cdr.detectChanges();
-              return this._alertCtrl.create({
-                header: 'Cancellazione avvenuta con successo',
-                message: "L'indirizzo è stato correttamente cancellato",
-                buttons: ['ok'],
-              });
-            }
-          }),
-        )
-        .subscribe(async alert => {
-          (await alert).present();
-        });
-    }
   }
 
   setLocation(event: any): void {

@@ -1,26 +1,24 @@
 export interface TrashBookRow {
+  collection_center: boolean;
+  delivery: boolean;
+  hide: boolean;
   id: number;
   name: string;
   notes: string;
   pap: boolean;
-  delivery: boolean;
-  where: string;
-  collection_center: boolean;
   translations: any;
-  trash_type_id: number;
   trashBookType?: TrashBookType;
-  hide: boolean;
+  trash_type_id: number;
+  where: string;
 }
 
 export interface TrashBookType {
-  id: number;
-  slug: string;
-  name: string;
-  description: string;
-  howto: string;
-  where: string;
-  color: string;
   allowed: string[];
+  color: string;
+  description?: string;
+  howto?: string;
+  id: number;
+  name: string;
   notallowed: string[];
   showed_in: {
     abandonment: boolean;
@@ -28,5 +26,7 @@ export interface TrashBookType {
     report: boolean;
     reservation: boolean;
   };
+  slug: string;
   translations: any;
+  where: string;
 }
