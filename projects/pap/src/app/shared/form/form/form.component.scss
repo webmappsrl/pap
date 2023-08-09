@@ -61,7 +61,7 @@ pap-form {
     line-height: 23.44px;
   }
   ion-card {
-    height: auto;
+    overflow: unset !important;
     form {
       div {
         margin-bottom: 10px;

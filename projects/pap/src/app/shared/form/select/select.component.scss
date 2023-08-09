@@ -2,4 +2,22 @@ pap-form-select {
   .selected {
     --ion-item-background: rgba(97, 94, 93, 0.2);
   }
+  ion-searchbar {
+    --box-shadow: 0px 1px 2px 0px #00000040 !important;
+    .searchbar-search-icon.sc-ion-searchbar-md {
+      transform: translateX(12px);
+      width: 22px;
+      height: 22px;
+    }
+    input::placeholder {
+      transform: translateX(20px);
+    }
+    .searchbar-input.sc-ion-searchbar-md {
+      --background: var(--ion-color-light);
+    }
+  }
+  ion-list {
+    overflow: auto;
+    height: 340px;
+  }
 }

@@ -17,8 +17,9 @@ pap-trash-book-details {
       font-size: 0.9rem;
     }
     ion-card {
-      height: 314px;
+      height: 50%;
       .trash-book-details-calendar {
+        padding: 0px 0px 20px 0px;
         .trash-book-details-button {
           font-size: 13px;
         }
@@ -96,6 +97,7 @@ pap-trash-book-details {
       }
       .trash-book-details-collection-center {
         order: 1;
+        padding: 30px 0px 0px 0px;
       }
     }
   }

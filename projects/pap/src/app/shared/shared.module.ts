@@ -36,6 +36,8 @@ import {FormStatusComponent} from './form/status/status.component';
 import {LocationModalComponent} from './form/location/location.modal';
 import {CalendarSelectComponent} from './form/calendar-select/calendar-select.component';
 import {CalendarComponent} from './components/calendar/calendar.component';
+import {SortPipe} from './pipes/sort.pipe';
+import {FilterByPipe} from './pipes/filter-by.pipe';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -56,6 +58,8 @@ import {CalendarComponent} from './components/calendar/calendar.component';
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
+    SortPipe,
+    FilterByPipe,
     GetZoneFromLocationPipe,
     CalendarSelectComponent,
     CalendarComponent,
@@ -98,6 +102,8 @@ import {CalendarComponent} from './components/calendar/calendar.component';
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
+    FilterByPipe,
+    SortPipe,
     firstStepSignupComponent,
     secondStepSignupComponent,
     thirdStepSignupComponent,
