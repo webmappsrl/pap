@@ -1,0 +1,101 @@
+pap-calendar-page {
+  ion-list {
+    ion-item {
+      margin-bottom: 15px;
+      width: 100%;
+      margin-left: 14px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      .pap-calendar-trash {
+        flex: 1 1 auto;
+        align-self: flex-start;
+      }
+      .pap-calendar-info-icon {
+        flex: 0 1 auto;
+        align-self: auto;
+      }
+      .pap-calendar-information-circle {
+        height: 0px;
+      }
+    }
+  }
+  ion-card-header {
+    display: flex;
+    flex-direction: column;
+    ion-card-title {
+      align-self: self-start;
+    }
+    .pap-calendar-info {
+      display: block;
+      padding-top: 10px;
+      align-self: stretch;
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 21px;
+      color: var(--ion-color-secondary-contrast);
+    }
+    .pap-calendar-infobuttoncontainer {
+      width: 100%;
+      text-align: center;
+      .pap-calendar-infobutton {
+        height: 40px;
+        width: 150px;
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 16.41;
+      }
+    }
+  }
+  .pap-calendar-item {
+    .pap-calendar-date {
+      max-width: 70px;
+      color: var(--ion-color-primary);
+      font-weight: 300;
+      font-size: 50px;
+      text-align: center;
+      overflow: visible;
+      flex: 0 1 auto;
+      align-self: flex-start;
+      display: flex;
+      flex-direction: column;
+      .pap-calendar-monthname {
+        font-weight: 400;
+        font-size: 21px;
+        text-transform: uppercase;
+        align-self: flex-start;
+        color: var(--ion-color-secondary-contrast);
+      }
+      .pap-calendar-monthday {
+        align-self: flex-start;
+        font-size: 21px;
+        font-weight: 400;
+        color: var(--ion-color-secondary-contrast);
+      }
+    }
+    .pap-calendar-weekday {
+      font-size: 16px;
+      font-weight: 400;
+      font-style: italic;
+      text-transform: uppercase;
+      color: var(--ion-color-medium);
+    }
+    .pap-calendar-event {
+      padding: 5px 0 15px;
+      .pap-calendar-trashlist {
+        display: inline-block;
+        color: var(--ion-color-secondary-contrast);
+        text-transform: Capitalize;
+        margin-top: 5px;
+        margin-left: 2px;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 18.75px;
+      }
+    }
+    .pap-calendar-time {
+      color: var(--ion-color-medium);
+    }
+  }
+}

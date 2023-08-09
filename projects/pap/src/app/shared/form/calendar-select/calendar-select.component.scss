@@ -1,0 +1,12 @@
+pap-form-calendar-select {
+  .selected {
+    --ion-item-background: rgba(97, 94, 93, 0.2);
+  }
+  pap-calendar {
+    display: block;
+    ion-card {
+      margin: 0 !important;
+      display: contents;
+    }
+  }
+}

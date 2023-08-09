@@ -11,13 +11,15 @@
             {{address.address}}
           </h5>
         </ion-item-divider>
-        <ion-item *ngFor="let userType of zone.avalaible_user_types">
-          <ion-label>
-            {{userType.label.it}}
-          </ion-label>
-          <ion-checkbox></ion-checkbox>
-          <ion-icon name="star-sharp"></ion-icon>
-        </ion-item>
+        <ion-radio-group
+          [value]="address.user_type_id"
+          (ionChange)="selectUserType(address, $event)"
+        >
+          <ion-item *ngFor="let userType of zone.avalaible_user_types">
+            <ion-label> {{userType.label.it}}</ion-label>
+            <ion-radio slot="end" [value]="userType.id"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
       </ng-container>
     </ion-item-group>
   </div>

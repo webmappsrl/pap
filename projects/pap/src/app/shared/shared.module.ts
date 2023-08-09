@@ -34,6 +34,8 @@ import {LocalNotificationService} from './services/local-notification.service';
 import {FooterComponent} from './footer/footer.component';
 import {FormStatusComponent} from './form/status/status.component';
 import {LocationModalComponent} from './form/location/location.modal';
+import {CalendarSelectComponent} from './form/calendar-select/calendar-select.component';
+import {CalendarComponent} from './components/calendar/calendar.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -55,6 +57,8 @@ import {LocationModalComponent} from './form/location/location.modal';
     SelectComponent,
     PapDatePipe,
     GetZoneFromLocationPipe,
+    CalendarSelectComponent,
+    CalendarComponent,
   ],
   imports: [
     CommonModule,
@@ -98,6 +102,8 @@ import {LocationModalComponent} from './form/location/location.modal';
     secondStepSignupComponent,
     thirdStepSignupComponent,
     GetZoneFromLocationPipe,
+    CalendarSelectComponent,
+    CalendarComponent,
   ],
 })
 export class SharedModule {}

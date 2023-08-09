@@ -63,6 +63,11 @@
                 [formControlName]="currentStep.type"
               >
               </pap-form-location>
+              <pap-form-calendar-select
+                *ngSwitchCase="'calendar_trash_type_id'"
+                [calendars]="(calendars$|async)!"
+                [formControlName]="currentStep.type"
+              ></pap-form-calendar-select>
               <pap-form-select
                 *ngSwitchCase="'trash_type_id'"
                 #focusInput

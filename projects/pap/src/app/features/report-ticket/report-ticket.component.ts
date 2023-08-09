@@ -1,9 +1,12 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 
+import {AppState} from '@capacitor/app';
 import {NavController} from '@ionic/angular';
-import {TicketFormConf} from '../../shared/models/form.model';
+import {Store} from '@ngrx/store';
+import {format as fm, subDays} from 'date-fns';
 import {environment} from 'projects/pap/src/environments/environment';
-
+import {TicketFormConf} from '../../shared/models/form.model';
+import {loadCalendars} from '../calendar/state/calendar.actions';
 @Component({
   selector: 'pap-report-ticket',
   templateUrl: './report-ticket.component.html',
@@ -26,15 +29,9 @@ export class ReportTicketComponent {
       },
       {
         label: 'Scegli il tipo di servizio che non ha funzionato:',
-        type: 'trash_type_id',
+        type: 'calendar_trash_type_id',
         required: true,
         recap: 'Servizio',
-      },
-      {
-        label: '',
-        type: 'location',
-        required: true,
-        recap: 'Indirizzo',
       },
       {
         label: 'Puoi aggiungere una foto: ci aiuterà a capire meglio cosa è successo',
@@ -56,13 +53,21 @@ export class ReportTicketComponent {
     ],
   };
 
-  constructor(private navController: NavController) {}
+  constructor(private navController: NavController, private _store: Store<AppState>) {
+    const stop_date = fm(new Date(), 'd-M-Y');
+    const start_date = fm(subDays(new Date(), 14), 'd-M-Y');
+    this._store.dispatch(loadCalendars({start_date, stop_date}));
+  }
+
+  exitPage() {
+    this.navController.pop();
+  }
 
   formFilled(event: any) {
     this.form = event;
   }
 
-  exitPage() {
-    this.navController.pop();
+  ionViewWillLeave() {
+    this._store.dispatch(loadCalendars());
   }
 }

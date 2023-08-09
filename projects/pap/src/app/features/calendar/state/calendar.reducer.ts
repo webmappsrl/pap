@@ -5,7 +5,7 @@ import * as CalendarActions from './calendar.actions';
 export const calendarFeatureKey = 'calendar';
 
 export interface CalendarState {
-  calendar?: Calendar;
+  calendars?: Calendar[];
   error: string;
 }
 
@@ -18,7 +18,7 @@ export const reducer = createReducer(
   on(CalendarActions.loadCalendars, state => state),
   on(CalendarActions.loadCalendarsSuccess, (state, action) => ({
     ...state,
-    calendar: action.calendar,
+    calendars: action.calendars,
   })),
   on(CalendarActions.loadCalendarsFailure, (state, action) => ({
     ...state,

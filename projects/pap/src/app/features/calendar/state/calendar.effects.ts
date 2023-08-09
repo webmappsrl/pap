@@ -17,29 +17,24 @@ export class CalendarEffects {
       ofType(TrashBookAction.loadTrashBooksSuccess),
       switchMap(() => of({type: '[Calendar] Load Calendars'})),
       ofType(CalendarActions.loadCalendars),
-      switchMap(_ => this.calendarService.getCalendar()),
-      withLatestFrom(
-        this.store.pipe(
-          select(trashBookTypes),
-          filter(p => p.length > 0),
-        ),
-      ),
-      map(([calendar, trashTypes]) => {
-        for (let k in calendar) {
-          if (calendar[k]) {
-            calendar[k].map(event => {
-              event.trash_objects = [];
-              event.trash_types.forEach(x => {
-                const trashBookType = trashTypes.find(tt => tt.id === x);
-                if (trashBookType) {
-                  event.trash_objects?.push(trashBookType);
-                }
-              });
-              return event;
-            });
-          }
-        }
-        return CalendarActions.loadCalendarsSuccess({calendar});
+      switchMap(action => {
+        console.log(action);
+        return this.calendarService.getCalendars();
+      }),
+      map(calendars => {
+        return CalendarActions.loadCalendarsSuccess({calendars});
+      }),
+      catchError(error => of(CalendarActions.loadCalendarsFailure({error}))),
+    );
+  });
+  loadCalendarsWithDate$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CalendarActions.loadCalendars),
+      switchMap(action => {
+        return this.calendarService.getCalendars(action.prop!);
+      }),
+      map(calendars => {
+        return CalendarActions.loadCalendarsSuccess({calendars});
       }),
       catchError(error => of(CalendarActions.loadCalendarsFailure({error}))),
     );

@@ -1,0 +1,6 @@
+<ion-item>
+  <ion-label>
+    {{select?.trashDate|date}}{{currentTrashType!=null? '- '+currentTrashType.name['it']:''}}
+  </ion-label>
+</ion-item>
+<pap-calendar [calendars]="calendars" (selectedTrashTypeEVT)="writeValue($event)"></pap-calendar>

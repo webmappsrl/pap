@@ -17,15 +17,13 @@ import {
   FormGroupDirective,
   UntypedFormGroup,
 } from '@angular/forms';
-import {FormProvider} from '../form-provider';
 import {AlertController, IonModal, ModalController} from '@ionic/angular';
 import {LocationModalComponent} from '../location/location.modal';
 import {filter, map, switchMap, take} from 'rxjs/operators';
-import {Observable, from} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../core/core.state';
 import {loadConfiniZone} from '../../map/state/map.actions';
-import {currentZone} from '../../map/state/map.selectors';
 import {SettingsService} from '../../../features/settings/state/settings.service';
 import {loadCalendarSettings} from '../../../features/settings/state/settings.actions';
 import {loadAuths} from '../../../core/auth/state/auth.actions';
@@ -56,7 +54,6 @@ export class firstStepSignupComponent implements OnInit {
   firstStep: UntypedFormGroup;
 
   constructor(
-    private _formProvider: FormProvider,
     private _modalCtrl: ModalController,
     private _formBuilder: FormBuilder,
     private _cdr: ChangeDetectorRef,

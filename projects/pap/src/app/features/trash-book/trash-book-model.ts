@@ -13,12 +13,12 @@ export interface TrashBookRow {
 }
 
 export interface TrashBookType {
-  allowed: string[];
+  allowed: {[lang: string]: string}[];
   color: string;
-  description?: string;
-  howto?: string;
+  description?: {[lang: string]: string};
+  howto?: {[lang: string]: string};
   id: number;
-  name: string;
+  name: {[lang: string]: string};
   notallowed: string[];
   showed_in: {
     abandonment: boolean;

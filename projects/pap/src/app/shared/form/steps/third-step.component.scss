@@ -1,7 +1,24 @@
 pap-third-step-signup-form {
-  ion-checkbox {
-    margin-right: 10px;
+  ion-radio {
+    --border-radius: 4px;
+    --inner-border-radius: 4px;
+
+    --color: #ddd;
+    --color-checked: var(--ion-color-primary);
   }
+
+  ion-radio.ios {
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .radio-checked.ios {
+    border-color: #6815ec;
+  }
+
   .scrollable {
     padding-bottom: 42px;
     max-height: calc(100vh - 360px);

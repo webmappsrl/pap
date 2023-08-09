@@ -38,6 +38,7 @@ export type TicketFieldTypes =
   | 'location'
   | 'image'
   | 'note'
-  | 'phone';
+  | 'phone'
+  | 'calendar_trash_type_id';
 
 export type TicketType = 'reservation' | 'info' | 'abandonment' | 'report';

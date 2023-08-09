@@ -5,17 +5,19 @@
 <ion-content padding class="trash-book-type">
   <ion-card class="trash-book-type pap-card pap-card-book-type-1">
     <h1 class="trash-book-type-title">
-      {{ trashBookType.name }}
+      {{ trashBookType.name['it'] }}
     </h1>
 
-    <div class="trash-book-type-content">{{trashBookType.description}}</div>
+    <div class="trash-book-type-content" *ngIf="trashBookType.description">
+      {{trashBookType.description['it']}}
+    </div>
   </ion-card>
 
   <ion-card class="trash-book-type pap-card pap-card-book-type-2">
     <ng-container *ngIf="trashBookType?.howto as howto">
       <h2 class="trash-book-type-subtitle">{{'Come'|translate}}</h2>
       <div class="trash-book-type-content">
-        {{howto}}
+        {{howto['it']}}
       </div>
     </ng-container>
     <h2
