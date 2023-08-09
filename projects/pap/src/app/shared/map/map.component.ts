@@ -1,7 +1,4 @@
-import {confiniZone} from './state/map.selectors';
-import {environment} from 'projects/pap/src/environments/environment';
 import {
-  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -13,22 +10,23 @@ import {
   Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
-import {GeoJson} from '../../features/waste-center-collection/waste-center-collection-model';
-import {
-  Map,
-  map,
-  tileLayer,
-  marker,
-  icon,
-  LeafletEvent,
-  LatLngExpression,
-  LeafletMouseEvent,
-  latLng,
-  Icon,
-  geoJson,
-} from 'leaflet';
 import {AppState} from '@capacitor/app';
 import {Store} from '@ngrx/store';
+import {
+  Icon,
+  LatLngExpression,
+  LeafletEvent,
+  LeafletMouseEvent,
+  Map,
+  geoJson,
+  icon,
+  latLng,
+  map,
+  marker,
+  tileLayer,
+} from 'leaflet';
+import {environment} from 'projects/pap/src/environments/environment';
+import {GeoJson} from '../../features/waste-center-collection/waste-center-collection-model';
 import {setMarker} from './state/map.actions';
 
 const DEFAULT_CENTER_ZOOM = 12;
@@ -56,6 +54,12 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
+  @Input() set featureCollection(features: any[]) {
+    if (features.length > 0) {
+      geoJson(features).addTo(this.map);
+    }
+  }
+
   @Input() set markers(value: GeoJson[]) {
     if (this.map == null) {
       this.initMap();
@@ -66,12 +70,6 @@ export class MapComponent implements OnInit, OnDestroy {
   @Input() set positionMarker(value: number[]) {
     if (value) {
       this.makePositionMarker(value);
-    }
-  }
-
-  @Input() set featureCollection(features: any[]) {
-    if (features.length > 0) {
-      geoJson(features).addTo(this.map);
     }
   }
 
@@ -96,20 +94,20 @@ export class MapComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
-  centerToPoint(coord: number[]) {
+  centerToPoint(coord: number[]): void {
     if (this.map != null) {
       const zoom = this.map.getZoom();
       this.map.setView(latLng(coord[1], coord[0]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
     }
   }
 
-  clickOnMap(ev: LeafletMouseEvent) {
+  clickOnMap(ev: LeafletMouseEvent): void {
     const coords: [number, number] = [ev.latlng.lng, ev.latlng.lat];
     this._store.dispatch(setMarker({coords}));
     this.genericClickEvt.emit(coords);
   }
 
-  clickedMarker(_: LeafletEvent, feature: GeoJson) {
+  clickedMarker(_: LeafletEvent, feature: GeoJson): void {
     this.markerClickEvt.emit(feature);
   }
 
@@ -139,7 +137,7 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
-  makePositionMarker(coords: number[]) {
+  makePositionMarker(coords: number[]): void {
     if (this.myPositionMarker) {
       this.myPositionMarker.remove();
     }
@@ -154,7 +152,7 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.map.clearAllEventListeners;
     this.map.remove();
   }

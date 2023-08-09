@@ -13,7 +13,7 @@ import {currentZone} from '../../map/state/map.selectors';
   styleUrls: ['./location.modal.scss'],
 })
 export class LocationModalComponent {
-  confiniZone$: Observable<any> = this._store.select(currentZone);
+  currentZone$: Observable<any> = this._store.select(currentZone);
   modalForm: FormGroup = this._formBuilder.group({
     address: ['', [Validators.required]],
     zone_id: ['', [Validators.required]],
@@ -27,12 +27,12 @@ export class LocationModalComponent {
     private _store: Store<AppState>,
   ) {}
 
-  cancel() {
-    return this._modalCtrl.dismiss(null, 'cancel');
+  cancel(): void {
+    this._modalCtrl.dismiss(null, 'cancel');
   }
 
-  confirm() {
-    return this._modalCtrl.dismiss(this.modalForm.value);
+  confirm(): void {
+    this._modalCtrl.dismiss(this.modalForm.value);
   }
 
   setAddess(event: any): void {

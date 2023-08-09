@@ -25,6 +25,7 @@
               <ion-label class="pap-form-label" *ngIf="currentStep.label != null">
                 {{ currentStep.label }}
               </ion-label>
+              <br />
             </ng-template>
 
             <ion-input
@@ -60,7 +61,9 @@
               <pap-form-location
                 *ngSwitchCase="'location'"
                 #focusInput
+                [form]="ticketForm"
                 [formControlName]="currentStep.type"
+                [features]="confiniZone$|async"
               >
               </pap-form-location>
               <pap-form-calendar-select

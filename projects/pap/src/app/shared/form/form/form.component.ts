@@ -9,12 +9,14 @@ import {
 } from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {AlertController, IonInput, NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {filter, map, switchMap} from 'rxjs/operators';
 import {AppState} from '../../../core/core.state';
+import {selectCalendarState} from '../../../features/calendar/state/calendar.selectors';
 import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
+import {confiniZone} from '../../map/state/map.selectors';
 import {TicketFormConf, TicketFormStep} from '../../models/form.model';
 import {resetTicket, sendTicket} from '../state/form.actions';
 import {
@@ -23,7 +25,6 @@ import {
   ticketLoading,
   ticketSuccess,
 } from '../state/form.selectors';
-import {selectCalendarState} from '../../../features/calendar/state/calendar.selectors';
 
 @Component({
   selector: 'pap-form',
@@ -45,6 +46,10 @@ export class FormComponent implements OnDestroy {
 
       const formControl = new UntypedFormControl('', validators);
       this.ticketForm.addControl(step.type, formControl);
+      if (step.type === 'location') {
+        const formControl = new UntypedFormControl('', validators);
+        this.ticketForm.addControl('location_address', formControl);
+      }
       this.trashBookTypesOpts$ = this._store.pipe(
         select(trashBookTypes),
         map(trashBookTypes =>
@@ -59,6 +64,11 @@ export class FormComponent implements OnDestroy {
   @ViewChild('focusInput') focusInput!: IonInput;
 
   alertEvt$: EventEmitter<any> = new EventEmitter<any>();
+  calendars$ = this._store.pipe(select(selectCalendarState)).pipe(
+    filter(c => c != null),
+    map(calendarView => calendarView.calendars),
+  );
+  confiniZone$: Observable<any> = this._store.select(confiniZone);
   currentTrashbookType$: Observable<TrashBookType | undefined> = this._store.pipe(
     select(currentTrashBookType),
   );
@@ -70,10 +80,6 @@ export class FormComponent implements OnDestroy {
   ticketFormConf$: BehaviorSubject<TicketFormConf | null> =
     new BehaviorSubject<TicketFormConf | null>(null);
   trashBookTypesOpts$!: Observable<TrashBookType[]>;
-  calendars$ = this._store.pipe(select(selectCalendarState)).pipe(
-    filter(c => c != null),
-    map(calendarView => calendarView.calendars),
-  );
 
   constructor(
     private _store: Store<AppState>,
@@ -135,10 +141,6 @@ export class FormComponent implements OnDestroy {
     const formControlName = currentStep.type;
     const formControl = this.ticketForm.controls[formControlName];
     return !formControl.invalid;
-  }
-
-  log(val: any) {
-    console.log(val);
   }
 
   nextStep(): void {
