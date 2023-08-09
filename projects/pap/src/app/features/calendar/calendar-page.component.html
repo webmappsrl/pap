@@ -24,14 +24,10 @@
 
       <ion-list lines="full">
         <ion-item>
-          <ion-select
-            placeholder="Select address"
-            (ionChange)="selectAddress($event)"
-            [value]="(currentAddress$|async)"
-          >
+          <ion-select placeholder="Select address" (ionChange)="selectAddress($event)" [value]="0">
             <ion-select-option
-              [value]="calendar"
-              *ngFor="let calendar of calendarView.calendars"
+              [value]="idx"
+              *ngFor="let calendar of calendarView.calendars;let idx= index"
               >{{calendar.address.address}}</ion-select-option
             >
           </ion-select>

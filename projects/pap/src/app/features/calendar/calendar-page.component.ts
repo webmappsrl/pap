@@ -1,25 +1,23 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {Store, select} from '@ngrx/store';
 
-import {AppState} from '../../core/core.state';
 import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 import {ModalController} from '@ionic/angular';
+import {BehaviorSubject} from 'rxjs';
+import {debounceTime, filter, take} from 'rxjs/operators';
+import {AppState} from '../../core/core.state';
+import {showButtons} from '../../shared/header/state/header.actions';
+import {setTrashBookType} from '../trash-book/state/trash-book.actions';
 import {TrashBookType} from '../trash-book/trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book/trash-book-type/trash-book-type.component';
-import {loadCalendars} from './state/calendar.actions';
-import {parse} from 'date-fns';
-import {selectCalendarState} from './state/calendar.selectors';
-import {setTrashBookType} from '../trash-book/state/trash-book.actions';
-import {showButtons} from '../../shared/header/state/header.actions';
-import {BehaviorSubject, Observable} from 'rxjs';
 import {Calendar} from './calendar.model';
-import {take, filter} from 'rxjs/operators';
+import {loadCalendars} from './state/calendar.actions';
+import {selectCalendarState} from './state/calendar.selectors';
 
 @Component({
   selector: 'pap-calendar-page',
   templateUrl: './calendar-page.component.html',
   styleUrls: ['./calendar-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class CalendarPageComponent {
@@ -61,6 +59,15 @@ export class CalendarPageComponent {
   }
 
   selectAddress(event: any): void {
-    this.currentAddress$.next(event.detail.value);
+    this.calendarView$
+      .pipe(
+        filter(f => f != null),
+        take(1),
+      )
+      .subscribe(calendarView => {
+        if (calendarView != null && calendarView.calendars != null) {
+          this.currentAddress$.next(calendarView.calendars[event.detail.value]);
+        }
+      });
   }
 }
