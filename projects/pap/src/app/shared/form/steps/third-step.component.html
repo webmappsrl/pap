@@ -1,6 +1,6 @@
 <form [formGroup]="thirdStep">
-  <div class="scrollable">
-    <ion-item-group *ngFor="let zone of calendarSettings$|async">
+  <div class="scrollable" *ngIf="calendarSettings$|async as zones">
+    <ion-item-group *ngFor="let zone of zones">
       <ion-item-divider>
         <h5>
           {{zone.label}}
@@ -9,7 +9,21 @@
       <ng-container *ngFor="let address of zone.addresses">
         <ion-card class="address-card">
           <ion-card-header>
-            <ion-card-subtitle> {{address.address}}</ion-card-subtitle>
+            <ion-row>
+              <ion-col>
+                <ion-card-subtitle> {{address.address}}</ion-card-subtitle>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-button
+                  class="pap-first-step-signup-form-remove-address"
+                  (click)="deleteAddress(address)"
+                  expand="block"
+                  color="danger"
+                  *ngIf="zones.length > 1|| zone.addresses.length> 1"
+                >
+                  <ion-icon name="trash-sharp"></ion-icon> </ion-button
+              ></ion-col>
+            </ion-row>
           </ion-card-header>
           <ion-card-content>
             <ion-item class="map-container">

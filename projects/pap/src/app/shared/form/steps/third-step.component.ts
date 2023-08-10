@@ -9,11 +9,11 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {FormArray, FormBuilder, FormGroupDirective, UntypedFormGroup} from '@angular/forms';
-import {AlertController, IonModal, ModalController} from '@ionic/angular';
+import {FormArray, FormGroupDirective, UntypedFormGroup} from '@angular/forms';
+import {AlertController, IonModal} from '@ionic/angular';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
-import {filter, map, switchMap, take} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 import {loadAuths} from '../../../core/auth/state/auth.actions';
 import {AppState} from '../../../core/core.state';
 import {Address} from '../../../features/settings/settings.model';
@@ -22,7 +22,6 @@ import {calendarSettings} from '../../../features/settings/state/settings.select
 import {SettingsService} from '../../../features/settings/state/settings.service';
 import {loadConfiniZone} from '../../map/state/map.actions';
 import {confiniZone} from '../../map/state/map.selectors';
-import {LocationModalComponent} from '../location/location.modal';
 
 @Component({
   selector: 'pap-third-step-signup-form',
@@ -57,11 +56,10 @@ export class thirdStepSignupComponent implements OnInit {
     this._store.dispatch(loadConfiniZone());
   }
 
-  deleteAddress(index: number): void {
-    const currentAddressValue = this.addresses.value[index];
-    if (currentAddressValue.id != null) {
+  deleteAddress(address: any): void {
+    if (address.id != null) {
       this._settingsSvc
-        .deleteAddress(currentAddressValue.id)
+        .deleteAddress(address.id)
         .pipe(
           take(1),
           map(res => {
@@ -79,7 +77,6 @@ export class thirdStepSignupComponent implements OnInit {
                 buttons: ['ok'],
               });
             } else {
-              this.addresses.removeAt(index);
               this._cdr.detectChanges();
               return this._alertCtrl.create({
                 header: 'Cancellazione avvenuta con successo',
