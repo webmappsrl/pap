@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable} from 'rxjs';
@@ -22,7 +22,7 @@ const MAP = {
 export class LocationService {
   constructor(private _http: HttpClient) {}
 
-  getAddress(coordinates: number[]) {
+  getAddress(coordinates: number[]): Observable<string> {
     return this._http
       .get(
         `https://nominatim.openstreetmap.org/reverse?lat=${coordinates[1]}&lon=${coordinates[0]}&format=json`,
@@ -37,15 +37,5 @@ export class LocationService {
 
   getConfiniZone(): Observable<any> {
     return this._http.get(`${env.api}/c/${env.companyId}/zones.geojson`);
-  }
-
-  isInsideMap(latLng: number[]) {
-    console.log('------- ~ LocationService ~ isInsideMap ~ latLng', latLng, MAP.bounds);
-    return (
-      latLng[0] >= MAP.bounds.southWest.lat &&
-      latLng[0] <= MAP.bounds.northEast.lat &&
-      latLng[1] >= MAP.bounds.southWest.lng &&
-      latLng[1] <= MAP.bounds.northEast.lng
-    );
   }
 }
