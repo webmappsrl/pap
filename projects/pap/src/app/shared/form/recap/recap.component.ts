@@ -23,7 +23,6 @@ export class RecapComponent {
     this.steps$.next(recapSteps);
   }
   steps$: BehaviorSubject<TicketFormStep[]> = new BehaviorSubject<TicketFormStep[]>([]);
-  currentAddress$: Observable<string | undefined> = this._store.pipe(select(currentAddress));
   currentTrashBookType$: Observable<TrashBookType | undefined> = this._store.pipe(
     select(currentTrashBookType),
   );

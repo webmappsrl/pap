@@ -79,6 +79,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
           firstStep: fb.group({
             name: [sv.user?.name ?? '', [Validators.required]],
             email: [sv.user?.email ?? '', [Validators.required, Validators.email]],
+            phone_number: [sv.user?.phone_number ?? null],
+            user_code: [sv.user?.user_code ?? null],
+            fiscal_code: [sv.user?.fiscal_code ?? null],
           }),
           secondStep: fb.group(
             {
@@ -90,8 +93,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
             },
           ),
           thirdStep: fb.group({
-            location: [sv.user?.location ?? '', [Validators.required]],
-            zone_id: [sv.user?.zone_id ?? '', [Validators.required]],
             addresses: this._addressFormArray,
           }),
         });
@@ -227,9 +228,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
   update() {
     let updates: {[key: string]: any} | null = {};
+    const firstStep = this.settingsForm.get('firstStep');
     switch (this.currentStep) {
       case 'firstStep':
-        updates['name'] = this.settingsForm.controls['firstStep'].value['name'];
+        if (firstStep != null) {
+          const formControlNames = Object.keys((firstStep as any).controls as string[]);
+          Object.values((firstStep as any).controls as any[]).forEach((fcontrol, idx) => {
+            if (fcontrol?.dirty) {
+              (updates as any)[formControlNames[idx]] = fcontrol.value!;
+            }
+          });
+        }
         break;
       case 'secondStep':
         updates = this.settingsForm.controls['secondStep'].value;

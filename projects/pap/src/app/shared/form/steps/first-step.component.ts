@@ -7,7 +7,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import {ControlContainer, FormGroupDirective, UntypedFormGroup} from '@angular/forms';
+import {FormGroupDirective, UntypedFormGroup} from '@angular/forms';
 
 @Component({
   selector: 'pap-first-step-signup-form',
@@ -15,12 +15,6 @@ import {ControlContainer, FormGroupDirective, UntypedFormGroup} from '@angular/f
   styleUrls: ['./first-step.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useExisting: FormGroupDirective,
-    },
-  ],
 })
 export class firstStepSignupComponent implements OnInit {
   @Input() buttons = true;
