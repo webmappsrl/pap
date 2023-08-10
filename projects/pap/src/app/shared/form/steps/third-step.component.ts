@@ -1,23 +1,28 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {AppState} from '../../../core/core.state';
-import {FormGroupDirective, UntypedFormGroup} from '@angular/forms';
-import {FormProvider} from '../form-provider';
-import {Observable} from 'rxjs';
+import {FormArray, FormBuilder, FormGroupDirective, UntypedFormGroup} from '@angular/forms';
+import {AlertController, IonModal, ModalController} from '@ionic/angular';
 import {Store} from '@ngrx/store';
-import {calendarSettings} from '../../../features/settings/state/settings.selectors';
-import {loadCalendarSettings} from '../../../features/settings/state/settings.actions';
+import {Observable} from 'rxjs';
+import {filter, map, switchMap, take} from 'rxjs/operators';
+import {loadAuths} from '../../../core/auth/state/auth.actions';
+import {AppState} from '../../../core/core.state';
 import {Address} from '../../../features/settings/settings.model';
+import {loadCalendarSettings} from '../../../features/settings/state/settings.actions';
+import {calendarSettings} from '../../../features/settings/state/settings.selectors';
 import {SettingsService} from '../../../features/settings/state/settings.service';
-import {RadioGroupChangeEventDetail} from '@ionic/angular';
-import {map, take} from 'rxjs/operators';
+import {loadConfiniZone} from '../../map/state/map.actions';
+import {confiniZone} from '../../map/state/map.selectors';
+import {LocationModalComponent} from '../location/location.modal';
 
 @Component({
   selector: 'pap-third-step-signup-form',
@@ -27,22 +32,69 @@ import {map, take} from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class thirdStepSignupComponent implements OnInit {
+  get addresses() {
+    return this.thirdStep.get('addresses') as FormArray;
+  }
+
   @Input() buttons = true;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
+  @ViewChild(IonModal) modal!: IonModal;
 
   calendarSettings$: Observable<any> = this._store.select(calendarSettings);
+  confiniZone$: Observable<any> = this._store.select(confiniZone);
   thirdStep: UntypedFormGroup;
 
   constructor(
     private _store: Store<AppState>,
     private _settingSvc: SettingsService,
+    private _cdr: ChangeDetectorRef,
+    private _settingsSvc: SettingsService,
+    private _alertCtrl: AlertController,
     private _parent: FormGroupDirective,
   ) {
     this._store.dispatch(loadCalendarSettings());
-    this.calendarSettings$.subscribe(res => {
-      console.log(res);
-    });
+    this._store.dispatch(loadConfiniZone());
+  }
+
+  deleteAddress(index: number): void {
+    const currentAddressValue = this.addresses.value[index];
+    if (currentAddressValue.id != null) {
+      this._settingsSvc
+        .deleteAddress(currentAddressValue.id)
+        .pipe(
+          take(1),
+          map(res => {
+            if (res.success) {
+              return res.data.address;
+            } else {
+              return null;
+            }
+          }),
+          map(address => {
+            if (address == null) {
+              return this._alertCtrl.create({
+                header: 'Cancellazione fallita',
+                message: 'riprova in un secondo momento',
+                buttons: ['ok'],
+              });
+            } else {
+              this.addresses.removeAt(index);
+              this._cdr.detectChanges();
+              return this._alertCtrl.create({
+                header: 'Cancellazione avvenuta con successo',
+                message: "L'indirizzo è stato correttamente cancellato",
+                buttons: ['ok'],
+              });
+            }
+          }),
+        )
+        .subscribe(async alert => {
+          (await alert).present();
+          this._store.dispatch(loadAuths());
+          this._store.dispatch(loadCalendarSettings());
+        });
+    }
   }
 
   ngOnInit(): void {

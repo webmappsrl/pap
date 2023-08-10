@@ -5,21 +5,34 @@
       <ion-card-header>
         <ion-card-title>Seleziona il tuo indirizzo</ion-card-title>
       </ion-card-header>
-      <ion-item lines="none">
-        <pap-form-location
-          formControlName="location"
-          (addressEVT)="setAddess($event)"
-          [features]="features"
-          [form]="modalForm"
+      <ion-card-content>
+        <ion-item lines="none">
+          <pap-form-location
+            formControlName="location"
+            (addressEVT)="setAddess($event)"
+            [features]="features"
+            [form]="modalForm"
+          >
+          </pap-form-location>
+
+          <input
+            hidden
+            required
+            formControlName="zone_id"
+            [ngModel]="(currentZone$|async)?.properties.id??undefined"
+          />
+        </ion-item>
+        <ion-radio-group
+          formControlName="user_type_id"
+          *ngIf="(currentZone$|async) as currentZone"
+          (ionChange)="setUserType($event)"
         >
-        </pap-form-location>
-        <input
-          hidden
-          required
-          formControlName="zone_id"
-          [ngModel]="(currentZone$|async)?.properties.id??undefined"
-        />
-      </ion-item>
+          <ion-item *ngFor="let userType of currentZone.properties.availableUserTypes">
+            <ion-label> {{userType.label.it}}</ion-label>
+            <ion-radio slot="end" [value]="userType.id"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-card-content>
     </ion-card>
   </form>
   <div class="pap-location-modal-buttons">

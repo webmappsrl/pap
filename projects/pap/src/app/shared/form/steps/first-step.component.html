@@ -19,15 +19,7 @@
   <ion-item *ngIf="firstStep.controls['email'].errors as errors">
     <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
   </ion-item>
-  <ion-item lines="none" class="pap-first-step-signup-form-add-address">
-    <ion-col></ion-col>
-    <ion-col>
-      <ion-button (click)="openModalLocation()" expand="block" shape="round"
-        >Aggiungi indirizzo</ion-button
-      >
-    </ion-col>
-    <ion-col></ion-col>
-  </ion-item>
+
   <ion-grid *ngIf="buttons">
     <ion-row>
       <ion-col size="8"> </ion-col>
@@ -38,50 +30,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <span formArrayName="addresses">
-    <div class="pap-first-step-signup-form-address-container">
-      <ion-item *ngFor="let viewAddress of addresses.controls; let idx=index">
-        <ion-grid [fixed]="true">
-          <ion-row
-            ><ion-col
-              ><ion-label>Indirizzo {{idx+1}}:</ion-label>
-              <ion-label
-                >{{viewAddress.value.location|getZoneFromLocation:(confiniZone$|async)}}</ion-label
-              ></ion-col
-            ></ion-row
-          >
-          <ion-row>
-            <ion-col
-              ><ion-label
-                class="pap-first-step-signup-form-view-address"
-                text-wrap
-                >{{viewAddress?.value?.address}}</ion-label
-              ></ion-col
-            >
-          </ion-row>
-          <ion-row class="pap-first-step-signup-form-address-map">
-            <ion-col size="10">
-              <pap-map
-                [positionMarker]="viewAddress.value.location"
-                [center]="viewAddress.value.location"
-                [edit]="false"
-                [featureCollection]="confiniZone$|async"
-              >
-              </pap-map>
-            </ion-col>
-            <ion-col size="auto">
-              <ion-button
-                class="pap-first-step-signup-form-remove-address"
-                (click)="deleteAddress(idx)"
-                expand="block"
-                color="danger"
-                *ngIf="addresses.controls.length > 1"
-              >
-                <ion-icon name="trash-sharp"></ion-icon> </ion-button
-            ></ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </div>
-  </span>
 </form>

@@ -1,25 +1,37 @@
 <form [formGroup]="thirdStep">
   <div class="scrollable">
     <ion-item-group *ngFor="let zone of calendarSettings$|async">
-      <ion-card-header>
-        <ion-card-title>{{zone.label}}</ion-card-title>
-      </ion-card-header>
-
+      <ion-item-divider>
+        <h5>
+          {{zone.label}}
+        </h5>
+      </ion-item-divider>
       <ng-container *ngFor="let address of zone.addresses">
-        <ion-item-divider>
-          <h5>
-            {{address.address}}
-          </h5>
-        </ion-item-divider>
-        <ion-radio-group
-          [value]="address.user_type_id"
-          (ionChange)="selectUserType(address, $event)"
-        >
-          <ion-item *ngFor="let userType of zone.avalaible_user_types">
-            <ion-label> {{userType.label.it}}</ion-label>
-            <ion-radio slot="end" [value]="userType.id"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
+        <ion-card class="address-card">
+          <ion-card-header>
+            <ion-card-subtitle> {{address.address}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item class="map-container">
+              <pap-map
+                [positionMarker]="address.location"
+                [center]="address.location"
+                [edit]="false"
+                [featureCollection]="confiniZone$|async"
+              >
+              </pap-map>
+            </ion-item>
+            <ion-radio-group
+              [value]="address.user_type_id"
+              (ionChange)="selectUserType(address, $event)"
+            >
+              <ion-item *ngFor="let userType of zone.avalaible_user_types">
+                <ion-label> {{userType.label.it}}</ion-label>
+                <ion-radio slot="end" [value]="userType.id"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-card-content>
+        </ion-card>
       </ng-container>
     </ion-item-group>
   </div>

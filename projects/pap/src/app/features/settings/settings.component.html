@@ -2,7 +2,7 @@
   <ion-header><pap-header></pap-header></ion-header>
 
   <ion-content padding class="pap-settings">
-    <ion-card>
+    <ion-card class="main-card">
       <ion-segment [(ngModel)]="currentStep">
         <ion-segment-button value="firstStep" (click)="step$.next(0)">
           <ion-label>Generali</ion-label>
@@ -36,6 +36,15 @@
       </form>
     </ion-card>
     <ion-grid class="footer">
+      <ion-row *ngIf="currentStep === 'thirdStep'">
+        <ion-col class="ion-align-self-start"> </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-button (click)="openModalLocation()" expand="block" shape="round"
+            >Aggiungi indirizzo</ion-button
+          >
+        </ion-col>
+        <ion-col class="ion-align-self-end"></ion-col>
+      </ion-row>
       <ion-row>
         <ion-col class="ion-align-self-start">
           <ion-button fill="outline" shape="round" expand="full" (click)="logout()">

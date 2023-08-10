@@ -17,10 +17,12 @@ export class LocationModalComponent {
   modalForm: FormGroup = this._formBuilder.group({
     address: ['', [Validators.required]],
     zone_id: ['', [Validators.required]],
+    user_type_id: ['', [Validators.required]],
     location: [[], [Validators.required]],
   });
 
   features: any[];
+  availableUserTypes: any[];
   constructor(
     private _modalCtrl: ModalController,
     private _formBuilder: FormBuilder,
@@ -40,5 +42,9 @@ export class LocationModalComponent {
     if (address != null) {
       this.modalForm.get('address')?.setValue(address);
     }
+  }
+  setUserType(event: any): void {
+    const userTypeId = event.target.value;
+    this.modalForm.get('user_type_id')?.setValue(userTypeId);
   }
 }
