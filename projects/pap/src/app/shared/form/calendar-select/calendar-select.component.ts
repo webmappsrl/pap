@@ -33,12 +33,12 @@ import {Calendar} from '../../../features/calendar/calendar.model';
 export class CalendarSelectComponent implements ControlValueAccessor {
   @Input() calendars: Calendar[];
 
-  currentTrashType: TrashBookType;
   disabled = false;
   onChange = (select: {trashDate: string; tbType: TrashBookType; calendar: Calendar}) => {};
   onTouched = () => {};
   options$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   select: {trashDate: string; tbType: TrashBookType; calendar: Calendar} | null = null;
+  currentSelectionLabel$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   touched = false;
   public calendarForm: FormGroup = new FormGroup({
     calendar: new FormControl(null, [Validators.required]),
@@ -66,6 +66,7 @@ export class CalendarSelectComponent implements ControlValueAccessor {
   writeValue(obj: {trashDate: string; tbType: TrashBookType; calendar: Calendar}): void {
     if ((obj as any) != '') {
       this.calendarForm.setValue(obj);
+      this.select = obj;
       this._cdr.detectChanges();
     }
   }
