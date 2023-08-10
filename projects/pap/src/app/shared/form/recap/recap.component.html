@@ -17,7 +17,7 @@
               {{(currentTrashBookType$|async)?.name}}
             </ion-note>
             <ion-note class="pap-form-recap-note" *ngSwitchCase="'location'">
-              {{currentAddress$|async}}
+              {{form.controls['location_address'].value|json}}
             </ion-note>
             <ion-note class="pap-form-recap-note" *ngSwitchCase="'phone'">
               {{form.controls[item.type].value}}
