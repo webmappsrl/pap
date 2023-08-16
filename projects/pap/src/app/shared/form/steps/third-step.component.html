@@ -1,0 +1,68 @@
+<form [formGroup]="thirdStep">
+  <div class="scrollable" *ngIf="calendarSettings$|async as zones">
+    <ion-item-group *ngFor="let zone of zones">
+      <ion-item-divider>
+        <h5>
+          {{zone.label}}
+        </h5>
+      </ion-item-divider>
+      <ng-container *ngFor="let address of zone.addresses">
+        <ion-card class="address-card">
+          <ion-card-header>
+            <ion-row>
+              <ion-col>
+                <ion-card-subtitle> {{address.address}}</ion-card-subtitle>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-button
+                  class="pap-first-step-signup-form-remove-address"
+                  (click)="deleteAddress(address)"
+                  expand="block"
+                  color="danger"
+                  *ngIf="zones.length > 1|| zone.addresses.length> 1"
+                >
+                  <ion-icon name="trash-sharp"></ion-icon> </ion-button
+              ></ion-col>
+            </ion-row>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item class="map-container">
+              <pap-map
+                [positionMarker]="address.location"
+                [center]="address.location"
+                [edit]="false"
+                [featureCollection]="confiniZone$|async"
+              >
+              </pap-map>
+            </ion-item>
+            <ion-radio-group
+              [value]="address.user_type_id"
+              (ionChange)="selectUserType(address, $event)"
+            >
+              <ion-item *ngFor="let userType of zone.avalaible_user_types">
+                <ion-label> {{userType.label.it}}</ion-label>
+                <ion-radio slot="end" [value]="userType.id"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </ion-item-group>
+  </div>
+
+  <ion-grid *ngIf="buttons">
+    <ion-row>
+      <ion-col class="ion-align-self-start">
+        <ion-button (click)="prev.emit()" expand="full">
+          <ion-icon name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="ion-align-self-center"></ion-col>
+      <ion-col class="ion-align-self-end">
+        <ion-button [disabled]="thirdStep.invalid" (click)="next.emit()" expand="full">
+          <ion-icon color="light" name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>

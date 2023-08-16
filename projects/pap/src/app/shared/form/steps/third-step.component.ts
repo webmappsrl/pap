@@ -1,93 +1,124 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-
-import {AppState} from '../../../core/core.state';
-import {UntypedFormGroup} from '@angular/forms';
-import {FormProvider} from '../form-provider';
-import {Observable} from 'rxjs';
+import {FormArray, FormGroupDirective, UntypedFormGroup} from '@angular/forms';
+import {AlertController, IonModal} from '@ionic/angular';
 import {Store} from '@ngrx/store';
-import {currentUserTypes} from '../state/sign-up.selectors';
-import {currentZone} from '../../map/state/map.selectors';
+import {Observable} from 'rxjs';
+import {map, take} from 'rxjs/operators';
+import {loadAuths} from '../../../core/auth/state/auth.actions';
+import {AppState} from '../../../core/core.state';
+import {Address} from '../../../features/settings/settings.model';
+import {loadCalendarSettings} from '../../../features/settings/state/settings.actions';
+import {calendarSettings} from '../../../features/settings/state/settings.selectors';
+import {SettingsService} from '../../../features/settings/state/settings.service';
 import {loadConfiniZone} from '../../map/state/map.actions';
-import {loadUserTypes} from '../state/sign-up.actions';
+import {confiniZone} from '../../map/state/map.selectors';
 
 @Component({
-  template: `
-      <form [formGroup]="thirdStep">
-        <div class="scrollable">
-        <ion-item>
-        <pap-form-location formControlName="location" (ngModelChange)="reset()"> </pap-form-location>
-      </ion-item>
-      <ion-item *ngIf="thirdStep.controls['location'].errors as errors">
-        <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
-      </ion-item>
-      <ng-container *ngIf="(confiniZone$|async) as zone; else noValidZone">
-        <ion-item *ngIf="userTypes$|async as userTypes">
-          <ng-container  *ngIf="userTypes.length >0;else noUserTypes">
-            <pap-form-select formControlName="user_type_id" [options]="userTypes">
-              </pap-form-select>
-            </ng-container>
-        </ion-item>
-        <input
-          hidden
-          *ngIf="zone.properties as prop"
-          required
-          formControlName="zone_id"
-          [ngModel]="prop.id"
-        />
-      </ng-container>
-      <ng-template #noValidZone>
-        <ion-item *ngIf="!thirdStep.controls['location'].errors">
-          <ion-label color="danger">seleziona una zona valida</ion-label>
-        </ion-item>
-      </ng-template>
-      <ng-template #noUserTypes>
-        <ion-label>non ci sono tipi utente associati a questa zona</ion-label>
-      </ng-template>
-        </div>
-
-      <ion-grid *ngIf="buttons">
-        <ion-row>
-          <ion-col class="ion-align-self-start">
-          <ion-button (click)="prev.emit()"  expand="full" >
-            <ion-icon name="chevron-back" ></ion-icon>
-          </ion-button>
-          </ion-col>
-          <ion-col class="ion-align-self-center"></ion-col>
-          <ion-col class="ion-align-self-end">
-          <ion-button [disabled]="thirdStep.invalid" (click)="next.emit()"  expand="full" >
-            <ion-icon color="light" name="checkmark"></ion-icon>
-          </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      </form>
-    `,
   selector: 'pap-third-step-signup-form',
+  templateUrl: './third-step.component.html',
+  styleUrls: ['./third-step.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class thirdStepSignupComponent {
+export class thirdStepSignupComponent implements OnInit {
+  get addresses() {
+    return this.thirdStep.get('addresses') as FormArray;
+  }
+
+  @Input() buttons = true;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
-  @Input() buttons = true;
+  @ViewChild(IonModal) modal!: IonModal;
 
-  thirdStep: UntypedFormGroup = this._formProvider.getForm().get('thirdStep') as UntypedFormGroup;
-  confiniZone$: Observable<any> = this._store.select(currentZone);
-  userTypes$: Observable<any> = this._store.select(currentUserTypes);
+  calendarSettings$: Observable<any> = this._store.select(calendarSettings);
+  confiniZone$: Observable<any> = this._store.select(confiniZone);
+  thirdStep: UntypedFormGroup;
 
-  constructor(private _formProvider: FormProvider, private _store: Store<AppState>) {
+  constructor(
+    private _store: Store<AppState>,
+    private _settingSvc: SettingsService,
+    private _cdr: ChangeDetectorRef,
+    private _settingsSvc: SettingsService,
+    private _alertCtrl: AlertController,
+    private _parent: FormGroupDirective,
+  ) {
+    this._store.dispatch(loadCalendarSettings());
     this._store.dispatch(loadConfiniZone());
-    this._store.dispatch(loadUserTypes());
+  }
+
+  deleteAddress(address: any): void {
+    if (address.id != null) {
+      this._settingsSvc
+        .deleteAddress(address.id)
+        .pipe(
+          take(1),
+          map(res => {
+            if (res.success) {
+              return res.data.address;
+            } else {
+              return null;
+            }
+          }),
+          map(address => {
+            if (address == null) {
+              return this._alertCtrl.create({
+                header: 'Cancellazione fallita',
+                message: 'riprova in un secondo momento',
+                buttons: ['ok'],
+              });
+            } else {
+              this._cdr.detectChanges();
+              return this._alertCtrl.create({
+                header: 'Cancellazione avvenuta con successo',
+                message: "L'indirizzo è stato correttamente cancellato",
+                buttons: ['ok'],
+              });
+            }
+          }),
+        )
+        .subscribe(async alert => {
+          (await alert).present();
+          this._store.dispatch(loadAuths());
+          this._store.dispatch(loadCalendarSettings());
+        });
+    }
+  }
+
+  ngOnInit(): void {
+    this.thirdStep = this._parent.form.get('thirdStep') as UntypedFormGroup;
   }
 
   reset(): void {
     this.thirdStep.controls['user_type_id'].reset();
+  }
+
+  selectUserType(address: Address, userTypeEVT: any): void {
+    console.log(address, userTypeEVT);
+    const newAddress = {...address, ...{user_type_id: userTypeEVT.detail.value}};
+    this._settingSvc
+      .updateAddress({...address, ...{user_type_id: userTypeEVT.detail.value}})
+      .pipe(
+        take(1),
+        map(res => {
+          if (res.success) {
+            return res.data.address;
+          } else {
+            return null;
+          }
+        }),
+      )
+      .subscribe(v => {
+        console.log(v);
+      });
   }
 }

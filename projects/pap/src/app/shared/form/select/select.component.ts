@@ -29,6 +29,7 @@ import {currentTrashBookType} from '../state/form.actions';
 export class SelectComponent implements ControlValueAccessor {
   options$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   select: number = -1;
+  searchString: string = '';
 
   @Input() set selected(value: TrashBookType | null | undefined) {
     if (value) {

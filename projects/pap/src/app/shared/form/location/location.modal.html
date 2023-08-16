@@ -1,0 +1,62 @@
+<ion-header><pap-header></pap-header></ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="modalForm">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Seleziona il tuo indirizzo</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <pap-form-location
+            formControlName="location"
+            (addressEVT)="setAddess($event)"
+            [features]="features"
+            [form]="modalForm"
+          >
+          </pap-form-location>
+
+          <input
+            hidden
+            required
+            formControlName="zone_id"
+            [ngModel]="(currentZone$|async)?.properties.id??undefined"
+          />
+        </ion-item>
+        <ion-radio-group
+          formControlName="user_type_id"
+          *ngIf="(currentZone$|async) as currentZone"
+          (ionChange)="setUserType($event)"
+        >
+          <ion-item *ngFor="let userType of currentZone.properties.availableUserTypes">
+            <ion-label> {{userType.label.it}}</ion-label>
+            <ion-radio slot="end" [value]="userType.id"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-card-content>
+    </ion-card>
+  </form>
+  <div class="pap-location-modal-buttons">
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" color="primary" shape="round" fill="outline"
+        >Annulla</ion-button
+      >
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button
+        (click)="confirm()"
+        [strong]="true"
+        [disabled]="modalForm.invalid"
+        color="primary"
+        shape="round"
+        fill="solid"
+        >Salva</ion-button
+      >
+    </ion-buttons>
+  </div>
+</ion-content>
+<ng-template #noValidZone>
+  <input hidden required formControlName="zone_id" />
+</ng-template>
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>

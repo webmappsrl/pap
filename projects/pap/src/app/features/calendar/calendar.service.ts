@@ -11,9 +11,9 @@ import {Calendar} from './calendar.model';
 export class CalendarService {
   constructor(private _http: HttpClient) {}
 
-  getCalendar(): Observable<Calendar> {
-    return (this._http.get(`${env.api}/api/c/${env.companyId}/calendar`) as Observable<any>).pipe(
-      map(r => r.data as Calendar),
-    );
+  getCalendars(prop?: {start_date: string; stop_date: string}): Observable<Calendar[]> {
+    return (
+      this._http.get(`${env.api}/c/${env.companyId}/calendar`, {params: prop}) as Observable<any>
+    ).pipe(map(r => r.data as Calendar[]));
   }
 }

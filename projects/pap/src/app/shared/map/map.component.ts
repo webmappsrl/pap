@@ -1,29 +1,32 @@
-import {environment} from 'projects/pap/src/environments/environment';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
-import {GeoJson} from '../../features/waste-center-collection/waste-center-collection-model';
-import {
-  Map,
-  map,
-  tileLayer,
-  marker,
-  icon,
-  LeafletEvent,
-  LatLngExpression,
-  LeafletMouseEvent,
-  latLng,
-  Icon,
-} from 'leaflet';
 import {AppState} from '@capacitor/app';
 import {Store} from '@ngrx/store';
+import {
+  Icon,
+  LatLngExpression,
+  LeafletEvent,
+  LeafletMouseEvent,
+  Map,
+  geoJson,
+  icon,
+  latLng,
+  map,
+  marker,
+  tileLayer,
+} from 'leaflet';
+import {environment} from 'projects/pap/src/environments/environment';
+import {GeoJson} from '../../features/waste-center-collection/waste-center-collection-model';
 import {setMarker} from './state/map.actions';
 
 const DEFAULT_CENTER_ZOOM = 12;
@@ -43,9 +46,17 @@ const MAP_OPTIONS = {
   encapsulation: ViewEncapsulation.None,
 })
 export class MapComponent implements OnInit, OnDestroy {
+  static index = 0;
+
   @Input() set center(value: number[]) {
     if (value != null && value.length === 2) {
       this.centerToPoint(value);
+    }
+  }
+
+  @Input() set featureCollection(features: any[]) {
+    if (features.length > 0) {
+      geoJson(features).addTo(this.map);
     }
   }
 
@@ -62,28 +73,41 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
+  @Input() edit = true;
   @Output() genericClickEvt: EventEmitter<number[]> = new EventEmitter<number[]>();
   @Output() markerClickEvt: EventEmitter<GeoJson> = new EventEmitter<GeoJson>();
 
   map!: Map;
+  mapId = `map-${MapComponent.index}`;
   myPositionMarker!: any;
 
-  constructor(private _store: Store<AppState>) {}
+  constructor(
+    private _store: Store<AppState>,
+    private _renderer: Renderer2,
+    private _el: ElementRef,
+  ) {
+    MapComponent.index += 1;
+    setTimeout(() => {
+      if (this.map == null) {
+        this.initMap();
+      }
+    }, 500);
+  }
 
-  centerToPoint(coord: number[]) {
+  centerToPoint(coord: number[]): void {
     if (this.map != null) {
       const zoom = this.map.getZoom();
-      this.map.setView(latLng(coord[0], coord[1]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
+      this.map.setView(latLng(coord[1], coord[0]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
     }
   }
 
-  clickOnMap(ev: LeafletMouseEvent) {
-    const coords: [number, number] = [ev.latlng.lat, ev.latlng.lng];
+  clickOnMap(ev: LeafletMouseEvent): void {
+    const coords: [number, number] = [ev.latlng.lng, ev.latlng.lat];
     this._store.dispatch(setMarker({coords}));
     this.genericClickEvt.emit(coords);
   }
 
-  clickedMarker(_: LeafletEvent, feature: GeoJson) {
+  clickedMarker(_: LeafletEvent, feature: GeoJson): void {
     this.markerClickEvt.emit(feature);
   }
 
@@ -113,7 +137,7 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
-  makePositionMarker(coords: number[]) {
+  makePositionMarker(coords: number[]): void {
     if (this.myPositionMarker) {
       this.myPositionMarker.remove();
     }
@@ -121,26 +145,35 @@ export class MapComponent implements OnInit, OnDestroy {
       this.initMap();
     }
     if (this.map != null) {
-      this.myPositionMarker = marker(latLng(coords[0], coords[1]), {
+      this.myPositionMarker = marker(latLng(coords[1], coords[0]), {
         icon: this.getIcon('position'),
       });
       this.myPositionMarker.addTo(this.map);
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.map.clearAllEventListeners;
     this.map.remove();
   }
 
   ngOnInit(): void {
-    if (this.map == null) {
-      this.initMap();
+    if (this.edit === false) {
+      this.map.dragging.disable();
+      this.map.scrollWheelZoom.disable();
+      this.map.touchZoom.disable();
+      this.map.doubleClickZoom.disable();
+      this.map.boxZoom.disable();
+      this.map.keyboard.disable();
     }
   }
 
   private initMap(): void {
-    this.map = map('map').setView(
+    const mapDiv = this._renderer.createElement('div');
+    this._renderer.setAttribute(mapDiv, 'id', this.mapId);
+    this._renderer.setStyle(mapDiv, 'height', '100%');
+    this._renderer.appendChild(this._el.nativeElement, mapDiv);
+    this.map = map(this.mapId).setView(
       MAP_OPTIONS.LOCATION as LatLngExpression,
       MAP_OPTIONS.DEFAULT_ZOOM,
     );

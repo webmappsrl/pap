@@ -1,10 +1,19 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {take} from 'rxjs/operators';
 import {AppState} from '../../../core/core.state';
 import {setMarker} from '../../map/state/map.actions';
-import {currentAddress} from '../../map/state/map.selectors';
+import {currentAddress, currentZone} from '../../map/state/map.selectors';
 import {LocationService} from '../../services/location.service';
 
 @Component({
@@ -13,82 +22,86 @@ import {LocationService} from '../../services/location.service';
   styleUrls: ['./location.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: LocationComponent,
-    },
-  ],
 })
-export class LocationComponent implements ControlValueAccessor {
-  currentAddress$: Observable<string | undefined> = this._store.pipe(select(currentAddress));
-  disabled = false;
-  myPosition$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
-  public myPositionString: string = '';
-  onChange = (location: number) => {};
-  onTouched = () => {};
-  touched = false;
-
-  constructor(private locationService: LocationService, private _store: Store<AppState>) {}
-
-  addressOnChange(event: any) {
-    if (event?.target && typeof event.target.value === 'string') {
-      this.setAddress(event.target.value);
+export class LocationComponent {
+  @Input() set position(coords: [number, number]) {
+    if (coords != null && coords.length > 0) {
+      this.myPosition$.next(coords);
+      this._store.dispatch(setMarker({coords}));
     }
   }
 
-  async getLocation() {
+  get address() {
+    return this.myPositionString;
+  }
+
+  set address(addr: string) {
+    this.addressEVT.emit({
+      location: this.myPosition$.value,
+      address: addr,
+    });
+    this.setAddress(addr);
+  }
+
+  @Input() features: any[];
+  @Input() form: FormGroup;
+  @Output() addressEVT: EventEmitter<any> = new EventEmitter<any>();
+
+  currentZone$: Observable<any> = this._store.select(currentZone);
+  myPosition$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+  myPositionString: string = '';
+
+  constructor(
+    private locationService: LocationService,
+    private _store: Store<AppState>,
+    private _cdr: ChangeDetectorRef,
+  ) {}
+
+  async getLocation(): Promise<void> {
     try {
       navigator.geolocation.getCurrentPosition(location => {
-        const coords = [location.coords.latitude, location.coords.longitude] as [number, number];
+        const coords = [location.coords.longitude, location.coords.latitude] as [number, number];
         this._store.dispatch(setMarker({coords}));
-        this.writeValue(coords);
       });
     } catch (error) {
       console.error(error);
     }
   }
 
-  mapClick(ev: number[]) {
+  mapClick(ev: number[]): void {
     this.setPosition(ev);
   }
 
-  markAsTouched() {
-    if (!this.touched) {
-      this.onTouched();
-      this.touched = true;
-    }
-  }
-
-  registerOnChange(onChange: any) {
-    this.onChange = onChange;
-  }
-
-  registerOnTouched(onTouched: any) {
-    this.onTouched = onTouched;
-  }
-
-  setAddress(address: string) {
+  setAddress(address: string): void {
     this.myPositionString = address;
+    this.form.get('location_address')?.setValue(address);
+    this._cdr.detectChanges();
   }
 
-  setPosition(coords: number[]) {
-    this.writeValue(coords);
+  setPosition(coords: number[]): void {
     this.myPosition$.next(coords);
+    this.form.get('location')?.setValue(coords);
     this.locationService.getAddress(coords).subscribe(
       res => {
         this.setAddress(res as string);
+        this.addressEVT.emit({
+          location: coords,
+          address: res,
+        });
       },
       (error: any) => {
-        this.setAddress(`${coords[0]} ${coords[1]}`);
+        const res = `${coords[0]} ${coords[1]}`;
+        this.setAddress(res);
+        this.addressEVT.emit({
+          location: coords,
+          address: res,
+        });
       },
     );
-  }
-
-  writeValue(coords: any): void {
-    this.myPosition$.next(coords);
-    this._store.dispatch(setMarker({coords}));
-    this.onChange(coords);
+    this.currentZone$.pipe(take(1)).subscribe(zone => {
+      if (zone == null) {
+        this.form.get('location')!.setErrors({'incorrect': true});
+      }
+    });
   }
 }

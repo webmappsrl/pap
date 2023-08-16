@@ -1,0 +1,83 @@
+<ng-container *ngIf="calendarView$|async as calendarView">
+  <ion-header>
+    <pap-header></pap-header>
+  </ion-header>
+  <ion-content padding class="pap-calendar">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Calendario</ion-card-title>
+        <ion-label class="pap-calendar-info"
+          >La raccolta del verde viene gestita esternamente all'APP. Puoi comunque controllarla dal
+          sito</ion-label
+        >
+        <div class="pap-calendar-infobuttoncontainer">
+          <ion-button
+            class="pap-calendar-infobutton"
+            fill="outline"
+            shape="round"
+            size="large"
+            (click)="openLink()"
+            >Vedi</ion-button
+          >
+        </div>
+      </ion-card-header>
+
+      <ion-list lines="full">
+        <ion-item>
+          <ion-select placeholder="Select address" (ionChange)="selectAddress($event)" [value]="0">
+            <ion-select-option
+              [value]="idx"
+              *ngFor="let calendar of calendarView.calendars;let idx= index"
+              >{{calendar.address.address}}</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+        <ng-container *ngIf="currentAddress$|async as currentAddress">
+          <ion-item
+            *ngFor="let item of currentAddress.calendar| keyvalue"
+            class="pap-calendar-item"
+          >
+            <ion-label slot="start" class="pap-calendar-date">
+              <div class="pap-calendar-monthday">{{item.key|papDate: 'd' }}</div>
+              <div class="pap-calendar-monthname">{{item.key|papDate: 'MMMM' }}</div>
+            </ion-label>
+            <div class="pap-calendar-trash">
+              <div class="pap-calendar-weekday">{{item.key|papDate: 'EEEE' }}</div>
+              <div div *ngFor="let trash of item.value" class="pap-calendar-event">
+                <div class="pap-calendar-time">
+                  Dalle {{trash.start_time}} alle {{trash.stop_time}}
+                </div>
+                <div>
+                  <div
+                    *ngFor="let trashType of trash.trash_types"
+                    (click)="info(trashType)"
+                    class="pap-calendar-trashlist"
+                  >
+                    <ion-icon
+                      class="trash-book-details-icon"
+                      slot="end"
+                      [ngStyle]="{color:trashType?.color}"
+                      name="ellipse"
+                    ></ion-icon>
+                    {{trashType.name['it']}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pap-calendar-information-circle">
+              <ion-icon
+                size="large"
+                color="primary"
+                slot="end"
+                name="information-circle"
+              ></ion-icon>
+            </div>
+          </ion-item>
+        </ng-container>
+      </ion-list>
+    </ion-card>
+  </ion-content>
+  <ion-footer collapse="fade">
+    <pap-footer></pap-footer>
+  </ion-footer>
+</ng-container>

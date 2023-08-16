@@ -26,6 +26,6 @@ export class ReportService {
   }
 
   sendReport(report: any) {
-    return this.http.post(`${env.api}/api/c/${company_id}/ticket`, report.data);
+    return this.http.post(`${env.api}/c/${company_id}/ticket`, report.data);
   }
 }

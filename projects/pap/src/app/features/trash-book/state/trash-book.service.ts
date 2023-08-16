@@ -11,13 +11,13 @@ export class TrashBookService {
   constructor(private _http: HttpClient) {}
 
   getTrashBook(): Observable<TrashBookRow[]> {
-    return this._http.get(`${env.api}/api/c/${env.companyId}/wastes.json`) as Observable<
+    return this._http.get(`${env.api}/c/${env.companyId}/wastes.json`) as Observable<
       TrashBookRow[]
     >;
   }
 
   getTrashTypes(): Observable<TrashBookType[]> {
-    return this._http.get(`${env.api}/api/c/${env.companyId}/trash_types.json`) as Observable<
+    return this._http.get(`${env.api}/c/${env.companyId}/trash_types.json`) as Observable<
       TrashBookType[]
     >;
   }

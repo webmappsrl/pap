@@ -1,4 +1,6 @@
 pap-settings {
+  height: 100vh;
+
   .pap-settings {
     --padding-bottom: 80px;
     &-editicon {
@@ -26,9 +28,7 @@ pap-settings {
     flex-wrap: wrap;
     align-content: center;
   }
-  ion-row {
-    width: 300px;
-  }
+
   ion-button {
     width: auto;
     height: 36px;
@@ -36,9 +36,17 @@ pap-settings {
   ion-segment {
     height: 70px;
   }
-  ion-card {
+  .main-card {
     display: flow-root;
-    height: fit-content;
+    height: calc(100% - 80px) !important;
+    overflow: unset !important;
+    > form {
+      height: calc(100% - 35px) !important;
+      ion-list {
+        height: inherit;
+        overflow: auto;
+      }
+    }
   }
   pap-form-location {
     .pap-form-location-infocontainer {
@@ -46,5 +54,9 @@ pap-settings {
         margin-top: -15px;
       }
     }
+  }
+  .pap-first-step-signup-form-address-container,
+  .scrollable {
+    padding-bottom: 42px;
   }
 }

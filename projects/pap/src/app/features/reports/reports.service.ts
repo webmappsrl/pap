@@ -11,7 +11,7 @@ export class ReportsService {
   constructor(private _http: HttpClient) {}
 
   getReports(): Observable<Ticket[]> {
-    return (this._http.get(`${env.api}/api/c/${env.companyId}/tickets`) as Observable<any>).pipe(
+    return (this._http.get(`${env.api}/c/${env.companyId}/tickets`) as Observable<any>).pipe(
       map(r => r.data as Ticket[]),
     );
   }

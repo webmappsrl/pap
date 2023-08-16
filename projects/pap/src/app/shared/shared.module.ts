@@ -12,6 +12,7 @@ import {FormComponent} from './form/form/form.component';
 import {ImagePickerComponent} from './form/image-picker/image-picker.component';
 import {InputPatternPipe} from './form/input-pattern.pipe';
 import {InputTypePipe} from './form/input-type.pipe';
+import {GetZoneFromLocationPipe} from './form/get-zone-from-location.pipe';
 import {LocationComponent} from './form/location/location.component';
 import {RecapComponent} from './form/recap/recap.component';
 import {SelectComponent} from './form/select/select.component';
@@ -32,6 +33,11 @@ import {BroadcastNotificationService} from './services/broadcast-notification.se
 import {LocalNotificationService} from './services/local-notification.service';
 import {FooterComponent} from './footer/footer.component';
 import {FormStatusComponent} from './form/status/status.component';
+import {LocationModalComponent} from './form/location/location.modal';
+import {CalendarSelectComponent} from './form/calendar-select/calendar-select.component';
+import {CalendarComponent} from './components/calendar/calendar.component';
+import {SortPipe} from './pipes/sort.pipe';
+import {FilterByPipe} from './pipes/filter-by.pipe';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -46,11 +52,17 @@ import {FormStatusComponent} from './form/status/status.component';
     secondStepSignupComponent,
     thirdStepSignupComponent,
     LocationComponent,
+    LocationModalComponent,
     FormStatusComponent,
     RecapComponent,
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
+    SortPipe,
+    FilterByPipe,
+    GetZoneFromLocationPipe,
+    CalendarSelectComponent,
+    CalendarComponent,
   ],
   imports: [
     CommonModule,
@@ -90,9 +102,14 @@ import {FormStatusComponent} from './form/status/status.component';
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
+    FilterByPipe,
+    SortPipe,
     firstStepSignupComponent,
     secondStepSignupComponent,
     thirdStepSignupComponent,
+    GetZoneFromLocationPipe,
+    CalendarSelectComponent,
+    CalendarComponent,
   ],
 })
 export class SharedModule {}

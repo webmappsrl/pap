@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private _http: HttpClient) {}
 
   delete() {
-    return this._http.get(`${env.api}/api/delete`);
+    return this._http.get(`${env.api}/delete`);
   }
 
   getAlert(error: any): void {
@@ -19,13 +19,13 @@ export class AuthService {
   }
 
   getUser(): Observable<any> {
-    return this._http.get(`${env.api}/api/user`);
+    return this._http.get(`${env.api}/user`);
   }
 
   login(credential: any) {
     console.log('login ', env.api);
     return this._http.post(
-      `${env.api}/api/login`,
+      `${env.api}/login`,
       {
         email: credential.email,
         password: credential.password,
@@ -45,7 +45,7 @@ export class AuthService {
 
   register(credential: any) {
     return this._http.post(
-      `${env.api}/api/register`,
+      `${env.api}/register`,
       {
         ...credential,
         company_id: 8,
@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   resendEmail() {
-    return this._http.get(`${env.api}/api/email/resend`, {
+    return this._http.get(`${env.api}/email/resend`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
@@ -68,7 +68,7 @@ export class AuthService {
 
   update(updates: any) {
     return this._http.post(
-      `${env.api}/api/user`,
+      `${env.api}/user`,
       {
         ...updates,
       },

@@ -25,6 +25,7 @@
               <ion-label class="pap-form-label" *ngIf="currentStep.label != null">
                 {{ currentStep.label }}
               </ion-label>
+              <br />
             </ng-template>
 
             <ion-input
@@ -60,9 +61,16 @@
               <pap-form-location
                 *ngSwitchCase="'location'"
                 #focusInput
+                [form]="ticketForm"
                 [formControlName]="currentStep.type"
+                [features]="confiniZone$|async"
               >
               </pap-form-location>
+              <pap-form-calendar-select
+                *ngSwitchCase="'calendar_trash_type_id'"
+                [calendars]="(calendars$|async)!"
+                [formControlName]="currentStep.type"
+              ></pap-form-calendar-select>
               <pap-form-select
                 *ngSwitchCase="'trash_type_id'"
                 #focusInput
@@ -82,11 +90,11 @@
                 [conf]="(ticketFormConf$|async)!"
               ></pap-form-recap>
             </ng-container>
-            <ion-item *ngIf="ticketForm.controls[currentStep.type].errors as errors">
-              <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
-            </ion-item>
           </div>
         </form>
+        <ion-item lines="none" *ngIf="ticketForm.controls[currentStep.type].errors as errors">
+          <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
+        </ion-item>
       </ion-card>
       <ng-container *ngIf="formError$|async as error">
         <ion-label color="danger">{{error}}</ion-label>

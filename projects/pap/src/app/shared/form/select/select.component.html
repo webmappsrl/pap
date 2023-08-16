@@ -1,5 +1,10 @@
+<ion-searchbar placeholder="Ricerca" debounce="200" [(ngModel)]="searchString"></ion-searchbar>
 <ion-list *ngIf="(options$|async) as opts">
-  <ion-item *ngFor="let opt of opts" (click)="writeValue(opt)" [class.selected]="opt.id ===select">
+  <ion-item
+    *ngFor="let opt of opts | sort | filterBy : searchString "
+    (click)="writeValue(opt)"
+    [class.selected]="opt.id ===select"
+  >
     <ion-icon
       slot="start"
       [ngStyle]="{color:opt?.color}"

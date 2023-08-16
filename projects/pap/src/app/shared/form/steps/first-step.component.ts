@@ -3,51 +3,29 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import {UntypedFormGroup} from '@angular/forms';
-import {FormProvider} from '../form-provider';
+import {FormGroupDirective, UntypedFormGroup} from '@angular/forms';
 
 @Component({
-  template: `
-    <form [formGroup]="firstStep">
-      <ion-item>
-        <ion-label position="stacked" position="fixed">Nome</ion-label>
-        <ion-input formControlName="name" required placeholder="Inserire il nome"> </ion-input>
-      </ion-item>
-      <ion-item *ngIf="firstStep.controls['name'].errors as errors">
-        <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked" position="fixed">Email</ion-label>
-        <ion-input formControlName="email" required placeholder="Inserire la email" [disabled]="disable.indexOf('email')> -1"> </ion-input>
-      </ion-item>
-      <ion-item *ngIf="firstStep.controls['email'].errors as errors">
-        <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
-      </ion-item>
-      <ion-grid *ngIf="buttons">
-        <ion-row>
-          <ion-col size="8">
-          </ion-col>
-          <ion-col>
-            <ion-button [disabled]="firstStep.invalid" (click)="next.emit()"  expand="full">
-              <ion-icon name="chevron-forward"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </form>
-    `,
   selector: 'pap-first-step-signup-form',
+  templateUrl: './first-step.component.html',
+  styleUrls: ['./first-step.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class firstStepSignupComponent {
-  firstStep: UntypedFormGroup = this._formProvider.getForm().get('firstStep') as UntypedFormGroup;
-  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+export class firstStepSignupComponent implements OnInit {
   @Input() buttons = true;
   @Input() disable: string[] = [];
+  @Output() next: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private _formProvider: FormProvider) {}
+  firstStep: UntypedFormGroup;
+
+  constructor(private _parent: FormGroupDirective) {}
+
+  ngOnInit(): void {
+    this.firstStep = this._parent.form.get('firstStep') as UntypedFormGroup;
+  }
 }

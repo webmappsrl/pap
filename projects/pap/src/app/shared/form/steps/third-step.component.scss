@@ -1,0 +1,51 @@
+pap-third-step-signup-form {
+  ion-radio {
+    --border-radius: 4px;
+    --inner-border-radius: 4px;
+
+    --color: #ddd;
+    --color-checked: var(--ion-color-primary);
+  }
+  ion-item-group {
+    margin-bottom: 20px;
+  }
+  .address-card {
+    --color: white;
+    --background: white;
+    margin: 10px !important;
+    ion-item {
+      --background: white;
+    }
+    .map-container {
+      position: relative;
+      .leaflet-control-zoom {
+        display: none;
+      }
+      pap-map {
+        height: 200px;
+        position: relative;
+      }
+    }
+  }
+  ion-radio.ios {
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid #ddd;
+    border-radius: 4px;
+  }
+  pap-form-location {
+    max-height: 200px;
+  }
+  .radio-checked.ios {
+    border-color: #6815ec;
+  }
+  .pap-first-step-signup-form-address-map {
+    width: 100%;
+    height: 100px;
+    padding-bottom: 10px;
+  }
+  .scrollable {
+    padding-bottom: 42px;
+  }
+}

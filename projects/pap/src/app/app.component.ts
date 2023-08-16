@@ -6,6 +6,7 @@ import {loadCalendars} from './features/calendar/state/calendar.actions';
 import {loadTrashBooks} from './features/trash-book/state/trash-book.actions';
 import {BroadcastNotificationService} from './shared/services/broadcast-notification.service';
 import {LocalNotificationService} from './shared/services/local-notification.service';
+import {loadConfiniZone} from './shared/map/state/map.actions';
 
 @Component({
   selector: 'pap-root',
@@ -21,5 +22,6 @@ export class AppComponent {
     this._store.dispatch(loadAuths());
     this._store.dispatch(loadTrashBooks());
     this._store.dispatch(loadCalendars());
+    this._store.dispatch(loadConfiniZone());
   }
 }

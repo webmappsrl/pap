@@ -1,0 +1,22 @@
+pap-first-step-signup-form {
+  ion-grid {
+    padding: 0;
+  }
+  .leaflet-control-container {
+    display: none;
+  }
+  .pap-first-step-signup-form-add-address {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+  .pap-first-step-signup-form-remove-address {
+    margin-left: 10px;
+  }
+
+  .pap-first-step-signup-form-view-address {
+    color: var(--ion-color-medium) !important;
+  }
+  .pap-first-step-signup-form-address-container {
+    max-height: calc(100vh - 490px);
+  }
+}

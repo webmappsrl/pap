@@ -25,9 +25,9 @@ export class LocalNotificationService {
   private _getBodyNotificationFromCalendarRows(calendarRow: CalendarRow): string {
     let body = '';
     // `${calendarRow.trash_objects!.map(f => f.name).toString()}`
-    if (calendarRow.trash_objects) {
-      calendarRow.trash_objects.forEach(trashObj => {
-        body += `${trashObj.name}, `;
+    if (calendarRow.trash_types) {
+      calendarRow.trash_types.forEach(trashObj => {
+        body += `${trashObj.name['it']}, `;
       });
     }
     body += `esporre i sacchetti dalle ore ${calendarRow.start_time} alle ore ${calendarRow.stop_time}`;
@@ -41,53 +41,55 @@ export class LocalNotificationService {
   private async _scheduleNotifications(): Promise<void> {
     setTimeout(() => {
       this.calendarView$
-        .pipe(filter(p => p != null && p.calendar != null))
+        .pipe(filter(p => p != null && p.calendars != null))
         .subscribe(async calendarView => {
-          const calendar = calendarView.calendar!;
-          const calendarDates = Object.keys(calendar);
-          const notifications: LocalNotificationSchema[] = [];
-          calendarDates
-            .filter(cDate => differenceInCalendarDays(new Date(cDate), new Date()) > 0)
-            .forEach(calendarDate => {
-              const calendarRows: CalendarRow[] = calendar![calendarDate];
-              const currentDate = new Date();
-              currentDate.setMinutes(currentDate.getMinutes() + 1);
-              const atDate = new Date(calendarDate);
+          const calendars = calendarView.calendars!;
+          calendars.forEach(async calendar => {
+            const calendarDates = Object.keys(calendar);
+            const notifications: LocalNotificationSchema[] = [];
+            calendarDates
+              .filter(cDate => differenceInCalendarDays(new Date(cDate), new Date()) > 0)
+              .forEach(calendarDate => {
+                const calendarRows: CalendarRow[] = calendar.calendar![calendarDate];
+                const currentDate = new Date();
+                currentDate.setMinutes(currentDate.getMinutes() + 1);
+                const atDate = new Date(calendarDate);
 
-              calendarRows.forEach(calendarRow => {
-                const startHour = +calendarRow.start_time.split(':')[0];
-                const startMinute = +calendarRow.start_time.split(':')[1];
-                const startDate = atDate.setHours(startHour, startMinute);
-                const at = subHours(startDate, 7);
-                const body = this._getBodyNotificationFromCalendarRows(calendarRow);
-                notifications.push({
-                  id: +`${at.getTime()}`.toString().slice(0, 8),
-                  title: 'Raccolta differenziata',
-                  body,
-                  largeBody: 'largeBody della notifica',
-                  summaryText: 'summaryText della notifica',
-                  schedule: {
-                    at,
-                    allowWhileIdle: true,
-                  },
+                calendarRows.forEach(calendarRow => {
+                  const startHour = +calendarRow.start_time.split(':')[0];
+                  const startMinute = +calendarRow.start_time.split(':')[1];
+                  const startDate = atDate.setHours(startHour, startMinute);
+                  const at = subHours(startDate, 7);
+                  const body = this._getBodyNotificationFromCalendarRows(calendarRow);
+                  notifications.push({
+                    id: +`${at.getTime()}`.toString().slice(0, 8),
+                    title: 'Raccolta differenziata',
+                    body,
+                    largeBody: 'largeBody della notifica',
+                    summaryText: 'summaryText della notifica',
+                    schedule: {
+                      at,
+                      allowWhileIdle: true,
+                    },
+                  });
+                  // console.log(`${format(at, 'dd/MM/yyyy HH:mm:ss')}: ${body} alle notifica inviata alle ${format(at, 'dd/MM/yyyy HH:mm:ss',)}`);
                 });
-                // console.log(`${format(at, 'dd/MM/yyyy HH:mm:ss')}: ${body} alle notifica inviata alle ${format(at, 'dd/MM/yyyy HH:mm:ss',)}`);
               });
-            });
-          let options: ScheduleOptions = {
-            notifications,
-          };
-          try {
-            const pendingNotification = await LocalNotifications.getPending();
-            if (pendingNotification.notifications.length > 0) {
-              await LocalNotifications.cancel({notifications: pendingNotification.notifications});
+            let options: ScheduleOptions = {
+              notifications,
+            };
+            try {
+              const pendingNotification = await LocalNotifications.getPending();
+              if (pendingNotification.notifications.length > 0) {
+                await LocalNotifications.cancel({notifications: pendingNotification.notifications});
+              }
+              await LocalNotifications.schedule(options);
+            } catch (e) {
+              console.log(`LocalNotifications error: ${e}`);
+              console.log(`LocalNotifications error: ${JSON.stringify(options)}`);
+              window.alert(`error: ${JSON.stringify(e)}`);
             }
-            await LocalNotifications.schedule(options);
-          } catch (e) {
-            console.log(`LocalNotifications error: ${e}`);
-            console.log(`LocalNotifications error: ${JSON.stringify(options)}`);
-            window.alert(`error: ${JSON.stringify(e)}`);
-          }
+          });
         });
     }, 2000);
   }

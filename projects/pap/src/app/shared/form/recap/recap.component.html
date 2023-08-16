@@ -17,7 +17,7 @@
               {{(currentTrashBookType$|async)?.name}}
             </ion-note>
             <ion-note class="pap-form-recap-note" *ngSwitchCase="'location'">
-              {{currentAddress$|async}}
+              {{form.controls['location_address'].value|json}}
             </ion-note>
             <ion-note class="pap-form-recap-note" *ngSwitchCase="'phone'">
               {{form.controls[item.type].value}}
@@ -25,6 +25,19 @@
             <ion-note class="pap-form-recap-note" *ngSwitchCase="'note'">
               {{form.controls[item.type].value}}
             </ion-note>
+            <ng-container *ngSwitchCase="'calendar_trash_type_id'">
+              <ng-container *ngIf="form.controls[item.type].value as value">
+                <ion-note class="pap-form-recap-note" *ngIf="value.trashDate  as trashDate">
+                  data: {{trashDate|date}}
+                </ion-note>
+                <ion-note class="pap-form-recap-note" *ngIf="value.tbType  as tbType">
+                  tipo di rifiuto: {{tbType.name.it}}
+                </ion-note>
+                <ion-note class="pap-form-recap-note" *ngIf="value.calendar  as calendar">
+                  indirizzo: {{calendar.address.address}}
+                </ion-note>
+              </ng-container>
+            </ng-container>
             <ng-container *ngSwitchCase="'image'">
               <img [src]="form.controls[item.type].value" />
             </ng-container>

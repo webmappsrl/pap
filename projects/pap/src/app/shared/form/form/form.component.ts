@@ -9,12 +9,14 @@ import {
 } from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {AlertController, IonInput, NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {filter, map, switchMap} from 'rxjs/operators';
 import {AppState} from '../../../core/core.state';
+import {selectCalendarState} from '../../../features/calendar/state/calendar.selectors';
 import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
+import {confiniZone} from '../../map/state/map.selectors';
 import {TicketFormConf, TicketFormStep} from '../../models/form.model';
 import {resetTicket, sendTicket} from '../state/form.actions';
 import {
@@ -44,6 +46,10 @@ export class FormComponent implements OnDestroy {
 
       const formControl = new UntypedFormControl('', validators);
       this.ticketForm.addControl(step.type, formControl);
+      if (step.type === 'location') {
+        const formControl = new UntypedFormControl('', validators);
+        this.ticketForm.addControl('location_address', formControl);
+      }
       this.trashBookTypesOpts$ = this._store.pipe(
         select(trashBookTypes),
         map(trashBookTypes =>
@@ -58,6 +64,11 @@ export class FormComponent implements OnDestroy {
   @ViewChild('focusInput') focusInput!: IonInput;
 
   alertEvt$: EventEmitter<any> = new EventEmitter<any>();
+  calendars$ = this._store.pipe(select(selectCalendarState)).pipe(
+    filter(c => c != null),
+    map(calendarView => calendarView.calendars),
+  );
+  confiniZone$: Observable<any> = this._store.select(confiniZone);
   currentTrashbookType$: Observable<TrashBookType | undefined> = this._store.pipe(
     select(currentTrashBookType),
   );
@@ -132,10 +143,6 @@ export class FormComponent implements OnDestroy {
     return !formControl.invalid;
   }
 
-  log(val: any) {
-    console.log(val);
-  }
-
   nextStep(): void {
     const nextStep = (this.pos$.value as number) + 1;
     if (nextStep < (this.ticketFormConf$.value as TicketFormConf).step.length) {
@@ -153,6 +160,20 @@ export class FormComponent implements OnDestroy {
   }
 
   sendData(): void {
-    this._store.dispatch(sendTicket({ticket: this.ticketForm.value}));
+    let formValue = this.ticketForm.value;
+    if (formValue['calendar_trash_type_id'] != null) {
+      const calendar = formValue['calendar_trash_type_id'];
+      delete formValue['calendar_trash_type_id'];
+      if (calendar.calendar.address.id != null) {
+        formValue['address_id'] = calendar.calendar.address.id;
+      }
+      if (calendar.trashDate != null) {
+        formValue['missed_withdraw_date'] = calendar.trashDate;
+      }
+      if (calendar.tbType != null) {
+        formValue['trash_type_id'] = calendar.tbType.id;
+      }
+    }
+    this._store.dispatch(sendTicket({ticket: formValue}));
   }
 }

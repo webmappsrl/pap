@@ -48,13 +48,6 @@ export class TicketReservationComponent {
         recap: 'Note',
       },
       {
-        label:
-          "Per rendere l'operazione più rapida puoi decidere di lasciarci il tuo numero di telefono",
-        type: 'phone',
-        required: false,
-        recap: 'Telefono',
-      },
-      {
         label: '',
         type: 'recap',
         required: false,

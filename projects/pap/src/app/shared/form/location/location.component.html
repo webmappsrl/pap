@@ -1,9 +1,16 @@
+<ng-container *ngIf="(currentZone$|async) as zone; else noValidZone">
+  <ion-label color="success">{{zone.properties.label}}</ion-label>
+</ng-container>
+<ion-item>
+  <ion-input type="text" [(ngModel)]="address" placeholder="Indirizzo"></ion-input>
+</ion-item>
 <div class="pap-form-location">
   <pap-map
     class=" pap-form-location-map"
     (genericClickEvt)="mapClick($event)"
     [positionMarker]="(myPosition$|async)!"
     [center]="(myPosition$|async)!"
+    [featureCollection]="features"
   >
   </pap-map>
 
@@ -14,12 +21,8 @@
       <ion-icon slot="start" name="location-sharp"></ion-icon>
       {{ 'La mia posizione' | translate }}
     </ion-button>
-    <ng-container *ngIf="currentAddress$|async as currentAddress">
-      <h2 class="pap-form-location-title">{{ 'Indirizzo'| translate }}:</h2>
-      <span>{{currentAddress}}</span>
-    </ng-container>
-    <ng-template #skeleton>
-      <ion-skeleton-text class="pap-form-location-skeleton" animated></ion-skeleton-text>
-    </ng-template>
   </div>
 </div>
+<ng-template #noValidZone>
+  <ion-label color="danger">seleziona una zona valida</ion-label>
+</ng-template>
