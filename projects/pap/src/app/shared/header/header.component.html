@@ -1,7 +1,14 @@
 <ng-container *ngIf="(headerView$|async)?.header as view">
   <ion-toolbar class="pap-header">
     <ion-buttons slot="start">
-      <ion-back-button class="back-button" size="large" color="light"></ion-back-button>
+      <ion-back-button
+        icon="arrow-back-outline"
+        text=""
+        class="back-button"
+        size="large"
+        color="light"
+      >
+      </ion-back-button>
       <ion-menu-button color="white" *ngIf="startButton"></ion-menu-button>
       <ion-button (click)="closeModal()" *ngIf="modal" class="modal" color="light">
         <ion-icon name="arrow-back-outline" size="large"></ion-icon>

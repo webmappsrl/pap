@@ -1,12 +1,13 @@
 pap-form-status {
+  display: inline;
   width: 80%;
   ion-icon {
     color: var(--ion-color-primary);
   }
   ion-grid {
-    max-width: fit-content;
-    padding-right: 50px;
-    padding-left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     ion-col {
       margin: auto;
       text-align: center;
@@ -20,11 +21,17 @@ pap-form-status {
         color: var(--ion-color-primary-contrast);
       }
     }
+    .pap-status-row-icon {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      font-size: 13px;
+    }
     .pap-status-cancel-icon {
       width: 144px !important;
     }
     .pap-status-back-button {
-      margin-left: -40px;
+      margin-left: -50px;
     }
   }
 }

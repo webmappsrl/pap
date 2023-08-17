@@ -9,7 +9,16 @@ import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [CoreModule, AppRoutingModule, IonicModule.forRoot(), HttpClientModule, AuthModule],
+  imports: [
+    CoreModule,
+    AppRoutingModule,
+    IonicModule.forRoot({
+      rippleEffect: false,
+      mode: 'md',
+    }),
+    HttpClientModule,
+    AuthModule,
+  ],
   bootstrap: [AppComponent],
   providers: [InAppBrowser],
 })

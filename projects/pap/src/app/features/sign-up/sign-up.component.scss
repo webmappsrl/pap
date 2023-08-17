@@ -1,23 +1,27 @@
 pap-sign-up {
-  form {
-    height: 100%;
-    ion-list {
-      height: 100%;
-      .scrollable {
-        height: 80%;
-        overflow-y: auto;
-      }
-    }
-    ion-grid {
-      position: fixed;
-      z-index: 1;
-      height: 10%;
-      bottom: 10px;
-      left: 0;
-      right: 0;
-    }
+  ion-list-header {
+    font-size: 20px;
+    font-weight: 600;
   }
-  pap-form-location {
-    width: 100%;
-  }
+  // form {
+  //   height: 100%;
+  //   ion-list {
+  //     height: 100%;
+  //     .scrollable {
+  //       height: 80%;
+  //       overflow-y: auto;
+  //     }
+  //   }
+  //   ion-grid {
+  //     position: fixed;
+  //     z-index: 1;
+  //     height: 10%;
+  //     bottom: 10px;
+  //     left: 0;
+  //     right: 0;
+  //   }
+  // }
+  // pap-form-location {
+  //   width: 100%;
+  // }
 }

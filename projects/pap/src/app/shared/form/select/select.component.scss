@@ -18,6 +18,9 @@ pap-form-select {
   }
   ion-list {
     overflow: auto;
-    height: 340px;
+    height: 300px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

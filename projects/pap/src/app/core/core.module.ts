@@ -25,7 +25,10 @@ import {CalendarEffects} from '../features/calendar/state/calendar.effects';
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      rippleEffect: false,
+      mode: 'md',
+    }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forRoot(reducers, {}),
     StoreModule.forFeature(fromTrashBook.trashBookFeatureKey, fromTrashBook.reducer),
@@ -33,7 +36,10 @@ import {CalendarEffects} from '../features/calendar/state/calendar.effects';
     StoreModule.forFeature(fromTrashBook.trashBookFeatureKey, fromTrashBook.reducer),
     StoreModule.forFeature(fromMap.mapFeatureKey, fromMap.reducer),
     EffectsModule.forRoot([LayoutEffects, TrashBookEffects, MapEffects, CalendarEffects]),
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      rippleEffect: false,
+      mode: 'md',
+    }),
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   exports: [LayoutComponent],

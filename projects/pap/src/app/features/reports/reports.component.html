@@ -7,16 +7,6 @@
       <ion-card-title>I miei ticket</ion-card-title>
     </ion-card-header>
     <ng-container *ngIf="reportsView$|async as reports">
-      <ion-grid>
-        <ion-row>
-          <ion-col> </ion-col>
-          <ion-col size="8" class="ion-align-self-center">
-            <img src="/assets/images/logo.jpg" />
-          </ion-col>
-          <ion-col> </ion-col>
-        </ion-row>
-        <ion-row> </ion-row>
-      </ion-grid>
       <ion-list>
         <ion-item
           *ngFor="let report of reports"
@@ -32,11 +22,7 @@
           </ion-avatar>
           <ion-label class="pap-reports-label-info" slot="end">
             <span>Ticket {{report.ticket_type}}</span>
-            <div
-              class="pap-reports-item"
-              *ngIf="report.trashType as trashType"
-              (click)="openTrashTypeDetail(trashType, $event)"
-            >
+            <div class="pap-reports-item" *ngIf="report.trashType as trashType">
               <ion-icon slot="end" [ngStyle]="{color:trashType.color}" name="ellipse"></ion-icon>
               {{trashType.name}}
             </div>

@@ -8,8 +8,8 @@
         {{(item.recap||'') | translate}}
       </span>
       <ul>
-        <li class="pap-form-recap-note-internal">
-          <ng-container [ngSwitch]="item.type">
+        <ng-container [ngSwitch]="item.type">
+          <li class="pap-form-recap-note-internal">
             <ion-note class="pap-form-recap-note" *ngSwitchCase="'text'">
               {{form.controls[item.type].value}}
             </ion-note>
@@ -25,27 +25,40 @@
             <ion-note class="pap-form-recap-note" *ngSwitchCase="'note'">
               {{form.controls[item.type].value}}
             </ion-note>
+
             <ng-container *ngSwitchCase="'calendar_trash_type_id'">
               <ng-container *ngIf="form.controls[item.type].value as value">
-                <ion-note class="pap-form-recap-note" *ngIf="value.trashDate  as trashDate">
-                  data: {{trashDate|date}}
-                </ion-note>
-                <ion-note class="pap-form-recap-note" *ngIf="value.tbType  as tbType">
-                  tipo di rifiuto: {{tbType.name.it}}
-                </ion-note>
-                <ion-note class="pap-form-recap-note" *ngIf="value.calendar  as calendar">
-                  indirizzo: {{calendar.address.address}}
-                </ion-note>
+                <ul>
+                  <li>
+                    <ion-label lines="none"> data: </ion-label>
+                    <ion-note class="pap-form-recap-note" *ngIf="value.trashDate  as trashDate">
+                      {{trashDate|date}}
+                    </ion-note>
+                  </li>
+                  <li>
+                    <ion-label lines="none"> tipo di rifiuto: </ion-label>
+                    <ion-note class="pap-form-recap-note" *ngIf="value.tbType  as tbType">
+                      {{tbType.name.it}}
+                    </ion-note>
+                  </li>
+                  <li>
+                    <ion-label lines="none"> indirizzo: </ion-label>
+                    <ion-note class="pap-form-recap-note" *ngIf="value.calendar  as calendar">
+                      {{calendar.address.address}}
+                    </ion-note>
+                  </li>
+                </ul>
               </ng-container>
             </ng-container>
+
             <ng-container *ngSwitchCase="'image'">
               <img [src]="form.controls[item.type].value" />
             </ng-container>
             <ion-note class="pap-form-recap-note" *ngSwitchDefault class="pap-form-recap-note">
               {{'messages.notInserted' | translate}}
             </ion-note>
-          </ng-container>
-        </li>
+          </li>
+        </ng-container>
       </ul>
     </li>
   </ng-container>

@@ -70,18 +70,7 @@ pap-reports {
       font-style: italic;
     }
   }
-  ion-card {
-    img {
-      padding: 25px;
-      display: none;
-      width: 100%;
-    }
-    ion-list {
-      margin-top: -170px !important;
-    }
-  }
   ion-card-header {
-    margin-top: 150px;
     flex: 0 1 auto;
     align-self: stretch;
   }
@@ -89,15 +78,19 @@ pap-reports {
     font-size: 22px;
     font-weight: 500;
     line-height: 23.44px;
-    padding: 16px;
-    position: absolute;
-    bottom: 130px;
-    left: 4px;
   }
   ion-icon {
     margin-right: 5px;
   }
   .input-wrapper {
     flex: 0 1 0% !important;
+  }
+  ion-list {
+    overflow-y: auto;
+    height: 95%;
+    background-color: var(--ion-color-light) !important;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

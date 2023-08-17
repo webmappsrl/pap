@@ -45,6 +45,9 @@ pap-settings {
       ion-list {
         height: inherit;
         overflow: auto;
+        &::-webkit-scrollbar {
+          display: none;
+        }
       }
     }
   }
@@ -59,4 +62,7 @@ pap-settings {
   .scrollable {
     padding-bottom: 42px;
   }
+  // ion-list {
+  //   background-color: var(--ion-color-light) !important;
+  // }
 }

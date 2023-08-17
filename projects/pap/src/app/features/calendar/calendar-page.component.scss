@@ -1,5 +1,10 @@
 pap-calendar-page {
   ion-list {
+    overflow-y: auto;
+    height: 95%;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     ion-item {
       margin-bottom: 15px;
       width: 100%;
@@ -19,6 +24,9 @@ pap-calendar-page {
         height: 0px;
       }
     }
+  }
+  ion-card {
+    height: calc(100% - 80px);
   }
   ion-card-header {
     display: flex;

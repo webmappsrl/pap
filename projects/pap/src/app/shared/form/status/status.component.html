@@ -1,5 +1,5 @@
 <ion-grid>
-  <ion-row>
+  <ion-row class="pap-status-row">
     <ion-col size="2" sizeSm="4" sizeMd="2">
       <ion-button
         class="pap-status-back-button"
@@ -11,7 +11,7 @@
       </ion-button>
     </ion-col>
     <ion-col size="8" sizeSm="4" sizeMd="8">
-      <ion-row>
+      <ion-row class="pap-status-row-icon">
         <ion-col *ngFor="let s of conf.step;let idx=index">
           <ion-icon src="assets/icons/filled-circle.svg" *ngIf="idx === pos"></ion-icon>
           <ion-icon src="assets/icons/empty-circle.svg" *ngIf="idx !== pos"></ion-icon>

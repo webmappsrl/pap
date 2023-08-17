@@ -62,6 +62,7 @@ pap-form {
   }
   ion-card {
     overflow: unset !important;
+    max-height: calc(100% - 21%);
     form {
       div {
         margin-bottom: 10px;
@@ -93,6 +94,7 @@ pap-form {
     bottom: 0;
     left: 0;
     right: 0;
+    padding: 0px 55px 0px 55px;
   }
   pap-map {
     padding: 15px;

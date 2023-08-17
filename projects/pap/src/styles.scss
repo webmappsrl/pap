@@ -11,7 +11,6 @@ body {
 ion-card {
   display: grid;
   max-width: 93%;
-  overflow-y: auto;
   margin: auto !important;
   top: 15px;
   box-shadow: 0px 2px 3px 0px #00000033;
@@ -43,6 +42,29 @@ ion-footer {
 .alert-wrapper {
   border-radius: 30px !important;
 }
+pap-abandonment-ticket,
+pap-info-ticket,
+pap-report-ticket,
+pap-ticket-reservation {
+  pap-header {
+    ion-buttons {
+      display: none !important;
+    }
+  }
+}
+ion-radio {
+  --border-radius: 4px;
+  --inner-border-radius: 4px;
+  --color: #ddd;
+  --color-checked: var(--ion-color-primary);
+}
+ion-modal {
+  --width: 100%;
+  --height: 100%;
+}
+.alert-button {
+  background-color: var(--ion-color-primary-contrast);
+}
 /************ end global style ***************/
 
 /**************** font *************/
@@ -63,7 +85,6 @@ ion-footer {
   height: calc(100% - constant(safe-area-inset-top)) !important;
   height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
 }
-
 /************ start auth guard NO_LOGGED ***************/
 .pap-alert-login {
   .alert-title {
@@ -163,22 +184,6 @@ ion-footer {
           border-bottom-color: var(--ion-color-light);
         }
       }
-      .action-sheet-group-cancel {
-        .action-sheet-button {
-          // CHIUDI
-          flex: 0 1 auto;
-          align-self: flex-end;
-          position: absolute;
-          bottom: 208px;
-          right: 0px;
-          width: 85px;
-          font-weight: 500;
-          font-size: 14px;
-          line-height: 16.41px;
-          border-top: 0px solid;
-          border-bottom: 0px solid;
-        }
-      }
     }
   }
 }
@@ -235,7 +240,6 @@ ion-footer {
   }
 }
 /************ end pap-status-alert ***************/
-
 /************ start pap-status-alert-confirmation ***************/
 .pap-status-alert-confirmation {
   .pap-status-alert-confirmation-close {
@@ -266,9 +270,9 @@ ion-footer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    max-height: 100% !important;
+    height: 570px !important;
     ion-item {
-      padding: 5px 20px 20px 20px;
+      padding: 2px 20px 2px 20px;
     }
     .pap-location-modal-address-label {
       font-size: 30px;
@@ -283,10 +287,20 @@ ion-footer {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    margin-top: 50px;
+    margin-top: 30px;
   }
   pap-form-location {
     width: 100% !important;
+  }
+  pap-map {
+    height: 70% !important;
+  }
+  pap-form-location {
+    .pap-form-location-infocontainer {
+      ion-button {
+        margin-top: -80px !important;
+      }
+    }
   }
 }
 /************ end pap-location-modal ***************/

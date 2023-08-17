@@ -14,36 +14,40 @@
       </ion-select>
     </ion-item>
     <ng-container *ngIf="currentCalendar$|async as currentCalendar">
-      <ion-item *ngFor="let item of currentCalendar.calendar| keyvalue" class="pap-calendar-item">
-        <ion-label slot="start" class="pap-calendar-date">
-          <div class="pap-calendar-monthday">{{item.key|papDate: 'd' }}</div>
-          <div class="pap-calendar-monthname">{{item.key|papDate: 'MMMM' }}</div>
-        </ion-label>
-        <div class="pap-calendar-trash">
-          <div class="pap-calendar-weekday">{{item.key|papDate: 'EEEE' }}</div>
-          <div div *ngFor="let trash of item.value" class="pap-calendar-event">
-            <div class="pap-calendar-time">Dalle {{trash.start_time}} alle {{trash.stop_time}}</div>
-            <div>
-              <div
-                *ngFor="let trashType of trash.trash_types"
-                (click)="info(item.key,trashType)"
-                class="pap-calendar-trashlist"
-              >
-                <ion-icon
-                  class="trash-book-details-icon"
-                  slot="end"
-                  [ngStyle]="{color:trashType?.color}"
-                  name="ellipse"
-                ></ion-icon>
-                {{trashType.name['it']}}
+      <div class="pap-calendar-scrollable-item">
+        <ion-item *ngFor="let item of currentCalendar.calendar| keyvalue" class="pap-calendar-item">
+          <ion-label slot="start" class="pap-calendar-date">
+            <div class="pap-calendar-monthday">{{item.key|papDate: 'd' }}</div>
+            <div class="pap-calendar-monthname">{{item.key|papDate: 'MMMM' }}</div>
+          </ion-label>
+          <div class="pap-calendar-trash">
+            <div class="pap-calendar-weekday">{{item.key|papDate: 'EEEE' }}</div>
+            <div div *ngFor="let trash of item.value" class="pap-calendar-event">
+              <div class="pap-calendar-time">
+                Dalle {{trash.start_time}} alle {{trash.stop_time}}
+              </div>
+              <div>
+                <div
+                  *ngFor="let trashType of trash.trash_types"
+                  (click)="info(item.key,trashType)"
+                  class="pap-calendar-trashlist"
+                >
+                  <ion-icon
+                    class="trash-book-details-icon"
+                    slot="end"
+                    [ngStyle]="{color:trashType?.color}"
+                    name="ellipse"
+                  ></ion-icon>
+                  {{trashType.name['it']}}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="pap-calendar-information-circle">
-          <ion-icon size="large" color="primary" slot="end" name="information-circle"></ion-icon>
-        </div>
-      </ion-item>
+          <div class="pap-calendar-information-circle">
+            <ion-icon size="large" color="primary" slot="end" name="information-circle"></ion-icon>
+          </div>
+        </ion-item>
+      </div>
     </ng-container>
   </ion-list>
 </ion-card>

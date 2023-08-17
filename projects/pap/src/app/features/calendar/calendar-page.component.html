@@ -20,9 +20,6 @@
             >Vedi</ion-button
           >
         </div>
-      </ion-card-header>
-
-      <ion-list lines="full">
         <ion-item>
           <ion-select placeholder="Select address" (ionChange)="selectAddress($event)" [value]="0">
             <ion-select-option
@@ -32,6 +29,9 @@
             >
           </ion-select>
         </ion-item>
+      </ion-card-header>
+
+      <ion-list lines="full">
         <ng-container *ngIf="currentAddress$|async as currentAddress">
           <ion-item
             *ngFor="let item of currentAddress.calendar| keyvalue"

@@ -4,7 +4,7 @@
 
 <ion-content padding class="pap-home">
   <ion-grid>
-    <ion-list>
+    <ion-list lines="none">
       <ng-container *ngIf="homeView$|async as view">
         <ng-container *ngFor="let button of view.buttons">
           <ion-item *ngIf="!button.hideInHome" size="4">
