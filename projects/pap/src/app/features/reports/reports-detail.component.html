@@ -24,6 +24,21 @@
         </ul>
       </ion-item>
 
+      <ion-item lines="none" *ngIf="rep.location_address as locationAddress">
+        <ul class="pap-reports-detail-outer-list">
+          <li>
+            <ion-label>Indirizzo:</ion-label>
+            <ul class="pap-reports-detail-inner-list">
+              <li>
+                <ion-note class="pap-form-recap-note">
+                  {{rep.location_address}}
+                </ion-note>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </ion-item>
+
       <ion-accordion-group *ngIf="rep.location as loc" [value]="['location']">
         <ion-accordion value="location">
           <ion-item slot="header" color="light">

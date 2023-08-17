@@ -26,6 +26,7 @@ export interface Ticket {
   trash_type_id: number; // (FK recuperato da http://portapporta.webmapp.it/c/4/trash_types.json)
   user_id: number; // (FK id dell'utente loggato)
   location: number[]; // (long,lat)
+  location_address: string;
   image?: string; // (base64)
   note?: string;
   phone?: string;
