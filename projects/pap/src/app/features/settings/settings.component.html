@@ -3,32 +3,32 @@
 
   <ion-content padding class="pap-settings">
     <ion-card class="main-card">
-      <ion-segment [(ngModel)]="currentStep">
-        <ion-segment-button value="firstStep" (click)="step$.next(0)">
+      <ion-segment value="firstStep">
+        <ion-segment-button value="firstStep" (click)="currentStep$.next('firstStep')">
           <ion-label>Generali</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="secondStep" (click)="step$.next(1)">
+        <ion-segment-button value="secondStep" (click)="currentStep$.next('secondStep')">
           <ion-label>Password</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="thirdStep" (click)="step$.next(2)">
+        <ion-segment-button value="thirdStep" (click)="currentStep$.next('thirdStep')">
           <ion-label>Indirizzi</ion-label>
         </ion-segment-button>
       </ion-segment>
 
       <form [formGroup]="(settingsForm)!">
         <ion-list>
-          <ng-container [ngSwitch]="step$|async">
+          <ng-container [ngSwitch]="currentStep$|async">
             <pap-first-step-signup-form
-              *ngSwitchCase="0"
+              *ngSwitchCase="'firstStep'"
               [buttons]="false"
               [disable]="['email']"
             ></pap-first-step-signup-form>
             <pap-second-step-signup-form
-              *ngSwitchCase="1"
+              *ngSwitchCase="'secondStep'"
               [buttons]="false"
             ></pap-second-step-signup-form>
             <pap-third-step-signup-form
-              *ngSwitchCase="2"
+              *ngSwitchCase="'thirdStep'"
               [buttons]="false"
             ></pap-third-step-signup-form>
           </ng-container>
@@ -36,7 +36,7 @@
       </form>
     </ion-card>
     <ion-grid class="footer">
-      <ion-row *ngIf="currentStep === 'thirdStep'">
+      <ion-row *ngIf="(currentStep$|async) === 'thirdStep'">
         <ion-col class="ion-align-self-start"> </ion-col>
         <ion-col class="ion-align-self-center">
           <ion-button (click)="openModalLocation()" expand="block" shape="round"
@@ -64,7 +64,7 @@
           </ion-button>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="currentStep === 'firstStep'">
+      <ion-row *ngIf="(currentStep$|async) === 'firstStep'">
         <ion-col class="ion-align-self-start"> </ion-col>
         <ion-col class="ion-align-self-center" size="8">
           <ion-button fill="outline" shape="round" expand="full" (click)="delete()">

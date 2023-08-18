@@ -1,39 +1,52 @@
 import {Injectable} from '@angular/core';
 import {Capacitor} from '@capacitor/core';
 import {PushNotifications} from '@capacitor/push-notifications';
+import {Store, select} from '@ngrx/store';
+import {AppState} from '../../core/core.state';
+import {isLogged} from '../../core/auth/state/auth.selectors';
+import {filter, switchMap, take} from 'rxjs/operators';
+import {AuthService} from '../../core/auth/state/auth.service';
+import {from} from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class BroadcastNotificationService {
-  constructor() {
+  isLogged$ = this._store.pipe(select(isLogged));
+
+  constructor(private _store: Store<AppState>, private _authSvc: AuthService) {
     if (Capacitor.getPlatform() !== 'web') {
-      this._registerNotifications();
-      setTimeout(async () => {
-        await PushNotifications.addListener('registration', token => {
-          console.info('Registration token: ', token.value);
-          alert('Push registration success, token: ' + token.value);
-        });
+      this.isLogged$
+        .pipe(
+          filter(l => l),
+          take(1),
+        )
+        .subscribe(async () => {
+          alert('logged');
+          await this._registerNotifications();
+          await PushNotifications.addListener('pushNotificationReceived', notification => {
+            console.log('Push notification received: ', notification);
+            alert('Push received: ' + JSON.stringify(notification));
+          });
 
-        await PushNotifications.addListener('registrationError', err => {
-          console.error('Registration error: ', err.error);
-          alert('Error on registration: ' + JSON.stringify(err));
+          await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
+            console.log(
+              'Push notification action performed',
+              notification.actionId,
+              notification.inputValue,
+            );
+            alert('Push action performed: ' + JSON.stringify(notification));
+          });
+          await PushNotifications.addListener('registration', token => {
+            console.info('Registration token: ', token.value);
+            alert('Push registration success, token: ' + token.value);
+            this._authSvc.update({fcm_token: token.value}).pipe(take(1)).subscribe();
+          });
+          await PushNotifications.addListener('registrationError', err => {
+            console.error('Registration error: ', err.error);
+            alert('Error on registration: ' + JSON.stringify(err));
+          });
+          this._getDeliveredNotifications();
         });
-
-        await PushNotifications.addListener('pushNotificationReceived', notification => {
-          console.log('Push notification received: ', notification);
-          alert('Push received: ' + JSON.stringify(notification));
-        });
-
-        await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-          console.log(
-            'Push notification action performed',
-            notification.actionId,
-            notification.inputValue,
-          );
-          alert('Push action performed: ' + JSON.stringify(notification));
-        });
-        this._getDeliveredNotifications();
-      }, 500);
     }
   }
 
@@ -58,6 +71,6 @@ export class BroadcastNotificationService {
       throw new Error('User denied permissions!');
     }
 
-    await PushNotifications.register();
+    return PushNotifications.register();
   }
 }

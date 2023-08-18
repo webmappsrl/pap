@@ -48,7 +48,7 @@ export class AuthService {
       `${env.api}/register`,
       {
         ...credential,
-        company_id: 8,
+        app_company_id: env.companyId,
       },
       {
         headers: new HttpHeaders({

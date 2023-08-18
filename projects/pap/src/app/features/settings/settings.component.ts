@@ -45,11 +45,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _alertSub: Subscription = Subscription.EMPTY;
   private _settingsFormSub: Subscription = Subscription.EMPTY;
 
-  currentStep = 'firstStep';
   error$: Observable<string | false | undefined> = this._store.select(error);
   settingsForm: UntypedFormGroup;
   settingsView$ = this._store.pipe(select(settingView));
-  step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  currentStep$: BehaviorSubject<string> = new BehaviorSubject<string>('firstStep');
   confiniZone$: Observable<any> = this._store.select(confiniZone);
   private _addressFormArray: UntypedFormArray = this._formBuilder.array([]);
   constructor(
@@ -147,7 +146,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   isDisabled(): boolean {
-    const ctrl = this.settingsForm.controls[this.currentStep];
+    const ctrl = this.settingsForm.controls[this.currentStep$.value];
 
     return !ctrl.valid;
   }
@@ -229,7 +228,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   update() {
     let updates: {[key: string]: any} | null = {};
     const firstStep = this.settingsForm.get('firstStep');
-    switch (this.currentStep) {
+    switch (this.currentStep$.value) {
       case 'firstStep':
         if (firstStep != null) {
           const formControlNames = Object.keys((firstStep as any).controls as string[]);

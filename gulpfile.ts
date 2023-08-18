@@ -5,8 +5,8 @@ import * as fsExtra from 'fs-extra';
 import axios from 'axios';
 import {exec} from 'child_process';
 import {CapacitorConfig} from '@capacitor/cli';
-// const api = 'https://dev.portapporta.webmapp.it/api';
-const api = 'http://127.0.0.1:8000/api/v1';
+const api = 'https://dev.portapporta.webmapp.it/api/v1';
+// const api = 'http://127.0.0.1:8000/api/v1';
 interface Config {
   id: number;
   name: string;
@@ -140,11 +140,26 @@ gulp.task('init', async () => {
   await execCmd(`npm install --force`);
   await execCmd(`npx cap add ios`);
   await execCmd(`cd ios/App && pod install`);
+  await ionicUpdateIosSetup();
   await execCmd(`npx cap add android`);
 });
 // Task predefinito
 gulp.task('default', gulp.series('build'));
-
+const ionicUpdateIosSetup = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    try {
+      fsExtra.copyFile('./ios-custom/Podfile', `./ios/App/Podfile`);
+      console.log(`update Podfile`);
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      fsExtra.copyFile('./ios-custom/AppDelegate.swift', `./ios/App/App/AppDelegate.swift`);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+};
 async function setDevEnvironment(paths: Paths, config: Config): Promise<void> {
   const environment = {
     production: true,
