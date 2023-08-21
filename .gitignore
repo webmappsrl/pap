@@ -60,3 +60,4 @@ projects/pap/src/assets/images/header.png
 projects/pap/src/assets/icons/logo.png
 
 ios-custom/GoogleService-Info.plist
+ios-custom/google-services.json

@@ -138,10 +138,10 @@ gulp.task('init', async () => {
   await execCmd(`rm -rf resources`);
   await execCmd(`rm -rf icons`);
   await execCmd(`npm install --force`);
+  await execCmd(`npx cap add android`);
   await execCmd(`npx cap add ios`);
   await execCmd(`cd ios/App && pod install`);
   await ionicUpdateIosSetup();
-  await execCmd(`npx cap add android`);
 });
 // Task predefinito
 gulp.task('default', gulp.series('build'));
