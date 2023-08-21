@@ -158,6 +158,11 @@ const ionicUpdateIosSetup = (): Promise<void> => {
     } catch (error) {
       console.log(error);
     }
+    try {
+      fsExtra.copyFile('./ios-custom/info.plist', `./ios/App/App/info.plist`);
+    } catch (error) {
+      console.log(error);
+    }
   });
 };
 async function setDevEnvironment(paths: Paths, config: Config): Promise<void> {
