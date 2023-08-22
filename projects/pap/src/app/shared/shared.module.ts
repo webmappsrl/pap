@@ -22,7 +22,7 @@ import {SignUpEffects} from './form/state/sign-up.effects';
 import * as fromSignUp from './form/state/sign-up.reducer';
 import {firstStepSignupComponent} from './form/steps/first-step.component';
 import {secondStepSignupComponent} from './form/steps/second-step.component';
-import {thirdStepSignupComponent} from './form/steps/third-step.component';
+import {thirdStepComponent} from './form/steps/third-step.component';
 import {HeaderComponent} from './header/header.component';
 import {HeaderEffects} from './header/state/header.effects';
 import * as fromHeader from './header/state/header.reducer';
@@ -38,6 +38,7 @@ import {CalendarSelectComponent} from './form/calendar-select/calendar-select.co
 import {CalendarComponent} from './components/calendar/calendar.component';
 import {SortPipe} from './pipes/sort.pipe';
 import {FilterByPipe} from './pipes/filter-by.pipe';
+import {thirdStepSignupComponent} from './form/steps/third-step-signup.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -50,6 +51,7 @@ import {FilterByPipe} from './pipes/filter-by.pipe';
     FormComponent,
     firstStepSignupComponent,
     secondStepSignupComponent,
+    thirdStepComponent,
     thirdStepSignupComponent,
     LocationComponent,
     LocationModalComponent,
@@ -106,10 +108,12 @@ import {FilterByPipe} from './pipes/filter-by.pipe';
     SortPipe,
     firstStepSignupComponent,
     secondStepSignupComponent,
+    thirdStepComponent,
     thirdStepSignupComponent,
     GetZoneFromLocationPipe,
     CalendarSelectComponent,
     CalendarComponent,
+    LocationModalComponent,
   ],
 })
 export class SharedModule {}

@@ -21,83 +21,49 @@ import {loadCalendarSettings} from '../../../features/settings/state/settings.ac
 import {calendarSettings} from '../../../features/settings/state/settings.selectors';
 import {SettingsService} from '../../../features/settings/state/settings.service';
 import {loadConfiniZone} from '../../map/state/map.actions';
-import {confiniZone} from '../../map/state/map.selectors';
+import {confiniZone, currentZone} from '../../map/state/map.selectors';
 
 @Component({
-  selector: 'pap-third-step-form',
-  templateUrl: './third-step.component.html',
-  styleUrls: ['./third-step.component.scss'],
+  selector: 'pap-third-step-signup-form',
+  templateUrl: './third-step-signup.component.html',
+  styleUrls: ['./third-step-signup.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class thirdStepComponent implements OnInit {
+export class thirdStepSignupComponent implements OnInit {
+  currentZone$: Observable<any> = this._store.select(currentZone);
+  confiniZone$: Observable<any> = this._store.select(confiniZone);
   get addresses() {
     return this.thirdStep.get('addresses') as FormArray;
   }
-
   @Input() buttons = true;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild(IonModal) modal!: IonModal;
 
-  calendarSettings$: Observable<any> = this._store.select(calendarSettings);
-  confiniZone$: Observable<any> = this._store.select(confiniZone);
   thirdStep: UntypedFormGroup;
-
+  availableUserTypes: any[];
   constructor(
     private _store: Store<AppState>,
     private _settingSvc: SettingsService,
-    private _cdr: ChangeDetectorRef,
-    private _settingsSvc: SettingsService,
-    private _alertCtrl: AlertController,
     private _parent: FormGroupDirective,
   ) {
     this._store.dispatch(loadCalendarSettings());
     this._store.dispatch(loadConfiniZone());
   }
 
-  deleteAddress(address: any): void {
-    if (address.id != null) {
-      this._settingsSvc
-        .deleteAddress(address.id)
-        .pipe(
-          take(1),
-          map(res => {
-            if (res.success) {
-              return res.data.address;
-            } else {
-              return null;
-            }
-          }),
-          map(address => {
-            if (address == null) {
-              return this._alertCtrl.create({
-                header: 'Cancellazione fallita',
-                message: 'riprova in un secondo momento',
-                buttons: ['ok'],
-              });
-            } else {
-              this._cdr.detectChanges();
-              return this._alertCtrl.create({
-                header: 'Cancellazione avvenuta con successo',
-                message: "L'indirizzo è stato correttamente cancellato",
-                buttons: ['ok'],
-              });
-            }
-          }),
-        )
-        .subscribe(async alert => {
-          (await alert).present();
-          this._store.dispatch(loadAuths());
-          this._store.dispatch(loadCalendarSettings());
-        });
-    }
+  setUserType(event: any): void {
+    const userTypeId = event.target.value;
+    this.thirdStep.get('user_type_id')?.setValue(userTypeId);
   }
-
   ngOnInit(): void {
     this.thirdStep = this._parent.form.get('thirdStep') as UntypedFormGroup;
   }
-
+  setAddess(event: any): void {
+    const address = event.address;
+    if (address != null) {
+      this.thirdStep.get('address')?.setValue(address);
+    }
+  }
   reset(): void {
     this.thirdStep.controls['user_type_id'].reset();
   }

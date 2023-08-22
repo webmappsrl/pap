@@ -41,16 +41,17 @@ import {SettingsService} from './state/settings.service';
   providers: [{provide: FormProvider, useExisting: SettingsComponent}],
 })
 export class SettingsComponent implements OnInit, OnDestroy {
+  private _addressFormArray: UntypedFormArray = this._formBuilder.array([]);
   private _alertEVT: EventEmitter<void> = new EventEmitter<void>();
   private _alertSub: Subscription = Subscription.EMPTY;
   private _settingsFormSub: Subscription = Subscription.EMPTY;
 
+  confiniZone$: Observable<any> = this._store.select(confiniZone);
+  currentStep$: BehaviorSubject<string> = new BehaviorSubject<string>('firstStep');
   error$: Observable<string | false | undefined> = this._store.select(error);
   settingsForm: UntypedFormGroup;
   settingsView$ = this._store.pipe(select(settingView));
-  currentStep$: BehaviorSubject<string> = new BehaviorSubject<string>('firstStep');
-  confiniZone$: Observable<any> = this._store.select(confiniZone);
-  private _addressFormArray: UntypedFormArray = this._formBuilder.array([]);
+
   constructor(
     private _alertCtrl: AlertController,
     private _store: Store<AppState>,
@@ -164,7 +165,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._store.dispatch(showButtons({show: false}));
   }
-  openModalLocation() {
+
+  openModalLocation(): void {
     this.confiniZone$
       .pipe(
         filter(f => f != null && f.length > 0),
@@ -225,6 +227,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this._store.dispatch(loadCalendarSettings());
       });
   }
+
   update() {
     let updates: {[key: string]: any} | null = {};
     const firstStep = this.settingsForm.get('firstStep');

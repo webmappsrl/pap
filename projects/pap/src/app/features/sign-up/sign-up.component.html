@@ -2,41 +2,36 @@
   <pap-header></pap-header>
 </ion-header>
 <ion-content>
-  <form [formGroup]="signUpForm">
-    <ion-card>
-      <ion-list>
-        <ion-list-header>
-          <ion-label position="stacked">Registrazione</ion-label>
-        </ion-list-header>
-        <ng-container [ngSwitch]="step$|async">
-          <!-- <pap-first-step-signup-form
-            *ngSwitchCase="0"
-            (next)="step$.next(step$.value +1)"
-          ></pap-first-step-signup-form> -->
-          <!-- <pap-second-step-signup-form
-            *ngSwitchCase="1"
-            (next)="step$.next(step$.value +1)"
-            (prev)="step$.next(step$.value -1)"
-          ></pap-second-step-signup-form>
-          <pap-third-step-signup-form
-            *ngSwitchCase="2"
-            (next)="register()"
-            (prev)="step$.next(step$.value -1)"
-          ></pap-third-step-signup-form> -->
-        </ng-container>
-        <ion-item *ngIf="error$|async as error">
-          <ion-label position="stacked" color="danger">{{error}}</ion-label>
-        </ion-item>
-      </ion-list>
-      <ion-grid>
-        <ion-col></ion-col>
-        <ion-col>
-          <ion-button shape="round" fill="outline">Registrati</ion-button>
-        </ion-col>
-        <ion-col></ion-col>
-      </ion-grid>
-    </ion-card>
-  </form>
+  <ng-container *ngIf="signUpForm!=null">
+    <form [formGroup]="signUpForm">
+      <ion-card>
+        <ion-list>
+          <ion-list-header>
+            <ion-label position="stacked">Registrazione</ion-label>
+          </ion-list-header>
+          <ng-container [ngSwitch]="step$|async">
+            <pap-first-step-signup-form
+              *ngSwitchCase="0"
+              (next)="step$.next(step$.value +1)"
+            ></pap-first-step-signup-form>
+            <pap-second-step-signup-form
+              *ngSwitchCase="1"
+              (next)="step$.next(step$.value +1)"
+              (prev)="step$.next(step$.value -1)"
+            ></pap-second-step-signup-form>
+            <pap-third-step-signup-form
+              *ngSwitchCase="2"
+              (next)="register()"
+              (prev)="step$.next(step$.value -1)"
+            ></pap-third-step-signup-form>
+          </ng-container>
+          <ion-item *ngIf="error$|async as error">
+            <ion-label position="stacked" color="danger">{{error}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </form>
+  </ng-container>
 </ion-content>
 <ion-footer collapse="fade">
   <pap-footer></pap-footer>

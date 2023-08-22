@@ -54,6 +54,9 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
       firstStep: fb.group({
         name: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
+        phone_number: [null],
+        user_code: [null],
+        fiscal_code: [null],
       }),
       secondStep: fb.group(
         {
@@ -65,9 +68,10 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
         },
       ),
       thirdStep: fb.group({
-        location: ['', [Validators.required]],
+        address: '',
+        location: [[], [Validators.required]],
         user_type_id: ['', [Validators.required]],
-        zone_id: [''],
+        zone_id: ['', [Validators.required]],
       }),
     });
     this._isLoggesSub = this._store

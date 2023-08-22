@@ -1,82 +1,82 @@
-<form [formGroup]="firstStep">
-  <ion-list lines="inset">
-    <ion-item>
-      <ion-label position="stacked">Nome</ion-label>
-      <ion-input label="Nome" formControlName="name" required placeholder="Inserire il nome">
-      </ion-input>
-    </ion-item>
-    <ion-item *ngIf="!this.firstStep.get('name')!.valid">
-      <pap-error-form-handler
-        [errors]="this.firstStep.get('name')!.errors"
-      ></pap-error-form-handler>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input
-        formControlName="email"
-        required
-        placeholder="Inserire la email"
-        [disabled]="disable.indexOf('email')> -1"
+<ng-container *ngIf="firstStep!=null">
+  <form [formGroup]="firstStep">
+    <ion-list lines="inset">
+      <ion-item>
+        <ion-label position="stacked">Nome</ion-label>
+        <ion-input label="Nome" formControlName="name" required placeholder="Inserire il nome">
+        </ion-input>
+      </ion-item>
+      <ion-item *ngIf="firstStep.get('name')!= null && firstStep.get('name')!.valid">
+        <pap-error-form-handler [errors]="firstStep.get('name')!.errors"></pap-error-form-handler>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input
+          formControlName="email"
+          required
+          placeholder="Inserire la email"
+          [disabled]="disable.indexOf('email')> -1"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item *ngIf="firstStep.get('email')!= null &&firstStep.get('email')!.valid">
+        <pap-error-form-handler [errors]="firstStep.get('email')!.errors"></pap-error-form-handler>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Telefono</ion-label>
+        <ion-input
+          formControlName="phone_number"
+          placeholder="Inserire un recapito telefonico"
+          [disabled]="disable.indexOf('phone_number')> -1"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item
+        *ngIf="firstStep.get('phone_number')!= null && firstStep.get('phone_number')!.valid"
       >
-      </ion-input>
-    </ion-item>
-    <ion-item *ngIf="!this.firstStep.get('email')!.valid">
-      <pap-error-form-handler
-        [errors]="this.firstStep.get('email')!.errors"
-      ></pap-error-form-handler>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Telefono</ion-label>
-      <ion-input
-        formControlName="phone_number"
-        placeholder="Inserire un recapito telefonico"
-        [disabled]="disable.indexOf('phone_number')> -1"
-      >
-      </ion-input>
-    </ion-item>
-    <ion-item *ngIf="!this.firstStep.get('phone_number')!.valid">
-      <pap-error-form-handler
-        [errors]="this.firstStep.get('phone_number')!.errors"
-      ></pap-error-form-handler>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Codice Utenza</ion-label>
-      <ion-input
-        formControlName="user_code"
-        placeholder="Inserire il codice utente"
-        [disabled]="disable.indexOf('user_code')> -1"
-      >
-      </ion-input>
-    </ion-item>
-    <ion-item *ngIf="!this.firstStep.get('user_code')!.valid">
-      <pap-error-form-handler
-        [errors]="this.firstStep.get('user_code')!.errors"
-      ></pap-error-form-handler>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Codice Fiscale</ion-label>
-      <ion-input
-        formControlName="fiscal_code"
-        placeholder="Inserire il codice fiscale"
-        [disabled]="disable.indexOf('fiscal_code')> -1"
-      >
-      </ion-input>
-    </ion-item>
-    <ion-item *ngIf="!this.firstStep.get('fiscal_code')!.valid">
-      <pap-error-form-handler
-        [errors]="this.firstStep.get('fiscal_code')!.errors"
-      ></pap-error-form-handler>
-    </ion-item>
-  </ion-list>
+        <pap-error-form-handler
+          [errors]="firstStep.get('phone_number')!.errors"
+        ></pap-error-form-handler>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Codice Utenza</ion-label>
+        <ion-input
+          formControlName="user_code"
+          placeholder="Inserire il codice utente"
+          [disabled]="disable.indexOf('user_code')> -1"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item *ngIf="firstStep.get('user_code')!=null &&firstStep.get('user_code')!.valid">
+        <pap-error-form-handler
+          [errors]="firstStep.get('user_code')!.errors"
+        ></pap-error-form-handler>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Codice Fiscale</ion-label>
+        <ion-input
+          formControlName="fiscal_code"
+          placeholder="Inserire il codice fiscale"
+          [disabled]="disable.indexOf('fiscal_code')> -1"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item *ngIf="firstStep.get('fiscal_code')!=null &&firstStep.get('fiscal_code')!.valid">
+        <pap-error-form-handler
+          [errors]="firstStep.get('fiscal_code')!.errors"
+        ></pap-error-form-handler>
+      </ion-item>
+    </ion-list>
 
-  <ion-grid *ngIf="buttons">
-    <ion-row>
-      <ion-col size="8"> </ion-col>
-      <ion-col>
-        <ion-button [disabled]="firstStep.invalid" (click)="next.emit()" expand="full">
-          <ion-icon name="chevron-forward"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</form>
+    <ion-grid *ngIf="buttons">
+      <ion-row>
+        <ion-col size="8"> </ion-col>
+        <ion-col>
+          <ion-button [disabled]="firstStep.invalid" (click)="next.emit()" expand="full">
+            <ion-icon name="chevron-forward"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ng-container>

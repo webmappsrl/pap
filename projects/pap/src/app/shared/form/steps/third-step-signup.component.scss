@@ -1,0 +1,19 @@
+pap-third-step-signup-form {
+  ion-item-group {
+    margin-bottom: 20px;
+  }
+
+  ion-radio.ios {
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid #ddd;
+    border-radius: 4px;
+  }
+  pap-form-location {
+    width: 100%;
+  }
+  .radio-checked.ios {
+    border-color: #6815ec;
+  }
+}

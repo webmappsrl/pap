@@ -1,7 +1,7 @@
 import * as AuthActions from './auth.actions';
 
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {AlertController, AlertOptions} from '@ionic/angular';
+import {AlertController, AlertOptions, NavController} from '@ionic/angular';
 import {EventEmitter, Injectable} from '@angular/core';
 import {Subscription, of} from 'rxjs';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
@@ -40,6 +40,22 @@ export class AuthEffects {
   private _alertEVT: EventEmitter<AlertOptions> = new EventEmitter<AlertOptions>();
   private _alertSub: Subscription = Subscription.EMPTY;
 
+  deleteUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.deleteUser),
+      switchMap(action =>
+        this._authSvc.delete().pipe(
+          map(user => {
+            this._alertEVT.emit(SUCESSFULLY_DELETE);
+            return AuthActions.UpdateUserSuccess({user});
+          }),
+          catchError(error => {
+            return of(AuthActions.UpdateUserFailure({error}));
+          }),
+        ),
+      ),
+    );
+  });
   loadAuths$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.loadAuths),
@@ -53,21 +69,6 @@ export class AuthEffects {
       ),
     );
   });
-
-  logout$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(AuthActions.logout),
-      switchMap(_ =>
-        this._authSvc.logout().pipe(
-          map(user => AuthActions.loadSignInsSuccess({user})),
-          catchError(error => {
-            return of(AuthActions.loadSignInsFailure({error}));
-          }),
-        ),
-      ),
-    );
-  });
-
   loadSignin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.loadSignIns),
@@ -84,7 +85,6 @@ export class AuthEffects {
       ),
     );
   });
-
   loadSignup$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.loadSignUps),
@@ -94,6 +94,7 @@ export class AuthEffects {
             this._alertEVT.emit(SUCESSFULLY_REGISTRATION);
             return AuthActions.loadSignUpsSuccess({user});
           }),
+          tap(_ => this._navCtrl.navigateForward('settings')),
           catchError(error => {
             return of(AuthActions.loadSignUpsFailure({error}));
           }),
@@ -101,7 +102,35 @@ export class AuthEffects {
       ),
     );
   });
-
+  logout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.logout),
+      switchMap(_ =>
+        this._authSvc.logout().pipe(
+          map(user => AuthActions.loadSignInsSuccess({user})),
+          catchError(error => {
+            return of(AuthActions.loadSignInsFailure({error}));
+          }),
+        ),
+      ),
+    );
+  });
+  resendEmail$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.resendEmail),
+      switchMap(action =>
+        this._authSvc.resendEmail().pipe(
+          map(res => {
+            this._alertEVT.emit(SUCESSFULLY_RESEND);
+            return AuthActions.resendEmailSuccess({res});
+          }),
+          catchError(error => {
+            return of(AuthActions.resendEmailFailure({error}));
+          }),
+        ),
+      ),
+    );
+  });
   updateUser$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.UpdateUser),
@@ -119,45 +148,12 @@ export class AuthEffects {
     );
   });
 
-  deleteUser$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(AuthActions.deleteUser),
-      switchMap(action =>
-        this._authSvc.delete().pipe(
-          map(user => {
-            this._alertEVT.emit(SUCESSFULLY_DELETE);
-            return AuthActions.UpdateUserSuccess({user});
-          }),
-          catchError(error => {
-            return of(AuthActions.UpdateUserFailure({error}));
-          }),
-        ),
-      ),
-    );
-  });
-
-  resendEmail$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(AuthActions.resendEmail),
-      switchMap(action =>
-        this._authSvc.resendEmail().pipe(
-          map(res => {
-            this._alertEVT.emit(SUCESSFULLY_RESEND);
-            return AuthActions.resendEmailSuccess({res});
-          }),
-          catchError(error => {
-            return of(AuthActions.resendEmailFailure({error}));
-          }),
-        ),
-      ),
-    );
-  });
-
   constructor(
     private actions$: Actions,
     private _authSvc: AuthService,
     private _alertCtrl: AlertController,
     private _store: Store<AppState>,
+    private _navCtrl: NavController,
   ) {
     this._alertSub = this._alertEVT
       .pipe(

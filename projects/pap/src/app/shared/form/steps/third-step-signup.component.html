@@ -1,0 +1,51 @@
+<form [formGroup]="thirdStep">
+  <ion-card-header>
+    <ion-card-title>Seleziona il tuo indirizzo</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item lines="none">
+      <pap-form-location
+        formControlName="location"
+        (addressEVT)="setAddess($event)"
+        [features]="confiniZone$|async"
+        [form]="thirdStep"
+      >
+      </pap-form-location>
+
+      <input
+        hidden
+        required
+        formControlName="zone_id"
+        [ngModel]="(currentZone$|async)?.properties.id??undefined"
+      />
+    </ion-item>
+    <ion-radio-group
+      formControlName="user_type_id"
+      *ngIf="(currentZone$|async) as currentZone"
+      (ionChange)="setUserType($event)"
+    >
+      <ion-item *ngFor="let userType of currentZone.properties.availableUserTypes">
+        <ion-label> {{userType.label.it}}</ion-label>
+        <ion-radio slot="end" [value]="userType.id"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-card-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-align-self-start">
+        <ion-button (click)="prev.emit()" expand="full">
+          <ion-icon name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="ion-align-self-center"></ion-col>
+      <ion-col class="ion-align-self-end">
+        <ion-button [disabled]="thirdStep.invalid" (click)="next.emit()" expand="full">
+          <ion-icon color="light" name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
+<ng-template #noValidZone>
+  <input hidden required formControlName="zone_id" />
+</ng-template>
