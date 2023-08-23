@@ -52,7 +52,9 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'image'">
-              <img [src]="form.controls[item.type].value" />
+              <div>
+                <img [src]="form.controls[item.type].value" />
+              </div>
             </ng-container>
             <ion-note class="pap-form-recap-note" *ngSwitchDefault class="pap-form-recap-note">
               {{'messages.notInserted' | translate}}

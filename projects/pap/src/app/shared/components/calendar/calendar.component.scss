@@ -8,5 +8,30 @@ pap-calendar {
     ion-list {
       background-color: var(--ion-color-light) !important;
     }
+    .pap-calendar-date {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 21px;
+      color: var(--ion-color-secondary-contrast);
+    }
+    .pap-calendar-trashlist {
+      display: flex;
+      flex-direction: row;
+      font-size: 17px;
+      margin-top: 5px;
+    }
+    .pap-calendar-trashlist-details-label {
+      margin: 0px 0px 10px 10px;
+      flex: 1 1 80%;
+      max-width: 75%;
+    }
+  }
+  ion-select {
+    max-width: 100%;
+  }
+  ion-select,
+  ion-label {
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
   }
 }

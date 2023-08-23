@@ -8,8 +8,6 @@
       <ion-card-title>Prenotazione {{rep.ticket_type}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <img *ngIf="rep.image as img" [src]="img" />
-
       <ion-item lines="none" *ngIf="rep.trashType as trashType">
         <ul class="pap-reports-detail-outer-list">
           <li>
@@ -67,6 +65,15 @@
                 </ion-note>
               </li>
             </ul>
+          </li>
+        </ul>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ul class="pap-reports-detail-outer-list">
+          <li>
+            <ion-label>Foto</ion-label>
+            <img *ngIf="rep.image as img" [src]="img" />
           </li>
         </ul>
       </ion-item>

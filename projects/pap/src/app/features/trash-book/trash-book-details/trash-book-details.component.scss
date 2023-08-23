@@ -17,7 +17,8 @@ pap-trash-book-details {
       font-size: 0.9rem;
     }
     ion-card {
-      height: 50%;
+      height: calc(100% - 40%);
+
       .trash-book-details-calendar {
         padding: 0px 0px 20px 0px;
         .trash-book-details-button {
@@ -64,6 +65,7 @@ pap-trash-book-details {
           flex: 0 1 auto;
           -webkit-align-self: auto;
           align-self: center;
+          margin: 5px;
         }
         .trash-book-details-value {
           text-align: right;

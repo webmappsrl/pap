@@ -1,8 +1,13 @@
 <ng-container *ngIf="(currentZone$|async) as zone; else noValidZone">
   <ion-label color="success">{{zone.properties.label}}</ion-label>
 </ng-container>
-<ion-item>
-  <ion-input type="text" [(ngModel)]="address" placeholder="Indirizzo"></ion-input>
+<ion-item lines="none">
+  <ion-textarea
+    [autoGrow]="true"
+    type="text"
+    [(ngModel)]="address"
+    placeholder="Indirizzo"
+  ></ion-textarea>
 </ion-item>
 <div class="pap-form-location">
   <pap-map

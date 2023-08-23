@@ -6,7 +6,7 @@
     <ion-card>
       <ion-card-header>
         <ion-card-title>Calendario</ion-card-title>
-        <ion-label class="pap-calendar-info"
+        <ion-label class="ion-text-wrap pap-calendar-info"
           >La raccolta del verde viene gestita esternamente all'APP. Puoi comunque controllarla dal
           sito</ion-label
         >
@@ -20,7 +20,7 @@
             >Vedi</ion-button
           >
         </div>
-        <ion-item>
+        <ion-item lines="none">
           <ion-select placeholder="Select address" (ionChange)="selectAddress($event)" [value]="0">
             <ion-select-option
               [value]="idx"
@@ -59,7 +59,12 @@
                       [ngStyle]="{color:trashType?.color}"
                       name="ellipse"
                     ></ion-icon>
-                    {{trashType.name['it']}}
+                    <ion-label
+                      class="pap-calendar-page-trashlist-details-label"
+                      *ngIf="trashType.name"
+                    >
+                      {{trashType.name|papLang}}
+                    </ion-label>
                   </div>
                 </div>
               </div>

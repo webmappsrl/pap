@@ -271,9 +271,6 @@ ion-modal {
     flex-direction: column;
     justify-content: flex-start;
     height: 570px !important;
-    ion-item {
-      padding: 2px 20px 2px 20px;
-    }
     .pap-location-modal-address-label {
       font-size: 30px;
       font-weight: 500;
@@ -294,13 +291,48 @@ ion-modal {
   }
   pap-map {
     height: 70% !important;
+    margin-top: 0px !important;
   }
   pap-form-location {
+    max-height: 411px;
     .pap-form-location-infocontainer {
       ion-button {
-        margin-top: -80px !important;
+        margin-top: -90px !important;
       }
     }
   }
 }
 /************ end pap-location-modal ***************/
+
+/************ start pap-waste-center-alert ***************/
+.pap-waste-center-alert {
+  .alert-button-group {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: column;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    -webkit-align-content: flex-start;
+    align-content: flex-start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+    margin-top: -15px;
+    .alert-button {
+      border: 2px solid;
+      border-radius: 30px;
+      line-height: 10px;
+      --width: 90px;
+      --height: 34px;
+      margin: 5px;
+    }
+    .pap-waste-center-alert-btn-ok {
+      background-color: var(--ion-color-primary);
+      color: var(--ion-color-primary-contrast);
+    }
+  }
+}
+/************ end pap-waste-center-alert ***************/

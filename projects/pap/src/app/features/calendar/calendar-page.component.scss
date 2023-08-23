@@ -1,7 +1,8 @@
 pap-calendar-page {
   ion-list {
-    overflow-y: auto;
-    height: 95%;
+    overflow: auto;
+    overflow-x: hidden !important;
+    max-height: calc(100% - 50%);
     &::-webkit-scrollbar {
       display: none;
     }
@@ -15,6 +16,7 @@ pap-calendar-page {
       .pap-calendar-trash {
         flex: 1 1 auto;
         align-self: flex-start;
+        margin-left: 30px;
       }
       .pap-calendar-info-icon {
         flex: 0 1 auto;
@@ -26,6 +28,7 @@ pap-calendar-page {
     }
   }
   ion-card {
+    display: flow;
     height: calc(100% - 80px);
   }
   ion-card-header {
@@ -46,6 +49,7 @@ pap-calendar-page {
     .pap-calendar-infobuttoncontainer {
       width: 100%;
       text-align: center;
+      align-self: center;
       .pap-calendar-infobutton {
         height: 40px;
         width: 150px;
@@ -105,5 +109,22 @@ pap-calendar-page {
     .pap-calendar-time {
       color: var(--ion-color-medium);
     }
+  }
+  ion-select,
+  ion-label {
+    max-width: 100%;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+  }
+  .pap-calendar-trashlist {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+  .pap-calendar-page-trashlist-details-label {
+    margin: 0px 0px 10px 10px;
+    flex: 1 1 80%;
+  }
+  .trash-book-details-icon {
+    flex: 1 1 20%;
   }
 }

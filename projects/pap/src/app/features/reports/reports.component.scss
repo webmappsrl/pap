@@ -24,6 +24,8 @@ pap-reports {
     .pap-reports-label-info {
       order: -1;
       margin-left: 0px;
+      white-space: normal;
+      overflow-wrap: break-word;
       span {
         font-size: 18px;
         font-weight: 400;
@@ -70,6 +72,9 @@ pap-reports {
       font-style: italic;
     }
   }
+  ion-card {
+    max-height: 80%;
+  }
   ion-card-header {
     flex: 0 1 auto;
     align-self: stretch;
@@ -87,10 +92,13 @@ pap-reports {
   }
   ion-list {
     overflow-y: auto;
-    height: 95%;
+    height: calc(100% - 55%);
     background-color: var(--ion-color-light) !important;
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+  ion-avatar {
+    padding: 5px;
   }
 }

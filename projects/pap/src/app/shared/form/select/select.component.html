@@ -1,5 +1,14 @@
-<ion-searchbar placeholder="Ricerca" debounce="200" [(ngModel)]="searchString"></ion-searchbar>
-<ion-list *ngIf="(options$|async) as opts">
+<ion-searchbar
+  placeholder="Ricerca"
+  debounce="200"
+  [(ngModel)]="searchString"
+  (ionFocus)="onFocus()"
+  (ionBlur)="onBlur()"
+></ion-searchbar>
+<ion-list
+  *ngIf="(options$|async) as opts"
+  [ngStyle]="{height: (isFocused$|async) ? '80px' : 'auto'}"
+>
   <ion-item
     *ngFor="let opt of opts | sort | filterBy : searchString "
     (click)="writeValue(opt)"

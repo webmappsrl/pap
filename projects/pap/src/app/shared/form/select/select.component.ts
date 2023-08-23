@@ -30,6 +30,7 @@ export class SelectComponent implements ControlValueAccessor {
   options$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   select: number = -1;
   searchString: string = '';
+  isFocused$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   @Input() set selected(value: TrashBookType | null | undefined) {
     if (value) {
@@ -74,5 +75,13 @@ export class SelectComponent implements ControlValueAccessor {
       this.onTouched();
       this.touched = true;
     }
+  }
+
+  onFocus() {
+    this.isFocused$.next(true);
+  }
+
+  onBlur() {
+    this.isFocused$.next(false);
   }
 }

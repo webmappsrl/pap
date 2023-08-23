@@ -12,8 +12,7 @@ pap-form {
     margin-bottom: 15px;
   }
   .pap-form-content {
-    padding: 25px;
-    padding-bottom: 15px;
+    padding: 2px 25px 0px 25px;
     font-size: 14px;
     font-weight: 500;
     line-height: 1.2;
@@ -34,7 +33,7 @@ pap-form {
   }
   .pap-form-textarea {
     font-size: 1.1em;
-    padding: 10px;
+    padding: 0px 10px 0px 10px;
   }
   .pap-form-checkbox {
     width: 90%;
@@ -61,22 +60,19 @@ pap-form {
     line-height: 23.44px;
   }
   ion-card {
-    overflow: unset !important;
+    display: flow;
+    overflow: auto;
     max-height: calc(100% - 21%);
     form {
-      div {
-        margin-bottom: 10px;
+      min-height: 170x !important;
 
-        ion-textarea {
-          div {
-            textarea {
-              margin-left: -15px !important;
-            }
-          }
-        }
+      div {
         pap-form-image-picker {
           display: flex;
           flex-direction: column;
+          &::-webkit-scrollbar {
+            display: none;
+          }
           .pap-form-picturepicker-button {
             margin-top: 15px;
             width: 240px;
@@ -85,16 +81,28 @@ pap-form {
           ion-icon {
             font-size: 24px;
           }
+          div {
+            display: flex;
+            flex-direction: column;
+            img {
+              width: 300px;
+              height: 200px;
+              object-fit: contain;
+              align-self: center;
+              margin-top: 10px;
+              margin-bottom: 5px;
+            }
+          }
         }
       }
     }
   }
   .pap-form-footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 0px 55px 0px 55px;
+    padding: 0px 55px 70px 55px;
   }
   pap-map {
     padding: 15px;

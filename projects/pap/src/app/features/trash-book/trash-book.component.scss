@@ -30,6 +30,8 @@ pap-trash-book {
       font-weight: 500;
       font-size: 20px;
       line-height: 23.44px;
+      white-space: normal !important;
+      overflow-wrap: break-word;
     }
     .item.sc-ion-label-md-h,
     .item .sc-ion-label-md-h {

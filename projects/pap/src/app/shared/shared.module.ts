@@ -39,6 +39,7 @@ import {CalendarComponent} from './components/calendar/calendar.component';
 import {SortPipe} from './pipes/sort.pipe';
 import {FilterByPipe} from './pipes/filter-by.pipe';
 import {thirdStepSignupComponent} from './form/steps/third-step-signup.component';
+import {PapLangPipe} from './pipes/pap-lang.pipe';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -60,6 +61,7 @@ import {thirdStepSignupComponent} from './form/steps/third-step-signup.component
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
+    PapLangPipe,
     SortPipe,
     FilterByPipe,
     GetZoneFromLocationPipe,
@@ -104,6 +106,7 @@ import {thirdStepSignupComponent} from './form/steps/third-step-signup.component
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
+    PapLangPipe,
     FilterByPipe,
     SortPipe,
     firstStepSignupComponent,
