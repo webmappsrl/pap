@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  companyId: '1',
+  companyId: 1,
   config: {
     id: 1,
     name: 'Ersu',

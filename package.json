@@ -29,15 +29,14 @@
     "@capacitor/app": "^5.0.0",
     "@capacitor/browser": "^5.0.0",
     "@capacitor/core": "^5.0.0",
+    "@capacitor/geolocation": "5.0.6",
     "@capacitor/haptics": "^5.0.0",
     "@capacitor/ios": "^5.0.0",
     "@capacitor/keyboard": "^5.0.0",
     "@capacitor/local-notifications": "^5.0.0",
     "@capacitor/push-notifications": "5.0.6",
     "@capacitor/status-bar": "^5.0.0",
-    "@ionic-native/camera": "^5.36.0",
     "@ionic/angular": "^6.7.5",
-    "@ionic/cordova-builders": "^10.0.0",
     "@ngrx/effects": "^15.0.0",
     "@ngrx/entity": "^15.0.0",
     "@ngrx/schematics": "^15.0.0",
@@ -45,7 +44,6 @@
     "@ngrx/store-devtools": "^15.0.0",
     "@ngx-translate/core": "^14.0.0",
     "cordova-plugin-camera": "^6.0.0",
-    "cordova-plugin-geolocation": "^4.1.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "date-fns": "^2.28.0",
     "leaflet": "^1.8.0",
@@ -71,6 +69,7 @@
     "@types/jasmine": "~3.10.0",
     "@types/leaflet": "^1.7.10",
     "@types/node": "^12.20.55",
+    "@types/yargs": "^17.0.24",
     "@typescript-eslint/eslint-plugin": "6.1.0",
     "@typescript-eslint/parser": "6.1.0",
     "axios": "^1.4.0",
@@ -95,6 +94,7 @@
     "ts-node": "^10.9.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~4.9.5",
-    "vinyl-fs": "^4.0.0"
+    "vinyl-fs": "^4.0.0",
+    "yargs": "^17.7.2"
   }
 }

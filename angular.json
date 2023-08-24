@@ -2,9 +2,7 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
     "analytics": false,
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "schematicCollections": ["@angular-eslint/schematics"]
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -159,30 +157,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["projects/pap/**/*.ts", "projects/pap/**/*.html"]
-          }
-        },
-        "ionic-cordova-serve": {
-          "builder": "@ionic/cordova-builders:cordova-serve",
-          "options": {
-            "cordovaBuildTarget": "core:ionic-cordova-build",
-            "devServerTarget": "core:serve"
-          },
-          "configurations": {
-            "production": {
-              "cordovaBuildTarget": "core:ionic-cordova-build:production",
-              "devServerTarget": "core:serve:production"
-            }
-          }
-        },
-        "ionic-cordova-build": {
-          "builder": "@ionic/cordova-builders:cordova-build",
-          "options": {
-            "browserTarget": "core:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "core:build:production"
-            }
           }
         }
       }

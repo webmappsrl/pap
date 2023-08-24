@@ -1,10 +1,14 @@
 import * as gulp from 'gulp';
+import * as yargs from 'yargs';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as fsExtra from 'fs-extra';
 import axios from 'axios';
 import {exec} from 'child_process';
 import {CapacitorConfig} from '@capacitor/cli';
+const args: any = <any>yargs.argv;
+let version = '';
+let paths: Paths = {} as Paths;
 const api = 'https://dev.portapporta.webmapp.it/api/v1';
 // const api = 'http://127.0.0.1:8000/api/v1';
 interface Config {
@@ -39,8 +43,18 @@ dotenv.config();
 // Task per il build e il deploy dell'app
 gulp.task('build', async () => {
   try {
-    const companyId = process.argv[4];
-    const paths: Paths = getPaths(companyId);
+    const companyId = args.id || null;
+    const release = args.release ? true : false;
+    const packageJson = await readJsonFile('./package.json');
+    if (release) {
+      version = incrementVersion(packageJson.version);
+      packageJson.version = version;
+      writeFile('./package.json', JSON.stringify(packageJson, null, 2));
+      console.log(version);
+    } else {
+      version = packageJson.version;
+    }
+    paths = getPaths(companyId);
 
     const oldVariables = await readFileContent(paths.variablesConfigPath);
     const devVariables = await readFileContent(paths.devVariablesConfigPath);
@@ -83,18 +97,21 @@ gulp.task('build', async () => {
       GOOOGLEAPIKEY: '',
     };
 
-    await writeFile(paths.capacitorConfigPath, JSON.stringify(capacitorConfig));
+    await writeFile(paths.capacitorConfigPath, JSON.stringify(capacitorConfig, null, 2));
     await writeFile(
       'capacitor.config.ts',
       `
       import {CapacitorConfig} from '@capacitor/cli';
-      const capacitorConfig: CapacitorConfig = ${JSON.stringify(capacitorConfig)}
+      const capacitorConfig: CapacitorConfig = ${JSON.stringify(capacitorConfig, null, 2)}
       export default capacitorConfig;
       `,
     );
     await writeFile(
       paths.environmentProdPath,
-      `export const environment = ${JSON.stringify(environment).replace(/"([^"]+)":/g, '$1:')}`,
+      `export const environment = ${JSON.stringify(environment, null, 2).replace(
+        /"([^"]+)":/g,
+        '$1:',
+      )}`,
     );
 
     await writeFile(paths.variablesConfigPath, config.resources.variables);
@@ -342,6 +359,7 @@ const ionicBuildIos = (): Promise<void> => {
     });
   });
 };
+
 const ionicBuildIAndroid = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     const cmd = `ionic  build android --prod`;
@@ -465,4 +483,12 @@ async function download(url: string, destinationPath: string) {
   } catch (error) {
     console.error('Si è verificato un errore durante il download del file :', url);
   }
+}
+
+function incrementVersion(version: string): string {
+  const parts = version.split('.'); // Dividi la stringa in parti usando il punto come separatore
+  const lastPart = parts[parts.length - 1]; // Prendi l'ultimo elemento
+  const incremented = parseInt(lastPart) + 1; // Incrementa l'ultimo elemento
+  parts[parts.length - 1] = incremented.toString(); // Sostituisci l'ultimo elemento con il valore incrementato
+  return parts.join('.'); // Riunisci le parti con il punto come separatore
 }
