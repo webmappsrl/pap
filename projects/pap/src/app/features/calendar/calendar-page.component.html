@@ -29,6 +29,10 @@
             >
           </ion-select>
         </ion-item>
+        <div class="pap-calendar-information-circle" *ngIf="(currentAddress$|async)">
+          <ion-icon size="large" color="primary" slot="end" name="information-circle"></ion-icon>
+          <ion-label>Clicca sul tipo di rifiuto per più dettagli</ion-label>
+        </div>
       </ion-card-header>
 
       <ion-list lines="full">
@@ -68,14 +72,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="pap-calendar-information-circle">
-              <ion-icon
-                size="large"
-                color="primary"
-                slot="end"
-                name="information-circle"
-              ></ion-icon>
             </div>
           </ion-item>
         </ng-container>
