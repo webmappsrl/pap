@@ -18,7 +18,7 @@
             <div class="pap-reports-monthname">{{report.created_at|papDate: 'MMMM' }}</div>
           </ion-label>
           <ion-label class="pap-reports-label-info" slot="end">
-            <span>Ticket {{report.ticket_type}}</span>
+            <span>Ticket {{report.ticket_type|papTicket}}</span>
             <div class="pap-reports-item" *ngIf="report.trashType as trashType">
               <ion-icon slot="end" [ngStyle]="{color:trashType.color}" name="ellipse"></ion-icon>
               {{trashType.name}}

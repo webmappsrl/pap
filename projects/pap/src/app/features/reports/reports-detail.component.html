@@ -5,7 +5,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Dettaglio ticket</ion-card-subtitle>
-      <ion-card-title>Prenotazione {{rep.ticket_type}}</ion-card-title>
+      <ion-card-title>Prenotazione {{rep.ticket_type|papTicket}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item lines="none" *ngIf="rep.trashType as trashType">

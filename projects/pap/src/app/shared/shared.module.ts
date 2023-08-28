@@ -40,6 +40,7 @@ import {SortPipe} from './pipes/sort.pipe';
 import {FilterByPipe} from './pipes/filter-by.pipe';
 import {thirdStepSignupComponent} from './form/steps/third-step-signup.component';
 import {PapLangPipe} from './pipes/pap-lang.pipe';
+import {PapTicketPipe} from './pipes/pap-ticket.pipe';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -49,6 +50,7 @@ import {PapLangPipe} from './pipes/pap-lang.pipe';
     MapComponent,
     InputTypePipe,
     InputPatternPipe,
+    PapTicketPipe,
     FormComponent,
     firstStepSignupComponent,
     secondStepSignupComponent,
@@ -99,6 +101,7 @@ import {PapLangPipe} from './pipes/pap-lang.pipe';
     TranslateModule,
     InputTypePipe,
     InputPatternPipe,
+    PapTicketPipe,
     FormComponent,
     LocationComponent,
     RecapComponent,
