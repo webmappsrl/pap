@@ -19,7 +19,7 @@ import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {UpdateUser, deleteUser, loadAuths, logout} from '../../core/auth/state/auth.actions';
 
-import {AlertController, ModalController, NavController} from '@ionic/angular';
+import {AlertController, AlertOptions, ModalController, NavController} from '@ionic/angular';
 import {filter, map, switchMap, take} from 'rxjs/operators';
 import {error} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
@@ -31,7 +31,44 @@ import {settingView} from './state/settings.selectors';
 import {confiniZone} from '../../shared/map/state/map.selectors';
 import {LocationModalComponent} from '../../shared/form/location/location.modal';
 import {SettingsService} from './state/settings.service';
-
+const DELETE: AlertOptions = {
+  header: 'Vuoi eliminare il tuo account?',
+  message: 'questa operazione è irreversibile una volta eseguita',
+  buttons: [
+    {
+      text: 'ok',
+      role: 'delete-ok',
+    },
+    {
+      text: 'annulla',
+      role: 'annulla',
+    },
+  ],
+};
+const LOGOUT: AlertOptions = {
+  header: 'Sei sicuro di voler effettuare il logout?',
+  message: '',
+  buttons: [
+    {
+      text: 'ok',
+      role: 'logout-ok',
+    },
+    {
+      text: 'annulla',
+      role: 'annulla',
+    },
+  ],
+};
+const LOGOUT_CONFIRM: AlertOptions = {
+  header: 'Logout effettuato con successo',
+  message: '',
+  buttons: [
+    {
+      text: 'ok',
+      role: 'ok',
+    },
+  ],
+};
 @Component({
   selector: 'pap-settings',
   templateUrl: './settings.component.html',
@@ -42,7 +79,7 @@ import {SettingsService} from './state/settings.service';
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   private _addressFormArray: UntypedFormArray = this._formBuilder.array([]);
-  private _alertEVT: EventEmitter<void> = new EventEmitter<void>();
+  private _alertEVT: EventEmitter<AlertOptions> = new EventEmitter<AlertOptions>();
   private _alertSub: Subscription = Subscription.EMPTY;
   private _settingsFormSub: Subscription = Subscription.EMPTY;
 
@@ -103,39 +140,29 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     this._alertSub = this._alertEVT
       .pipe(
-        switchMap(_ =>
-          this._alertCtrl.create({
-            header: 'Vuoi eliminare il tuo account?',
-            message: 'questa operazione è irreversibile una volta eseguita',
-            buttons: [
-              {
-                text: 'ok',
-                role: 'ok',
-              },
-              {
-                text: 'annulla',
-                role: 'annulla',
-              },
-            ],
-          }),
-        ),
+        switchMap(opt => this._alertCtrl.create(opt)),
         switchMap(alert => {
           alert.present();
           return alert.onWillDismiss();
         }),
       )
       .subscribe(val => {
-        if (val != null && val.role != null && val.role === 'ok') {
+        if (val != null && val.role != null && val.role === 'delete-ok') {
           this._store.dispatch(deleteUser());
           setTimeout(() => {
             this.logout();
           }, 300);
         }
+        if (val != null && val.role != null && val.role === 'logout-ok') {
+          this._store.dispatch(logout());
+          this._alertEVT.emit(LOGOUT_CONFIRM);
+          this._navCtrl.navigateForward('home');
+        }
       });
   }
 
   delete(): void {
-    this._alertEVT.emit();
+    this._alertEVT.emit(DELETE);
   }
 
   edit(value: boolean) {
@@ -153,8 +180,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this._store.dispatch(logout());
-    this._navCtrl.navigateForward('home');
+    this._alertEVT.emit(LOGOUT);
   }
 
   ngOnDestroy(): void {
