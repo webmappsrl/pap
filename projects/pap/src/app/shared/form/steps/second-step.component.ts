@@ -36,13 +36,13 @@ import {FormProvider} from '../form-provider';
       <ion-grid *ngIf="buttons">
         <ion-row>
           <ion-col class="ion-align-self-start">
-            <ion-button (click)="prev.emit()"  expand="full" >
+            <ion-button shape="round" (click)="prev.emit()"  expand="full" >
             <ion-icon name="chevron-back"></ion-icon>
             </ion-button>
           </ion-col>
           <ion-col class="ion-align-self-center"></ion-col>
           <ion-col class="ion-align-self-end">
-            <ion-button [disabled]="secondStep.invalid" (click)="next.emit()"  expand="full" >
+            <ion-button shape="round" [disabled]="secondStep.invalid" (click)="next.emit()"  expand="full" >
             <ion-icon name="chevron-forward"></ion-icon>
             </ion-button>
           </ion-col>
