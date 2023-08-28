@@ -17,16 +17,12 @@
             <div class="pap-reports-monthday">{{report.created_at|papDate: 'd' }}</div>
             <div class="pap-reports-monthname">{{report.created_at|papDate: 'MMMM' }}</div>
           </ion-label>
-          <ion-avatar *ngIf="report.image as img">
-            <img [src]="img" />
-          </ion-avatar>
           <ion-label class="pap-reports-label-info" slot="end">
             <span>Ticket {{report.ticket_type}}</span>
             <div class="pap-reports-item" *ngIf="report.trashType as trashType">
               <ion-icon slot="end" [ngStyle]="{color:trashType.color}" name="ellipse"></ion-icon>
               {{trashType.name}}
             </div>
-            <p>{{report.note}}</p>
           </ion-label>
         </ion-item>
       </ion-list>
