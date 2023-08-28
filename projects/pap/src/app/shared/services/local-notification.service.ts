@@ -6,25 +6,35 @@ import {
 } from '@capacitor/local-notifications';
 import {Store, select} from '@ngrx/store';
 import {differenceInCalendarDays, subHours} from 'date-fns';
-import {filter} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 import {AppState} from '../../core/core.state';
 import {CalendarRow} from '../../features/calendar/calendar.model';
 import {selectCalendarState} from '../../features/calendar/state/calendar.selectors';
-
+import {isLogged} from '../../core/auth/state/auth.selectors';
+import {App} from '@capacitor/app';
 @Injectable({
   providedIn: 'root',
 })
 export class LocalNotificationService {
   calendarView$ = this._store.pipe(select(selectCalendarState));
+  isLogged$ = this._store.pipe(select(isLogged));
 
   constructor(private _store: Store<AppState>) {
-    this._initNotifications();
-    this._scheduleNotifications();
+    App.addListener('resume', () => {
+      this.isLogged$
+        .pipe(
+          filter(l => l),
+          take(1),
+        )
+        .subscribe(async () => {
+          this._initNotifications();
+          this._scheduleNotifications();
+        });
+    });
   }
 
   private _getBodyNotificationFromCalendarRows(calendarRow: CalendarRow): string {
     let body = '';
-    // `${calendarRow.trash_objects!.map(f => f.name).toString()}`
     if (calendarRow.trash_types) {
       calendarRow.trash_types.forEach(trashObj => {
         body += `${trashObj.name['it']}, `;
@@ -38,15 +48,26 @@ export class LocalNotificationService {
     await LocalNotifications.requestPermissions();
   }
 
+  private async _remove(): Promise<void> {
+    const pendingNotification = await LocalNotifications.getPending();
+    if (pendingNotification.notifications.length > 0) {
+      await LocalNotifications.cancel({
+        notifications: pendingNotification.notifications,
+      });
+    }
+  }
+
   private async _scheduleNotifications(): Promise<void> {
-    setTimeout(() => {
+    alert('remove');
+    await this._remove();
+    setTimeout(async () => {
       this.calendarView$
         .pipe(filter(p => p != null && p.calendars != null))
         .subscribe(async calendarView => {
           const calendars = calendarView.calendars!;
           if (calendars) {
             calendars.forEach(async calendar => {
-              const calendarDates = Object.keys(calendar);
+              const calendarDates = Object.keys(calendar.calendar);
               const notifications: LocalNotificationSchema[] = [];
               calendarDates
                 .filter(cDate => differenceInCalendarDays(new Date(cDate), new Date()) > 0)
@@ -79,12 +100,6 @@ export class LocalNotificationService {
                 notifications,
               };
               try {
-                const pendingNotification = await LocalNotifications.getPending();
-                if (pendingNotification.notifications.length > 0) {
-                  await LocalNotifications.cancel({
-                    notifications: pendingNotification.notifications,
-                  });
-                }
                 await LocalNotifications.schedule(options);
               } catch (e) {
                 console.log(`LocalNotifications error: ${e}`);

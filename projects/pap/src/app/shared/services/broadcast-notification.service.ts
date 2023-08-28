@@ -4,9 +4,8 @@ import {PushNotifications} from '@capacitor/push-notifications';
 import {Store, select} from '@ngrx/store';
 import {AppState} from '../../core/core.state';
 import {isLogged} from '../../core/auth/state/auth.selectors';
-import {filter, switchMap, take} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 import {AuthService} from '../../core/auth/state/auth.service';
-import {from} from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,7 +20,6 @@ export class BroadcastNotificationService {
           take(1),
         )
         .subscribe(async () => {
-          alert('logged');
           await this._registerNotifications();
           await PushNotifications.addListener('pushNotificationReceived', notification => {
             console.log('Push notification received: ', notification);
@@ -34,16 +32,13 @@ export class BroadcastNotificationService {
               notification.actionId,
               notification.inputValue,
             );
-            alert('Push action performed: ' + JSON.stringify(notification));
           });
           await PushNotifications.addListener('registration', token => {
             console.info('Registration token: ', token.value);
-            alert('Push registration success, token: ' + token.value);
             this._authSvc.update({fcm_token: token.value}).pipe(take(1)).subscribe();
           });
           await PushNotifications.addListener('registrationError', err => {
             console.error('Registration error: ', err.error);
-            alert('Error on registration: ' + JSON.stringify(err));
           });
           this._getDeliveredNotifications();
         });
@@ -60,7 +55,6 @@ export class BroadcastNotificationService {
   }
 
   private async _registerNotifications(): Promise<void> {
-    alert('_registerNotifications');
     let permStatus = await PushNotifications.checkPermissions();
 
     if (permStatus.receive === 'prompt') {
