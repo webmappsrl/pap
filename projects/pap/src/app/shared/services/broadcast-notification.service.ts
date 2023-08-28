@@ -50,7 +50,7 @@ export class BroadcastNotificationService {
       const notificationList = await PushNotifications.getDeliveredNotifications();
       console.log('delivered notifications', notificationList);
     } catch (e) {
-      alert('Error on registration: ' + JSON.stringify(e));
+      // alert('Error on registration: ' + JSON.stringify(e));
     }
   }
 

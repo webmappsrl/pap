@@ -1,3 +1,4 @@
+import {LayoutEffects} from './../../../core/layout/state/layout.effects';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -31,11 +32,25 @@ import {Calendar} from '../../../features/calendar/calendar.model';
   ],
 })
 export class CalendarSelectComponent implements ControlValueAccessor {
-  @Input() calendars: Calendar[];
+  @Input() set calendars(calendars: Calendar[]) {
+    calendars = calendars.map(c => {
+      const calendarKeys = Object.keys(c.calendar).reverse();
+      for (let i = 0; i < calendarKeys.length; i++) {
+        if (i > 4) {
+          const calendarKey = calendarKeys[i] as string;
+          delete c.calendar[calendarKey];
+        }
+      }
+      return c;
+    });
+
+    this.calendars$.next(calendars);
+  }
 
   disabled = false;
   onChange = (select: {trashDate: string; tbType: TrashBookType; calendar: Calendar}) => {};
   onTouched = () => {};
+  calendars$: BehaviorSubject<Calendar[]> = new BehaviorSubject<Calendar[]>([]);
   options$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   select: {trashDate: string; tbType: TrashBookType; calendar: Calendar} | null = null;
   currentSelectionLabel$: BehaviorSubject<string> = new BehaviorSubject<string>('');

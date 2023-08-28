@@ -7,10 +7,10 @@ import {User} from '../auth.model';
 export const authFeatureKey = 'auth';
 
 export interface AuthState {
+  error?: string;
   isLogged: boolean;
   isVerified: boolean;
   user?: User;
-  error?: string;
 }
 
 export const initialState: AuthState = {

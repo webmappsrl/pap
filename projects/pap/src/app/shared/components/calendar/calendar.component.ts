@@ -14,6 +14,7 @@ import {BehaviorSubject} from 'rxjs';
 import {Calendar} from '../../../features/calendar/calendar.model';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {Address} from '../../../features/settings/settings.model';
+import {KeyValue} from '@angular/common';
 
 @Component({
   selector: 'pap-calendar',
@@ -22,7 +23,8 @@ import {Address} from '../../../features/settings/settings.model';
   encapsulation: ViewEncapsulation.None,
 })
 export class CalendarComponent implements OnInit {
-  @Input() calendars: Calendar[];
+  @Input() calendars: Calendar[] = [];
+  @Input() reverse: boolean = false;
   @Output() selectedTrashTypeEVT: EventEmitter<{
     trashDate: string;
     tbType: TrashBookType;
@@ -50,4 +52,10 @@ export class CalendarComponent implements OnInit {
   selectAddress(event: any): void {
     this.currentCalendar$.next(event.detail.value);
   }
+  originalOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
+    return 0;
+  };
+  keyDescOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
+    return a.key > b.key ? -1 : b.key > a.key ? 1 : 0;
+  };
 }

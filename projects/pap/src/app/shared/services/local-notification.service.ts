@@ -58,7 +58,6 @@ export class LocalNotificationService {
   }
 
   private async _scheduleNotifications(): Promise<void> {
-    alert('remove');
     await this._remove();
     setTimeout(async () => {
       this.calendarView$

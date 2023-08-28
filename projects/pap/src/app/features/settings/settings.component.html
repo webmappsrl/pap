@@ -36,15 +36,6 @@
       </form>
     </ion-card>
     <ion-grid class="footer">
-      <ion-row *ngIf="(currentStep$|async) === 'thirdStep'">
-        <ion-col class="ion-align-self-start"> </ion-col>
-        <ion-col class="ion-align-self-center">
-          <ion-button (click)="openModalLocation()" expand="block" shape="round"
-            >Aggiungi indirizzo</ion-button
-          >
-        </ion-col>
-        <ion-col class="ion-align-self-end"></ion-col>
-      </ion-row>
       <ion-row>
         <ion-col class="ion-align-self-start">
           <ion-button fill="outline" shape="round" expand="full" (click)="logout()">
@@ -52,16 +43,24 @@
           </ion-button>
         </ion-col>
         <ion-col class="ion-align-self-center"> </ion-col>
-        <ion-col class="ion-align-self-end">
+        <ion-col class="ion-align-self-end" *ngIf="(currentStep$|async) as currentStep">
           <ion-button
             fill="solid"
             shape="round"
             expand="full"
+            *ngIf="currentStep !== 'thirdStep'"
             [disabled]="isDisabled()"
             (click)="update()"
           >
             Salva
           </ion-button>
+          <ion-button
+            (click)="openModalLocation()"
+            expand="block"
+            shape="round"
+            *ngIf="currentStep === 'thirdStep'"
+            >Aggiungi indirizzo</ion-button
+          >
         </ion-col>
       </ion-row>
       <ion-row *ngIf="(currentStep$|async) === 'firstStep'">

@@ -15,7 +15,10 @@
     </ion-item>
     <ng-container *ngIf="currentCalendar$|async as currentCalendar">
       <div class="pap-calendar-scrollable-item">
-        <ion-item *ngFor="let item of currentCalendar.calendar| keyvalue" class="pap-calendar-item">
+        <ion-item
+          *ngFor="let item of currentCalendar.calendar| keyvalue:reverse?keyDescOrder:originalOrder"
+          class="pap-calendar-item"
+        >
           <ion-label slot="start" class="pap-calendar-date">
             <div class="pap-calendar-monthday">{{item.key|papDate: 'd' }}</div>
             <div class="pap-calendar-monthname">{{item.key|papDate: 'MMMM' }}</div>

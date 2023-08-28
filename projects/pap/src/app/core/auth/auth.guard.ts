@@ -4,7 +4,7 @@ import {AlertController, AlertOptions, NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
 import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable, Subscription} from 'rxjs';
-import {delay, map, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, delay, map, switchMap, tap} from 'rxjs/operators';
 import {AppState} from '../core.state';
 import {loadAuths, resendEmail} from './state/auth.actions';
 import {isVerified, user} from './state/auth.selectors';
@@ -90,6 +90,7 @@ export class AuthGuard implements CanActivate, OnDestroy {
           this._store.dispatch(loadAuths());
         }
       }),
+      debounceTime(500),
       switchMap(isV => usr$),
       map(user => {
         const isL = user != null;

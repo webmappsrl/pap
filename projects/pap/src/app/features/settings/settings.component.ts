@@ -149,7 +149,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   isDisabled(): boolean {
     const ctrl = this.settingsForm.controls[this.currentStep$.value];
 
-    return !ctrl.valid;
+    return !ctrl.valid || !ctrl.dirty;
   }
 
   logout(): void {
