@@ -29,10 +29,6 @@
             >
           </ion-select>
         </ion-item>
-        <div class="pap-calendar-information-circle" *ngIf="(currentAddress$|async)">
-          <ion-icon size="large" color="primary" slot="end" name="information-circle"></ion-icon>
-          <ion-label>Clicca sul tipo di rifiuto per più dettagli</ion-label>
-        </div>
       </ion-card-header>
 
       <ion-list lines="full">
@@ -52,14 +48,17 @@
                   Dalle {{trash.start_time}} alle {{trash.stop_time}}
                 </div>
                 <div>
-                  <div
+                  <ion-button
+                    shape="round"
+                    fill="outline"
+                    size="large"
                     *ngFor="let trashType of trash.trash_types"
                     (click)="info(trashType)"
                     class="pap-calendar-trashlist"
                   >
                     <ion-icon
                       class="trash-book-details-icon"
-                      slot="end"
+                      slot="start"
                       [ngStyle]="{color:trashType?.color}"
                       name="ellipse"
                     ></ion-icon>
@@ -69,7 +68,7 @@
                     >
                       {{trashType.name|papLang}}
                     </ion-label>
-                  </div>
+                  </ion-button>
                 </div>
               </div>
             </div>

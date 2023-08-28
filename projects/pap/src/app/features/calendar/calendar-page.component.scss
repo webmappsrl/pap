@@ -118,12 +118,8 @@ pap-calendar-page {
     white-space: normal !important;
     overflow-wrap: break-word !important;
   }
-  .pap-calendar-trashlist {
-    display: flex !important;
-    flex-direction: row !important;
-  }
   .pap-calendar-page-trashlist-details-label {
-    margin: 0px 0px 10px 10px;
+    margin: 10px;
     flex: 1 1 80%;
   }
   .trash-book-details-icon {

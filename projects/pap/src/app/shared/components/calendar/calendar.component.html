@@ -26,21 +26,24 @@
           <div class="pap-calendar-trash">
             <div div *ngFor="let trash of item.value" class="pap-calendar-event">
               <div>
-                <div
+                <ion-button
+                  shape="round"
+                  fill="outline"
+                  size="large"
                   *ngFor="let trashType of trash.trash_types"
                   (click)="info(item.key,trashType)"
                   class="pap-calendar-trashlist"
                 >
                   <ion-icon
                     class="trash-book-details-icon"
-                    slot="end"
+                    slot="start"
                     [ngStyle]="{color:trashType?.color}"
                     name="ellipse"
                   ></ion-icon>
                   <ion-label class="pap-calendar-trashlist-details-label">
                     {{trashType.name['it']}}
                   </ion-label>
-                </div>
+                </ion-button>
               </div>
             </div>
           </div>
