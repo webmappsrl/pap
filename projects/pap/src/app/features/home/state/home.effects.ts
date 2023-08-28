@@ -49,7 +49,7 @@ export class HomeEffects {
                 },
               },
               {
-                text: 'segnala mancato ritiro',
+                text: 'Segnala mancato ritiro',
                 icon: 'alert-circle',
                 data: {
                   action: 'report-ticket',
