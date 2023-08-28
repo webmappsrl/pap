@@ -22,10 +22,12 @@ pap-calendar-page {
         flex: 0 1 auto;
         align-self: auto;
       }
-      .pap-calendar-information-circle {
-        height: 0px;
-      }
     }
+  }
+  .pap-calendar-information-circle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
   ion-card {
     display: flow;
