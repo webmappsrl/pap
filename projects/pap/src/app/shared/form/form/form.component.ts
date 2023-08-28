@@ -91,13 +91,14 @@ export class FormComponent implements OnDestroy {
       .pipe(
         filter(v => v != null),
         switchMap(success => {
+          const label = this.ticketFormConf$.value?.label || 'Prenotazione';
           const header = `${
-            success ? 'Prenotazione avvenuta con successo' : 'Errore nella prenotazione'
+            success ? `${label} avvenuta con successo` : `Errore nella prenotazione`
           }`;
           const message = `${
             success
               ? 'Puoi visualizzarla nella sezione "i miei ticket".'
-              : "Si è verificato un errore durante l'invio del tuo ticket. Per favore, prova di nuovo"
+              : 'Errore durante l’invio - Si è verificato un errore durante l’invio del tuo ticket. Per favore, prova di nuovo.'
           }`;
           return this._alertCtrl.create({
             cssClass: `pap-status-alert-${success ? 'confirmation' : 'erro'}`,
