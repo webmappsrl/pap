@@ -61,6 +61,7 @@ ios-custom/GoogleService-Info.plist
 ios-custom/google-services.json
 projects/pap/src/environments/
 
-
 capacitor.config.ts
+capacitor.config.ts
+projects/pap/src/environments/environment.prod.ts
 
