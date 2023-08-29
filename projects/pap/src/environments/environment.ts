@@ -3,7 +3,7 @@ export const environment = {
   companyId: 1,
   config: {
     id: 1,
-    name: 'Ersu',
+    name: 'Ersus',
     sku: 'it.netseven.portapporta',
     resources: {
       icon: 'https://dev.portapporta.webmapp.it/storage/resources/1/icon.png',

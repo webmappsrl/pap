@@ -43,6 +43,7 @@ dotenv.config();
 // Task per il build e il deploy dell'app
 gulp.task('build', async () => {
   try {
+    await init();
     const companyId = args.id || null;
     const release = args.release ? true : false;
     const packageJson = await readJsonFile('./package.json');
@@ -55,16 +56,14 @@ gulp.task('build', async () => {
       version = packageJson.version;
     }
     paths = getPaths(companyId);
-
     const oldVariables = await readFileContent(paths.variablesConfigPath);
     const devVariables = await readFileContent(paths.devVariablesConfigPath);
     await execCmd(`rm -rf ${paths.devVariablesConfigPath}`);
     const oldCapacitorConfig = await readFileContent('capacitor.config.ts');
 
     const config: Config = await getConfig(paths.apiUrl);
-    console.log('Configurazione ottenuta:', config);
-    const sku = config.sku;
-    console.log('Sku:', sku);
+    await setAssets(config);
+    await ionicPlathforms(config.resources);
     await execCmd(`rm -rf ${paths.instancePath}`);
     createFolder(paths.instancePath);
     const capacitorConfig: CapacitorConfig = {
@@ -124,7 +123,6 @@ gulp.task('build', async () => {
     await ionicBuild();
     await ionicBuildIos();
     await ionicBuildIAndroid();
-    await ionicPlathforms(config.resources);
     await ionicCapSync();
 
     await writeFile(paths.variablesConfigPath, oldVariables);
@@ -142,6 +140,8 @@ gulp.task('serve', async () => {
   const companyId = process.argv[4];
   const paths: Paths = getPaths(companyId);
   const config: Config = await getConfig(paths.apiUrl);
+  await setAssets(config);
+  await ionicPlathforms(config.resources);
 
   await setDevEnvironment(paths, config);
   await writeFile(paths.devVariablesConfigPath, config.resources.variables);
@@ -149,17 +149,7 @@ gulp.task('serve', async () => {
   await execCmd(`ionic serve`);
 });
 
-gulp.task('init', async () => {
-  await execCmd(`rm -rf android`);
-  await execCmd(`rm -rf ios`);
-  await execCmd(`rm -rf resources`);
-  await execCmd(`rm -rf icons`);
-  await execCmd(`npm install --force`);
-  await execCmd(`npx cap add android`);
-  await execCmd(`npx cap add ios`);
-  await execCmd(`cd ios/App && pod install`);
-  await ionicUpdateIosSetup();
-});
+gulp.task('init', init);
 // Task predefinito
 gulp.task('default', gulp.series('build'));
 const ionicUpdateIosSetup = (): Promise<void> => {
@@ -220,14 +210,13 @@ async function setAssets(config: Config): Promise<void> {
 }
 function execCmd(cmd: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    console.log(`${cmd}: START`);
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error(stderr);
         console.log(`${cmd}: ERROR`);
         reject();
       }
-      console.log(`${cmd}: DONE`);
+      console.log(`EXEC: ${cmd}`);
       resolve();
     });
   });
@@ -279,6 +268,31 @@ function readJsonFile(filePath: string): Promise<any> {
       });
   });
 }
+function init(): Promise<void> {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await execCmd(`rm -rf android`);
+      await execCmd(`rm -rf ios`);
+      await execCmd(`rm -rf resources`);
+      await execCmd(`rm -rf icons`);
+      await execCmd(`npm install --force`);
+      await execCmd(`npx cap add android`);
+      await execCmd(`npx cap add ios`);
+      // Imposta la variabile di ambiente LANG su en_US.UTF-8
+      process.env['LANG'] = 'en_US.UTF-8';
+      await execCmd(`cd ios/App && pod install`);
+      fsExtra.copyFile('./ios-custom/Podfile', `./ios/App/Podfile`);
+      console.log(`INFO: update Podfile`);
+      fsExtra.copyFile('./ios-custom/AppDelegate.swift', `./ios/App/App/AppDelegate.swift`);
+      fsExtra.copyFile('./ios-custom/info.plist', `./ios/App/App/info.plist`);
+      console.log(`init completato`);
+      resolve();
+    } catch (error) {
+      console.log(error);
+      reject();
+    }
+  });
+}
 
 const getConfig = (apiUrl: string): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -326,17 +340,13 @@ const createFolder = (path: string): void => {
 const ionicBuild = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     const cmd = `ionic  build --prod`;
-    console.log(`${cmd}: START`);
+    console.log(`EXEC: ${cmd}`);
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error('Errore durante la build di Ionic:', error);
         console.log(`${cmd}: ERROR`);
         reject();
       }
-      console.log(stdout);
-
-      console.error(stderr);
-      console.log(`${cmd}: DONE`);
       resolve();
     });
   });
@@ -345,16 +355,13 @@ const ionicBuild = (): Promise<void> => {
 const ionicBuildIos = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     const cmd = `ionic  build ios --prod`;
-    console.log(`${cmd}: START`);
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error('Errore durante la build di Ionic:', error);
         console.log(`${cmd}: ERROR`);
         reject();
       }
-      console.log(stdout);
-      console.error(stderr);
-      console.log(`${cmd}: DONE`);
+      console.log(`EXEC: ${cmd}`);
       resolve();
     });
   });
@@ -363,16 +370,13 @@ const ionicBuildIos = (): Promise<void> => {
 const ionicBuildIAndroid = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     const cmd = `ionic  build android --prod`;
-    console.log(`${cmd}: START`);
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error('Errore durante la build di Ionic:', error);
         console.log(`${cmd}: ERROR`);
         reject();
       }
-      console.log(stdout);
-      console.error(stderr);
-      console.log(`${cmd}: DONE`);
+      console.log(`EXEC: ${cmd}`);
       resolve();
     });
   });
@@ -389,16 +393,13 @@ const ionicPlathforms = (resources: {icon: string; splash: string}): Promise<voi
     download(resources.splash, `resources/splash.png`);
     download(resources.splash, `resources/splash-dark.png`);
     const cmd = `npx capacitor-assets generate`;
-    console.log(`${cmd}: START`);
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error('Errore durante la build di Ionic:', error);
         console.log(`${cmd}: ERROR`);
         reject();
       }
-      console.log(stdout);
-      console.error(stderr);
-      console.log(`${cmd}: DONE`);
+      console.log(`EXEC: ${cmd}`);
       resolve();
     });
   });
@@ -406,16 +407,13 @@ const ionicPlathforms = (resources: {icon: string; splash: string}): Promise<voi
 const ionicCapSync = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     const cmd = `npx cap sync`;
-    console.log(`${cmd}: START`);
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error('Errore durante la build di Ionic:', error);
         console.log(`${cmd}: ERROR`);
         reject();
       }
-      console.log(stdout);
-      console.error(stderr);
-      console.log(`${cmd}: DONE`);
+      console.log(`EXEC: ${cmd}`);
       resolve();
     });
   });
@@ -423,10 +421,10 @@ const ionicCapSync = (): Promise<void> => {
 const writeFile = (path: string, file: string | null): Promise<void> => {
   return new Promise((resolve, reject) => {
     if (file == null) reject();
-    console.log(`${path}: START`);
     try {
       fs.writeFileSync(path, file);
-      console.log(`${path}: DONE`);
+      console.log(`WRITE_FILE: ${path}`);
+
       resolve();
     } catch (error) {
       console.error('Errore durante la scrittura del file temporaneo:', error);
