@@ -137,7 +137,7 @@ gulp.task('build', async () => {
 });
 
 gulp.task('serve', async () => {
-  const companyId = process.argv[4];
+  const companyId = args.id || null;
   const paths: Paths = getPaths(companyId);
   const config: Config = await getConfig(paths.apiUrl);
   await setAssets(config);
