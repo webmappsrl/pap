@@ -68,9 +68,16 @@ ion-modal {
 .pap-calendar-trashlist {
   display: flex !important;
   flex-direction: row !important;
-  height: 100%;
+  height: fit-content;
   width: 100%;
   padding: 3px;
+}
+.pap-trashlist-details-label {
+  margin: 10px;
+  flex: 1 1 80%;
+}
+.pap-trash-book-details-icon {
+  font-size: 15px;
 }
 /************ end global style ***************/
 

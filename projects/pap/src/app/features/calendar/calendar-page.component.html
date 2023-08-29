@@ -20,6 +20,7 @@
             >Vedi</ion-button
           >
         </div>
+
         <ion-item lines="none">
           <ion-select placeholder="Select address" (ionChange)="selectAddress($event)" [value]="0">
             <ion-select-option
@@ -37,41 +38,45 @@
             *ngFor="let item of currentAddress.calendar| keyvalue"
             class="pap-calendar-item"
           >
-            <ion-label slot="start" class="pap-calendar-date">
-              <div class="pap-calendar-monthday">{{item.key|papDate: 'd' }}</div>
-              <div class="pap-calendar-monthname">{{item.key|papDate: 'MMMM' }}</div>
-            </ion-label>
-            <div class="pap-calendar-trash">
-              <div class="pap-calendar-weekday">{{item.key|papDate: 'EEEE' }}</div>
-              <div div *ngFor="let trash of item.value" class="pap-calendar-event">
-                <div class="pap-calendar-time">
-                  Dalle {{trash.start_time}} alle {{trash.stop_time}}
-                </div>
-                <div>
-                  <ion-button
-                    shape="round"
-                    fill="outline"
-                    size="large"
-                    *ngFor="let trashType of trash.trash_types"
-                    (click)="info(trashType)"
-                    class="pap-calendar-trashlist"
-                  >
-                    <ion-icon
-                      class="trash-book-details-icon"
-                      slot="start"
-                      [ngStyle]="{color:trashType?.color}"
-                      name="ellipse"
-                    ></ion-icon>
-                    <ion-label
-                      class="pap-calendar-page-trashlist-details-label"
-                      *ngIf="trashType.name"
-                    >
-                      {{trashType.name|papLang}}
-                    </ion-label>
-                  </ion-button>
-                </div>
-              </div>
-            </div>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="4">
+                  <ion-label class="pap-calendar-date">
+                    <div>{{item.key|papDate: 'd' }}</div>
+                    <div>{{item.key|papDate: 'MMMM' }}</div>
+                  </ion-label>
+                </ion-col>
+                <ion-col size="8">
+                  <div class="pap-calendar-weekday">{{item.key|papDate: 'EEEE' }}</div>
+                  <div div *ngFor="let trash of item.value" class="pap-calendar-event">
+                    <div class="pap-calendar-time">
+                      Dalle {{trash.start_time}} alle {{trash.stop_time}}
+                    </div>
+                    <div>
+                      <ion-button
+                        shape="round"
+                        fill="outline"
+                        size="small"
+                        *ngFor="let trashType of trash.trash_types"
+                        (click)="info(trashType)"
+                        class="pap-calendar-trashlist"
+                      >
+                        <ion-icon
+                          class="trash-book-details-icon"
+                          size="medium"
+                          slot="start"
+                          [ngStyle]="{color:trashType?.color}"
+                          name="ellipse"
+                        ></ion-icon>
+                        <ion-label class="pap-trashlist-details-label" *ngIf="trashType.name">
+                          {{trashType.name|papLang}}
+                        </ion-label>
+                      </ion-button>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-item>
         </ng-container>
       </ion-list>
