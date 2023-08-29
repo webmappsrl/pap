@@ -61,3 +61,8 @@ projects/pap/src/assets/icons/logo.png
 
 ios-custom/GoogleService-Info.plist
 ios-custom/google-services.json
+capacitor.config.ts
+
+projects/pap/src/environments/
+
+projects/pap/src/theme/variables.scss
