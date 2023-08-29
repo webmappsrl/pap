@@ -64,3 +64,5 @@ ios-custom/google-services.json
 projects/pap/src/environments/
 
 .vscode/launch.json
+
+capacitor.config.ts
