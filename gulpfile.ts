@@ -285,7 +285,7 @@ function init(): Promise<void> {
       console.log(`INFO: update Podfile`);
       fsExtra.copyFile('./ios-custom/AppDelegate.swift', `./ios/App/App/AppDelegate.swift`);
       fsExtra.copyFile('./ios-custom/info.plist', `./ios/App/App/info.plist`);
-      console.log(`init completato`);
+      console.log(`INFO: init completato`);
       resolve();
     } catch (error) {
       console.log(error);
@@ -328,7 +328,7 @@ const createFolder = (path: string): void => {
   try {
     if (!fs.existsSync(path)) {
       fs.mkdirSync(path);
-      console.log(`Cartella "${path}" creata con successo.`);
+      console.log(`CREATE_FOLDER: "${path}"`);
     } else {
       console.log(`La cartella "${path}" esiste già.`);
     }
@@ -474,12 +474,13 @@ async function readFileContent(filePath: string) {
 }
 
 async function download(url: string, destinationPath: string) {
+  console.log(`DOWNLOAD: ${url}`);
+  console.log(`TO: ${destinationPath}`);
   try {
     const response = await axios.get(url, {responseType: 'arraybuffer'});
     fs.writeFileSync(destinationPath, response.data);
-    console.log('Il file  è stato scaricato con successo.');
   } catch (error) {
-    console.error('Si è verificato un errore durante il download del file :', url);
+    console.log(`ERROR: ${error}`);
   }
 }
 

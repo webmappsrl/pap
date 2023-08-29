@@ -25,6 +25,7 @@ yarn-error.log
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
+.vscode/launch.json
 !.vscode/extensions.json
 .history/*
 
@@ -52,17 +53,14 @@ instances/
 .env
 
 projects/pap/src/theme/dev-variables.scss
-
+projects/pap/src/theme/variables.scss
 projects/pap/src/assets/images/footer.png
-
 projects/pap/src/assets/images/header.png
-
 projects/pap/src/assets/icons/logo.png
-
 ios-custom/GoogleService-Info.plist
 ios-custom/google-services.json
 projects/pap/src/environments/
 
-.vscode/launch.json
 
 capacitor.config.ts
+
