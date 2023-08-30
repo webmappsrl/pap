@@ -52,16 +52,10 @@ instances/
 /icons/
 .env
 
-projects/pap/src/theme/dev-variables.scss
-projects/pap/src/theme/variables.scss
-projects/pap/src/assets/images/footer.png
-projects/pap/src/assets/images/header.png
-projects/pap/src/assets/icons/logo.png
+projects/pap/src/environments/
+projects/pap/src/theme/
+projects/pap/src/assets/images/
+projects/pap/src/assets/icons/
 ios-custom/GoogleService-Info.plist
 ios-custom/google-services.json
-projects/pap/src/environments/
-
 capacitor.config.ts
-capacitor.config.ts
-projects/pap/src/environments/environment.prod.ts
-
