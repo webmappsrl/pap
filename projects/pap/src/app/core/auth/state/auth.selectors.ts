@@ -7,5 +7,6 @@ export const isVerified = createSelector(
   selectAuthState,
   state => state != null && state.user != null && state.user!.email_verified_at != null,
 );
+export const noAddress = createSelector(selectAuthState, state => state != null && state.noAddress);
 export const user = createSelector(selectAuthState, state => state.user);
 export const error = createSelector(selectAuthState, state => state != null && state.error);

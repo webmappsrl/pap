@@ -1,3 +1,4 @@
+import {noAddress} from './auth.selectors';
 import * as AuthActions from './auth.actions';
 
 import {createReducer, on} from '@ngrx/store';
@@ -10,11 +11,13 @@ export interface AuthState {
   error?: string;
   isLogged: boolean;
   isVerified: boolean;
+  noAddress: boolean;
   user?: User;
 }
 
 export const initialState: AuthState = {
   isLogged: false,
+  noAddress: false,
   isVerified: false,
 };
 
@@ -28,6 +31,7 @@ export const reducer = createReducer(
       user: action.user,
       isLogged: true,
       isVerified: action.user.email_verified_at != null ? true : false,
+      noAddress: action.user.addresses == null || action.user.addresses.length === 0 ? true : false,
     };
   }),
   on(AuthActions.loadAuthsFailure, (state, action) => {

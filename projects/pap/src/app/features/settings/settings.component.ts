@@ -17,19 +17,20 @@ import {
 } from '@angular/forms';
 import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {UpdateUser, deleteUser, loadAuths, logout} from '../../core/auth/state/auth.actions';
+import {UpdateUser, deleteUser, logout} from '../../core/auth/state/auth.actions';
 
+import {ActivatedRoute} from '@angular/router';
 import {AlertController, AlertOptions, ModalController, NavController} from '@ionic/angular';
 import {filter, map, switchMap, take} from 'rxjs/operators';
 import {error} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {FormProvider} from '../../shared/form/form-provider';
+import {LocationModalComponent} from '../../shared/form/location/location.modal';
 import {showButtons} from '../../shared/header/state/header.actions';
+import {confiniZone} from '../../shared/map/state/map.selectors';
 import {ConfirmedValidator} from '../sign-up/sign-up.component';
 import {loadCalendarSettings, toggleEdit} from './state/settings.actions';
 import {settingView} from './state/settings.selectors';
-import {confiniZone} from '../../shared/map/state/map.selectors';
-import {LocationModalComponent} from '../../shared/form/location/location.modal';
 import {SettingsService} from './state/settings.service';
 const DELETE: AlertOptions = {
   header: 'Vuoi eliminare il tuo account?',
@@ -86,6 +87,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   confiniZone$: Observable<any> = this._store.select(confiniZone);
   currentStep$: BehaviorSubject<string> = new BehaviorSubject<string>('firstStep');
   error$: Observable<string | false | undefined> = this._store.select(error);
+  initStep = 'firstStep';
   settingsForm: UntypedFormGroup;
   settingsView$ = this._store.pipe(select(settingView));
 
@@ -97,8 +99,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _settingsSvc: SettingsService,
     private _cdr: ChangeDetectorRef,
+    private _route: ActivatedRoute,
     fb: UntypedFormBuilder,
   ) {
+    const urlSegments = this._route.snapshot.url.map(segment => segment.path);
+    if (urlSegments.includes('address')) {
+      this.initStep = 'thirdStep';
+      this.currentStep$.next('thirdStep');
+    }
     this._settingsFormSub = this.settingsView$.subscribe(sv => {
       try {
         (sv.user?.addresses ?? []).forEach(address => {

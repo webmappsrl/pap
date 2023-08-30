@@ -3,7 +3,7 @@
 
   <ion-content padding class="pap-settings">
     <ion-card class="main-card">
-      <ion-segment value="firstStep">
+      <ion-segment value="{{initStep}}">
         <ion-segment-button value="firstStep" (click)="currentStep$.next('firstStep')">
           <ion-label>Generali</ion-label>
         </ion-segment-button>
