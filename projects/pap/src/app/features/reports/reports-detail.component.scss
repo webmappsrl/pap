@@ -6,11 +6,7 @@ pap-reports-detail {
 
   ion-card {
     ion-card-content {
-      overflow: auto;
-      max-height: 95%;
-      &::-webkit-scrollbar {
-        display: none;
-      }
+      height: 90%;
     }
     ion-label {
       font-weight: 500;
