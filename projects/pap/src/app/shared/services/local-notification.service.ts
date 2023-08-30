@@ -103,7 +103,6 @@ export class LocalNotificationService {
               } catch (e) {
                 console.log(`LocalNotifications error: ${e}`);
                 console.log(`LocalNotifications error: ${JSON.stringify(options)}`);
-                window.alert(`error: ${JSON.stringify(e)}`);
               }
             });
           }

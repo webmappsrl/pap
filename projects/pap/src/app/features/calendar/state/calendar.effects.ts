@@ -9,11 +9,15 @@ import {CalendarService} from '../calendar.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../../core/core.state';
 import {trashBookTypes} from '../../trash-book/state/trash-book.selectors';
+import {isLogged} from '../../../core/auth/state/auth.selectors';
 
 @Injectable()
 export class CalendarEffects {
+  isLogged$ = this._store.pipe(select(isLogged));
   loadCalendars$ = createEffect(() => {
-    return this.actions$.pipe(
+    return this.isLogged$.pipe(
+      filter(l => l),
+      switchMap(_ => this.actions$),
       ofType(TrashBookAction.loadTrashBooksSuccess),
       switchMap(() => of({type: '[Calendar] Load Calendars'})),
       ofType(CalendarActions.loadCalendars),
@@ -28,7 +32,9 @@ export class CalendarEffects {
     );
   });
   loadCalendarsWithDate$ = createEffect(() => {
-    return this.actions$.pipe(
+    return this.isLogged$.pipe(
+      filter(l => l),
+      switchMap(_ => this.actions$),
       ofType(CalendarActions.loadCalendars),
       switchMap(action => {
         return this.calendarService.getCalendars(action.prop!);
@@ -43,6 +49,6 @@ export class CalendarEffects {
   constructor(
     private actions$: Actions,
     private calendarService: CalendarService,
-    private store: Store<AppState>,
+    private _store: Store<AppState>,
   ) {}
 }

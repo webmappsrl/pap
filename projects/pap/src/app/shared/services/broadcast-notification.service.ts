@@ -23,7 +23,6 @@ export class BroadcastNotificationService {
           await this._registerNotifications();
           await PushNotifications.addListener('pushNotificationReceived', notification => {
             console.log('Push notification received: ', notification);
-            alert('Push received: ' + JSON.stringify(notification));
           });
 
           await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
@@ -49,9 +48,7 @@ export class BroadcastNotificationService {
     try {
       const notificationList = await PushNotifications.getDeliveredNotifications();
       console.log('delivered notifications', notificationList);
-    } catch (e) {
-      // alert('Error on registration: ' + JSON.stringify(e));
-    }
+    } catch (e) {}
   }
 
   private async _registerNotifications(): Promise<void> {

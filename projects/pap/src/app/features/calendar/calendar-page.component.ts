@@ -7,7 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 import {debounceTime, filter, take} from 'rxjs/operators';
 import {AppState} from '../../core/core.state';
 import {showButtons} from '../../shared/header/state/header.actions';
-import {setTrashBookType} from '../trash-book/state/trash-book.actions';
+import {loadTrashBooks, setTrashBookType} from '../trash-book/state/trash-book.actions';
 import {TrashBookType} from '../trash-book/trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book/trash-book-type/trash-book-type.component';
 import {Calendar} from './calendar.model';
@@ -29,18 +29,14 @@ export class CalendarPageComponent {
     private _modalController: ModalController,
     private _inAppBrowser: InAppBrowser,
   ) {
+    this._store.dispatch(loadTrashBooks());
     this._store.dispatch(loadCalendars());
     this._store.dispatch(showButtons({show: false}));
-    this.calendarView$
-      .pipe(
-        filter(f => f != null),
-        take(1),
-      )
-      .subscribe(calendarView => {
-        if (calendarView != null && calendarView.calendars != null) {
-          this.currentAddress$.next(calendarView.calendars[0]);
-        }
-      });
+    this.calendarView$.pipe(filter(f => f != null)).subscribe(calendarView => {
+      if (calendarView != null && calendarView.calendars != null) {
+        this.currentAddress$.next(calendarView.calendars[0]);
+      }
+    });
   }
 
   info(tbType: TrashBookType) {

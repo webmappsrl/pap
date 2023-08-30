@@ -1,8 +1,8 @@
 
       import {CapacitorConfig} from '@capacitor/cli';
       const capacitorConfig: CapacitorConfig = {
-  "appId": "it.netseven.portapporta",
-  "appName": "Ersu",
+  "appId": "it.webmapp.portapportaesa",
+  "appName": "esa",
   "webDir": "dist/pap/",
   "bundledWebRuntime": false,
   "cordova": {
