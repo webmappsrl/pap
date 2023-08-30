@@ -56,7 +56,6 @@ gulp.task('build', async () => {
       version = packageJson.version;
     }
     paths = getPaths(companyId);
-    const oldVariables = await readFileContent(paths.variablesConfigPath);
     const devVariables = await readFileContent(paths.devVariablesConfigPath);
     await execCmd(`rm -rf ${paths.devVariablesConfigPath}`);
     const oldCapacitorConfig = await readFileContent('capacitor.config.ts');
@@ -125,7 +124,6 @@ gulp.task('build', async () => {
     await ionicBuildIAndroid();
     await ionicCapSync();
 
-    await writeFile(paths.variablesConfigPath, oldVariables);
     await writeFile('capacitor.config.ts', oldCapacitorConfig);
     await writeFile(paths.devVariablesConfigPath, devVariables);
     await moveFoldersToInstance(paths.instancePath);
