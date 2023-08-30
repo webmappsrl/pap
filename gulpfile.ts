@@ -141,6 +141,7 @@ gulp.task('serve', async () => {
   await ionicPlathforms(config.resources);
 
   await setDevEnvironment(paths, config);
+  await writeFile(paths.variablesConfigPath, config.resources.variables);
   await writeFile(paths.devVariablesConfigPath, config.resources.variables);
   await setAssets(config);
   await execCmd(`ionic serve`);
@@ -181,7 +182,10 @@ async function setDevEnvironment(paths: Paths, config: Config): Promise<void> {
 
   await writeFile(
     paths.environmentDevPath,
-    `export const environment = ${JSON.stringify(environment).replace(/"([^"]+)":/g, '$1:')}`,
+    `export const environment = ${JSON.stringify(environment, null, 2).replace(
+      /"([^"]+)":/g,
+      '$1:',
+    )}`,
   );
 }
 async function setProdEnvironment(paths: Paths, config: Config): Promise<void> {
