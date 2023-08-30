@@ -12,6 +12,7 @@ ion-card {
   display: grid;
   max-width: 93%;
   margin: auto !important;
+  padding: 10px;
   top: 15px;
   box-shadow: 0px 2px 3px 0px #00000033;
   scrollbar-width: none;
@@ -63,7 +64,7 @@ ion-modal {
   --height: 100%;
 }
 .alert-button {
-  background-color: var(--ion-color-primary-contrast);
+  background-color: var(--ion-color-primary-contrast) !important;
 }
 .pap-calendar-trashlist {
   display: flex !important;
@@ -236,6 +237,7 @@ ion-modal {
         --width: 90px;
         --height: 34px;
         margin: 5px;
+        background-color: var(--ion-color-primary-contrast);
       }
       .alert-button-role-cancel {
         flex: 0 1 44%;
@@ -244,7 +246,7 @@ ion-modal {
       .alert-button-role-ok {
         flex: 0 1 33%;
         align-self: flex-start;
-        background-color: var(--ion-color-primary);
+        background-color: var(--ion-color-primary) !important;
         color: var(--ion-color-primary-contrast);
       }
       span {
@@ -325,15 +327,6 @@ ion-modal {
     display: flex;
     -webkit-flex-direction: row;
     flex-direction: column;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-justify-content: flex-start;
-    justify-content: flex-start;
-    -webkit-align-content: flex-start;
-    align-content: flex-start;
-    -webkit-align-items: flex-start;
-    align-items: flex-start;
-    padding: 20px;
     margin-top: -15px;
     .alert-button {
       border: 2px solid;
@@ -342,10 +335,14 @@ ion-modal {
       --width: 90px;
       --height: 34px;
       margin: 5px;
+      background-color: var(--ion-color-primary-contrast);
     }
     .pap-waste-center-alert-btn-ok {
-      background-color: var(--ion-color-primary);
+      background-color: var(--ion-color-primary) !important;
       color: var(--ion-color-primary-contrast);
+    }
+    .alert-button-inner {
+      justify-content: center;
     }
   }
 }

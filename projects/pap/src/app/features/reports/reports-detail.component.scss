@@ -5,10 +5,9 @@ pap-reports-detail {
   }
 
   ion-card {
-    max-height: calc(100% - 10%);
     ion-card-content {
       overflow: auto;
-      max-height: calc(100% - 25%);
+      max-height: 95%;
       &::-webkit-scrollbar {
         display: none;
       }

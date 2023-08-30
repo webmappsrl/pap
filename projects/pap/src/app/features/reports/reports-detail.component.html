@@ -5,7 +5,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Dettaglio ticket</ion-card-subtitle>
-      <ion-card-title>Prenotazione {{rep.ticket_type|papTicket}}</ion-card-title>
+      <ion-card-title>Ticket {{rep.ticket_type|papTicket}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item lines="none" *ngIf="rep.trashType as trashType">
@@ -54,14 +54,14 @@
         </ion-accordion>
       </ion-accordion-group>
 
-      <ion-item lines="none">
+      <ion-item *ngIf="rep.created_at as createdAt" lines="none">
         <ul class="pap-reports-detail-outer-list">
           <li>
             <ion-label>Data prenotazione:</ion-label>
             <ul class="pap-reports-detail-inner-list">
               <li>
                 <ion-note class="pap-form-recap-note">
-                  {{rep.created_at|papDate:'MM/dd/yyyy'}}
+                  {{createdAt|papDate:'MM/dd/yyyy'}}
                 </ion-note>
               </li>
             </ul>
@@ -69,11 +69,11 @@
         </ul>
       </ion-item>
 
-      <ion-item lines="none">
+      <ion-item *ngIf="rep.image as img" lines="none">
         <ul class="pap-reports-detail-outer-list">
           <li>
             <ion-label>Foto</ion-label>
-            <img *ngIf="rep.image as img" [src]="img" />
+            <img [src]="img" />
           </li>
         </ul>
       </ion-item>
