@@ -1,6 +1,6 @@
 {
-  "name": "pappppppppp",
-  "version": "2.0.2",
+  "name": "pap",
+  "version": "2.2.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

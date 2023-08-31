@@ -127,6 +127,12 @@ gulp.task('build', async () => {
 
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
     await moveFoldersToInstance(paths.instancePath);
+    const info = ((await readFileContent('./ios-custom/info.plist')) || '').replace(
+      '<string>PAP</string>',
+      `<string>${config.name}</string>`,
+    );
+    await writeFile(`${paths.instancePath}/ios/App/App/info.plist`, info);
+
     console.log('Build completed successfully.');
   } catch (err) {
     console.error('An error occurred during the build:', err);
@@ -151,26 +157,6 @@ gulp.task('serve', async () => {
 gulp.task('init', init);
 // Task predefinito
 gulp.task('default', gulp.series('build'));
-const ionicUpdateIosSetup = (): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    try {
-      fsExtra.copyFile('./ios-custom/Podfile', `./ios/App/Podfile`);
-      console.log(`update Podfile`);
-    } catch (error) {
-      console.log(error);
-    }
-    try {
-      fsExtra.copyFile('./ios-custom/AppDelegate.swift', `./ios/App/App/AppDelegate.swift`);
-    } catch (error) {
-      console.log(error);
-    }
-    try {
-      fsExtra.copyFile('./ios-custom/info.plist', `./ios/App/App/info.plist`);
-    } catch (error) {
-      console.log(error);
-    }
-  });
-};
 async function setDevEnvironment(paths: Paths, config: Config): Promise<void> {
   const environment = {
     production: true,
@@ -437,32 +423,38 @@ const writeFile = (path: string, file: string | null): Promise<void> => {
 };
 
 const moveFoldersToInstance = (instancePath: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
-      fsExtra.copy('./dist/pap', `${instancePath}/www`, {overwrite: true});
+      await fsExtra.copy('./dist/pap', `${instancePath}/www`, {overwrite: true});
     } catch (error) {
       console.log(error);
+      reject();
     }
     try {
-      fsExtra.copy('./android', `${instancePath}/android`, {overwrite: true});
+      await fsExtra.copy('./android', `${instancePath}/android`, {overwrite: true});
     } catch (error) {
       console.log(error);
+      reject();
     }
     try {
-      fsExtra.copy('./ios', `${instancePath}/ios`, {overwrite: true});
+      await fsExtra.copy('./ios', `${instancePath}/ios`, {overwrite: true});
     } catch (error) {
       console.log(error);
+      reject();
     }
     try {
-      fsExtra.copy('./node_modules', `${instancePath}/node_modules`, {overwrite: true});
+      await fsExtra.copy('./node_modules', `${instancePath}/node_modules`, {overwrite: true});
     } catch (error) {
       console.log(error);
+      reject();
     }
     try {
-      fsExtra.copy('./resources', `${instancePath}/resources`, {overwrite: true});
+      await fsExtra.copy('./resources', `${instancePath}/resources`, {overwrite: true});
     } catch (error) {
       console.log(error);
+      reject();
     }
+    resolve();
   });
 };
 async function readFileContent(filePath: string) {
@@ -476,8 +468,7 @@ async function readFileContent(filePath: string) {
 }
 
 async function download(url: string, destinationPath: string) {
-  console.log(`DOWNLOAD: ${url}`);
-  console.log(`TO: ${destinationPath}`);
+  console.log(`DOWNLOAD: ${destinationPath}`);
   try {
     const response = await axios.get(url, {responseType: 'arraybuffer'});
     fs.writeFileSync(destinationPath, response.data);
