@@ -28,26 +28,35 @@
 
             <ng-container *ngSwitchCase="'calendar_trash_type_id'">
               <ng-container *ngIf="form.controls[item.type].value as value">
-                <ul>
-                  <li>
+                <div
+                  class="pap-form-recap-calendar-item"
+                  *ngIf="form.controls[item.type].value as value"
+                >
+                  <div class="pap-form-recap-calendar-detail">
                     <ion-label lines="none"> data: </ion-label>
-                    <ion-note class="pap-form-recap-note" *ngIf="value.trashDate  as trashDate">
-                      {{trashDate|date}}
-                    </ion-note>
-                  </li>
-                  <li>
+                    <ion-note
+                      class="pap-form-recap-note"
+                      *ngIf="value.trashDate as trashDate"
+                      >{{trashDate|date}}</ion-note
+                    >
+                  </div>
+                  <div class="pap-form-recap-calendar-detail">
                     <ion-label lines="none"> tipo di rifiuto: </ion-label>
-                    <ion-note class="pap-form-recap-note" *ngIf="value.tbType  as tbType">
-                      {{tbType.name.it}}
-                    </ion-note>
-                  </li>
-                  <li>
+                    <ion-note
+                      class="pap-form-recap-note"
+                      *ngIf="value.tbType as tbType"
+                      >{{tbType.name.it}}</ion-note
+                    >
+                  </div>
+                  <div class="pap-form-recap-calendar-detail">
                     <ion-label lines="none"> indirizzo: </ion-label>
-                    <ion-note class="pap-form-recap-note" *ngIf="value.calendar  as calendar">
-                      {{calendar.address.address}}
-                    </ion-note>
-                  </li>
-                </ul>
+                    <ion-note
+                      class="pap-form-recap-note"
+                      *ngIf="value.calendar as calendar"
+                      >{{calendar.address.address}}</ion-note
+                    >
+                  </div>
+                </div>
               </ng-container>
             </ng-container>
 
