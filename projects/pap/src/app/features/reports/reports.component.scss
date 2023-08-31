@@ -51,7 +51,7 @@ pap-reports {
         font-size: 18px;
         text-transform: uppercase;
         align-self: center;
-        color: var(--ion-color-secondary-contrast);
+        color: var(--ion-color-light-contrast);
       }
 
       .pap-reports-monthname {
@@ -60,7 +60,7 @@ pap-reports {
         text-transform: uppercase;
         text-transform: uppercase;
         align-self: flex-start;
-        color: var(--ion-color-secondary-contrast);
+        color: var(--ion-color-light-contrast);
       }
     }
     .input-wrapper {
@@ -73,7 +73,7 @@ pap-reports {
     }
   }
   ion-card {
-    max-height: 90%;
+    height: calc(100% - 80px);
   }
   ion-card-header {
     flex: 0 1 auto;
@@ -83,6 +83,9 @@ pap-reports {
     font-size: 22px;
     font-weight: 500;
     line-height: 23.44px;
+  }
+  ion-card-content {
+    height: 90%;
   }
   ion-icon {
     margin-right: 5px;

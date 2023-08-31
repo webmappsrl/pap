@@ -14,7 +14,7 @@ import {of} from 'rxjs';
 export class InfoComponent {
   constructor(private _sanitizer: DomSanitizer) {}
   public infoView$ = of({
-    imageUrl: '/assets/images/logo.jpg',
+    imageUrl: '/assets/icons/logo.png',
     pageBody: this._sanitizer
       .bypassSecurityTrustHtml(`<p style="font-weight: 400;"><strong>PortAPPorta</strong> &egrave; la nuova applicazione <strong>${environment.config.name}</strong> che rende la Raccolta Differenziata ancora pi&ugrave; semplice per gli utenti dei Comuni serviti da ${environment.config.name}.</p>
     <p style="font-weight: 400;">L'applicazione localizza la tua posizione e associa automaticamente il tuo calendario utente della raccolta Porta a Porta. Potrai consultare giorni e orari di raccolta, potrai richiedere la prenotazione dei servizi di ritiro e segnalare abbandoni, ed avere tutte le informazioni riguardo ai centri di raccolta. Un'applicazione gratuita che rappresenta un utile strumento per i cittadini, che potranno comunicare in maniera diretta e immediata con l'azienda.</p>

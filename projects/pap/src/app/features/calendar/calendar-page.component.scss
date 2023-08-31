@@ -23,6 +23,7 @@ pap-calendar-page {
     max-width: 100%;
     white-space: normal !important;
     overflow-wrap: break-word !important;
+    color: var(--ion-color-light-contrast);
   }
   ion-card-header {
     display: flex;
@@ -37,7 +38,6 @@ pap-calendar-page {
       font-size: 17px;
       font-weight: 400;
       line-height: 21px;
-      color: var(--ion-color-secondary-contrast);
     }
     .pap-calendar-infobuttoncontainer {
       width: 100%;

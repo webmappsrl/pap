@@ -6,7 +6,7 @@ pap-info {
     line-height: 16.41px;
     font-weight: 400;
     font-size: 16px;
-    color: var(--ion-color-secondary-contrast);
+    color: var(--ion-color-light-contrast);
   }
   ion-card {
     height: 100%;
@@ -17,5 +17,8 @@ pap-info {
         display: none;
       }
     }
+  }
+  ion-img {
+    max-height: 100px;
   }
 }
