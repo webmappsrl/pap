@@ -1,4 +1,31 @@
 pap-reports {
+  ion-card {
+    height: calc(100% - 80px);
+  }
+  ion-card-header {
+    flex: 0 1 auto;
+    align-self: stretch;
+  }
+  ion-card-title {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 23.44px;
+  }
+  ion-card-content {
+    height: 90%;
+  }
+  ion-icon {
+    margin-right: 5px;
+  }
+
+  ion-list {
+    overflow-y: auto;
+    height: 98%;
+    background-color: var(--ion-color-light) !important;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
   .pap-reports-item {
     margin-bottom: 4px;
     margin-top: 4px;
@@ -72,33 +99,18 @@ pap-reports {
       font-style: italic;
     }
   }
-  ion-card {
-    height: calc(100% - 80px);
-  }
-  ion-card-header {
-    flex: 0 1 auto;
-    align-self: stretch;
-  }
-  ion-card-title {
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 23.44px;
-  }
-  ion-card-content {
-    height: 90%;
-  }
-  ion-icon {
-    margin-right: 5px;
+  .pap-reports-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    ion-spinner {
+      width: 50px;
+      height: 50px;
+    }
   }
   .input-wrapper {
     flex: 0 1 0% !important;
-  }
-  ion-list {
-    overflow-y: auto;
-    height: 98%;
-    background-color: var(--ion-color-light) !important;
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 }

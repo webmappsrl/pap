@@ -6,6 +6,9 @@
     <ion-card-header>
       <ion-card-title>I miei ticket</ion-card-title>
     </ion-card-header>
+    <div class="pap-reports-spinner" *ngIf="!(reportsView$|async)">
+      <ion-spinner></ion-spinner>
+    </div>
     <ng-container *ngIf="reportsView$|async as reports">
       <ion-list>
         <ion-item
