@@ -1,6 +1,6 @@
 {
-  "name": "pap",
-  "version": "2.0.1",
+  "name": "pappppppppp",
+  "version": "2.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -74,6 +74,7 @@
     "@typescript-eslint/eslint-plugin": "6.1.0",
     "@typescript-eslint/parser": "6.1.0",
     "axios": "^1.4.0",
+    "capacitor-set-version": "^2.0.13",
     "dotenv": "^16.3.1",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.5.0",
