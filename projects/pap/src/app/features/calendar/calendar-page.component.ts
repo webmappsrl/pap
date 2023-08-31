@@ -51,7 +51,7 @@ export class CalendarPageComponent {
   }
 
   openLink(): void {
-    this._inAppBrowser.create('https://www.esaspa.it/index.php/rifiuti-ingombranti.html');
+    this._inAppBrowser.create('https://www.esaspa.it/cittadini/calendario-pap');
   }
 
   selectAddress(event: any): void {
