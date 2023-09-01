@@ -11,29 +11,59 @@ import {AuthService} from './auth.service';
 import {Store} from '@ngrx/store';
 
 const SUCESSFULLY_UPDATE: AlertOptions = {
+  cssClass: 'pap-alert',
   header: 'Aggiornamento avvenuto con successo',
   message: 'i dati relativi al tuo profilo sono stati aggiornati',
-  buttons: ['ok'],
+  buttons: [
+    {
+      text: 'ok',
+      cssClass: 'pap-alert-btn-ok',
+    },
+  ],
 };
 const SUCESSFULLY_DELETE: AlertOptions = {
+  cssClass: 'pap-alert',
   header: 'Utente eliminato con successo',
   message: 'i dati relativi al tuo profilo sono stati eliminati',
-  buttons: ['ok'],
+  buttons: [
+    {
+      text: 'ok',
+      cssClass: 'pap-alert-btn-ok',
+    },
+  ],
 };
 const SUCESSFULLY_LOGIN: AlertOptions = {
+  cssClass: 'pap-alert',
   header: 'LOGIN',
   message: 'Log in effettuato',
-  buttons: ['ok'],
+  buttons: [
+    {
+      text: 'ok',
+      cssClass: 'pap-alert-btn-ok',
+    },
+  ],
 };
 const SUCESSFULLY_REGISTRATION: AlertOptions = {
+  cssClass: 'pap-alert',
   header: 'REGISTRAZIONE',
   message: 'avvenuta con successo',
-  buttons: ['ok'],
+  buttons: [
+    {
+      text: 'ok',
+      cssClass: 'pap-alert-btn-ok',
+    },
+  ],
 };
 const SUCESSFULLY_RESEND: AlertOptions = {
+  cssClass: 'pap-alert',
   header: 'EMAIL SPEDITA',
   message: 'ti abbiamo inviato una nuova mail',
-  buttons: ['ok'],
+  buttons: [
+    {
+      text: 'ok',
+      cssClass: 'pap-alert-btn-ok',
+    },
+  ],
 };
 @Injectable()
 export class AuthEffects {

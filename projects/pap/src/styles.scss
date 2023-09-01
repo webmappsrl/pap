@@ -64,8 +64,17 @@ ion-modal {
   --width: 100%;
   --height: 100%;
 }
-.alert-button {
-  background-color: var(--ion-color-primary-contrast) !important;
+.pap-alert {
+  .alert-button {
+    background-color: var(--ion-color-primary-contrast) !important;
+    border: 2px solid;
+    border-radius: 30px;
+    line-height: 10px;
+  }
+  .pap-alert-btn-ok {
+    background-color: var(--ion-color-primary) !important;
+    color: var(--ion-color-primary-contrast);
+  }
 }
 .pap-calendar-trashlist {
   display: flex !important;
@@ -137,6 +146,8 @@ ion-modal {
       flex: 0 1 40%;
       -webkit-align-self: auto;
       align-self: auto;
+      background-color: var(--ion-color-primary) !important;
+      color: var(--ion-color-primary-contrast);
     }
     .alert-button-role-sign-up {
       -webkit-order: 0;

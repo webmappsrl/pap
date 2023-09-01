@@ -33,12 +33,15 @@ import {loadCalendarSettings, toggleEdit} from './state/settings.actions';
 import {settingView} from './state/settings.selectors';
 import {SettingsService} from './state/settings.service';
 const DELETE: AlertOptions = {
+  cssClass: 'pap-alert',
+
   header: 'Vuoi eliminare il tuo account?',
   message: 'questa operazione è irreversibile una volta eseguita',
   buttons: [
     {
       text: 'ok',
       role: 'delete-ok',
+      cssClass: 'pap-alert-btn-ok',
     },
     {
       text: 'annulla',
@@ -47,12 +50,14 @@ const DELETE: AlertOptions = {
   ],
 };
 const LOGOUT: AlertOptions = {
+  cssClass: 'pap-alert',
   header: 'Sei sicuro di voler effettuare il logout?',
   message: '',
   buttons: [
     {
       text: 'ok',
       role: 'logout-ok',
+      cssClass: 'pap-alert-btn-ok',
     },
     {
       text: 'annulla',
@@ -61,12 +66,15 @@ const LOGOUT: AlertOptions = {
   ],
 };
 const LOGOUT_CONFIRM: AlertOptions = {
+  cssClass: 'pap-alert',
+
   header: 'Logout effettuato con successo',
   message: '',
   buttons: [
     {
       text: 'ok',
       role: 'ok',
+      cssClass: 'pap-alert-btn-ok',
     },
   ],
 };
@@ -230,9 +238,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
         map(address => {
           if (address == null) {
             return this._alertCtrl.create({
+              cssClass: 'pap-alert',
               header: 'Salvataggio fallito',
               message: 'riprova in un secondo momento',
-              buttons: ['ok'],
+              buttons: [
+                {
+                  text: 'ok',
+                  cssClass: 'pap-alert-btn-ok',
+                },
+              ],
             });
           } else {
             const modalForm = this._formBuilder.group({
@@ -249,9 +263,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
             this._addressFormArray.push(modalForm);
             this._cdr.detectChanges();
             return this._alertCtrl.create({
+              cssClass: 'pap-alert',
               header: 'Salvataggio avvenuto con successo',
               message: 'il nuovo indirizzo è stato correttamente salvato',
-              buttons: ['ok'],
+              buttons: [
+                {
+                  text: 'ok',
+                  cssClass: 'pap-alert-btn-ok',
+                },
+              ],
             });
           }
         }),

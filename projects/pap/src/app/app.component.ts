@@ -39,12 +39,14 @@ export class AppComponent {
         filter(f => f),
         switchMap(_ =>
           this._alertCtrl.create({
+            cssClass: 'pap-alert',
             header: 'Non hai un indirizzo valido',
             message: `Per usurfruire di tutte le funzionalita della app devi inserire un indirizzo`,
             buttons: [
               {
                 text: 'ok',
                 role: 'ok',
+                cssClass: 'pap-alert-btn-ok',
               },
             ],
           }),

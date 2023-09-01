@@ -101,7 +101,7 @@ export class FormComponent implements OnDestroy {
               : 'Errore durante l’invio - Si è verificato un errore durante l’invio del tuo ticket. Per favore, prova di nuovo.'
           }`;
           return this._alertCtrl.create({
-            cssClass: `pap-status-alert-${success ? 'confirmation' : 'erro'}`,
+            cssClass: `pap-status-alert-${success ? 'confirmation' : 'error'}`,
             header,
             message,
             buttons: [

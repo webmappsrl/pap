@@ -72,16 +72,28 @@ export class thirdStepComponent implements OnInit {
           map(address => {
             if (address == null) {
               return this._alertCtrl.create({
+                cssClass: 'pap-alert',
                 header: 'Cancellazione fallita',
                 message: 'riprova in un secondo momento',
-                buttons: ['ok'],
+                buttons: [
+                  {
+                    text: 'ok',
+                    cssClass: 'pap-alert-btn-ok',
+                  },
+                ],
               });
             } else {
               this._cdr.detectChanges();
               return this._alertCtrl.create({
+                cssClass: 'pap-alert',
                 header: 'Cancellazione avvenuta con successo',
                 message: "L'indirizzo è stato correttamente cancellato",
-                buttons: ['ok'],
+                buttons: [
+                  {
+                    text: 'ok',
+                    cssClass: 'pap-alert-btn-ok',
+                  },
+                ],
               });
             }
           }),

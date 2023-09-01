@@ -34,6 +34,7 @@ const NO_LOGGED: AlertOptions = {
 };
 
 const NO_VERIFIED: AlertOptions = {
+  cssClass: 'pap-alert',
   header: 'Email non verificata',
   message: 'devi ancora accettare la mail che ti abbiamo inviato',
   buttons: [
@@ -41,7 +42,11 @@ const NO_VERIFIED: AlertOptions = {
       text: 'rispedisci email',
       role: 'resend',
     },
-    'ok',
+    {
+      text: 'ok',
+      role: 'ok',
+      cssClass: 'pap-alert-btn-ok',
+    },
   ],
 };
 @Injectable({
