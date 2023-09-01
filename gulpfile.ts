@@ -56,9 +56,9 @@ gulp.task('build', async () => {
       version = packageJson.version;
     }
     paths = getPaths(companyId);
-    await execCmd(`rm -rf ${paths.devVariablesConfigPath}`);
-
     const config: Config = await getConfig(paths.apiUrl);
+    await setEnvironment(paths, config);
+    await execCmd(`rm -rf ${paths.devVariablesConfigPath}`);
     await setAssets(config);
     await ionicPlathforms(config.resources);
     await execCmd(`rm -rf ${paths.instancePath}`);
@@ -87,14 +87,6 @@ gulp.task('build', async () => {
     };
     await writeFile('capacitor.config.ts', JSON.stringify(capacitorConfig, null, 2));
 
-    const environment = {
-      production: true,
-      companyId: companyId,
-      config,
-      api,
-      GOOOGLEAPIKEY: '',
-    };
-
     await writeFile(paths.capacitorConfigPath, JSON.stringify(capacitorConfig, null, 2));
     await writeFile(
       'capacitor.config.ts',
@@ -103,13 +95,6 @@ gulp.task('build', async () => {
       const capacitorConfig: CapacitorConfig = ${JSON.stringify(capacitorConfig, null, 2)}
       export default capacitorConfig;
       `,
-    );
-    await writeFile(
-      paths.environmentProdPath,
-      `export const environment = ${JSON.stringify(environment, null, 2).replace(
-        /"([^"]+)":/g,
-        '$1:',
-      )}`,
     );
 
     await writeFile(paths.variablesConfigPath, config.resources.variables);
@@ -147,7 +132,7 @@ gulp.task('serve', async () => {
 
   await setAssets(config);
   await ionicPlathforms(config.resources);
-  await setDevEnvironment(paths, config);
+  await setEnvironment(paths, config);
   await writeFile(paths.variablesConfigPath, config.resources.variables);
   await writeFile(paths.devVariablesConfigPath, config.resources.variables);
   await setAssets(config);
@@ -157,27 +142,9 @@ gulp.task('serve', async () => {
 gulp.task('init', init);
 // Task predefinito
 gulp.task('default', gulp.series('build'));
-async function setDevEnvironment(paths: Paths, config: Config): Promise<void> {
-  const environment = {
-    production: true,
-    companyId: paths.companyId,
-    config,
-    api,
-    //api: 'http://127.0.0.1:8000/',
-    GOOOGLEAPIKEY: '',
-  };
 
-  await writeFile(
-    paths.environmentDevPath,
-    `export const environment = ${JSON.stringify(environment, null, 2).replace(
-      /"([^"]+)":/g,
-      '$1:',
-    )}`,
-  );
-}
-async function setProdEnvironment(paths: Paths, config: Config): Promise<void> {
+async function setEnvironment(paths: Paths, config: Config): Promise<void> {
   const environment = {
-    production: true,
     companyId: paths.companyId,
     config,
     api,
@@ -187,7 +154,19 @@ async function setProdEnvironment(paths: Paths, config: Config): Promise<void> {
 
   await writeFile(
     paths.environmentProdPath,
-    `export const environment = ${JSON.stringify(environment).replace(/"([^"]+)":/g, '$1:')}`,
+    `export const environment = ${JSON.stringify(
+      {...environment, ...{production: true}},
+      null,
+      2,
+    ).replace(/"([^"]+)":/g, '$1:')}`,
+  );
+  await writeFile(
+    paths.environmentDevPath,
+    `export const environment = ${JSON.stringify(
+      {...environment, ...{production: false}},
+      null,
+      2,
+    ).replace(/"([^"]+)":/g, '$1:')}`,
   );
 }
 
@@ -326,10 +305,10 @@ const createFolder = (path: string): void => {
 };
 
 const ionicBuild = (): Promise<void> => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const cmd = `ionic  build --prod`;
     console.log(`EXEC: ${cmd}`);
-    exec(cmd, (error, stdout, stderr) => {
+    await exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error('Errore durante la build di Ionic:', error);
         console.log(`${cmd}: ERROR`);
@@ -408,14 +387,21 @@ const ionicCapSync = (): Promise<void> => {
 };
 const writeFile = (path: string, file: string | null): Promise<void> => {
   return new Promise((resolve, reject) => {
-    if (file == null) reject();
     try {
-      fs.writeFileSync(path, file);
-      console.log(`WRITE_FILE: ${path}`);
+      // Verifica se il file esiste
+      if (!fs.existsSync(path)) {
+        // Se il file non esiste, crea il file e scrivi il contenuto
+        fs.writeFileSync(path, file);
+        console.log(`File ${path} creato con successo.`);
+      } else {
+        // Se il file esiste già, sovrascrivilo con il nuovo contenuto
+        fs.writeFileSync(path, file);
+        console.log(`File ${path} sovrascritto con successo.`);
+      }
 
       resolve();
     } catch (error) {
-      console.error('Errore durante la scrittura del file temporaneo:', error);
+      console.error('Errore durante la scrittura del file:', error);
       console.log(`${path}: ERROR`);
       reject(error);
     }
