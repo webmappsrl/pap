@@ -1,35 +1,39 @@
 export interface TicketForm {
   cancel: string;
   finalMessage: string;
-  translationsObj: any;
   pages: number;
   step: TicketFormStep[];
+  translationsObj: any;
 }
 export interface TicketFormStep {
-  label: string;
-  type: TicketFieldTypes;
-  required: boolean;
-  value?: any;
-  translationsObj?: any;
-  options?: TicketFormOption[];
   extraOptions?: TicketFormOption[];
+  label: string;
+  options?: TicketFormOption[];
   recap?: string;
+  required: boolean;
+  translationsObj?: any;
+  type: TicketFieldTypes;
+  value?: any;
 }
 
 export interface TicketFormOption {
   label: string;
-  value: string;
   show: boolean;
+  value: string;
 }
 export interface Ticket {
-  ticket_type: TicketType;
-  trash_type_id: number; // (FK recuperato da http://portapporta.webmapp.it/c/4/trash_types.json)
-  user_id: number; // (FK id dell'utente loggato)
-  location: number[]; // (long,lat)
+  image?: string;
+  // (FK id dell'utente loggato)
+  location: number[];
+  // (long,lat)
   location_address: string;
-  image?: string; // (base64)
+  // (base64)
   note?: string;
   phone?: string;
+  ticket_type: TicketType;
+  trash_type_id: number;
+  // (FK recuperato da http://portapporta.webmapp.it/c/4/trash_types.json)
+  user_id: number;
 }
 
 export type TicketFieldTypes =

@@ -9,5 +9,6 @@ import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@ang
 })
 export class ErrorFormHandlerComponent {
   @Input() errors: any = null;
+
   constructor() {}
 }

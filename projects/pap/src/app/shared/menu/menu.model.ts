@@ -1,10 +1,10 @@
 import {buttonInfo} from '../../features/home/home.model';
 
 export interface menuButton {
-  showBack: boolean;
+  buttonEnd?: buttonInfo;
+  buttonStart?: buttonInfo;
+  img?: string;
   isMenuOpen: boolean;
   label?: string;
-  img?: string;
-  buttonStart?: buttonInfo;
-  buttonEnd?: buttonInfo;
+  showBack: boolean;
 }

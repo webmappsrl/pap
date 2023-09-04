@@ -57,11 +57,11 @@ export class AbandonmentTicketComponent {
 
   constructor(private navController: NavController) {}
 
-  formFilled(event: any) {
-    this.form = event;
-  }
-
   exitPage() {
     this.navController.pop();
+  }
+
+  formFilled(event: any) {
+    this.form = event;
   }
 }

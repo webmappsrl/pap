@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy,Component,OnDestroy,ViewEncapsulation } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { Store,select } from '@ngrx/store';
-import { AppState } from '../../core/core.state';
-import { showButtons } from '../../shared/header/state/header.actions';
-import { filterTrashBooks,setTrashBookDetail } from './state/trash-book.actions';
-import { selectTrashBookState } from './state/trash-book.selectors';
-import { TrashBookRow } from './trash-book-model';
+import {ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation} from '@angular/core';
+import {NavController} from '@ionic/angular';
+import {Store, select} from '@ngrx/store';
+import {AppState} from '../../core/core.state';
+import {showButtons} from '../../shared/header/state/header.actions';
+import {filterTrashBooks, setTrashBookDetail} from './state/trash-book.actions';
+import {selectTrashBookState} from './state/trash-book.selectors';
+import {TrashBookRow} from './trash-book-model';
 
 @Component({
   selector: 'pap-trash-book',
