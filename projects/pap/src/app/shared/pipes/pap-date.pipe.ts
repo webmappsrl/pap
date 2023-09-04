@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Pipe, PipeTransform} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {format as fm} from 'date-fns';
 import {it} from 'date-fns/locale';
 @Pipe({

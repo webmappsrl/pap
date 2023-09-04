@@ -1,10 +1,8 @@
-import * as SettingsActions from './settings.actions';
-
-import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {EMPTY, Observable, of} from 'rxjs';
-import {catchError, concatMap, map, switchMap} from 'rxjs/operators';
-
 import {Injectable} from '@angular/core';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {EMPTY, of} from 'rxjs';
+import {catchError, concatMap, map, switchMap} from 'rxjs/operators';
+import * as SettingsActions from './settings.actions';
 import {SettingsService} from './settings.service';
 
 @Injectable()

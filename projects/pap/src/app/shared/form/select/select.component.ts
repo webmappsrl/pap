@@ -9,7 +9,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AppState} from '@capacitor/app';
 import {Store} from '@ngrx/store';
 import {BehaviorSubject} from 'rxjs';
-import {TrashBookRow, TrashBookType} from '../../../features/trash-book/trash-book-model';
+import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {currentTrashBookType} from '../state/form.actions';
 
 @Component({
@@ -27,10 +27,9 @@ import {currentTrashBookType} from '../state/form.actions';
   ],
 })
 export class SelectComponent implements ControlValueAccessor {
-  options$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  select: number = -1;
-  searchString: string = '';
-  isFocused$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  @Input() set options(opts: TrashBookType[]) {
+    this.options$.next(opts);
+  }
 
   @Input() set selected(value: TrashBookType | null | undefined) {
     if (value) {
@@ -38,14 +37,40 @@ export class SelectComponent implements ControlValueAccessor {
     }
   }
 
-  @Input() set options(opts: TrashBookType[]) {
-    this.options$.next(opts);
-  }
+  disabled = false;
+  isFocused$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   onChange = (select: number) => {};
   onTouched = () => {};
+  options$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  searchString: string = '';
+  select: number = -1;
   touched = false;
-  disabled = false;
+
   constructor(private _store: Store<AppState>, private _cdr: ChangeDetectorRef) {}
+
+  markAsTouched() {
+    if (!this.touched) {
+      this.onTouched();
+      this.touched = true;
+    }
+  }
+
+  onBlur() {
+    this.isFocused$.next(false);
+  }
+
+  onFocus() {
+    this.isFocused$.next(true);
+  }
+
+  registerOnChange(onChange: any) {
+    this.onChange = onChange;
+  }
+
+  registerOnTouched(onTouched: any) {
+    this.onTouched = onTouched;
+  }
+
   writeValue(obj: TrashBookType | number): void {
     if (typeof obj === 'number') {
       const currentObj = this.options$.value.filter(f => f.id === obj);
@@ -60,28 +85,5 @@ export class SelectComponent implements ControlValueAccessor {
       this._store.dispatch(currentTrashBookType({currentTrashBookType: undefined}));
       this._cdr.detectChanges();
     }
-  }
-
-  registerOnChange(onChange: any) {
-    this.onChange = onChange;
-  }
-
-  registerOnTouched(onTouched: any) {
-    this.onTouched = onTouched;
-  }
-
-  markAsTouched() {
-    if (!this.touched) {
-      this.onTouched();
-      this.touched = true;
-    }
-  }
-
-  onFocus() {
-    this.isFocused$.next(true);
-  }
-
-  onBlur() {
-    this.isFocused$.next(false);
   }
 }

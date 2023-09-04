@@ -1,13 +1,12 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-
+import {NgModule} from '@angular/core';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
+import {SharedModule} from '../../shared/shared.module';
+import {TicketReservationEffects} from './state/ticket-reservation.effects';
+import * as fromTicketReservation from './state/ticket-reservation.reducer';
 import {TicketReservationRoutingModule} from './ticket-reservation-routing.module';
 import {TicketReservationComponent} from './ticket-reservation.component';
-import {StoreModule} from '@ngrx/store';
-import * as fromTicketReservation from './state/ticket-reservation.reducer';
-import {EffectsModule} from '@ngrx/effects';
-import {TicketReservationEffects} from './state/ticket-reservation.effects';
-import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [TicketReservationComponent],

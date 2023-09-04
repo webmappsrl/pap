@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {catchError, map, concatMap} from 'rxjs/operators';
-import {Observable, EMPTY, of} from 'rxjs';
+import {EMPTY, of} from 'rxjs';
 
 import * as ReportTicketActions from './report-ticket.actions';
 

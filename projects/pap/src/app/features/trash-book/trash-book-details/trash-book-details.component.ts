@@ -1,13 +1,12 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {ModalController, NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
-
 import {AppState} from '../../../core/core.state';
+import {currentTrashBookType} from '../../../shared/form/state/form.actions';
+import {showButtons} from '../../../shared/header/state/header.actions';
+import {selectedTrashBookDetail} from '../state/trash-book.selectors';
 import {TrashBookType} from '../trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book-type/trash-book-type.component';
-import {currentTrashBookType} from '../../../shared/form/state/form.actions';
-import {selectedTrashBookDetail} from '../state/trash-book.selectors';
-import {showButtons} from '../../../shared/header/state/header.actions';
 
 @Component({
   selector: 'pap-trash-book-details',
@@ -49,6 +48,7 @@ export class TrashBookDetailsComponent {
   openCalendar(): void {
     this.navController.navigateForward('calendar');
   }
+
   openWasteCenterCollection(): void {
     this.navController.navigateForward('waste-center-collection');
   }

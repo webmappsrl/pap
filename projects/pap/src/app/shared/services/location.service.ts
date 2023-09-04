@@ -1,20 +1,8 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-const MAP = {
-  bounds: {
-    southWest: {
-      lat: 41.99962549506941,
-      lng: 9.786415100097656,
-    },
-    northEast: {
-      lat: 43.65396273281939,
-      lng: 10.711669921874998,
-    },
-  },
-};
 
 @Injectable({
   providedIn: 'root',

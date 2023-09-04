@@ -7,14 +7,14 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {MenuController, ModalController, NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {Subscription} from 'rxjs';
-import {selectHomeState} from '../../features/home/state/home.selectors';
-import {selectHeaderState} from './state/header.selectors';
-import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
-import {buttonAction} from '../../features/home/home.model';
-import {AppState} from '../../core/core.state';
 import {isLogged} from '../../core/auth/state/auth.selectors';
+import {AppState} from '../../core/core.state';
+import {buttonAction} from '../../features/home/home.model';
+import {selectHomeState} from '../../features/home/state/home.selectors';
+import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
+import {selectHeaderState} from './state/header.selectors';
 
 interface ActionEvt {
   action: string;
@@ -31,14 +31,13 @@ export class HeaderComponent implements OnDestroy {
   private _actionEVT$: EventEmitter<ActionEvt> = new EventEmitter<ActionEvt>();
   private _actionEVTSub: Subscription = Subscription.EMPTY;
 
+  @Input() endButton: boolean = false;
+  @Input() modal: boolean = false;
+  @Input() startButton: boolean = false;
+
   headerView$ = this._store.pipe(select(selectHeaderState));
   homeView$ = this._store.pipe(select(selectHomeState));
   isLogged$ = this._store.pipe(select(isLogged));
-
-  @Input() startButton: boolean = false;
-  @Input() endButton: boolean = false;
-
-  @Input() modal: boolean = false;
 
   constructor(
     private _store: Store<AppState>,
@@ -64,6 +63,10 @@ export class HeaderComponent implements OnDestroy {
     this._actionEVT$.emit({action, url});
   }
 
+  public closeModal() {
+    this.modalCtrl.dismiss();
+  }
+
   public closedMenu(): void {
     this._menuCtrl.close('mainmenu');
     this._store.dispatch(closeMenu());
@@ -71,9 +74,5 @@ export class HeaderComponent implements OnDestroy {
 
   public ngOnDestroy(): void {
     this._actionEVTSub.unsubscribe();
-  }
-
-  public closeModal() {
-    this.modalCtrl.dismiss();
   }
 }

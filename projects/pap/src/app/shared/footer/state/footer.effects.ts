@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, concatMap} from 'rxjs/operators';
-import {Observable, EMPTY, of} from 'rxjs';
-
-import * as FooterActions from './footer.actions';
-import {footerInfo} from '../footer.model';
+import {of} from 'rxjs';
+import {catchError, concatMap, map} from 'rxjs/operators';
 import {buttonAction} from '../../../features/home/home.model';
+import {footerInfo} from '../footer.model';
+import * as FooterActions from './footer.actions';
 
 const footermock: footerInfo = {
   // label: 'portAPPorta',

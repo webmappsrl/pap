@@ -15,13 +15,12 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import {Store, select} from '@ngrx/store';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {UpdateUser, deleteUser, logout} from '../../core/auth/state/auth.actions';
-
 import {ActivatedRoute} from '@angular/router';
 import {AlertController, AlertOptions, ModalController, NavController} from '@ionic/angular';
+import {Store, select} from '@ngrx/store';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {filter, map, switchMap, take} from 'rxjs/operators';
+import {UpdateUser, deleteUser, logout} from '../../core/auth/state/auth.actions';
 import {error} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {FormProvider} from '../../shared/form/form-provider';
@@ -32,6 +31,7 @@ import {ConfirmedValidator} from '../sign-up/sign-up.component';
 import {loadCalendarSettings, toggleEdit} from './state/settings.actions';
 import {settingView} from './state/settings.selectors';
 import {SettingsService} from './state/settings.service';
+
 const DELETE: AlertOptions = {
   cssClass: 'pap-alert',
 

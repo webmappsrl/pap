@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
+import {environment} from 'projects/pap/src/environments/environment';
 import {first} from 'rxjs/operators';
 import {AuthService} from '../../core/auth/state/auth.service';
 import {AppState} from '../../core/core.state';
@@ -9,7 +10,6 @@ import {TicketFormConf} from '../../shared/models/form.model';
 import {ReportService} from '../../shared/services/report.service';
 import {loadInfoTickets, sendReportInfoTickets} from './state/info-ticket.actions';
 import {selectInfoTicketState} from './state/info-ticket.selectors';
-import {environment} from 'projects/pap/src/environments/environment';
 
 @Component({
   selector: 'pap-info-ticket',

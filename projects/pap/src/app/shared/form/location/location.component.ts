@@ -8,12 +8,12 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {Store, select} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {AppState} from '../../../core/core.state';
 import {setMarker} from '../../map/state/map.actions';
-import {currentAddress, currentZone} from '../../map/state/map.selectors';
+import {currentZone} from '../../map/state/map.selectors';
 import {LocationService} from '../../services/location.service';
 
 @Component({

@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {StoreModule} from '@ngrx/store';
-import * as fromAuth from './state/auth.reducer';
+import {NgModule} from '@angular/core';
 import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
 import {AuthEffects} from './state/auth.effects';
+import * as fromAuth from './state/auth.reducer';
 
 @NgModule({
   declarations: [],

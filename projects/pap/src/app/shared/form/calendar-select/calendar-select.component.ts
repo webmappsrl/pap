@@ -1,4 +1,3 @@
-import {LayoutEffects} from './../../../core/layout/state/layout.effects';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -14,8 +13,8 @@ import {
   Validators,
 } from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
-import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {Calendar} from '../../../features/calendar/calendar.model';
+import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 
 @Component({
   selector: 'pap-form-calendar-select',
@@ -47,19 +46,20 @@ export class CalendarSelectComponent implements ControlValueAccessor {
     this.calendars$.next(calendars);
   }
 
-  disabled = false;
-  onChange = (select: {trashDate: string; tbType: TrashBookType; calendar: Calendar}) => {};
-  onTouched = () => {};
-  calendars$: BehaviorSubject<Calendar[]> = new BehaviorSubject<Calendar[]>([]);
-  options$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  select: {trashDate: string; tbType: TrashBookType; calendar: Calendar} | null = null;
-  currentSelectionLabel$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  touched = false;
   public calendarForm: FormGroup = new FormGroup({
     calendar: new FormControl(null, [Validators.required]),
     tbType: new FormControl(null, [Validators.required]),
     trashDate: new FormControl('', [Validators.required]),
   });
+  calendars$: BehaviorSubject<Calendar[]> = new BehaviorSubject<Calendar[]>([]);
+  currentSelectionLabel$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  disabled = false;
+  onChange = (select: {trashDate: string; tbType: TrashBookType; calendar: Calendar}) => {};
+  onTouched = () => {};
+  options$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  select: {trashDate: string; tbType: TrashBookType; calendar: Calendar} | null = null;
+  touched = false;
+
   constructor(private _cdr: ChangeDetectorRef) {}
 
   markAsTouched() {

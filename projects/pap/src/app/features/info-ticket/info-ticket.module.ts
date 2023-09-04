@@ -1,13 +1,12 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-
+import {NgModule} from '@angular/core';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
+import {SharedModule} from '../../shared/shared.module';
 import {InfoTicketRoutingModule} from './info-ticket-routing.module';
 import {InfoTicketComponent} from './info-ticket.component';
-import {StoreModule} from '@ngrx/store';
-import * as fromInfoTicket from './state/info-ticket.reducer';
-import {EffectsModule} from '@ngrx/effects';
 import {InfoTicketEffects} from './state/info-ticket.effects';
-import {SharedModule} from '../../shared/shared.module';
+import * as fromInfoTicket from './state/info-ticket.reducer';
 
 @NgModule({
   declarations: [InfoTicketComponent],

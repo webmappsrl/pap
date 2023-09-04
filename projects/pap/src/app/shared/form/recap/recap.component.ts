@@ -1,11 +1,10 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
 import {UntypedFormGroup} from '@angular/forms';
 import {AppState} from '@capacitor/app';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
-import {currentAddress} from '../../map/state/map.selectors';
 import {TicketFormConf, TicketFormStep} from '../../models/form.model';
 import {currentTrashBookType} from '../state/form.selectors';
 
@@ -17,15 +16,18 @@ import {currentTrashBookType} from '../state/form.selectors';
   encapsulation: ViewEncapsulation.None,
 })
 export class RecapComponent {
-  @Input() form!: UntypedFormGroup;
   @Input() set conf(c: TicketFormConf) {
     const recapSteps = c.step.filter(s => s.recap != null);
     this.steps$.next(recapSteps);
   }
-  steps$: BehaviorSubject<TicketFormStep[]> = new BehaviorSubject<TicketFormStep[]>([]);
+
+  @Input() form!: UntypedFormGroup;
+
   currentTrashBookType$: Observable<TrashBookType | undefined> = this._store.pipe(
     select(currentTrashBookType),
   );
+  steps$: BehaviorSubject<TicketFormStep[]> = new BehaviorSubject<TicketFormStep[]>([]);
+
   constructor(private _translateSvc: TranslateService, private _store: Store<AppState>) {}
 
   getTranslation(field: any) {

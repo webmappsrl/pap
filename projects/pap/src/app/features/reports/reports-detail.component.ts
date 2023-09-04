@@ -10,5 +10,6 @@ import {Ticket} from './state/reports.effects';
 })
 export class ReportsDetailComponent {
   @Input() report!: Ticket;
+
   constructor() {}
 }

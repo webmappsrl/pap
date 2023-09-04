@@ -1,17 +1,17 @@
 import {Component} from '@angular/core';
+import {AlertController, NavController} from '@ionic/angular';
+import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
 import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {filter, skip, switchMap, take} from 'rxjs/operators';
 import {loadAuths} from './core/auth/state/auth.actions';
+import {noAddress} from './core/auth/state/auth.selectors';
 import {AppState} from './core/core.state';
 import {loadCalendars} from './features/calendar/state/calendar.actions';
 import {loadTrashBooks} from './features/trash-book/state/trash-book.actions';
+import {loadConfiniZone} from './shared/map/state/map.actions';
 import {BroadcastNotificationService} from './shared/services/broadcast-notification.service';
 import {LocalNotificationService} from './shared/services/local-notification.service';
-import {loadConfiniZone} from './shared/map/state/map.actions';
-import {Observable} from 'rxjs';
-import {noAddress} from './core/auth/state/auth.selectors';
-import {filter, skip, switchMap, take} from 'rxjs/operators';
-import {AlertController, NavController} from '@ionic/angular';
-import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
 
 @Component({
   selector: 'pap-root',

@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable} from 'rxjs';

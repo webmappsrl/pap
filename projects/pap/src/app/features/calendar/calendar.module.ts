@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 
-import {CalendarRoutingModule} from './calendar-routing.module';
-import {CalendarPageComponent} from './calendar-page.component';
 import {SharedModule} from '../../shared/shared.module';
+import {CalendarPageComponent} from './calendar-page.component';
+import {CalendarRoutingModule} from './calendar-routing.module';
 
 @NgModule({
   declarations: [CalendarPageComponent],

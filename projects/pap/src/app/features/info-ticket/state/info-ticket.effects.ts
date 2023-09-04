@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, concatMap} from 'rxjs/operators';
-import {Observable, EMPTY, of} from 'rxjs';
-
-import * as InfoTicketActions from './info-ticket.actions';
+import {EMPTY, of} from 'rxjs';
+import {catchError, concatMap, map} from 'rxjs/operators';
 import {ReportService} from '../../../shared/services/report.service';
+import * as InfoTicketActions from './info-ticket.actions';
 
 @Injectable()
 export class InfoTicketEffects {
@@ -20,7 +19,6 @@ export class InfoTicketEffects {
       ),
     );
   });
-
   sendReportInfoTickets$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(InfoTicketActions.sendReportInfoTickets),

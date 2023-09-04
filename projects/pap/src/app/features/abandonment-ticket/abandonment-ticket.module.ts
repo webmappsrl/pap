@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 
+import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
+import {SharedModule} from '../../shared/shared.module';
 import {AbandonmentTicketRoutingModule} from './abandonment-ticket-routing.module';
 import {AbandonmentTicketComponent} from './abandonment-ticket.component';
-import {StoreModule} from '@ngrx/store';
-import * as fromAbandonmentTicket from './state/abandonment-ticket.reducer';
-import {EffectsModule} from '@ngrx/effects';
 import {AbandonmentTicketEffects} from './state/abandonment-ticket.effects';
-import {SharedModule} from '../../shared/shared.module';
+import * as fromAbandonmentTicket from './state/abandonment-ticket.reducer';
 
 @NgModule({
   declarations: [AbandonmentTicketComponent],

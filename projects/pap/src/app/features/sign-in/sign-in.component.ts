@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {loadSignIns} from '../../core/auth/state/auth.actions';
 import {error, selectAuthState} from '../../core/auth/state/auth.selectors';
@@ -15,8 +15,9 @@ import {AppState} from '../../core/core.state';
   encapsulation: ViewEncapsulation.None,
 })
 export class SignInComponent {
-  public signInForm: UntypedFormGroup;
   error$: Observable<string | false | undefined> = this._store.select(error);
+  public signInForm: UntypedFormGroup;
+
   constructor(
     fb: UntypedFormBuilder,
     private _store: Store<AppState>,

@@ -1,10 +1,9 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
-import {Store, select} from '@ngrx/store';
-
+import {Component, ViewEncapsulation} from '@angular/core';
 import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 import {ModalController} from '@ionic/angular';
+import {Store, select} from '@ngrx/store';
 import {BehaviorSubject} from 'rxjs';
-import {debounceTime, filter, take} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 import {AppState} from '../../core/core.state';
 import {showButtons} from '../../shared/header/state/header.actions';
 import {loadTrashBooks, setTrashBookType} from '../trash-book/state/trash-book.actions';

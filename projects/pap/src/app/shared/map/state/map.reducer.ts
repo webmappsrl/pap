@@ -6,7 +6,7 @@ export const mapFeatureKey = 'map';
 export interface State {
   confiniZone: any[];
   currentMarkerAddress?: string;
-  currentMarkerCoords: [number, number] | [];
+  currentMarkerCoords: number[];
   error: string;
   validZone: boolean;
 }

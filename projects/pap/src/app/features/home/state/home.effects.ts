@@ -1,12 +1,10 @@
-import * as HomeActions from './home.actions';
-
-import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, concatMap, map} from 'rxjs/operators';
-
 import {Injectable} from '@angular/core';
-import {buttonAction} from '../home.model';
-import {of} from 'rxjs';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {environment} from 'projects/pap/src/environments/environment';
+import {of} from 'rxjs';
+import {catchError, concatMap, map} from 'rxjs/operators';
+import {buttonAction} from '../home.model';
+import * as HomeActions from './home.actions';
 
 @Injectable()
 export class HomeEffects {

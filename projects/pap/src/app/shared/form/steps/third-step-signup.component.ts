@@ -1,24 +1,19 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import {FormArray, FormGroupDirective, UntypedFormGroup} from '@angular/forms';
-import {AlertController, IonModal} from '@ionic/angular';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {map, take} from 'rxjs/operators';
-import {loadAuths} from '../../../core/auth/state/auth.actions';
 import {AppState} from '../../../core/core.state';
 import {Address} from '../../../features/settings/settings.model';
 import {loadCalendarSettings} from '../../../features/settings/state/settings.actions';
-import {calendarSettings} from '../../../features/settings/state/settings.selectors';
 import {SettingsService} from '../../../features/settings/state/settings.service';
 import {loadConfiniZone} from '../../map/state/map.actions';
 import {confiniZone, currentZone} from '../../map/state/map.selectors';
@@ -31,17 +26,19 @@ import {confiniZone, currentZone} from '../../map/state/map.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class thirdStepSignupComponent implements OnInit {
-  currentZone$: Observable<any> = this._store.select(currentZone);
-  confiniZone$: Observable<any> = this._store.select(confiniZone);
   get addresses() {
     return this.thirdStep.get('addresses') as FormArray;
   }
+
   @Input() buttons = true;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
 
-  thirdStep: UntypedFormGroup;
   availableUserTypes: any[];
+  confiniZone$: Observable<any> = this._store.select(confiniZone);
+  currentZone$: Observable<any> = this._store.select(currentZone);
+  thirdStep: UntypedFormGroup;
+
   constructor(
     private _store: Store<AppState>,
     private _settingSvc: SettingsService,
@@ -51,19 +48,10 @@ export class thirdStepSignupComponent implements OnInit {
     this._store.dispatch(loadConfiniZone());
   }
 
-  setUserType(event: any): void {
-    const userTypeId = event.target.value;
-    this.thirdStep.get('user_type_id')?.setValue(userTypeId);
-  }
   ngOnInit(): void {
     this.thirdStep = this._parent.form.get('thirdStep') as UntypedFormGroup;
   }
-  setAddess(event: any): void {
-    const address = event.address;
-    if (address != null) {
-      this.thirdStep.get('address')?.setValue(address);
-    }
-  }
+
   reset(): void {
     this.thirdStep.controls['user_type_id'].reset();
   }
@@ -86,5 +74,17 @@ export class thirdStepSignupComponent implements OnInit {
       .subscribe(v => {
         console.log(v);
       });
+  }
+
+  setAddess(event: any): void {
+    const address = event.address;
+    if (address != null) {
+      this.thirdStep.get('address')?.setValue(address);
+    }
+  }
+
+  setUserType(event: any): void {
+    const userTypeId = event.target.value;
+    this.thirdStep.get('user_type_id')?.setValue(userTypeId);
   }
 }

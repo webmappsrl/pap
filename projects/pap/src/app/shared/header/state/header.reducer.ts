@@ -5,8 +5,8 @@ import * as HeaderActions from './header.actions';
 export const headerFeatureKey = 'header';
 
 export interface HeaderState {
-  header: headerInfo;
   error: string;
+  header: headerInfo;
 }
 
 export const initialState: HeaderState = {

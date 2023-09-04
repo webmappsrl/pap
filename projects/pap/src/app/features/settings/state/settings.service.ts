@@ -21,7 +21,7 @@ export class SettingsService {
     return this._http.get(`${env.api}/address/delete/${id}`);
   }
 
-  updateAddress(address:Address): Observable<any> {
+  updateAddress(address: Address): Observable<any> {
     return this._http.post(`${env.api}/address/update`, address);
   }
 }

@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, concatMap, switchMap, withLatestFrom} from 'rxjs/operators';
-import {Observable, EMPTY, of} from 'rxjs';
-
+import {of} from 'rxjs';
+import {catchError, map, switchMap} from 'rxjs/operators';
 import * as WasteCenterCollectionActions from './waste-center-collection.actions';
 import {WasteCenterCollectionService} from './waste-center-collection.service';
 

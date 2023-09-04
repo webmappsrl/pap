@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
-
 import {AppState} from '@capacitor/app';
 import {NavController} from '@ionic/angular';
 import {Store} from '@ngrx/store';

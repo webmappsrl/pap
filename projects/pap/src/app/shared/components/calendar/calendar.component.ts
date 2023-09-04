@@ -1,19 +1,18 @@
+import {KeyValue} from '@angular/common';
 import {
-  Component,
-  Input,
-  ViewEncapsulation,
-  OnInit,
   ChangeDetectorRef,
+  Component,
   EventEmitter,
+  Input,
+  OnInit,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
-
 import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 import {BehaviorSubject} from 'rxjs';
 import {Calendar} from '../../../features/calendar/calendar.model';
-import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {Address} from '../../../features/settings/settings.model';
-import {KeyValue} from '@angular/common';
+import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 
 @Component({
   selector: 'pap-calendar',
@@ -30,8 +29,14 @@ export class CalendarComponent implements OnInit {
     calendar: Calendar;
   }> = new EventEmitter<{trashDate: string; tbType: TrashBookType; calendar: Calendar}>();
 
-  currentCalendar$: BehaviorSubject<Calendar> = new BehaviorSubject<any>(null);
   currentAddress$: BehaviorSubject<Address> = new BehaviorSubject<any>(null);
+  currentCalendar$: BehaviorSubject<Calendar> = new BehaviorSubject<any>(null);
+  keyDescOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
+    return a.key > b.key ? -1 : b.key > a.key ? 1 : 0;
+  };
+  originalOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
+    return 0;
+  };
 
   constructor(private _inAppBrowser: InAppBrowser, private _cdr: ChangeDetectorRef) {}
 
@@ -51,10 +56,4 @@ export class CalendarComponent implements OnInit {
   selectAddress(event: any): void {
     this.currentCalendar$.next(event.detail.value);
   }
-  originalOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
-    return 0;
-  };
-  keyDescOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
-    return a.key > b.key ? -1 : b.key > a.key ? 1 : 0;
-  };
 }

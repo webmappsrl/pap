@@ -1,7 +1,7 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import * as fromMap from './map.reducer';
 import Feature from 'ol/Feature';
 import MultiPolygon from 'ol/geom/MultiPolygon';
+import * as fromMap from './map.reducer';
 
 export const selectMapState = createFeatureSelector<fromMap.State>(fromMap.mapFeatureKey);
 export const currentAddress = createSelector(selectMapState, state => state.currentMarkerAddress);

@@ -1,15 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, filter, map, switchMap, withLatestFrom} from 'rxjs/operators';
+import {Store, select} from '@ngrx/store';
 import {of} from 'rxjs';
-
-import * as CalendarActions from './calendar.actions';
+import {catchError, filter, map, switchMap} from 'rxjs/operators';
+import {isLogged} from '../../../core/auth/state/auth.selectors';
+import {AppState} from '../../../core/core.state';
 import * as TrashBookAction from '../../trash-book/state/trash-book.actions';
 import {CalendarService} from '../calendar.service';
-import {select, Store} from '@ngrx/store';
-import {AppState} from '../../../core/core.state';
-import {trashBookTypes} from '../../trash-book/state/trash-book.selectors';
-import {isLogged} from '../../../core/auth/state/auth.selectors';
+import * as CalendarActions from './calendar.actions';
 
 @Injectable()
 export class CalendarEffects {

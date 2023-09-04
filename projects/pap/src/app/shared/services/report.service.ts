@@ -5,8 +5,6 @@ import {User} from '../../core/auth/auth.model';
 import {ApiTicket, ApiTicketType} from '../models/apimodels';
 import {TicketFormConf} from '../models/form.model';
 
-const company_id = 4;
-
 @Injectable({
   providedIn: 'root',
 })
@@ -26,6 +24,6 @@ export class ReportService {
   }
 
   sendReport(report: any) {
-    return this.http.post(`${env.api}/c/${company_id}/ticket`, report.data);
+    return this.http.post(`${env.api}/c/${env.companyId}/ticket`, report.data);
   }
 }

@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {TicketFormConf} from '../../shared/models/form.model';
 import {environment} from 'projects/pap/src/environments/environment';
+import {TicketFormConf} from '../../shared/models/form.model';
 
 @Component({
   selector: 'pap-ticket-reservation',

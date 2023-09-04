@@ -8,8 +8,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {BehaviorSubject, Observable, merge, of} from 'rxjs';
 import {AlertController} from '@ionic/angular';
+import {BehaviorSubject, Observable, merge, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Component({

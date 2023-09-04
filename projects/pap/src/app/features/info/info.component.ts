@@ -1,5 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-
+import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {environment} from 'projects/pap/src/environments/environment';
 import {of} from 'rxjs';

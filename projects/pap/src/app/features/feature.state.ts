@@ -1,6 +1,5 @@
 import {ActionReducerMap} from '@ngrx/store';
 import {AppState} from '../core/core.state';
-
 import {homeReducer, HomeState} from './home/state/home.reducer';
 import {trashBookReducer, TrashBookState} from './trash-book/state/trash-book.reducer';
 

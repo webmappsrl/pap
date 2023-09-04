@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from '../../core/auth/auth.guard';
 import {TrashBookDetailsComponent} from './trash-book-details/trash-book-details.component';
 import {TrashBookComponent} from './trash-book.component';
 

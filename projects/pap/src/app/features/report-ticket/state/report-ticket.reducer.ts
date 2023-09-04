@@ -1,4 +1,4 @@
-import {Action, createReducer, on} from '@ngrx/store';
+import {createReducer, on} from '@ngrx/store';
 import * as ReportTicketActions from './report-ticket.actions';
 
 export const reportTicketFeatureKey = 'reportTicket';

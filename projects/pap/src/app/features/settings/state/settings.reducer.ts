@@ -1,5 +1,4 @@
-import {state} from '@angular/animations';
-import {Action, createReducer, on} from '@ngrx/store';
+import {createReducer, on} from '@ngrx/store';
 import * as SettingsActions from './settings.actions';
 
 export const settingsFeatureKey = 'settings';

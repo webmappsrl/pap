@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, concatMap, switchMap, withLatestFrom} from 'rxjs/operators';
-import {Observable, EMPTY, of, forkJoin} from 'rxjs';
-
+import {forkJoin, of} from 'rxjs';
+import {catchError, map, switchMap} from 'rxjs/operators';
 import * as TrashBookActions from './trash-book.actions';
 import {TrashBookService} from './trash-book.service';
 

@@ -7,15 +7,15 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {MenuController, ModalController, NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {Subscription} from 'rxjs';
-import {selectHomeState} from '../../features/home/state/home.selectors';
-import {selectMenuState} from './state/menu.selectors';
-import {closeMenu, loadMenu, openMenu} from './state/menu.actions';
-import {buttonAction} from '../../features/home/home.model';
-import {AppState} from '../../core/core.state';
 import {logout} from '../../core/auth/state/auth.actions';
 import {isLogged} from '../../core/auth/state/auth.selectors';
+import {AppState} from '../../core/core.state';
+import {buttonAction} from '../../features/home/home.model';
+import {selectHomeState} from '../../features/home/state/home.selectors';
+import {closeMenu, loadMenu, openMenu} from './state/menu.actions';
+import {selectMenuState} from './state/menu.selectors';
 
 interface ActionEvt {
   action: string;
@@ -32,14 +32,13 @@ export class MenuComponent implements OnDestroy {
   private _actionEVT$: EventEmitter<ActionEvt> = new EventEmitter<ActionEvt>();
   private _actionEVTSub: Subscription = Subscription.EMPTY;
 
-  menuView$ = this._store.pipe(select(selectMenuState));
+  @Input() endButton: boolean = false;
+  @Input() modal: boolean = false;
+  @Input() startButton: boolean = false;
+
   homeView$ = this._store.pipe(select(selectHomeState));
   isLogged$ = this._store.pipe(select(isLogged));
-
-  @Input() startButton: boolean = false;
-  @Input() endButton: boolean = false;
-
-  @Input() modal: boolean = false;
+  menuView$ = this._store.pipe(select(selectMenuState));
 
   constructor(
     private _store: Store<AppState>,
@@ -64,9 +63,9 @@ export class MenuComponent implements OnDestroy {
   public action(action: string, url?: string): void {
     this._actionEVT$.emit({action, url});
   }
-  logout(): void {
-    this._store.dispatch(logout());
-    this.closedMenu();
+
+  public closeModal() {
+    this.modalCtrl.dismiss();
   }
 
   public closedMenu(): void {
@@ -74,11 +73,12 @@ export class MenuComponent implements OnDestroy {
     this._store.dispatch(closeMenu());
   }
 
-  public ngOnDestroy(): void {
-    this._actionEVTSub.unsubscribe();
+  logout(): void {
+    this._store.dispatch(logout());
+    this.closedMenu();
   }
 
-  public closeModal() {
-    this.modalCtrl.dismiss();
+  public ngOnDestroy(): void {
+    this._actionEVTSub.unsubscribe();
   }
 }

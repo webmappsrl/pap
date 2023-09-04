@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, concatMap} from 'rxjs/operators';
-import {Observable, EMPTY, of} from 'rxjs';
-
-import * as HeaderActions from './header.actions';
-import {headerInfo} from '../header.model';
+import {of} from 'rxjs';
+import {catchError, concatMap, map} from 'rxjs/operators';
 import {buttonAction} from '../../../features/home/home.model';
+import {headerInfo} from '../header.model';
+import * as HeaderActions from './header.actions';
 
 const headermock: headerInfo = {
   // label: 'portAPPorta',

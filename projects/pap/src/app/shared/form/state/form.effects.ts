@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
-
+import {catchError, map, switchMap} from 'rxjs/operators';
 import * as TicketActions from './form.actions';
 import {TicketService} from './form.service';
 

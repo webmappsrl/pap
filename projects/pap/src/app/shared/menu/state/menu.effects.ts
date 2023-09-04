@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, concatMap} from 'rxjs/operators';
-import {Observable, EMPTY, of} from 'rxjs';
-
-import * as HeaderActions from './menu.actions';
-import {menuButton} from '../menu.model';
+import {of} from 'rxjs';
+import {catchError, concatMap, map} from 'rxjs/operators';
 import {buttonAction} from '../../../features/home/home.model';
+import {menuButton} from '../menu.model';
+import * as HeaderActions from './menu.actions';
 
 const headermock: menuButton = {
   // label: 'portAPPorta',
@@ -38,7 +37,6 @@ export class HeaderEffects {
       ),
     );
   });
-
   showButtons$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(HeaderActions.showButtons),

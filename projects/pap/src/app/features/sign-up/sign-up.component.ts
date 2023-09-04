@@ -10,6 +10,7 @@ import {AppState} from '../../core/core.state';
 import {FormProvider} from '../../shared/form/form-provider';
 import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 import {loadConfiniZone} from '../../shared/map/state/map.actions';
+
 export function ConfirmedValidator(controlName: string, matchingControlName: string) {
   return (formGroup: UntypedFormGroup) => {
     const control = formGroup.controls[controlName];

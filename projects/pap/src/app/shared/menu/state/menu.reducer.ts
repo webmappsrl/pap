@@ -5,8 +5,8 @@ import * as HeaderActions from './menu.actions';
 export const headerFeatureKey = 'header';
 
 export interface MenuState {
-  header: menuButton;
   error: string;
+  header: menuButton;
 }
 
 export const initialState: MenuState = {

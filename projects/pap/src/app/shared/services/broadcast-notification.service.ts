@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {Capacitor} from '@capacitor/core';
 import {PushNotifications} from '@capacitor/push-notifications';
 import {Store, select} from '@ngrx/store';
-import {AppState} from '../../core/core.state';
-import {isLogged} from '../../core/auth/state/auth.selectors';
 import {filter, take} from 'rxjs/operators';
+import {isLogged} from '../../core/auth/state/auth.selectors';
 import {AuthService} from '../../core/auth/state/auth.service';
+import {AppState} from '../../core/core.state';
 @Injectable({
   providedIn: 'root',
 })

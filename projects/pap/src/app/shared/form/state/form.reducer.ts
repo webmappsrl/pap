@@ -1,14 +1,14 @@
-import {createReducer, on} from '@ngrx/store';
-import {TrashBookType} from '../../../features/trash-book/trash-book-model';
+import { createReducer,on } from '@ngrx/store';
+import { TrashBookType } from '../../../features/trash-book/trash-book-model';
 import * as TicketActions from './form.actions';
 
 export const ticketFeatureKey = 'ticket';
 
 export interface TicketState {
-  loading: boolean;
-  error?: string;
-  success?: boolean;
   currentTrashBookType?: TrashBookType;
+  error?: string;
+  loading: boolean;
+  success?: boolean;
 }
 
 export const initialState: TicketState = {

@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable} from 'rxjs';
 import {TrashBookRow, TrashBookType} from '../trash-book-model';
-import {environment as env} from 'projects/pap/src/environments/environment';
 
 @Injectable({
   providedIn: 'root',

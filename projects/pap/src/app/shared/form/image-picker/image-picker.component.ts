@@ -27,9 +27,7 @@ export class ImagePickerComponent implements ControlValueAccessor {
   public disabled = false;
   image$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public onChange = (image: string) => {};
-
   public onTouched = () => {};
-
   public touched = false;
 
   constructor(

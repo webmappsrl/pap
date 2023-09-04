@@ -1,4 +1,4 @@
-import {Action, createReducer, on} from '@ngrx/store';
+import {createReducer, on} from '@ngrx/store';
 import {Calendar} from '../calendar.model';
 import * as CalendarActions from './calendar.actions';
 

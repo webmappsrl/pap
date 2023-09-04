@@ -1,18 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {Store, select} from '@ngrx/store';
+import {of} from 'rxjs';
 import {catchError, map, switchMap, withLatestFrom} from 'rxjs/operators';
-import {Observable, EMPTY, of} from 'rxjs';
-
-import * as ReportsActions from './reports.actions';
-import {select, Store} from '@ngrx/store';
 import {AppState} from '../../../core/core.state';
-import {ReportsService} from '../reports.service';
-import {trashBookTypes} from '../../trash-book/state/trash-book.selectors';
 import {Ticket as BaseTicket} from '../../../shared/form/model';
+import {trashBookTypes} from '../../trash-book/state/trash-book.selectors';
 import {TrashBookType} from '../../trash-book/trash-book-model';
+import {ReportsService} from '../reports.service';
+import * as ReportsActions from './reports.actions';
 export interface Ticket extends BaseTicket {
-  trashType: TrashBookType;
   created_at: string;
+  trashType: TrashBookType;
 }
 
 @Injectable()

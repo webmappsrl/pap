@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {App} from '@capacitor/app';
 import {
   LocalNotificationSchema,
   LocalNotifications,
@@ -7,11 +8,10 @@ import {
 import {Store, select} from '@ngrx/store';
 import {differenceInCalendarDays, subHours} from 'date-fns';
 import {filter, take} from 'rxjs/operators';
+import {isLogged} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {CalendarRow} from '../../features/calendar/calendar.model';
 import {selectCalendarState} from '../../features/calendar/state/calendar.selectors';
-import {isLogged} from '../../core/auth/state/auth.selectors';
-import {App} from '@capacitor/app';
 @Injectable({
   providedIn: 'root',
 })

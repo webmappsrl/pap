@@ -1,11 +1,11 @@
+import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
+import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
+import {IonicModule} from '@ionic/angular';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {CoreModule} from './core/core.module';
-import {IonicModule} from '@ionic/angular';
-import {HttpClientModule} from '@angular/common/http';
 import {AuthModule} from './core/auth/auth.module';
-import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
+import {CoreModule} from './core/core.module';
 
 @NgModule({
   declarations: [AppComponent],

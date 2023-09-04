@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
-
+import {catchError, map, switchMap} from 'rxjs/operators';
 import * as SignUpActions from './sign-up.actions';
 import {UserTypesService} from './sign-up.service';
 

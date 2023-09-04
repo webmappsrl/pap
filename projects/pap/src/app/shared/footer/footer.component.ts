@@ -7,13 +7,13 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {MenuController, ModalController, NavController} from '@ionic/angular';
-import {select, Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {Subscription} from 'rxjs';
-import {selectHomeState} from '../../features/home/state/home.selectors';
-import {selectFooterState} from './state/footer.selectors';
-import {closeMenu, loadFooters, openMenu} from './state/footer.actions';
-import {buttonAction} from '../../features/home/home.model';
 import {AppState} from '../../core/core.state';
+import {buttonAction} from '../../features/home/home.model';
+import {selectHomeState} from '../../features/home/state/home.selectors';
+import {closeMenu, loadFooters, openMenu} from './state/footer.actions';
+import {selectFooterState} from './state/footer.selectors';
 
 interface ActionEvt {
   action: string;
