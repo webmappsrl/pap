@@ -10,7 +10,7 @@ export const loadTrashBooksSuccess = createAction(
 
 export const loadTrashBooksFailure = createAction(
   '[TrashBook] Load TrashBooks Failure',
-  props<{error: any}>(),
+  props<{error: string}>(),
 );
 
 export const filterTrashBooks = createAction(

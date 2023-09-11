@@ -25,8 +25,6 @@ export class WasteCenterCollectionComponent {
   }
 
   async clickedMarker(feature: WasteCenterCollectionFeature) {
-    console.log('------- ~ WasteCenterCollectionComponent ~ feature', feature);
-
     const Alert = await this.alertController.create({
       backdropDismiss: false,
       header: feature.properties.name,
@@ -36,16 +34,14 @@ export class WasteCenterCollectionComponent {
         {
           text: 'Indicazioni stradali', // TODO translation
           cssClass: 'pap-waste-center-alert-btn pap-waste-center-alert-btn-nav',
-          handler: (value: any) => {
-            console.log('------- ~ WasteCenterCollectionComponent ~ clickedMarker ~ value', value);
+          handler: () => {
             this.navigate(feature);
           },
         },
         {
           text: 'website', // TODO translation
           cssClass: 'pap-waste-center-alert-btn pap-waste-center-alert-btn-web',
-          handler: (value: any) => {
-            console.log('------- ~ WasteCenterCollectionComponent ~ clickedMarker ~ value', value);
+          handler: () => {
             this.website(feature);
           },
         },
@@ -55,16 +51,6 @@ export class WasteCenterCollectionComponent {
           role: 'cancel',
         },
       ],
-      // subHeader: string,
-      // inputs: AlertInput[],
-      // translucent: boolean,
-      // animated: boolean,
-      // htmlAttributes: { [key: string]: any },
-      // mode: Mode,
-      // keyboardClose: boolean,
-      // id: string,
-      // enterAnimation: AnimationBuilder,
-      // leaveAnimation: AnimationBuilder,
     });
     return await Alert.present();
   }
@@ -83,7 +69,7 @@ export class WasteCenterCollectionComponent {
     return body;
   }
 
-  navigate(feature: WasteCenterCollectionFeature) {
+  navigate(feature: WasteCenterCollectionFeature): void {
     window.open(
       'https://maps.google.com/maps?daddr=' +
         feature.geometry.coordinates[1] +
@@ -94,7 +80,7 @@ export class WasteCenterCollectionComponent {
     this.alertController.dismiss();
   }
 
-  website(feature: WasteCenterCollectionFeature) {
+  website(feature: WasteCenterCollectionFeature): void {
     window.open(feature.properties.website, '_system');
     this.alertController.dismiss();
   }

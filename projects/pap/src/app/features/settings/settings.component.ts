@@ -31,6 +31,8 @@ import {ConfirmedValidator} from '../sign-up/sign-up.component';
 import {loadCalendarSettings, toggleEdit} from './state/settings.actions';
 import {settingView} from './state/settings.selectors';
 import {SettingsService} from './state/settings.service';
+import {Zone} from '../../shared/form/location/location.model';
+import {User} from '../../core/auth/auth.model';
 
 const DELETE: AlertOptions = {
   cssClass: 'pap-alert',
@@ -92,7 +94,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _alertSub: Subscription = Subscription.EMPTY;
   private _settingsFormSub: Subscription = Subscription.EMPTY;
 
-  confiniZone$: Observable<any> = this._store.select(confiniZone);
+  confiniZone$: Observable<Zone[]> = this._store.select(confiniZone);
   currentStep$: BehaviorSubject<string> = new BehaviorSubject<string>('firstStep');
   error$: Observable<string | false | undefined> = this._store.select(error);
   initStep = 'firstStep';
@@ -251,13 +253,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
           } else {
             const modalForm = this._formBuilder.group({
               address: '',
-              location: [],
-              zone_id: '',
+              location: undefined,
+              zone_id: undefined,
             });
             modalForm.setValue({
               address: address.address,
               location: address.location,
-              zone_id: address,
+              zone_id: address.zone_id,
             });
 
             this._addressFormArray.push(modalForm);
@@ -282,8 +284,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
       });
   }
 
-  update() {
-    let updates: {[key: string]: any} | null = {};
+  update(): void {
+    let updates: Partial<User> | null = {};
     const firstStep = this.settingsForm.get('firstStep');
     switch (this.currentStep$.value) {
       case 'firstStep':

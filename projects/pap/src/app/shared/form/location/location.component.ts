@@ -15,6 +15,7 @@ import {AppState} from '../../../core/core.state';
 import {setMarker} from '../../map/state/map.actions';
 import {currentZone} from '../../map/state/map.selectors';
 import {LocationService} from '../../services/location.service';
+import {AddressEvent, GeoJsonFeatureCollection, Zone} from './location.model';
 
 @Component({
   selector: 'pap-form-location',
@@ -30,6 +31,19 @@ export class LocationComponent {
       this._store.dispatch(setMarker({coords}));
     }
   }
+  @Input() features: GeoJsonFeatureCollection[];
+  @Input() form: FormGroup;
+  @Output() addressEVT: EventEmitter<AddressEvent> = new EventEmitter<AddressEvent>();
+
+  currentZone$: Observable<Zone> = this._store.select(currentZone);
+  myPosition$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+  myPositionString: string = '';
+
+  constructor(
+    private locationService: LocationService,
+    private _store: Store<AppState>,
+    private _cdr: ChangeDetectorRef,
+  ) {}
 
   get address() {
     return this.myPositionString;
@@ -42,20 +56,6 @@ export class LocationComponent {
     });
     this.setAddress(addr);
   }
-
-  @Input() features: any[];
-  @Input() form: FormGroup;
-  @Output() addressEVT: EventEmitter<any> = new EventEmitter<any>();
-
-  currentZone$: Observable<any> = this._store.select(currentZone);
-  myPosition$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
-  myPositionString: string = '';
-
-  constructor(
-    private locationService: LocationService,
-    private _store: Store<AppState>,
-    private _cdr: ChangeDetectorRef,
-  ) {}
 
   async getLocation(): Promise<void> {
     try {
@@ -89,7 +89,7 @@ export class LocationComponent {
           address: res,
         });
       },
-      (error: any) => {
+      (error: string) => {
         const res = `${coords[0]} ${coords[1]}`;
         this.setAddress(res);
         this.addressEVT.emit({

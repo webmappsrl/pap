@@ -1,15 +1,16 @@
 import {createAction, props} from '@ngrx/store';
+import {footerInfo} from '../footer.model';
 
 export const loadFooters = createAction('[Footer] Load Footers');
 
 export const loadFootersSuccess = createAction(
   '[Footer] Load Footers Success',
-  props<{data: any}>(),
+  props<{data: footerInfo}>(),
 );
 
 export const loadFootersFailure = createAction(
   '[Footer] Load Footers Failure',
-  props<{error: any}>(),
+  props<{error: string}>(),
 );
 
 export const openMenu = createAction('[Footer] Open Menu');

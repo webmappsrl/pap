@@ -1,15 +1,16 @@
 import {createAction, props} from '@ngrx/store';
+import {headerInfo} from '../header.model';
 
 export const loadHeaders = createAction('[Header] Load Headers');
 
 export const loadHeadersSuccess = createAction(
   '[Header] Load Headers Success',
-  props<{data: any}>(),
+  props<{data: headerInfo}>(),
 );
 
 export const loadHeadersFailure = createAction(
   '[Header] Load Headers Failure',
-  props<{error: any}>(),
+  props<{error: string}>(),
 );
 
 export const openMenu = createAction('[Header] Open Menu');

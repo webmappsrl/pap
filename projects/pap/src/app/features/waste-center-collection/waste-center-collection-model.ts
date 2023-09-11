@@ -16,7 +16,7 @@ export interface WasteCenterCollectionFeatureProperties {
 export interface GeoJson {
   type: string;
   geometry: Geometry;
-  properties: any;
+  properties: WasteCenterCollectionFeatureProperties;
 }
 
 export interface Geometry {

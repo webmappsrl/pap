@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
-import {Calendar} from '../../../features/calendar/calendar.model';
+import {Calendar, CalendarRow} from '../../../features/calendar/calendar.model';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 
 @Component({
@@ -34,13 +34,16 @@ export class CalendarSelectComponent implements ControlValueAccessor {
   @Input() set calendars(calendars: Calendar[]) {
     calendars = calendars.map(c => {
       const calendarKeys = Object.keys(c.calendar).reverse();
-      for (let i = 0; i < calendarKeys.length; i++) {
-        if (i > 4) {
-          const calendarKey = calendarKeys[i] as string;
-          delete c.calendar[calendarKey];
+      const newCalendar: {[dateOfTrip: string]: CalendarRow[]} = {};
+      for (let i = 0; i < 4; i++) {
+        const calendarKey = calendarKeys[i] as string;
+        if (calendarKey) {
+          newCalendar[calendarKey] = c.calendar[calendarKey];
+        } else {
+          break;
         }
       }
-      return c;
+      return {...c, ...{calendar: newCalendar}};
     });
 
     this.calendars$.next(calendars);

@@ -67,7 +67,7 @@ export const reducer = createReducer(
       user: undefined,
       isLogged: false,
       isVerified: false,
-      error: action.error.error.message,
+      error: action.error,
     };
   }),
   on(AuthActions.loadSignUps, state => state),
@@ -87,7 +87,7 @@ export const reducer = createReducer(
       user: undefined,
       isLogged: false,
       isVerified: false,
-      error: action.error.error.message,
+      error: action.error,
     };
   }),
   on(AuthActions.UpdateUser, state => state),
@@ -106,7 +106,7 @@ export const reducer = createReducer(
       user: undefined,
       isLogged: false,
       isVerified: false,
-      error: action.error.error.message,
+      error: action.error,
     };
   }),
 );

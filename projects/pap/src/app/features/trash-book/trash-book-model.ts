@@ -13,13 +13,15 @@ export interface TrashBookRow {
 }
 
 export interface TrashBookType {
-  allowed: {[lang: string]: string}[];
+  allowed: ({[lang: string]: string} | string)[];
   color: string;
+  company_id?: number;
   description?: {[lang: string]: string};
   howto?: {[lang: string]: string};
   id: number;
   name: {[lang: string]: string};
   notallowed: string[];
+  reated_at?: string;
   showed_in: {
     abandonment: boolean;
     info: boolean;
@@ -28,5 +30,6 @@ export interface TrashBookType {
   };
   slug: string;
   translations: any;
-  where: string;
+  updated_at?: string;
+  where: {[lang: string]: string | null};
 }

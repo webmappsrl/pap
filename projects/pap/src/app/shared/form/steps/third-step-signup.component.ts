@@ -12,11 +12,11 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {map, take} from 'rxjs/operators';
 import {AppState} from '../../../core/core.state';
-import {Address} from '../../../features/settings/settings.model';
 import {loadCalendarSettings} from '../../../features/settings/state/settings.actions';
 import {SettingsService} from '../../../features/settings/state/settings.service';
 import {loadConfiniZone} from '../../map/state/map.actions';
 import {confiniZone, currentZone} from '../../map/state/map.selectors';
+import {Address} from '../../../core/auth/auth.model';
 
 @Component({
   selector: 'pap-third-step-signup-form',
@@ -83,8 +83,9 @@ export class thirdStepSignupComponent implements OnInit {
     }
   }
 
-  setUserType(event: any): void {
-    const userTypeId = event.target.value;
+  setUserType(event: Event): void {
+    const ionChangeEvent = event as CustomEvent<{value: number}>;
+    const userTypeId = ionChangeEvent.detail.value;
     this.thirdStep.get('user_type_id')?.setValue(userTypeId);
   }
 }

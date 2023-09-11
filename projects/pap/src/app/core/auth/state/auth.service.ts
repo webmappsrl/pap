@@ -2,26 +2,32 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable} from 'rxjs';
+import {
+  LoginCredentials,
+  LogoutResponse,
+  RegisterData,
+  ResendEmailResponse,
+  User,
+} from '../auth.model';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   constructor(private _http: HttpClient) {}
 
-  delete() {
-    return this._http.get(`${env.api}/delete`);
+  delete(): Observable<User> {
+    return this._http.get(`${env.api}/delete`) as Observable<User>;
   }
 
-  getAlert(error: any): void {
+  getAlert(error: string): void {
     window.alert(JSON.stringify(error));
   }
 
-  getUser(): Observable<any> {
-    return this._http.get(`${env.api}/user`);
+  getUser(): Observable<User> {
+    return this._http.get(`${env.api}/user`) as Observable<User>;
   }
 
-  login(credential: any) {
-    console.log('login ', env.api);
+  login(credential: LoginCredentials): Observable<User> {
     return this._http.post(
       `${env.api}/login`,
       {
@@ -33,19 +39,19 @@ export class AuthService {
           'Content-Type': 'application/json',
         }),
       },
-    );
+    ) as Observable<User>;
   }
 
-  logout(): Observable<any> {
+  logout(): Observable<LogoutResponse> {
     localStorage.removeItem('access_token');
-    return this.getUser();
+    return this.getUser() as Observable<LogoutResponse>;
   }
 
-  register(credential: any) {
+  register(data: RegisterData): Observable<User> {
     return this._http.post(
       `${env.api}/register`,
       {
-        ...credential,
+        ...data,
         app_company_id: env.companyId,
       },
       {
@@ -53,18 +59,18 @@ export class AuthService {
           'Content-Type': 'application/json',
         }),
       },
-    );
+    ) as Observable<User>;
   }
 
-  resendEmail() {
+  resendEmail(): Observable<ResendEmailResponse> {
     return this._http.get(`${env.api}/email/resend`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-    });
+    }) as Observable<ResendEmailResponse>;
   }
 
-  update(updates: any) {
+  update(updates: Partial<User>): Observable<User> {
     return this._http.post(
       `${env.api}/user`,
       {
@@ -75,6 +81,6 @@ export class AuthService {
           'Content-Type': 'application/json',
         }),
       },
-    );
+    ) as Observable<User>;
   }
 }

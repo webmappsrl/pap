@@ -93,12 +93,12 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
     this._isLoggesSub.unsubscribe();
   }
 
-  register() {
+  register(): void {
     const res = {
       ...this.signUpForm.controls['firstStep'].value,
       ...this.signUpForm.controls['secondStep'].value,
       ...this.signUpForm.controls['thirdStep'].value,
     };
-    this._store.dispatch(loadSignUps(res));
+    this._store.dispatch(loadSignUps({data: res}));
   }
 }

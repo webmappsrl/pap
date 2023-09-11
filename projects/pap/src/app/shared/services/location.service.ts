@@ -1,3 +1,4 @@
+import {GeoJsonFeatureCollection} from './../form/location/location.model';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment as env} from 'projects/pap/src/environments/environment';
@@ -23,7 +24,9 @@ export class LocationService {
       );
   }
 
-  getConfiniZone(): Observable<any> {
-    return this._http.get(`${env.api}/c/${env.companyId}/zones.geojson`);
+  getConfiniZone(): Observable<GeoJsonFeatureCollection> {
+    return this._http.get(
+      `${env.api}/c/${env.companyId}/zones.geojson`,
+    ) as Observable<GeoJsonFeatureCollection>;
   }
 }

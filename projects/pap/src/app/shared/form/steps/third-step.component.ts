@@ -16,12 +16,12 @@ import {Observable} from 'rxjs';
 import {map, take} from 'rxjs/operators';
 import {loadAuths} from '../../../core/auth/state/auth.actions';
 import {AppState} from '../../../core/core.state';
-import {Address} from '../../../features/settings/settings.model';
 import {loadCalendarSettings} from '../../../features/settings/state/settings.actions';
 import {calendarSettings} from '../../../features/settings/state/settings.selectors';
 import {SettingsService} from '../../../features/settings/state/settings.service';
 import {loadConfiniZone} from '../../map/state/map.actions';
 import {confiniZone} from '../../map/state/map.selectors';
+import {Address} from '../../../core/auth/auth.model';
 
 @Component({
   selector: 'pap-third-step-form',
@@ -56,7 +56,7 @@ export class thirdStepComponent implements OnInit {
     this._store.dispatch(loadConfiniZone());
   }
 
-  deleteAddress(address: any): void {
+  deleteAddress(address: Address): void {
     if (address.id != null) {
       this._settingsSvc
         .deleteAddress(address.id)
