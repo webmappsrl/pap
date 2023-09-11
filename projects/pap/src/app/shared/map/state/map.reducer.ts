@@ -1,10 +1,11 @@
 import {createReducer, on} from '@ngrx/store';
 import * as MapActions from './map.actions';
+import {Feature} from '../../form/location/location.model';
 
 export const mapFeatureKey = 'map';
 
 export interface State {
-  confiniZone: any[];
+  confiniZone: Feature[];
   currentMarkerAddress?: string;
   currentMarkerCoords: number[];
   error: string;

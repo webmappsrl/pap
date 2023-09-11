@@ -28,6 +28,7 @@ import {
 import {environment} from 'projects/pap/src/environments/environment';
 import {GeoJson} from '../../features/waste-center-collection/waste-center-collection-model';
 import {setMarker} from './state/map.actions';
+import {GeoJsonFeatureCollection} from '../form/location/location.model';
 
 const DEFAULT_CENTER_ZOOM = 12;
 
@@ -54,7 +55,7 @@ export class MapComponent implements OnInit, OnDestroy {
     }
   }
 
-  @Input() set featureCollection(features: any[]) {
+  @Input() set featureCollection(features: GeoJsonFeatureCollection[]) {
     if (features.length > 0) {
       geoJson(features).addTo(this.map);
     }

@@ -11,8 +11,8 @@ import {
 import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 import {BehaviorSubject} from 'rxjs';
 import {Calendar} from '../../../features/calendar/calendar.model';
-import {Address} from '../../../features/settings/settings.model';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
+import {Address} from '../../../core/auth/auth.model';
 
 @Component({
   selector: 'pap-calendar',
@@ -29,8 +29,8 @@ export class CalendarComponent implements OnInit {
     calendar: Calendar;
   }> = new EventEmitter<{trashDate: string; tbType: TrashBookType; calendar: Calendar}>();
 
-  currentAddress$: BehaviorSubject<Address> = new BehaviorSubject<any>(null);
-  currentCalendar$: BehaviorSubject<Calendar> = new BehaviorSubject<any>(null);
+  currentAddress$: BehaviorSubject<Address | null> = new BehaviorSubject<Address | null>(null);
+  currentCalendar$: BehaviorSubject<Calendar | null> = new BehaviorSubject<Calendar | null>(null);
   keyDescOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
     return a.key > b.key ? -1 : b.key > a.key ? 1 : 0;
   };
@@ -41,7 +41,9 @@ export class CalendarComponent implements OnInit {
   constructor(private _inAppBrowser: InAppBrowser, private _cdr: ChangeDetectorRef) {}
 
   info(trashDate: string, tbType: TrashBookType): void {
-    this.selectedTrashTypeEVT.emit({trashDate, tbType, calendar: this.currentCalendar$.value});
+    if (this.currentCalendar$.value != null) {
+      this.selectedTrashTypeEVT.emit({trashDate, tbType, calendar: this.currentCalendar$.value});
+    }
   }
 
   ngOnInit(): void {

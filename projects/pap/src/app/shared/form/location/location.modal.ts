@@ -5,6 +5,7 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {AppState} from '../../../core/core.state';
 import {currentZone} from '../../map/state/map.selectors';
+import {AddressEvent} from './location.model';
 
 @Component({
   selector: 'pap-location-modal',
@@ -36,15 +37,16 @@ export class LocationModalComponent {
     this._modalCtrl.dismiss(this.modalForm.value);
   }
 
-  setAddess(event: any): void {
+  setAddress(event: AddressEvent): void {
     const address = event.address;
     if (address != null) {
       this.modalForm.get('address')?.setValue(address);
     }
   }
 
-  setUserType(event: any): void {
-    const userTypeId = event.target.value;
+  setUserType(event: Event): void {
+    const customEvent = event as CustomEvent<{value: number}>;
+    const userTypeId = customEvent.detail.value;
     this.modalForm.get('user_type_id')?.setValue(userTypeId);
   }
 }

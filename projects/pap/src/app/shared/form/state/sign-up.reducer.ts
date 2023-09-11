@@ -1,10 +1,11 @@
 import {createReducer, on} from '@ngrx/store';
 import * as SignUpActions from './sign-up.actions';
+import {UserType} from '../location/location.model';
 
 export const signUpFeatureKey = 'signUp';
 
 export interface State {
-  userTypes: any[];
+  userTypes: UserType[];
 }
 
 export const initialState: State = {

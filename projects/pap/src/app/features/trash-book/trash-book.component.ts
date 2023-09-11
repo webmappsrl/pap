@@ -21,7 +21,7 @@ export class TrashBookComponent implements OnDestroy {
     this._store.dispatch(showButtons({show: false}));
   }
 
-  buttonClick(item: TrashBookRow) {
+  buttonClick(item: TrashBookRow): void {
     this._store.dispatch(setTrashBookDetail({trashBookDetail: item}));
     this._navCtrl.navigateForward('trashbook/detail');
   }
@@ -30,7 +30,8 @@ export class TrashBookComponent implements OnDestroy {
     this._store.dispatch(filterTrashBooks({filter: ''}));
   }
 
-  searchChange(event: any) {
-    this._store.dispatch(filterTrashBooks({filter: event.detail.value}));
+  searchChange(event: Event): void {
+    const ionChangeEvent = event as CustomEvent<{value: string}>;
+    this._store.dispatch(filterTrashBooks({filter: ionChangeEvent.detail.value}));
   }
 }

@@ -1,14 +1,14 @@
 import * as AuthActions from './auth.actions';
 
-import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {AlertController, AlertOptions, NavController} from '@ionic/angular';
 import {EventEmitter, Injectable} from '@angular/core';
+import {AlertController, AlertOptions, NavController} from '@ionic/angular';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {Subscription, of} from 'rxjs';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 
+import {Store} from '@ngrx/store';
 import {AppState} from '../../core.state';
 import {AuthService} from './auth.service';
-import {Store} from '@ngrx/store';
 
 const SUCESSFULLY_UPDATE: AlertOptions = {
   cssClass: 'pap-alert',
@@ -103,9 +103,8 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(AuthActions.loadSignIns),
       switchMap(action =>
-        this._authSvc.login(action).pipe(
+        this._authSvc.login(action.credential).pipe(
           map(user => {
-            this._alertEVT.emit(SUCESSFULLY_LOGIN);
             return AuthActions.loadSignInsSuccess({user});
           }),
           catchError(error => {
@@ -119,7 +118,7 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(AuthActions.loadSignUps),
       switchMap(action =>
-        this._authSvc.register(action).pipe(
+        this._authSvc.register(action.data).pipe(
           map(user => {
             this._alertEVT.emit(SUCESSFULLY_REGISTRATION);
             return AuthActions.loadSignUpsSuccess({user});

@@ -13,5 +13,5 @@ export const loadCalendarsSuccess = createAction(
 
 export const loadCalendarsFailure = createAction(
   '[Calendar] Load Calendars Failure',
-  props<{error: any}>(),
+  props<{error: string}>(),
 );

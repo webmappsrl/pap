@@ -1,4 +1,5 @@
 import {createAction, props} from '@ngrx/store';
+import {WasteCenterCollectionFeature} from '../waste-center-collection-model';
 
 export const loadWasteCenterCollections = createAction(
   '[WasteCenterCollection] Load WasteCenterCollections',
@@ -6,10 +7,10 @@ export const loadWasteCenterCollections = createAction(
 
 export const loadWasteCenterCollectionsSuccess = createAction(
   '[WasteCenterCollection] Load WasteCenterCollections Success',
-  props<{data: any}>(),
+  props<{data: WasteCenterCollectionFeature[]}>(),
 );
 
 export const loadWasteCenterCollectionsFailure = createAction(
   '[WasteCenterCollection] Load WasteCenterCollections Failure',
-  props<{error: any}>(),
+  props<{error: string}>(),
 );

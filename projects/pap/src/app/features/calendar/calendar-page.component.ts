@@ -21,7 +21,7 @@ import {selectCalendarState} from './state/calendar.selectors';
 })
 export class CalendarPageComponent {
   calendarView$ = this._store.pipe(select(selectCalendarState));
-  currentAddress$: BehaviorSubject<Calendar> = new BehaviorSubject<any>(null);
+  currentAddress$: BehaviorSubject<Calendar | null> = new BehaviorSubject<Calendar | null>(null);
 
   constructor(
     private _store: Store<AppState>,
@@ -38,7 +38,7 @@ export class CalendarPageComponent {
     });
   }
 
-  info(tbType: TrashBookType) {
+  info(tbType: TrashBookType): void {
     this._store.dispatch(setTrashBookType({trashBookType: tbType}));
     this._modalController
       .create({
@@ -53,7 +53,8 @@ export class CalendarPageComponent {
     this._inAppBrowser.create('https://www.esaspa.it/cittadini/calendario-pap');
   }
 
-  selectAddress(event: any): void {
+  selectAddress(event: Event): void {
+    const ionChangeEvent = event as CustomEvent<{value: number}>;
     this.calendarView$
       .pipe(
         filter(f => f != null),
@@ -61,7 +62,7 @@ export class CalendarPageComponent {
       )
       .subscribe(calendarView => {
         if (calendarView != null && calendarView.calendars != null) {
-          this.currentAddress$.next(calendarView.calendars[event.detail.value]);
+          this.currentAddress$.next(calendarView.calendars[ionChangeEvent.detail.value]);
         }
       });
   }

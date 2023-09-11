@@ -23,10 +23,6 @@ export class InfoTicketEffects {
     return this.actions$.pipe(
       ofType(InfoTicketActions.sendReportInfoTickets),
       concatMap(data => {
-        console.log(
-          '------- ~ InfoTicketEffects ~ sendReportInfoTickets$=createEffect ~ data',
-          data,
-        );
         return this.reportService.sendReport(data).pipe(
           map(_ => InfoTicketActions.sendReportInfoTicketsSuccess({data: {reportSend: true}})),
           catchError(error => of(InfoTicketActions.sendReportInfoTicketsFailure({error}))),

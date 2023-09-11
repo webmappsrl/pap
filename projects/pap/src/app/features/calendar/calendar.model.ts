@@ -1,3 +1,4 @@
+import {Address} from '../../core/auth/auth.model';
 import {TrashBookType} from '../trash-book/trash-book-model';
 
 export interface CalendarRow {
@@ -7,7 +8,7 @@ export interface CalendarRow {
 }
 
 export interface Calendar {
-  address: any;
+  address: Address;
   calendar: {
     [dateOfTrip: string]: CalendarRow[];
   };

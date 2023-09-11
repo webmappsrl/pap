@@ -20,7 +20,6 @@ export class CalendarEffects {
       switchMap(() => of({type: '[Calendar] Load Calendars'})),
       ofType(CalendarActions.loadCalendars),
       switchMap(action => {
-        console.log(action);
         return this.calendarService.getCalendars();
       }),
       map(calendars => {

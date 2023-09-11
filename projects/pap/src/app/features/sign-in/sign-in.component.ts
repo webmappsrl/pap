@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {loadSignIns} from '../../core/auth/state/auth.actions';
 import {error, selectAuthState} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
+import {LoginCredentials} from '../../core/auth/auth.model';
 
 @Component({
   selector: 'pap-sign-in',
@@ -16,7 +17,7 @@ import {AppState} from '../../core/core.state';
 })
 export class SignInComponent {
   error$: Observable<string | false | undefined> = this._store.select(error);
-  public signInForm: UntypedFormGroup;
+  signInForm: UntypedFormGroup;
 
   constructor(
     fb: UntypedFormBuilder,
@@ -34,7 +35,7 @@ export class SignInComponent {
     });
   }
 
-  login(value: any) {
-    this._store.dispatch(loadSignIns(value));
+  login(credential: LoginCredentials): void {
+    this._store.dispatch(loadSignIns({credential}));
   }
 }
