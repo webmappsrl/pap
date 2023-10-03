@@ -27,7 +27,10 @@
           *ngIf="(currentZone$|async) as currentZone"
           (ionChange)="setUserType($event)"
         >
-          <ion-item *ngFor="let userType of currentZone.properties.availableUserTypes">
+          <ion-item
+            class="pap-location-modal-radio-item"
+            *ngFor="let userType of currentZone.properties.availableUserTypes"
+          >
             <ion-label> {{userType.label.it}}</ion-label>
             <ion-radio slot="end" [value]="userType.id"></ion-radio>
           </ion-item>

@@ -20,6 +20,7 @@
     </ion-col>
     <ion-col size="2" sizeSm="4" sizeMd="2">
       <ion-button
+        class="pap-status-next-button"
         shape="round"
         (click)="this.nextEvt.emit()"
         [disabled]="!(isValid$|async)"
@@ -29,6 +30,7 @@
       </ion-button>
 
       <ion-button
+        class="pap-status-checkmark-button"
         shape="round"
         (click)="this.nextEvt.emit()"
         [disabled]="!(isValid$|async)"
@@ -38,6 +40,7 @@
       </ion-button>
 
       <ion-button
+        class="pap-status-sending-button"
         shape="round"
         (click)="this.sendDataEvt.emit()"
         [disabled]="!(isValid$|async)"

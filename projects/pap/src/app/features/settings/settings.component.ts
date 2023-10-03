@@ -64,6 +64,7 @@ const LOGOUT: AlertOptions = {
     {
       text: 'annulla',
       role: 'annulla',
+      cssClass: 'pap-alert-btn-annulla',
     },
   ],
 };

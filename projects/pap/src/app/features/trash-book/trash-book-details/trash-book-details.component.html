@@ -71,7 +71,7 @@
         </ion-button>
       </ion-item>
 
-      <ion-item lines="full" *ngIf="view.delivery">
+      <ion-item class="trash-book-details-delivery" lines="full" *ngIf="view.delivery">
         <ion-label class="trash-book-details-label" slot="start">Ritiro ingombranti</ion-label>
         <ion-button
           shape="round"
@@ -84,7 +84,7 @@
         </ion-button>
       </ion-item>
 
-      <ion-item lines="full" *ngIf="view.where">
+      <ion-item class="trash-book-details-where" lines="full" *ngIf="view.where">
         <ion-label class="trash-book-details-label" slot="start">Dove lo getto</ion-label>
         <ion-label class="trash-book-details-value  ion-text-wrap" slot="end">
           {{view.where}}
