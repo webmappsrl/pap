@@ -6,31 +6,15 @@ import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable, Subscription} from 'rxjs';
 import {delay, map, switchMap, tap} from 'rxjs/operators';
 import {AppState} from '../core.state';
-import {resendEmail} from './state/auth.actions';
-import {user} from './state/auth.selectors';
+import {loadAuths, resendEmail} from './state/auth.actions';
+import {isVerified, user} from './state/auth.selectors';
+import {noLoggedButtons} from '../../features/home/home.model';
 
 const NO_LOGGED: AlertOptions = {
   header: 'Non sei loggato',
   message: `Puoi accedere a questa pagina dopo aver effettuato il login o la registrazione`,
   cssClass: 'pap-alert-login',
-  buttons: [
-    {
-      text: 'accedi',
-      role: 'sign-in',
-    },
-    {
-      text: 'registrati',
-      role: 'sign-up',
-    },
-    {
-      text: 'password dimenticata?',
-      role: 'forgot-password',
-    },
-    {
-      text: 'X',
-      role: 'cancel',
-    },
-  ],
+  buttons: noLoggedButtons,
 };
 
 const NO_VERIFIED: AlertOptions = {

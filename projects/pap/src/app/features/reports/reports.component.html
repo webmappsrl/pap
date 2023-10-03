@@ -24,7 +24,9 @@
             <span>Ticket {{report.ticket_type|papTicket}}</span>
             <div class="pap-reports-item" *ngIf="report.trashType as trashType">
               <ion-icon slot="end" [ngStyle]="{color:trashType.color}" name="ellipse"></ion-icon>
-              {{trashType.name}}
+              <ion-label class="pap-reports-name">
+                {{trashType.name}}
+              </ion-label>
             </div>
           </ion-label>
         </ion-item>
