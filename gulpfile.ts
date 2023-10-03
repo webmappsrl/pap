@@ -57,8 +57,6 @@ gulp.task('build', async () => {
     }
     paths = getPaths(companyId);
     const config: Config = await getConfig(paths.apiUrl);
-    await setEnvironment(paths, config);
-    await execCmd(`rm -rf ${paths.devVariablesConfigPath}`);
     await setAssets(config);
     await ionicPlathforms(config.resources);
     await execCmd(`rm -rf ${paths.instancePath}`);
@@ -252,7 +250,7 @@ function init(): Promise<void> {
       console.log(`INFO: update Podfile`);
       fsExtra.copyFile('./ios-custom/AppDelegate.swift', `./ios/App/App/AppDelegate.swift`);
       fsExtra.copyFile('./ios-custom/info.plist', `./ios/App/App/info.plist`);
-      console.log(`INFO: init completato`);
+      console.log(`init completato`);
       resolve();
     } catch (error) {
       console.log(error);
@@ -291,17 +289,20 @@ const getConfig = (apiUrl: string): Promise<any> => {
   });
 };
 
-const createFolder = (path: string): void => {
-  try {
-    if (!fs.existsSync(path)) {
+const createFolder = (path: string): Promise<void> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (fs.existsSync(path)) {
+        await execCmd(`rm -rf ${paths.instancePath}`);
+      }
       fs.mkdirSync(path);
-      console.log(`CREATE_FOLDER: "${path}"`);
-    } else {
-      console.log(`La cartella "${path}" esiste già.`);
+      console.log(`CREATE_FOLDER: ${path}`);
+      resolve();
+    } catch (error) {
+      reject();
+      console.error(`Errore durante la creazione della cartella "${path}":`, error);
     }
-  } catch (error) {
-    console.error(`Errore durante la creazione della cartella "${path}":`, error);
-  }
+  });
 };
 
 const ionicBuild = (): Promise<void> => {
@@ -387,17 +388,10 @@ const ionicCapSync = (): Promise<void> => {
 };
 const writeFile = (path: string, file: string | null): Promise<void> => {
   return new Promise((resolve, reject) => {
+    if (file == null) reject();
     try {
-      // Verifica se il file esiste
-      if (!fs.existsSync(path)) {
-        // Se il file non esiste, crea il file e scrivi il contenuto
-        fs.writeFileSync(path, file);
-        console.log(`File ${path} creato con successo.`);
-      } else {
-        // Se il file esiste già, sovrascrivilo con il nuovo contenuto
-        fs.writeFileSync(path, file);
-        console.log(`File ${path} sovrascritto con successo.`);
-      }
+      fs.writeFileSync(path, file);
+      console.log(`WRITE_FILE: ${path}`);
 
       resolve();
     } catch (error) {
