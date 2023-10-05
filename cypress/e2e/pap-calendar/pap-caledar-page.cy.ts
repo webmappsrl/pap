@@ -4,7 +4,7 @@ import {environment} from 'projects/pap/src/environments/environment';
 import {Address} from 'cluster';
 import {e2eLogin, formatDateUsingPapDatePipe, hexToRgb} from 'cypress/utils/test-utils';
 
-const calendariButton = homeButtons.find(button => button.label === 'Calendari');
+const calendarsButton = homeButtons.find(button => button.label === 'Calendari');
 const apiCalendar = `${environment.api}/c/${environment.companyId}/calendar`;
 
 before(() => {
@@ -18,16 +18,16 @@ beforeEach(() => {
 
 describe('pap-calendar-page: test the correct behaviour of page', () => {
   it('should navigate to the calendar page and make a successful GET request to the calendar API', () => {
-    if (calendariButton) {
-      cy.contains(calendariButton.label).click();
-      cy.url().should('include', calendariButton.url);
+    if (calendarsButton) {
+      cy.contains(calendarsButton.label).click();
+      cy.url().should('include', calendarsButton.url);
       cy.wait('@calendarCall').its('response.statusCode').should('eq', 200); //success status code
     } else {
       throw new Error('Button not found.');
     }
   });
 
-  it('should attempt to open an external link when "VEDI" button is clicked', () => {
+  it('should attempt to open an external link when pap-calendar-infobutton is clicked', () => {
     cy.window().then(win => {
       cy.stub(win, 'open').as('windowOpen');
     });
@@ -82,7 +82,7 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
     });
   });
 
-  it('should have the correct environment color for the ion-button "VEDI"', () => {
+  it('should have the correct environment color for the pap-calendar-infobutton', () => {
     const primaryColorRegex = /--ion-color-primary: (\#\w+);/;
     const match = environment.config.resources.variables.match(primaryColorRegex);
     const environmentPrimaryColor = match ? match[1] : null;

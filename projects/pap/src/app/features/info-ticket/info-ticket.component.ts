@@ -6,7 +6,7 @@ import {first} from 'rxjs/operators';
 import {AuthService} from '../../core/auth/state/auth.service';
 import {AppState} from '../../core/core.state';
 import {ApiTicketType} from '../../shared/models/apimodels';
-import {TicketFormConf, infoTicketTypes} from '../../shared/models/form.model';
+import {TicketFormConf, infoTicketForm} from '../../shared/models/form.model';
 import {ReportService} from '../../shared/services/report.service';
 import {loadInfoTickets, sendReportInfoTickets} from './state/info-ticket.actions';
 import {selectInfoTicketState} from './state/info-ticket.selectors';
@@ -20,7 +20,7 @@ import {selectInfoTicketState} from './state/info-ticket.selectors';
 })
 export class InfoTicketComponent implements OnInit {
   public end = false;
-  public formConf: TicketFormConf = infoTicketTypes;
+  public formConf: TicketFormConf = infoTicketForm;
   infoTicketView$ = this._store.pipe(select(selectInfoTicketState));
   public privacyCheck: boolean = false;
 

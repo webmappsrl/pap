@@ -31,7 +31,7 @@ export interface TicketFormOption {
   value: string;
 }
 
-export const ticketReservationTypes: TicketFormConf = {
+export const ticketReservationForm: TicketFormConf = {
   ticketType: 'reservation',
   label: 'Prenotazione servizio',
   cancel: 'Sicuro di voler cancellare la prenotazione?',
@@ -75,7 +75,7 @@ export const ticketReservationTypes: TicketFormConf = {
   ],
 };
 
-export const abandonmentTicketTypes: TicketFormConf = {
+export const abandonmentTicketForm: TicketFormConf = {
   cancel: 'Sicuro di voler cancellare la prenotazione?',
   finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
   pages: 5,
@@ -119,7 +119,7 @@ export const abandonmentTicketTypes: TicketFormConf = {
   ],
 };
 
-export const reportTicketTypes: TicketFormConf = {
+export const reportTicketForm: TicketFormConf = {
   ticketType: 'report',
   cancel: 'Sicuro di voler cancellare la prenotazione?',
   finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
@@ -157,7 +157,7 @@ export const reportTicketTypes: TicketFormConf = {
   ],
 };
 
-export const infoTicketTypes: TicketFormConf = {
+export const infoTicketForm: TicketFormConf = {
   ticketType: 'info',
   cancel: 'Uscendo perderai tutti i dati inseriti. Sicuro di volerlo fare?',
   finalMessage:

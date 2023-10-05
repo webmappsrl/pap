@@ -3,7 +3,7 @@ import {homeButtons} from 'projects/pap/src/app/features/home/home.model';
 import {TrashBookType} from 'projects/pap/src/app/features/trash-book/trash-book-model';
 import {environment} from 'projects/pap/src/environments/environment';
 
-const rifiutarioButton = homeButtons.find(button => button.label === 'Rifiutario');
+const trathTypesButton = homeButtons.find(button => button.label === 'Rifiutario');
 const apiWastes = `${environment.api}/c/${environment.companyId}/wastes.json`;
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
 
@@ -24,9 +24,9 @@ before(() => {
 
 describe('pap-trash-book-detail: test the correct behaviour of page', () => {
   it('should render the correct number and content of ion-labels in pap-trash-book', function () {
-    if (rifiutarioButton) {
-      cy.contains(rifiutarioButton.label).click();
-      cy.url().should('include', rifiutarioButton.url);
+    if (trathTypesButton) {
+      cy.contains(trathTypesButton.label).click();
+      cy.url().should('include', trathTypesButton.url);
       cy.get('pap-trash-book ion-card ion-list ion-item ion-label').should(
         'have.length',
         this['wastesData'].length,

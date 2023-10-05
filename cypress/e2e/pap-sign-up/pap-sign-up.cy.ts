@@ -14,7 +14,7 @@ before(() => {
 });
 
 describe('pap-sign-up: test the correct behaviour of form at first step', () => {
-  it('should navigate to /sign-up when "REGISTRATI" button is clicked', () => {
+  it('should navigate to /sign-up when sign up button is clicked', () => {
     cy.get('.pap-header-button').click();
     cy.get('.pap-alert-login .alert-button-role-sign-up').click();
     cy.url().should('include', '/sign-up');
