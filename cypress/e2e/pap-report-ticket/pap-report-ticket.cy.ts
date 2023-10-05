@@ -14,6 +14,7 @@ const apiCalendarWithDates = `${environment.api}/c/${environment.companyId}/cale
 const skipBeforeEach = true;
 
 before(() => {
+  cy.wait(1000);
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
   cy.visit('/');
   cy.wait('@trashTypesCall').then(interception => {
@@ -58,6 +59,7 @@ describe('pap-report-ticket: test the correct behaviour of form at first step', 
 
 describe('pap-report-ticket: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no trash type selected', () => {
+    cy.wait(3000);
     cy.get('.pap-status-next-button').click();
     cy.get('.pap-form-content').should('include.text', reportTicketForm.label);
     const expectedLabelText = reportTicketForm.step[1].label;

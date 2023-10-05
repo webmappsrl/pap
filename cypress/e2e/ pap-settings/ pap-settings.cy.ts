@@ -14,6 +14,9 @@ const apiUser = `${environment.api}/user`;
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
 
 before(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+  cy.wait(1000);
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit('/');
   cy.wait('@apiZonesGeoJsonCall').then(interception => {
@@ -114,10 +117,14 @@ describe('pap-settings: test the correct behaviour of thirdStep tab', () => {
     cy.get('h5')
       .invoke('text')
       .then(uiLabelText => {
+        const labels = uiLabelText.split('  ').map(label => label.trim());
+
         const labelsFromApi = this['apiZonesGeoJsonData'].features.map(
           (feature: Feature) => feature.properties.label,
         );
-        expect(labelsFromApi).to.include(uiLabelText.trim());
+        labels.forEach(label => {
+          expect(labelsFromApi).to.include(label);
+        });
       });
   });
 

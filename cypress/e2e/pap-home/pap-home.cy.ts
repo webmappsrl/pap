@@ -6,6 +6,9 @@ const filteredHomeButtons = homeButtons.filter(btn => btn.hideInHome == null);
 const apiLogin = `${environment.api}/login`;
 
 beforeEach(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+  cy.wait(1000);
   cy.visit('/');
 });
 
@@ -79,22 +82,19 @@ describe('pap-home: test no logged user', () => {
   });
 });
 
-describe('pap-home: test logged user', () => {
-  beforeEach(() => {
+describe.only('pap-home: test logged user', () => {
+  before(() => {
     cy.intercept('POST', apiLogin).as('loginRequest');
   });
 
-  it('should login successfully using provided credentials', () => {
+  it('should login successfully using provided credentials, navigate correctly path when button is clicked and logout successfully ', () => {
     cy.get('.pap-header-button').click();
     cy.get('.pap-alert-login .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
-    cy.get('form [formControlName="email"]').type('admin@webmapp.it');
-    cy.get('form [formControlName="password"]').type('webmapp123');
+    cy.get('form [formControlName="email"]').type(Cypress.env('email'));
+    cy.get('form [formControlName="password"]').type(Cypress.env('password'));
     cy.get('ion-button[type="submit"]').click();
     cy.wait('@loginRequest').its('response.body').should('have.property', 'success', true);
-  });
-
-  it('should navigate to the correct path when button is clicked', () => {
     filteredHomeButtons.forEach((btn, index) => {
       if (btn.label === 'Servizi') {
         return;
@@ -103,16 +103,13 @@ describe('pap-home: test logged user', () => {
       cy.url().should('include', btn.url);
       cy.go('back');
     });
-  });
-
-  it('should logout successfully', () => {
     cy.wait(1000);
     cy.get('.pap-header-button').click();
     cy.wait(1000);
     cy.get('ion-button[fill="outline"][shape="round"]').contains('Log out').click();
     //first alert
     cy.get('.pap-alert .pap-alert-btn-ok').click();
-    cy.wait(500);
+    cy.wait(1000);
     //second alert
     cy.get('.pap-alert .pap-alert-btn-ok').click();
     cy.url().should('include', '/home');

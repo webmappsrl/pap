@@ -11,6 +11,9 @@ const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
 
 before(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+  cy.wait(1000);
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit('/');

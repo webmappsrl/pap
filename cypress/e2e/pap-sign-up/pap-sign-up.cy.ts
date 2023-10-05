@@ -4,6 +4,9 @@ import {environment} from 'projects/pap/src/environments/environment';
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
 
 before(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+  cy.wait(1000);
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit('/');
   cy.wait('@apiZonesGeoJsonCall').then(interception => {

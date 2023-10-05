@@ -3,6 +3,9 @@ import {environment} from 'projects/pap/src/environments/environment';
 const apiGeojson = `${environment.api}/c/${environment.companyId}/waste_collection_centers.geojson`;
 
 beforeEach(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+  cy.wait(1000);
   cy.intercept('GET', apiGeojson).as('geojsonCall');
   cy.visit('/waste-center-collection');
 });

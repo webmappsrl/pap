@@ -6,6 +6,9 @@ const servicesButton = homeButtons.find(button => button.label === 'Servizi');
 const infoTicketButton = servicesButtons.find(button => button.text === 'Richiedi Informazioni');
 
 before(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+  cy.wait(1000);
   cy.visit('/');
   e2eLogin();
 });

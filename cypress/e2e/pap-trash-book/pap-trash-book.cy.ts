@@ -11,6 +11,9 @@ const apiWastes = `${environment.api}/c/${environment.companyId}/wastes.json`;
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
 
 before(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+  cy.wait(1000);
   cy.intercept('GET', apiWastes).as('wastesCall');
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
   cy.visit('/');

@@ -8,6 +8,9 @@ const calendarsButton = homeButtons.find(button => button.label === 'Calendari')
 const apiCalendar = `${environment.api}/c/${environment.companyId}/calendar`;
 
 before(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+  cy.wait(1000);
   cy.visit('/');
   e2eLogin();
 });
