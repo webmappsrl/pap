@@ -8,6 +8,7 @@ import {delay, map, switchMap, tap} from 'rxjs/operators';
 import {AppState} from '../core.state';
 import {resendEmail} from './state/auth.actions';
 import {user} from './state/auth.selectors';
+import {noLoggedButtons} from '../../features/home/home.model';
 
 const NO_LOGGED: AlertOptions = {
   header: 'Non sei loggato',
