@@ -106,7 +106,9 @@ describe('pap-home: test logged user', () => {
   });
 
   it('should logout successfully', () => {
+    cy.wait(1000);
     cy.get('.pap-header-button').click();
+    cy.wait(1000);
     cy.get('ion-button[fill="outline"][shape="round"]').contains('Log out').click();
     //first alert
     cy.get('.pap-alert .pap-alert-btn-ok').click();

@@ -8,8 +8,8 @@ import {environment} from 'projects/pap/src/environments/environment';
  * @param password - User's password.
  */
 export function e2eLogin(
-  email: string = 'admin@webmapp.it',
-  password: string = 'webmapp123',
+  email: string = Cypress.env('email'),
+  password: string = Cypress.env('password'),
 ): Cypress.Chainable {
   const apiLogin = `${environment.api}/login`;
   cy.intercept('POST', apiLogin).as('loginRequest');
