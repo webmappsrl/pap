@@ -8,13 +8,26 @@ on:
     branches: [develop]
 
 jobs:
-  build:
+  cypress-run:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [16.19.1]
-
+    steps:
+      - uses: cypress-io/github-action@v6
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm start
+        env:
+          CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+          CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.19.1]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
