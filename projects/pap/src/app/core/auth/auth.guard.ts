@@ -4,10 +4,10 @@ import {AlertController, AlertOptions, NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
 import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable, Subscription} from 'rxjs';
-import {debounceTime, delay, map, switchMap, tap} from 'rxjs/operators';
+import {delay, map, switchMap, tap} from 'rxjs/operators';
 import {AppState} from '../core.state';
-import {loadAuths, resendEmail} from './state/auth.actions';
-import {isVerified, user} from './state/auth.selectors';
+import {resendEmail} from './state/auth.actions';
+import {user} from './state/auth.selectors';
 
 const NO_LOGGED: AlertOptions = {
   header: 'Non sei loggato',
@@ -88,15 +88,7 @@ export class AuthGuard implements CanActivate, OnDestroy {
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const usr$ = this._store.pipe(delay(300), select(user));
-    const isVerified$ = this._store.pipe(select(isVerified));
-    return isVerified$.pipe(
-      tap(isV => {
-        if (isV === false) {
-          this._store.dispatch(loadAuths());
-        }
-      }),
-      debounceTime(500),
-      switchMap(isV => usr$),
+    return usr$.pipe(
       map(user => {
         const isL = user != null;
         const isV = user?.email_verified_at != null;

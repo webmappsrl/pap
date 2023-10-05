@@ -56,6 +56,7 @@ export const reducer = createReducer(
     return {
       ...state,
       isLogged: true,
+      user: action.user.data.user,
       isVerified: action.user.data.email_verified_at != null ? true : false,
       error: undefined,
     };
