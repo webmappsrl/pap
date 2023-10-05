@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {TicketFormConf, abandonmentTicketTypes} from '../../shared/models/form.model';
+import {TicketFormConf, abandonmentTicketForm} from '../../shared/models/form.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
 @Component({
@@ -11,7 +11,7 @@ import {environment} from 'projects/pap/src/environments/environment';
   encapsulation: ViewEncapsulation.None,
 })
 export class AbandonmentTicketComponent {
-  public form: TicketFormConf = abandonmentTicketTypes;
+  public form: TicketFormConf = abandonmentTicketForm;
 
   constructor(private navController: NavController) {}
 

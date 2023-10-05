@@ -1,9 +1,9 @@
 import {e2eLogin} from 'cypress/utils/test-utils';
-import {homeButtons, serviziButtons} from 'projects/pap/src/app/features/home/home.model';
-import {infoTicketTypes} from 'projects/pap/src/app/shared/models/form.model';
+import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
+import {infoTicketForm} from 'projects/pap/src/app/shared/models/form.model';
 
-const serviziButton = homeButtons.find(button => button.label === 'Servizi');
-const infoTicketButton = serviziButtons.find(button => button.text === 'Richiedi Informazioni');
+const servicesButton = homeButtons.find(button => button.label === 'Servizi');
+const infoTicketButton = servicesButtons.find(button => button.text === 'Richiedi Informazioni');
 
 before(() => {
   cy.visit('/');
@@ -11,18 +11,18 @@ before(() => {
 });
 
 describe('pap-info-ticket: test the correct behaviour of form at first step', () => {
-  it('should open the action sheet when the "Servizi" and click button "Richiedi Informazioni"', () => {
-    if (serviziButton && infoTicketButton) {
-      cy.contains(serviziButton.label).click();
+  it('should navgate correctly to request information"', () => {
+    if (servicesButton && infoTicketButton) {
+      cy.contains(servicesButton.label).click();
       cy.contains(infoTicketButton.text).click();
     } else {
-      throw new Error('Servizi button not found in homeButtons.');
+      throw new Error('Services button not found in homeButtons.');
     }
   });
 
   it('should display the correct ticket type, label and status back button should be hidden', () => {
-    cy.get('.pap-form-first-step').should('include.text', infoTicketTypes.label);
-    const expectedLabelText = infoTicketTypes.step[0].label;
+    cy.get('.pap-form-first-step').should('include.text', infoTicketForm.label);
+    const expectedLabelText = infoTicketForm.step[0].label;
     cy.get('.pap-form-label-first-step').should('include.text', expectedLabelText);
     cy.get('.pap-status-back-button').should('be.hidden');
   });
@@ -116,7 +116,7 @@ describe('pap-info-ticket: test the correct behaviour of form at recap step', ()
   });
 });
 
-describe('pap-info-ticket: test the correct behaviour of button "annulla" in status', () => {
+describe('pap-info-ticket: test the correct behaviour of cancel button in status', () => {
   it('should display ion-alert correctly', () => {
     cy.get('.pap-status-cancel-icon').should('exist').click();
     cy.get('ion-alert').should('exist');
@@ -124,8 +124,8 @@ describe('pap-info-ticket: test the correct behaviour of button "annulla" in sta
 
   it('should display alert title correctly', () => {
     const alertTitle =
-      infoTicketTypes && infoTicketTypes.label
-        ? `Vuoi annullare ${infoTicketTypes.label}?`
+      infoTicketForm && infoTicketForm.label
+        ? `Vuoi annullare ${infoTicketForm.label}?`
         : 'Vuoi annullare?';
     cy.get('.alert-title').should('have.text', alertTitle);
     cy.get('ion-alert').should('exist');
@@ -135,7 +135,7 @@ describe('pap-info-ticket: test the correct behaviour of button "annulla" in sta
     cy.get('.alert-button-group button').should('have.length', 2);
   });
 
-  it('should click on the "Ok" button and navigate to /home', () => {
+  it('should click on the Ok button and navigate to /home', () => {
     cy.get('ion-alert .alert-button-group button').contains('Ok').click();
     cy.url().should('include', '/home');
   });

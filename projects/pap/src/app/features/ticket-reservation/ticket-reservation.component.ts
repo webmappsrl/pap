@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {environment} from 'projects/pap/src/environments/environment';
-import {TicketFormConf, ticketReservationTypes} from '../../shared/models/form.model';
+import {TicketFormConf, ticketReservationForm} from '../../shared/models/form.model';
 
 @Component({
   selector: 'pap-ticket-reservation',
@@ -11,7 +11,7 @@ import {TicketFormConf, ticketReservationTypes} from '../../shared/models/form.m
   encapsulation: ViewEncapsulation.None,
 })
 export class TicketReservationComponent {
-  public form: TicketFormConf = ticketReservationTypes;
+  public form: TicketFormConf = ticketReservationForm;
 
   constructor(private navController: NavController) {}
 

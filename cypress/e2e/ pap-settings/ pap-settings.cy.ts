@@ -40,7 +40,7 @@ before(() => {
   });
 });
 
-describe('pap-settings: test the correct behaviour of "GENERALI" tab', () => {
+describe('pap-settings: test the correct behaviour of firstStep tab', () => {
   it('should navigate to /settings after login', () => {
     cy.get('.pap-header-button').click();
     cy.url().should('include', '/settings');
@@ -79,12 +79,12 @@ describe('pap-settings: test the correct behaviour of "GENERALI" tab', () => {
   });
 });
 
-describe('pap-settings: test the correct behaviour of "PASSWORD" tab', () => {
-  it('should navigate to "PASSWORD" tab correctly', () => {
+describe('pap-settings: test the correct behaviour of secondStep tab', () => {
+  it('should navigate to secondStep tab correctly', () => {
     cy.get('ion-segment-button[value="secondStep"]').click();
   });
 
-  it('should disable the "Salva" button if no data is entered in the password fields', () => {
+  it('should disable the save button if no data is entered in the password fields', () => {
     cy.get('ion-input[formControlName="password"]').should(
       'have.attr',
       'placeholder',
@@ -98,15 +98,15 @@ describe('pap-settings: test the correct behaviour of "PASSWORD" tab', () => {
     cy.get('ion-button:contains("Salva")').should('not.be.enabled');
   });
 
-  it('should enable the "Salva" button if data is entered in the password fields', () => {
+  it('should enable the save button if data is entered in the password fields', () => {
     cy.get('ion-input[formControlName="password"]').type('TestPassword123');
     cy.get('ion-input[formControlName="password_confirmation"]').type('TestPassword123');
     cy.get('ion-button:contains("Salva")').should('not.be.disabled');
   });
 });
 
-describe('pap-settings: test the correct behaviour of "INDIRIZZI" tab', () => {
-  it('should navigate to "PASSWORD" tab correctly', () => {
+describe('pap-settings: test the correct behaviour of thirdStep tab', () => {
+  it('should navigate to thirdStep tab correctly', () => {
     cy.get('ion-segment-button[value="thirdStep"]').click();
   });
 
@@ -129,7 +129,7 @@ describe('pap-settings: test the correct behaviour of "INDIRIZZI" tab', () => {
   });
 });
 
-describe('pap-settings: test the correct behaviour of "AGGIUNGI INDIRIZZO" button', () => {
+describe('pap-settings: test the correct behaviour of add address button', () => {
   it('should open location modal correctly', () => {
     cy.get('ion-button').contains('Aggiungi indirizzo').click();
     cy.get('pap-location-modal').should('exist');
@@ -198,17 +198,17 @@ describe('pap-settings: test the correct behaviour of "AGGIUNGI INDIRIZZO" butto
     });
   });
 
-  it('should select always first user type from list and enabled "SALVA" button', () => {
+  it('should select always first user type from list and enabled save button', () => {
     cy.get('.pap-location-modal-radio-item').first().click();
     cy.get('ion-button').contains('Salva').should('exist', 'not.be.disabled');
   });
 
-  it('should go back to settings when click on "ANNULLA" button', () => {
+  it('should go back to settings when click on cancel button', () => {
     cy.get('ion-button').contains('Annulla').should('exist').click();
   });
 });
 
-describe('pap-settings: test the correct behaviour of "LOG OUT" button', () => {
+describe('pap-settings: test the correct behaviour of log out button', () => {
   it('should logout successfully', () => {
     cy.get('ion-button').contains('Log out').should('exist').click();
     //first alert

@@ -55,21 +55,21 @@ describe('pap-home: test no logged user', () => {
     cy.get('.pap-alert-login').should('not.exist');
   });
 
-  it('should navigate to /sign-in when "accedi" button is clicked', () => {
+  it('should navigate to /sign-in when sign in button is clicked', () => {
     cy.get('.pap-header-button').click();
     cy.get('.pap-alert-login .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
     cy.go('back');
   });
 
-  it('should navigate to /sign-up when "registrati" button is clicked', () => {
+  it('should navigate to /sign-up when sign up button is clicked', () => {
     cy.get('.pap-header-button').click();
     cy.get('.pap-alert-login .alert-button-role-sign-up').click();
     cy.url().should('include', '/sign-up');
     cy.go('back');
   });
 
-  it('should attempt to open an external link when "password dimenticata?" button is clicked', () => {
+  it('should attempt to open an external link when forgot password button is clicked', () => {
     cy.window().then(win => {
       cy.stub(win, 'open').as('windowOpen');
     });

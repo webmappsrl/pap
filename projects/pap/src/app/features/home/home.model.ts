@@ -20,7 +20,7 @@ export enum buttonAction {
   ACTION = 'action',
 }
 
-export const serviziButtons = [
+export const servicesButtons = [
   {
     text: 'Prenota un servizio',
     icon: 'create',
@@ -74,7 +74,7 @@ export const homeButtons = [
     svg: 'assets/icons/logo-call.svg',
     url: 'ticket-reservation',
     action: buttonAction.ACTION,
-    buttons: serviziButtons,
+    buttons: servicesButtons,
   },
   {
     label: 'Calendari',

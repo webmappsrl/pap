@@ -1,12 +1,12 @@
 import {e2eLogin, hexToRgb} from 'cypress/utils/test-utils';
-import {homeButtons, serviziButtons} from 'projects/pap/src/app/features/home/home.model';
+import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
 import {TrashBookRow} from 'projects/pap/src/app/features/trash-book/trash-book-model';
 import {Feature} from 'projects/pap/src/app/shared/form/location/location.model';
-import {ticketReservationTypes} from 'projects/pap/src/app/shared/models/form.model';
+import {ticketReservationForm} from 'projects/pap/src/app/shared/models/form.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
 const serviziButton = homeButtons.find(button => button.label === 'Servizi');
-const ticketReservationButton = serviziButtons.find(
+const ticketReservationButton = servicesButtons.find(
   button => button.text === 'Prenota un servizio',
 );
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
@@ -40,8 +40,8 @@ describe('pap-ticket-reservation: test the correct behaviour of form at first st
   });
 
   it('should display the correct ticket type, label and status back button should be hidden', () => {
-    cy.get('.pap-form-first-step').should('include.text', ticketReservationTypes.label);
-    const expectedLabelText = ticketReservationTypes.step[0].label;
+    cy.get('.pap-form-first-step').should('include.text', ticketReservationForm.label);
+    const expectedLabelText = ticketReservationForm.step[0].label;
     cy.get('.pap-form-label-first-step').should('include.text', expectedLabelText);
     cy.get('.pap-status-back-button').should('be.hidden');
   });
@@ -50,8 +50,8 @@ describe('pap-ticket-reservation: test the correct behaviour of form at first st
 describe('pap-ticket-reservation: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with "Questo campo è obbligatorio" if no trash type selected', () => {
     cy.get('.pap-status-next-button').click();
-    cy.get('.pap-form-content').should('include.text', ticketReservationTypes.label);
-    const expectedLabelText = ticketReservationTypes.step[1].label;
+    cy.get('.pap-form-content').should('include.text', ticketReservationForm.label);
+    const expectedLabelText = ticketReservationForm.step[1].label;
     cy.get('.pap-form-label').should('include.text', expectedLabelText);
     cy.get('.pap-status-next-button').should('not.be.enabled');
     cy.get('pap-error-form-handler ion-list ion-label').should(
@@ -89,8 +89,8 @@ describe('pap-ticket-reservation: test the correct behaviour of form at third st
   });
 
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with "Questo campo è obbligatorio" if no location selected', () => {
-    cy.get('.pap-form-content').should('include.text', ticketReservationTypes.label);
-    const expectedLabelText = ticketReservationTypes.step[2].label;
+    cy.get('.pap-form-content').should('include.text', ticketReservationForm.label);
+    const expectedLabelText = ticketReservationForm.step[2].label;
     cy.get('.pap-form-label').should('include.text', expectedLabelText);
     cy.get('.pap-status-next-button').should('not.be.enabled');
     cy.get('pap-error-form-handler ion-list ion-label').should(
@@ -158,8 +158,8 @@ describe('pap-ticket-reservation: test the correct behaviour of form at fourth s
   });
 
   it('should display the correct ticket type, ticket label', () => {
-    cy.get('.pap-form-content').should('include.text', ticketReservationTypes.label);
-    const expectedLabelText = ticketReservationTypes.step[3].label;
+    cy.get('.pap-form-content').should('include.text', ticketReservationForm.label);
+    const expectedLabelText = ticketReservationForm.step[3].label;
     cy.get('.pap-form-label').should('include.text', expectedLabelText);
     cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
   });
@@ -178,8 +178,8 @@ describe('pap-ticket-reservation: test the correct behaviour of form at fifth st
   });
 
   it('should display the correct ticket type, ticket label', () => {
-    cy.get('.pap-form-content').should('include.text', ticketReservationTypes.label);
-    const expectedLabelText = ticketReservationTypes.step[4].label;
+    cy.get('.pap-form-content').should('include.text', ticketReservationForm.label);
+    const expectedLabelText = ticketReservationForm.step[4].label;
     cy.get('.pap-form-label').should('include.text', expectedLabelText);
     cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
   });
@@ -275,8 +275,8 @@ describe('pap-ticket-reservation: test the correct behaviour of button "annulla"
 
   it('should display alert title correctly', () => {
     const alertTitle =
-      ticketReservationTypes && ticketReservationTypes.label
-        ? `Vuoi annullare ${ticketReservationTypes.label}?`
+      ticketReservationForm && ticketReservationForm.label
+        ? `Vuoi annullare ${ticketReservationForm.label}?`
         : 'Vuoi annullare?';
     cy.get('.alert-title').should('have.text', alertTitle);
     cy.get('ion-alert').should('exist');

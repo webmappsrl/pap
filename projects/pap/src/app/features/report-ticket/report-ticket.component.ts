@@ -4,7 +4,7 @@ import {NavController} from '@ionic/angular';
 import {Store} from '@ngrx/store';
 import {format as fm, subDays} from 'date-fns';
 import {environment} from 'projects/pap/src/environments/environment';
-import {reportTicketTypes, TicketFormConf} from '../../shared/models/form.model';
+import {reportTicketForm, TicketFormConf} from '../../shared/models/form.model';
 import {loadCalendars} from '../calendar/state/calendar.actions';
 @Component({
   selector: 'pap-report-ticket',
@@ -14,7 +14,7 @@ import {loadCalendars} from '../calendar/state/calendar.actions';
   encapsulation: ViewEncapsulation.None,
 })
 export class ReportTicketComponent {
-  public form: TicketFormConf = reportTicketTypes;
+  public form: TicketFormConf = reportTicketForm;
 
   constructor(private navController: NavController, private _store: Store<AppState>) {
     const stop_date = fm(new Date(), 'd-M-Y');
