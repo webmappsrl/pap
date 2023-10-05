@@ -295,7 +295,9 @@ const createFolder = (path: string): Promise<void> => {
       if (fs.existsSync(path)) {
         await execCmd(`rm -rf ${paths.instancePath}`);
       }
-      fs.mkdirSync(path);
+      try {
+        fs.mkdirSync(path);
+      } catch (_) {}
       console.log(`CREATE_FOLDER: ${path}`);
       resolve();
     } catch (error) {
