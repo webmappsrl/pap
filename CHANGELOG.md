@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.1](https://github.com/webmappsrl/pap/compare/v1.0.0...v1.0.1) (2023-10-05)
+
+
+### Miscellaneous
+
+* Add release_please.yml workflow ([0efac19](https://github.com/webmappsrl/pap/commit/0efac19242125c6437c96bee9ee35134e74b7dfe))
+* Update auth.guard.ts, auth.reducer.ts, and auth.selectors.ts ([c803b1b](https://github.com/webmappsrl/pap/commit/c803b1b1a1ff37a7b6d74eadf034c7b693de2d43))
+* Update gulpfile.ts to handle folder creation errors ([ce6f52e](https://github.com/webmappsrl/pap/commit/ce6f52e6cc1be798dedad5410c25c1ff91ea63fd))
+* Update package version to 2.2.3 ([9f579c1](https://github.com/webmappsrl/pap/commit/9f579c124266156d096997415af06ae746a166a5))
+* Update release_please.yml workflow ([370a69a](https://github.com/webmappsrl/pap/commit/370a69af662cea526224c6dfe2caedc540306cf8))
+
 ## 1.0.0 (2023-10-03)
 
 
