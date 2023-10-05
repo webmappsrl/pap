@@ -6,8 +6,8 @@ import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable, Subscription} from 'rxjs';
 import {delay, map, switchMap, tap} from 'rxjs/operators';
 import {AppState} from '../core.state';
-import {loadAuths, resendEmail} from './state/auth.actions';
-import {isVerified, user} from './state/auth.selectors';
+import {resendEmail} from './state/auth.actions';
+import {user} from './state/auth.selectors';
 import {noLoggedButtons} from '../../features/home/home.model';
 
 const NO_LOGGED: AlertOptions = {
