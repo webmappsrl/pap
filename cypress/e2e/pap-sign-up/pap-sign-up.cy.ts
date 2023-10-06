@@ -23,7 +23,7 @@ describe('pap-sign-up: test the correct behaviour of form at first step', () => 
     cy.url().should('include', '/sign-up');
   });
 
-  it('form next button should be enabled without required fields', () => {
+  it('form next button should be disabled without required fields', () => {
     cy.get('ion-card ion-button').should('exist', 'not.be.enabled');
   });
 
@@ -39,7 +39,7 @@ describe('pap-sign-up: test the correct behaviour of form at first step', () => 
     cy.get('ion-input[formControlName="fiscal_code"]').type('WBMWMP98R03G702M');
   });
 
-  it('next button should be enabled yet with phone, user code and fiscal code entered because need name and email', () => {
+  it('next button should be disabled yet with phone, user code and fiscal code entered because need name and email', () => {
     cy.get('ion-card ion-button').should('exist', 'not.be.enabled');
   });
 
@@ -61,7 +61,7 @@ describe('pap-sign-up: test the correct behaviour of form at second step', () =>
     cy.get('ion-card ion-button').should('exist', 'not.be.disabled').click();
   });
 
-  it('only prev button should be enabled without required fields', () => {
+  it('only prev button should be disabled without required fields', () => {
     cy.get('.ion-align-self-start ion-button').should('exist', 'not.be.disabled');
     cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.enabled');
   });
@@ -90,7 +90,7 @@ describe('pap-sign-up: test the correct behaviour of form at third step', () => 
     cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.disabled').click();
   });
 
-  it('only prev button should be enabled without a selected address', () => {
+  it('only prev button should be disabled without a selected address', () => {
     cy.get('.ion-align-self-start ion-button').should('exist', 'not.be.disabled');
     cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.enabled');
   });
@@ -137,7 +137,7 @@ describe('pap-sign-up: test the correct behaviour of form at third step', () => 
     });
   });
 
-  it('only prev button should be enabled with a selected address and without a user type selected', () => {
+  it('only prev button should be disabled with a selected address and without a user type selected', () => {
     cy.get('.ion-align-self-start ion-button').should('exist', 'not.be.disabled');
     cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.enabled');
   });
