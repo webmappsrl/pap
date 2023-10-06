@@ -7,6 +7,7 @@ import {loadSignIns} from '../../core/auth/state/auth.actions';
 import {error, selectAuthState} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {LoginCredentials} from '../../core/auth/auth.model';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'pap-sign-in',
@@ -16,7 +17,7 @@ import {LoginCredentials} from '../../core/auth/auth.model';
   encapsulation: ViewEncapsulation.None,
 })
 export class SignInComponent {
-  error$: Observable<string | false | undefined> = this._store.select(error);
+  error$: Observable<string | false | undefined | any> = this._store.select(error);
   signInForm: UntypedFormGroup;
 
   constructor(

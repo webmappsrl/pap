@@ -27,7 +27,7 @@
           <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
         </ion-item>
         <ion-item *ngIf="error$|async as error">
-          <ion-label color="danger">{{error}}</ion-label>
+          <ion-label color="danger">{{error?.error?.message}}</ion-label>
         </ion-item>
       </ion-list>
       <ion-grid>

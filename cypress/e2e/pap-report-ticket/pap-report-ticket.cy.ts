@@ -14,6 +14,8 @@ const apiCalendarWithDates = `${environment.api}/c/${environment.companyId}/cale
 const skipBeforeEach = true;
 
 before(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
   cy.wait(1000);
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
   cy.visit('/');
