@@ -6,7 +6,6 @@ const closeButton = servicesButtons.find(button => button.text === 'CHIUDI');
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.wait(1000);
   cy.visit(Cypress.env('baseurl'));
 });
 

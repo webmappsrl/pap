@@ -8,7 +8,6 @@ const apiLogin = `${environment.api}/login`;
 beforeEach(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.wait(1000);
   cy.visit(Cypress.env('baseurl'));
 });
 
@@ -103,15 +102,16 @@ describe.only('pap-home: test logged user', () => {
       cy.url().should('include', btn.url);
       cy.go('back');
     });
-    cy.wait(1000);
-    cy.get('.pap-header-button').click();
-    cy.wait(1000);
-    cy.get('ion-button[fill="outline"][shape="round"]').contains('Log out').click();
+    cy.get('.pap-header-button').should('be.visible').click();
+    cy.get('ion-button[fill="outline"][shape="round"]')
+      .contains('Log out')
+      .should('be.visible')
+      .click();
     //first alert
-    cy.get('.pap-alert .pap-alert-btn-ok').click();
-    cy.wait(1000);
+    cy.get('.pap-alert .pap-alert-btn-ok').should('be.visible').click();
+    cy.wait(1000); // TODO manage waiting time without wait
     //second alert
-    cy.get('.pap-alert .pap-alert-btn-ok').click();
+    cy.get('.pap-alert .pap-alert-btn-ok').should('be.visible').click();
     cy.url().should('include', '/home');
   });
 });

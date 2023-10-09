@@ -6,7 +6,6 @@ describe('pap-sign-in: test the correct behaviour with wrong credentials', () =>
   before(() => {
     cy.clearCookies();
     cy.clearLocalStorage();
-    cy.wait(1000);
     cy.visit(Cypress.env('baseurl'));
   });
 
@@ -45,7 +44,6 @@ describe('pap-sign-in: test the correct behaviour with correct credentials', () 
   before(() => {
     cy.clearCookies();
     cy.clearLocalStorage();
-    cy.wait(1000);
     cy.visit(Cypress.env('baseurl'));
     cy.intercept('POST', apiLogin).as('loginRequest');
   });
