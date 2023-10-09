@@ -62,7 +62,6 @@ describe('pap-waste-center-collection: test the correct behaviour of page', () =
 
   it('should display the correct data when a marker is clicked', function () {
     cy.get('.leaflet-marker-icon').first().should('be.visible').click();
-
     cy.get('.pap-waste-center-alert h2').eq(0).should('be.visible');
     cy.get('.pap-waste-center-alert ion-label').eq(0).should('be.visible');
     cy.get('.pap-waste-center-alert ion-label').eq(1).should('be.visible');
