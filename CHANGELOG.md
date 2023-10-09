@@ -1,7 +1,7 @@
 # Changelog
+prova
 
 ## [1.0.1](https://github.com/webmappsrl/pap/compare/v1.0.0...v1.0.1) (2023-10-05)
-
 
 ### Miscellaneous
 
@@ -12,7 +12,6 @@
 * Update release_please.yml workflow ([370a69a](https://github.com/webmappsrl/pap/commit/370a69af662cea526224c6dfe2caedc540306cf8))
 
 ## 1.0.0 (2023-10-03)
-
 
 ### Features
 
@@ -38,7 +37,6 @@
 * **settings/calendarPage:** add calendar page style ([56a4461](https://github.com/webmappsrl/pap/commit/56a4461c0b79e09c3cc5bd22df089e25927358ee))
 * **settings/calendarPage:** calendar page style update ([f89b164](https://github.com/webmappsrl/pap/commit/f89b164353fa1c24a0e5feb98c6fc1117b0a46c8))
 
-
 ### Bug Fixes
 
 * add disapled color to le mie segnalazione button ([bb216ed](https://github.com/webmappsrl/pap/commit/bb216edfaf205d875c04a23a9a0164c786f56500))
@@ -62,7 +60,6 @@
 * **revisione:** implements ([91b3381](https://github.com/webmappsrl/pap/commit/91b33818b6ccead9b376d3c0f858383ebe21880f))
 * **settings:** call loadAuth after add/delete address ([d56875a](https://github.com/webmappsrl/pap/commit/d56875a1a3e28cc221ec8f7e1f2ec39435335f82))
 * **user/registration:** fix new registration ([9b87954](https://github.com/webmappsrl/pap/commit/9b87954ed84fce98a35c39b95060a8eca36e6fcd))
-
 
 ### Miscellaneous
 
