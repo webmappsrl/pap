@@ -29,11 +29,12 @@ jobs:
         with:
           build: npm run cy:run
           config: baseurl=http://dev.app.portapporta.webmapp.it
-      - name: Archive Screenshots
-        uses: actions/upload-artifact@v2
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
         with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+          name: cypress-snapshots
+          path: cypress/snapshots
 
   build:
     runs-on: ubuntu-latest
