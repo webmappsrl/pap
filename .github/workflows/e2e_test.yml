@@ -8,9 +8,6 @@ on:
     types:
       - opened
       - synchronize
-  push:
-    branches:
-      - develop
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
