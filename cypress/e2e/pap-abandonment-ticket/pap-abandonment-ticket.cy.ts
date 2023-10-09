@@ -13,7 +13,6 @@ const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geo
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.wait(1000);
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit(Cypress.env('baseurl'));
@@ -130,7 +129,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
       //Make a new request to Nominatim to get the `display_name`
       //and then check that the `ion-textarea` element contains that value
       cy.request(
-        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=it`,
       ).then(response => {
         const nominatimDisplayName = response.body.display_name;
         cy.get('pap-form-location ion-item ion-textarea').should(

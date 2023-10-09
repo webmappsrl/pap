@@ -16,7 +16,6 @@ const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geo
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.wait(1000);
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@apiZonesGeoJsonCall').then(interception => {
@@ -115,6 +114,7 @@ describe('pap-settings: test the correct behaviour of thirdStep tab', () => {
 
   it('should verify that the displayed zone matches the API zones', function () {
     cy.get('h5')
+      .should('have.css', 'color', 'rgb(153, 153, 153)')
       .invoke('text')
       .then(uiLabelText => {
         const labels = uiLabelText.split('  ').map(label => label.trim());
@@ -143,11 +143,11 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
   });
 
   it('should click on a random position on the pap-map and verify address', () => {
-    cy.wait(1000);
     //Start intercepting requests to Nominatim
     cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
     //Perform the random click on the map as intended
     cy.get('pap-form-location').then($map => {
+      cy.wait(1000); //TODO gestire il tempo di attesa senza wait
       const width = $map.width();
       const height = $map.height();
       if (width && height) {
@@ -173,7 +173,7 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
       //Make a new request to Nominatim to get the `display_name`
       //and then check that the `ion-textarea` element contains that value
       cy.request(
-        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=it`,
       ).then(response => {
         const nominatimDisplayName = response.body.display_name;
         cy.get('pap-form-location ion-item ion-textarea').should(
@@ -186,6 +186,7 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
 
   it('should have a label that matches one of the apiZonesGeoJson labels', function () {
     cy.get('pap-form-location ion-label')
+      .should('be.visible')
       .invoke('text')
       .then(uiLabelText => {
         const labelsFromApi = this['apiZonesGeoJsonData'].features.map(
@@ -206,7 +207,7 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
   });
 
   it('should select always first user type from list and enabled save button', () => {
-    cy.get('.pap-location-modal-radio-item').first().click();
+    cy.get('.pap-location-modal-radio-item').should('be.visible').first().click();
     cy.get('ion-button').contains('Salva').should('exist', 'not.be.disabled');
   });
 
