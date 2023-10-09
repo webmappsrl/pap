@@ -7,6 +7,7 @@ on:
   pull_request:
     types:
       - opened
+      - synchronize
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -27,8 +28,8 @@ jobs:
           CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
           CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
         with:
-          build: npm run cy:run
           config: baseurl=http://dev.app.portapporta.webmapp.it
+          browser: chrome
       - name: Upload screenshots
         uses: actions/upload-artifact@v3
         if: failure()
