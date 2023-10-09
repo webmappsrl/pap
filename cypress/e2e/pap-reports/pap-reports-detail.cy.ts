@@ -15,7 +15,6 @@ const ticketButton = homeButtons.find(button => button.label === 'I miei ticket'
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.wait(1000);
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@trashTypesCall').then(interception => {
