@@ -15,7 +15,6 @@ const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geo
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.wait(1000);
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit(Cypress.env('baseurl'));
@@ -103,6 +102,7 @@ describe('pap-ticket-reservation: test the correct behaviour of form at third st
   });
 
   it('should click on a random position on the pap-map and verify address', () => {
+    cy.wait(1000); //TODO manage waiting without wait
     //Start intercepting requests to Nominatim
     cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
     //Perform the random click on the map as intended

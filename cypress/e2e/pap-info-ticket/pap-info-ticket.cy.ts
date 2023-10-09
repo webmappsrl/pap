@@ -8,7 +8,6 @@ const infoTicketButton = servicesButtons.find(button => button.text === 'Richied
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.wait(1000);
   const baseurl = Cypress.env('baseurl');
   console.log('baseurl:', baseurl);
   cy.visit(Cypress.env('baseurl'));
