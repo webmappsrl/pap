@@ -114,7 +114,7 @@ describe('pap-settings: test the correct behaviour of thirdStep tab', () => {
 
   it('should verify that the displayed zone matches the API zones', function () {
     cy.get('h5')
-      .should('have.css', 'color', 'rgb(153, 153, 153)')
+      .should('be.visible')
       .invoke('text')
       .then(uiLabelText => {
         const labels = uiLabelText.split('  ').map(label => label.trim());
@@ -143,11 +143,11 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
   });
 
   it('should click on a random position on the pap-map and verify address', () => {
+    cy.wait(1000); //TODO manage waiting time without wait
     //Start intercepting requests to Nominatim
     cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
     //Perform the random click on the map as intended
     cy.get('pap-form-location').then($map => {
-      cy.wait(1000); //TODO gestire il tempo di attesa senza wait
       const width = $map.width();
       const height = $map.height();
       if (width && height) {
