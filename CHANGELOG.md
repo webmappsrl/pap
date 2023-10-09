@@ -1,5 +1,33 @@
 # Changelog pap
 
+## [1.0.2](https://github.com/webmappsrl/pap/compare/v1.0.1...v1.0.2) (2023-10-09)
+
+
+### Bug Fixes
+
+* Update error handling in sign-in component ([26075a0](https://github.com/webmappsrl/pap/commit/26075a0a77ca36eb20c43637fd68e7e51cc1d1ee))
+
+
+### Miscellaneous
+
+* Update .gitignore and test-utils.ts ([59107c4](https://github.com/webmappsrl/pap/commit/59107c41870009d34032068c3949f23ac072565e))
+* Update dev_deploy.yml ([08ac487](https://github.com/webmappsrl/pap/commit/08ac487d24b68e387192bddc671a99015a2d7253))
+* Update dev_deploy.yml ([ebd3561](https://github.com/webmappsrl/pap/commit/ebd3561c2c91dbc5fd6198497568ed7fc4487fc1))
+* Update dev_deploy.yml ([1977e55](https://github.com/webmappsrl/pap/commit/1977e552b0931b4ff885bc563930745ad646a21f))
+* Update dev_deploy.yml ([c1d5e38](https://github.com/webmappsrl/pap/commit/c1d5e38ef6776ce4bdb35217be30c75feb82d206))
+* Update dev_deploy.yml and e2e_test.yml ([1046d9a](https://github.com/webmappsrl/pap/commit/1046d9a367112d02316f6b16b734b4d9f5470308))
+* Update dev_deploy.yml and e2e_test.yml ([b503b54](https://github.com/webmappsrl/pap/commit/b503b54a4b4a2b866dede8ad98cedbea53005433))
+* Update dev_deploy.yml and e2e_test.yml ([5ecc44c](https://github.com/webmappsrl/pap/commit/5ecc44ca51ef2fc05f3386c53653b367633988ae))
+* Update dev_deploy.yml and e2e_test.yml workflows ([91bde60](https://github.com/webmappsrl/pap/commit/91bde60cc5d36ce9028a9bd84762cee7b116a4e8))
+* Update dev_deploy.yml and e2e_test.yml workflows ([c2c42e6](https://github.com/webmappsrl/pap/commit/c2c42e6348611e32b90d5742d9ada5e886bd6ecd))
+* Update dev_deploy.yml for test-action branch ([7a41f22](https://github.com/webmappsrl/pap/commit/7a41f222f7f24b16e3c0d2f57db44ccdfd11652b))
+* Update dev_deploy.yml workflow ([1636b9d](https://github.com/webmappsrl/pap/commit/1636b9dfdd610e1c4b1bb956278f293995b0f522))
+* Update dev_deploy.yml workflow ([b500962](https://github.com/webmappsrl/pap/commit/b500962381746d586118b03470adcde14630df18))
+* Update dev_deploy.yml workflow ([53200c6](https://github.com/webmappsrl/pap/commit/53200c64e148d753264338b1f8d798c887f8afa1))
+* Update dev_deploy.yml workflow ([ebd3b4b](https://github.com/webmappsrl/pap/commit/ebd3b4b98adf5a94fa6a03671cea69dbea1ae316))
+* Update subproject path in dev_deploy.yml ([3864846](https://github.com/webmappsrl/pap/commit/386484653dc3b905cda593f80b5ab0bd163f28da))
+* Update subproject path in dev_deploy.yml ([532c7f9](https://github.com/webmappsrl/pap/commit/532c7f9c1463c50995bd7b30df7440b2f4e69eb4))
+
 ## [1.0.1](https://github.com/webmappsrl/pap/compare/v1.0.0...v1.0.1) (2023-10-05)
 
 ### Miscellaneous
