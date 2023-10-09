@@ -4,8 +4,10 @@
 name: pap app
 
 on:
-  push:
-    branches: [develop]
+  pull_request:
+    types:
+      - opened
+      - synchronize
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -34,26 +36,3 @@ jobs:
         with:
           name: cypress-screenshots
           path: cypress/screenshots
-
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.19.1]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm install
-      - run: npm run lint
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY }}
-          script: 'cd pap && ./scripts/dev_deploy.sh'
