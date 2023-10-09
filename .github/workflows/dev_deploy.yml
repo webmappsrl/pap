@@ -7,16 +7,6 @@ on:
   push:
     branches: [develop]
 jobs:
-  e2e-test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.19.1]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: esegui e2e_test
-        uses: ./.github/workflows/e2e_test.yml
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -29,6 +19,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - name: esegui e2e_test
+        uses: ./.github/workflows/e2e_test.yml
       - run: npm install
       - run: npm run lint
       - name: Deploy to server
