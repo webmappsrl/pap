@@ -20,7 +20,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - name: esegui e2e_test
-        uses: ./.github/workflows/e2e_test.yml
+        uses: ./e2e_test.yml
       - run: npm install
       - run: npm run lint
       - name: Deploy to server
