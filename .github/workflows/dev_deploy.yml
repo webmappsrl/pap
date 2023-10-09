@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Include sub.yml
-        uses: ./.github/workflows/e2e_test.yml
+        uses: ./github/workflows/e2e_test.yml
   build:
     runs-on: ubuntu-latest
     strategy:
