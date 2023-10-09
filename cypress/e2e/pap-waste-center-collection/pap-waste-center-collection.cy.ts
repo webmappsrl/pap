@@ -33,7 +33,7 @@ describe('pap-waste-center-collection: test the correct behaviour of page', () =
   });
 
   it('should display an alert when a marker is clicked', function () {
-    cy.get('.leaflet-marker-icon').first().should('be.visible').click();
+    cy.get('.leaflet-marker-icon').first().click();
     cy.get('.pap-waste-center-alert').should('be.visible');
   });
 
@@ -43,7 +43,7 @@ describe('pap-waste-center-collection: test the correct behaviour of page', () =
   });
 
   it('should open external link when the directions button is clicked', () => {
-    cy.get('.leaflet-marker-icon').first().should('be.visible').click();
+    cy.get('.leaflet-marker-icon').first().click();
     cy.window().then(win => {
       cy.stub(win, 'open').as('windowOpen');
     });
@@ -52,16 +52,16 @@ describe('pap-waste-center-collection: test the correct behaviour of page', () =
   });
 
   it('should open external link when the website button is clicked', () => {
-    cy.get('.leaflet-marker-icon').first().should('be.visible').click();
+    cy.get('.leaflet-marker-icon').first().click();
     cy.window().then(win => {
       cy.stub(win, 'open').as('windowOpen');
     });
-    cy.get('.pap-waste-center-alert-btn-web').click();
+    cy.get('.pap-waste-center-alert-btn-web').first().click();
     cy.get('@windowOpen').should('be.called');
   });
 
   it('should display the correct data when a marker is clicked', function () {
-    cy.get('.leaflet-marker-icon').first().should('be.visible').click();
+    cy.get('.leaflet-marker-icon').first().click();
     cy.get('.pap-waste-center-alert h2').eq(0).should('be.visible');
     cy.get('.pap-waste-center-alert ion-label').eq(0).should('be.visible');
     cy.get('.pap-waste-center-alert ion-label').eq(1).should('be.visible');
