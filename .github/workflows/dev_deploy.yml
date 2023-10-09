@@ -14,8 +14,8 @@ jobs:
         node-version: [16.19.1]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - name: Include sub.yml
+        uses: actions/checkout@v3
+      - name: esegui e2e_test
         uses: ./.github/workflows/e2e_test.yml
   build:
     runs-on: ubuntu-latest
