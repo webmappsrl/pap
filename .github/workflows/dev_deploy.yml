@@ -7,6 +7,33 @@ on:
   push:
     branches: [develop]
 jobs:
+  e2e-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.19.1]
+    env:
+      CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+      CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
+      CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+          CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
+          CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
+        with:
+          config: baseurl=http://dev.app.portapporta.webmapp.it
+          browser: chrome
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -19,8 +46,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - name: esegui e2e_test
-        uses: ./e2e_test.yml
       - run: npm install
       - run: npm run lint
       - name: Deploy to server
