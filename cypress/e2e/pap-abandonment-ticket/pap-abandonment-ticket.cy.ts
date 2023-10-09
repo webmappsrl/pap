@@ -100,6 +100,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
   });
 
   it('should click on a random position on the pap-map and verify address', () => {
+    cy.wait(1000); //TODO manage waiting time without wait
     //Start intercepting requests to Nominatim
     cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
     //Perform the random click on the map as intended
@@ -142,6 +143,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
 
   it('should have a label that matches one of the apiZonesGeoJson labels', function () {
     cy.get('pap-form-location ion-label')
+      .should('be.visible')
       .invoke('text')
       .then(uiLabelText => {
         const labelsFromApi = this['apiZonesGeoJsonData'].features.map(

@@ -10,7 +10,6 @@ const apiCalendar = `${environment.api}/c/${environment.companyId}/calendar`;
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
-  cy.wait(1000);
   cy.visit(Cypress.env('baseurl'));
   e2eLogin();
 });
