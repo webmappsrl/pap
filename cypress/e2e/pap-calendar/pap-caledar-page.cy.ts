@@ -11,7 +11,7 @@ before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.wait(1000);
-  cy.visit('/');
+  cy.visit(Cypress.env('baseurl'));
   e2eLogin();
 });
 

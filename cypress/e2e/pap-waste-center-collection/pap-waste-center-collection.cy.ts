@@ -7,7 +7,7 @@ beforeEach(() => {
   cy.clearLocalStorage();
   cy.wait(1000);
   cy.intercept('GET', apiGeojson).as('geojsonCall');
-  cy.visit('/waste-center-collection');
+  cy.visit(Cypress.env('baseurl') + '/waste-center-collection');
 });
 
 describe('pap-waste-center-collection: test the correct behaviour of page', () => {
@@ -52,7 +52,7 @@ describe('pap-waste-center-collection: test the correct behaviour of page', () =
     // Intercept the API call and alias the response
     cy.intercept('GET', apiGeojson).as('geojsonCall');
     // Visit the page and wait for the API call to complete
-    cy.visit('/waste-center-collection');
+    cy.visit(Cypress.env('baseurl') + '/waste-center-collection');
     cy.wait('@geojsonCall').then(interception => {
       // Get the name description and hours from the first feature of the intercepted response
       const expectedName = interception?.response?.body.features[0].properties.name;

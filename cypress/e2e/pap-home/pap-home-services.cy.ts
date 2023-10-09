@@ -7,7 +7,7 @@ before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.wait(1000);
-  cy.visit('/');
+  cy.visit(Cypress.env('baseurl'));
 });
 
 describe('pap-home-servizi: test the correct presences of action sheet buttons', () => {

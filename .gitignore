@@ -64,3 +64,5 @@ cypress/screenshots/
 cypress/fixtures/cypress.env.json
 
 cypress.env.json
+
+cypress.config.json

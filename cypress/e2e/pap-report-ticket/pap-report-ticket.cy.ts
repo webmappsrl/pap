@@ -18,7 +18,7 @@ before(() => {
   cy.clearLocalStorage();
   cy.wait(1000);
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
-  cy.visit('/');
+  cy.visit(Cypress.env('baseurl'));
   cy.wait('@trashTypesCall').then(interception => {
     const trashTypesData = interception?.response?.body;
     cy.wrap(trashTypesData).as('trashTypesData');

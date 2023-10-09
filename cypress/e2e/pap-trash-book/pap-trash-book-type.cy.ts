@@ -13,7 +13,7 @@ before(() => {
   cy.wait(1000);
   cy.intercept('GET', apiWastes).as('wastesCall');
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
-  cy.visit('/');
+  cy.visit(Cypress.env('baseurl'));
   cy.wait('@wastesCall').then(interception => {
     const wastesData = interception?.response?.body;
     cy.wrap(wastesData).as('wastesData');

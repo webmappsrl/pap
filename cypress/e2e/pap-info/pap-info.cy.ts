@@ -6,7 +6,7 @@ beforeEach(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.wait(1000);
-  cy.visit('/info');
+  cy.visit(Cypress.env('baseurl') + '/info');
 });
 
 describe('pap-info: test the correct behaviour of page', () => {

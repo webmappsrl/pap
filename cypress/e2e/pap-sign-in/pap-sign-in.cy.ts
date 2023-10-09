@@ -7,7 +7,7 @@ describe('pap-sign-in: test the correct behaviour with wrong credentials', () =>
     cy.clearCookies();
     cy.clearLocalStorage();
     cy.wait(1000);
-    cy.visit('/');
+    cy.visit(Cypress.env('baseurl'));
   });
 
   it('should navigate to /sign-in when sign in button is clicked', () => {
@@ -46,7 +46,7 @@ describe('pap-sign-in: test the correct behaviour with correct credentials', () 
     cy.clearCookies();
     cy.clearLocalStorage();
     cy.wait(1000);
-    cy.visit('/');
+    cy.visit(Cypress.env('baseurl'));
     cy.intercept('POST', apiLogin).as('loginRequest');
   });
 

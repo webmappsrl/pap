@@ -9,7 +9,7 @@ beforeEach(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.wait(1000);
-  cy.visit('/');
+  cy.visit(Cypress.env('baseurl'));
 });
 
 describe('pap-home: test the correct presences of home buttons', () => {

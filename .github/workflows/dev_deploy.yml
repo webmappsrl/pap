@@ -4,32 +4,37 @@
 name: pap app
 
 on:
-  push:
-    branches: [develop]
-
+  pull_request:
+    types:
+      - opened
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.19.1]
+    env:
+      CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+      CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
+      CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm install
-      - uses: cypress-io/github-action@v6
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        with:
-          build: npm run build
-          start: npm start
         env:
           CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
           CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
+          CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
+        with:
+          build: npm run cy:run
+          config: baseurl=http://dev.app.portapporta.webmapp.it
+      - name: Archive Screenshots
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
   build:
     runs-on: ubuntu-latest
     strategy:

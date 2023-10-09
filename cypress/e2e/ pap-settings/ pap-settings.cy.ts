@@ -18,7 +18,7 @@ before(() => {
   cy.clearLocalStorage();
   cy.wait(1000);
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
-  cy.visit('/');
+  cy.visit(Cypress.env('baseurl'));
   cy.wait('@apiZonesGeoJsonCall').then(interception => {
     const apiZonesGeoJsonData = interception?.response?.body;
     cy.wrap(apiZonesGeoJsonData).as('apiZonesGeoJsonData');
