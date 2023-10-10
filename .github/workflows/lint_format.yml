@@ -2,8 +2,8 @@ name: Format and Lint Code
 on:
   push:
     branches:
-      - action-format
-
+      - main
+      - develop
 jobs:
   format-lint:
     runs-on: ubuntu-latest

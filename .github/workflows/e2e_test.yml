@@ -1,13 +1,11 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: e2e test
+name: pull_request_style_e2e_test
 
 on:
   pull_request:
     types:
       - opened
       - synchronize
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -18,18 +16,24 @@ jobs:
       CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
       CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
       CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --write **/*.{ts,md} --print-width 100  --single-quote true --quote-props preserve --no-bracket-spacing true --arrow-parens avoid --embedded-language-formatting off
+          only_changed: True
+          commit_message: 'style: format code'
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        env:
-          CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-          CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
-          CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
         with:
-          config: baseurl=http://dev.app.portapporta.webmapp.it
+          config: 'baseurl=http://dev.app.portapporta.webmapp.it'
           browser: chrome
+
       - name: Upload screenshots
         uses: actions/upload-artifact@v3
         if: failure()
