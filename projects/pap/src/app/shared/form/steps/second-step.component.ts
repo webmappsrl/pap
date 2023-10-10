@@ -60,6 +60,5 @@ export class secondStepSignupComponent {
   @Input() buttons = true;
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
 
-
   constructor(private _formProvider: FormProvider) {}
 }
