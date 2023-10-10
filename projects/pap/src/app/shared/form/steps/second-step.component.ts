@@ -56,10 +56,10 @@ import {FormProvider} from '../form-provider';
 })
 export class secondStepSignupComponent {
   @Input() buttons = true;
-  @Output() next: EventEmitter<void> = new EventEmitter<void>();
+       @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
 
-  secondStep: UntypedFormGroup = this._formProvider.getForm().get('secondStep') as UntypedFormGroup;
+   secondStep: UntypedFormGroup = this._formProvider.getForm().get('secondStep') as UntypedFormGroup;
 
   constructor(private _formProvider: FormProvider) {}
 }
