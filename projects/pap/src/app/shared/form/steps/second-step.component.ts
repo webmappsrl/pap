@@ -55,11 +55,11 @@ import {FormProvider} from '../form-provider';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class secondStepSignupComponent {
-  @Input() buttons = true;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
+  secondStep: UntypedFormGroup = this._formProvider.getForm().get('secondStep') as UntypedFormGroup;
+  @Input() buttons = true;
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
 
-  secondStep: UntypedFormGroup = this._formProvider.getForm().get('secondStep') as UntypedFormGroup;
 
   constructor(private _formProvider: FormProvider) {}
 }
