@@ -4,13 +4,10 @@ on:
   pull_request:
     types:
       - closed
-
 jobs:
   merge-release:
     if: startsWith(github.event.pull_request.head.ref, 'release-please')
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Merge to main
         run: |
@@ -19,6 +16,8 @@ jobs:
           git stash
           git merge --no-ff ${{ github.event.pull_request.head.ref }}
           git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Merge to develop
         run: |
           git checkout develop
@@ -26,3 +25,5 @@ jobs:
           git stash
           git merge --no-ff ${{ github.event.pull_request.head.ref }}
           git push origin develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
