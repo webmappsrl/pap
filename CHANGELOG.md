@@ -1,5 +1,12 @@
 # Changelog pap
 
+## [1.0.6](https://github.com/webmappsrl/pap/compare/v1.0.5...v1.0.6) (2023-10-12)
+
+
+### Miscellaneous
+
+* Merge develop branch into main on tag push ([2bf30e0](https://github.com/webmappsrl/pap/commit/2bf30e04a3b7ce272101cd26515f241b0391955f))
+
 ## [1.0.5](https://github.com/webmappsrl/pap/compare/v1.0.4...v1.0.5) (2023-10-12)
 
 
