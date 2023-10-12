@@ -1,20 +1,23 @@
-name: Action per PR chiusa creata da GitHub
+name: Merge develop to main on tag push
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    tags:
+      - 'v*'
+
 jobs:
-  merge-release:
-    if: startsWith(github.event.pull_request.head.ref, 'release-please')
+  merge-develop-to-main:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Merge to main
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Merge develop to main
         run: |
-          git pull origin main
           git checkout main
-          git stash
-          git merge --no-ff ${{ github.event.pull_request.head.ref }}
+          git pull origin main
+          git merge --no-ff develop
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
