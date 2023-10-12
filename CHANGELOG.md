@@ -1,5 +1,13 @@
 # Changelog pap
 
+## [1.0.3](https://github.com/webmappsrl/pap/compare/v1.0.2...v1.0.3) (2023-10-12)
+
+
+### Miscellaneous
+
+* Update release_please.yml and add release_please_deploy.yml ([100d6a9](https://github.com/webmappsrl/pap/commit/100d6a929751e73d1afd7ebe14badf83de643047))
+* Update release_please.yml workflow ([98b18ac](https://github.com/webmappsrl/pap/commit/98b18ac69b028f6f7f5f30c269b5b0505e502f53))
+
 ## [1.0.2](https://github.com/webmappsrl/pap/compare/v1.0.1...v1.0.2) (2023-10-09)
 
 
