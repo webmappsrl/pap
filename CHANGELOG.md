@@ -1,5 +1,12 @@
 # Changelog pap
 
+## [1.0.8](https://github.com/webmappsrl/pap/compare/v1.0.7...v1.0.8) (2023-10-12)
+
+
+### Miscellaneous
+
+* Update release_please_deploy workflow to merge develop to main on valid commit message ([6e771fa](https://github.com/webmappsrl/pap/commit/6e771fa3b711e0381abdff68aea534b0fef1d687))
+
 ## [1.0.7](https://github.com/webmappsrl/pap/compare/v1.0.6...v1.0.7) (2023-10-12)
 
 
