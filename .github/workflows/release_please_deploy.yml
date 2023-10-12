@@ -1,0 +1,28 @@
+name: Action per PR chiusa creata da GitHub
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  merge-release:
+    if: startsWith(github.event.pull_request.head.ref, 'release-please')
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Merge to main
+        run: |
+          git checkout main
+          git pull origin main
+          git stash
+          git merge --no-ff ${{ github.event.pull_request.head.ref }}
+          git push origin main
+      - name: Merge to develop
+        run: |
+          git checkout develop
+          git pull origin develop
+          git stash
+          git merge --no-ff ${{ github.event.pull_request.head.ref }}
+          git push origin develop
