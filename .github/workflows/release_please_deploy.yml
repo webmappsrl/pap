@@ -1,22 +1,30 @@
-name: Merge develop to main on tag push
+name: Merge develop to main on valid commit message
 
 on:
   push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+    branches:
+      - develop
+
 jobs:
   merge-develop-to-main:
+    if: startsWith(github.ref, 'refs/heads/develop')
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Merge develop to main
+      - name: Check commit message
         run: |
-          git checkout main
-          git pull origin main
-          git merge --no-ff develop
-          git push origin main
+          commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
+          if [[ $commit_message =~ ^release: [0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Valid commit message, merging to main."
+            git checkout main
+            git pull origin main
+            git merge --no-ff develop
+            git push origin main
+          else
+            echo "Invalid commit message, not merging."
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
