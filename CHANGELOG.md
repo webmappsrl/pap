@@ -1,5 +1,12 @@
 # Changelog pap
 
+## [1.0.4](https://github.com/webmappsrl/pap/compare/v1.0.3...v1.0.4) (2023-10-12)
+
+
+### Miscellaneous
+
+* Update release_please_deploy workflow ([09d482a](https://github.com/webmappsrl/pap/commit/09d482a9277f05a5eb630be1419463954d34d3bf))
+
 ## [1.0.3](https://github.com/webmappsrl/pap/compare/v1.0.2...v1.0.3) (2023-10-12)
 
 
