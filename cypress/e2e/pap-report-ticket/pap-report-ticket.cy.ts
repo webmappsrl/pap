@@ -1,4 +1,9 @@
-import {e2eLogin, getApiDateRange, hexToRgb} from 'cypress/utils/test-utils';
+import {
+  e2eLogin,
+  formatDateUsingPapDatePipe,
+  getApiDateRange,
+  hexToRgb,
+} from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
 import {TrashBookRow} from 'projects/pap/src/app/features/trash-book/trash-book-model';
 import {reportTicketForm} from 'projects/pap/src/app/shared/models/form.model';
@@ -11,40 +16,30 @@ const reportTicketoButton = servicesButtons.find(
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
 const {startDate, stopDate} = getApiDateRange();
 const apiCalendarWithDates = `${environment.api}/c/${environment.companyId}/calendar?start_date=${startDate}&stop_date=${stopDate}`;
-const skipBeforeEach = true;
+let calendarData: any;
 
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
+  cy.intercept('GET', apiCalendarWithDates).as('calendarWithDatesCall');
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@trashTypesCall').then(interception => {
-    const trashTypesData = interception?.response?.body;
-    cy.wrap(trashTypesData).as('trashTypesData');
-    cy.log(trashTypesData);
+    cy.wrap(interception?.response?.body).as('trashTypesData');
   });
   e2eLogin();
 });
 
-//TODO INTERCEPT CORRECTLY apiCalendarWithDates
-beforeEach(() => {
-  if (skipBeforeEach) {
-    return;
-  }
-  cy.intercept('GET', apiCalendarWithDates).as('calendarWithDatesCall');
-  cy.log(apiCalendarWithDates);
-  cy.wait('@calendarWithDatesCall').then(interception => {
-    const calendarWithDatesData = interception?.response?.body;
-    cy.wrap(calendarWithDatesData).as('calendarData');
-    cy.log(calendarWithDatesData);
-  });
-});
-
 describe('pap-report-ticket: test the correct behaviour of form at first step', () => {
-  it('should navigate correctly to report failure to collect', () => {
+  it('should navigate correctly to report failure to collect', function () {
     if (servicesButton && reportTicketoButton) {
+      cy.log(apiCalendarWithDates);
       cy.contains(servicesButton.label).click();
       cy.contains(reportTicketoButton.text).click();
+      cy.wait('@calendarWithDatesCall').then(xhr => {
+        calendarData = xhr?.response?.body;
+        cy.wrap(calendarData).as('calendarData');
+      });
     } else {
       throw new Error('Services button not found in homeButtons.');
     }
@@ -70,6 +65,17 @@ describe('pap-report-ticket: test the correct behaviour of form at second step',
       'include.text',
       'Questo campo è obbligatorio',
     );
+  });
+
+  it('should verify all addresses from the API response', function () {
+    if (calendarData && Array.isArray(calendarData.data)) {
+      calendarData.data.forEach((item: any) => {
+        const expectedAddress = item?.address?.address;
+        if (expectedAddress) {
+          cy.contains('ion-select-option', expectedAddress).should('exist');
+        }
+      });
+    }
   });
 
   it('should display the correct trash types color', function () {

@@ -87,19 +87,22 @@ export function papLang(value: string | {[lang: string]: string}): string {
 
 /**
  * Generates the start and stop date range for the API call.
- * The start date is 4 days prior to the current date, and the stop date is the current date.
+ * The start date is 15 days prior to the current date, and the stop date is the current date.
  *
  * @returns {Object} An object containing formatted startDate and stopDate strings.
  */
 export function getApiDateRange(): {startDate: string; stopDate: string} {
-  const today = new Date();
+  const today = new Date(); // Get the current date
   const startDate = new Date();
-  startDate.setDate(today.getDate() - 4);
-
+  startDate.setDate(today.getDate() - 14); // Subtract 14 days from the current date
+  // Helper function to format a date into "day-month-year" without leading zeros
   const formatDate = (date: Date): string => {
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // JavaScript month starts from 0 (0 = January, 11 = December)
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   };
-
+  // Return the formatted dates
   return {
     startDate: formatDate(startDate),
     stopDate: formatDate(today),
