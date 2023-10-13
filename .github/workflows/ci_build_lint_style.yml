@@ -1,4 +1,4 @@
-name: ci_build_lint
+name: ci_build_lint_style
 on:
   push:
     branches:
@@ -21,7 +21,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-
+      - name: Install Dependencies
+        run: npm install
+      - name: Run Angular Lint
+        run: ng lint
       - name: Prettify code
         uses: creyD/prettier_action@v4.3
         with:
