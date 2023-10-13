@@ -1,4 +1,4 @@
-name: Merge develop to main on valid commit message
+name: cd_open_release
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
       - name: Check commit message
         run: |
           commit_message=$(git log --format=%B -n 1 ${{ github.sha }})

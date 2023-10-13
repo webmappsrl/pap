@@ -1,4 +1,4 @@
-name: pull_request_style_e2e_test
+name: ci_pull_request_style_e2e_test
 
 on:
   pull_request:

@@ -1,4 +1,4 @@
-name: Format and Lint Code
+name: ci_build_lint
 on:
   push:
     branches:

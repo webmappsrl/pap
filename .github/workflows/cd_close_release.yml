@@ -1,4 +1,4 @@
-name: Make a release
+name: cd_close_release
 
 on:
   push:
