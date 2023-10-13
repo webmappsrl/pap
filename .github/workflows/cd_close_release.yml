@@ -2,21 +2,29 @@ name: cd_close_release
 
 on:
   push:
-    branches: [develop]
-
-permissions:
-  contents: write
-  pull-requests: write
+    branches:
+      - develop
 
 jobs:
-  release-please:
+  merge-develop-to-main:
+    if: startsWith(github.ref, 'refs/heads/develop')
     runs-on: ubuntu-latest
+
     steps:
-      # https://github.com/marketplace/actions/release-please-action
-      - uses: google-github-actions/release-please-action@v3
-        with:
-          release-type: node
-          package-name: release-please-action
-          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
-          pull-request-title-pattern: 'release: ${version}'
-          pull-request-header: ':robot: I have created a release. Changelog updated with this data:'
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check commit message
+        run: |
+          commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
+          if [[ $commit_message == *"release: "*([0-9]).*([0-9]).*([0-9]) ]]; then
+            echo "Valid commit message, merging to main."
+            git checkout main
+            git pull origin main
+            git merge --no-ff develop
+            git push origin main
+          else
+            echo "Invalid commit message, not merging."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
