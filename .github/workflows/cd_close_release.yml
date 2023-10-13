@@ -1,4 +1,4 @@
-name: cd_close_release
+name: cd_pr_close_release
 
 on:
   push:

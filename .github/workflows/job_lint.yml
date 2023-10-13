@@ -1,0 +1,23 @@
+name: job_lint
+on:
+  workflow_call:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Angular Lint
+        run: ng lint

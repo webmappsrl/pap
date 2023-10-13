@@ -1,0 +1,11 @@
+name: ci_build_format_lint
+on:
+  push:
+    branches:
+      - main
+      - develop
+jobs:
+  format:
+    uses: webmappsrl/pap/.github/workflows/job_format.yml@develop
+  lint:
+    uses: webmappsrl/pap/.github/workflows/job_lint.yml@develop

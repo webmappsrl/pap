@@ -1,9 +1,6 @@
-name: ci_build_format_lint
+name: job_format
 on:
-  push:
-    branches:
-      - main
-      - develop
+  workflow_call:
 jobs:
   format:
     runs-on: ubuntu-latest
@@ -23,22 +20,3 @@ jobs:
           prettier_options: --write **/*.{ts,md} --print-width 100  --single-quote --quote-props preserve --no-bracket-spacing --arrow-parens avoid --embedded-language-formatting off
           only_changed: True
           commit_message: 'style: format code'
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Run Angular Lint
-        run: ng lint

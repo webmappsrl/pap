@@ -1,41 +1,19 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: ci_test_deploy_dev
+name: ci_lint_test_deploy_dev
 
 on:
   push:
     branches: [develop]
 jobs:
+  lint:
+    uses: webmappsrl/pap/.github/workflows/job_lint.yml@develop
   test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.19.1]
-    env:
-      CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-      CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
-      CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        env:
-          CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-          CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
-          CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
-        with:
-          config: baseurl=http://dev.app.portapporta.webmapp.it
-          browser: chrome
-
-      - name: Upload screenshots
-        uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+    needs: lint # Questo assicura che 'test' sia dipendente dal job 'lint'
+    if: success()
+    uses: webmappsrl/pap/.github/workflows/job_test.yml@develop
+    secrets: inherit
   deploy_dev:
     runs-on: ubuntu-latest
     needs: test # Questo assicura che 'deploy_dev' sia dipendente dal job 'test'
