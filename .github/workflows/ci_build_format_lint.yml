@@ -35,8 +35,8 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
 
       - name: Run Angular Lint
         run: ng lint
