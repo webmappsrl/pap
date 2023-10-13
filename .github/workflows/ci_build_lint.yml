@@ -26,6 +26,6 @@ jobs:
         uses: creyD/prettier_action@v4.3
         with:
           # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{ts,md} --print-width 100  --single-quote true --quote-props preserve --no-bracket-spacing true --arrow-parens avoid --embedded-language-formatting off
+          prettier_options: --write **/*.{ts,md} --print-width 100  --single-quote --quote-props preserve --no-bracket-spacing --arrow-parens avoid --embedded-language-formatting off
           only_changed: True
           commit_message: 'style: format code'
