@@ -71,9 +71,9 @@ export const homeButtons = [
   },
   {
     label: 'Servizi',
-      svg: 'assets/icons/logo-call.svg',
-      url: 'ticket-reservation',
-          action: buttonAction.ACTION,
+    svg: 'assets/icons/logo-call.svg',
+    url: 'ticket-reservation',
+    action: buttonAction.ACTION,
     buttons: servicesButtons,
   },
   {
