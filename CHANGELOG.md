@@ -1,5 +1,24 @@
 # Changelog pap
 
+## [1.0.10](https://github.com/webmappsrl/pap/compare/v1.0.9...v1.0.10) (2023-10-18)
+
+
+### Bug Fixes
+
+* Update text for services button ([#22](https://github.com/webmappsrl/pap/issues/22)) ([d6a5c6f](https://github.com/webmappsrl/pap/commit/d6a5c6fa9bef5db8716d27bc7937e5a71f69b60b))
+
+
+### Miscellaneous
+
+* Rename workflow files and update job names ([1a847e4](https://github.com/webmappsrl/pap/commit/1a847e4f3dbaa1b1d8ccf205b73f2b5afbb2211b))
+* Rename workflow files for CI/CD pipeline ([8761f98](https://github.com/webmappsrl/pap/commit/8761f9888e1f0d3c25ff31057db60daa96e5ed75))
+* Update CI workflow to install Angular CLI globally ([e07bf57](https://github.com/webmappsrl/pap/commit/e07bf570cc28062acafab1508c2398f3e0c9601b))
+* Update CI workflow to install dependencies and run Angular lint ([c0437e9](https://github.com/webmappsrl/pap/commit/c0437e9a5d1ad63ff0279fea62d55a104db80a55))
+* Update CI workflows ([26ff466](https://github.com/webmappsrl/pap/commit/26ff4669ee5be3c7d0b73ce4f4653721fc453e36))
+* Update ci_test_deploy_dev.yml and add job_test.yml ([e1e4c1c](https://github.com/webmappsrl/pap/commit/e1e4c1cc4a78a5badd4b64415d61123166c517a1))
+* Update development server description ([#23](https://github.com/webmappsrl/pap/issues/23)) ([19c94aa](https://github.com/webmappsrl/pap/commit/19c94aa2eeee94aea9e059b337ec178f57a21004))
+* Update workflow names and descriptions ([173d8d2](https://github.com/webmappsrl/pap/commit/173d8d218b2ff8ac38f1f4447ce13c9baaf82487))
+
 ## [1.0.9](https://github.com/webmappsrl/pap/compare/v1.0.8...v1.0.9) (2023-10-12)
 
 
