@@ -36,7 +36,7 @@ export const servicesButtons = [
     },
   },
   {
-    text: 'Segnala mancato ritiro',
+          text: 'Segnala mancato ritiro',
     icon: 'alert-circle',
     data: {
       action: 'report-ticket',
@@ -44,7 +44,7 @@ export const servicesButtons = [
   },
   {
     text: 'Richiedi Informazioni',
-    icon: 'information-circle',
+          icon: 'information-circle',
     data: {
       action: 'info-ticket',
     },
@@ -58,13 +58,13 @@ export const servicesButtons = [
 export const homeButtons = [
   {
     label: environment.config.name,
-    img: 'assets/icons/logo.png',
+          img: 'assets/icons/logo.png',
     url: 'info',
     action: buttonAction.NAVIGATION,
   },
   {
     label: 'Centri raccolta',
-    icon: 'map',
+       icon: 'map',
     url: 'waste-center-collection',
     action: buttonAction.NAVIGATION,
     hideInMenu: true,
