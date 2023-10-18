@@ -5,7 +5,7 @@ name: ci_lint_test_deploy_dev
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
 jobs:
   lint:
     uses: webmappsrl/pap/.github/workflows/job_lint.yml@develop
