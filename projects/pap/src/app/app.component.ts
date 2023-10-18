@@ -34,9 +34,9 @@ export class AppComponent {
     this._store.dispatch(loadConfiniZone());
     this.noAddress$
       .pipe(
-        skip(1),
+          skip(1),
         take(1),
-        filter(f => f),
+          filter(f => f),
         switchMap(_ =>
           this._alertCtrl.create({
             cssClass: 'pap-alert',
@@ -52,8 +52,7 @@ export class AppComponent {
           }),
         ),
         switchMap(alert => {
-          alert.present();
-          return alert.onWillDismiss();
+          alert.present();return alert.onWillDismiss();
         }),
       )
       .subscribe(_ => {
