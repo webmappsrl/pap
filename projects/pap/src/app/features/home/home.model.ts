@@ -50,7 +50,7 @@ export const servicesButtons = [
     },
   },
   {
-    text: 'CHIUDI',
+    text: 'ESCI',
     role: 'cancel',
   },
 ];
