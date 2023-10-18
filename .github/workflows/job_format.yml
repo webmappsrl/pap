@@ -18,5 +18,5 @@ jobs:
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{ts,md} --print-width 100  --single-quote --quote-props preserve --no-bracket-spacing --arrow-parens avoid --embedded-language-formatting off
-          only_changed: True
+          only_changed: true
           commit_message: 'style: format code'
