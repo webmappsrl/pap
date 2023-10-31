@@ -77,8 +77,8 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
           .eq(index)
           .should('have.css', 'color', trashColorRgb);
       });
-      cy.get('.pap-calendar-current-zone-label').eq(0).should('have.text', addressZoneLabel);
-      cy.get('.pap-calendar-current-zone-label').eq(1).should('have.text', addressUserTypeLabel);
+      cy.get('.pap-calendar-current-zone-label').should('include.text', addressZoneLabel);
+      cy.get('ion-badge').should('include.text', addressUserTypeLabel);
 
       cy.get('.pap-calendar-trashlist').first().click();
       cy.get('pap-trash-book-type').should('exist');
