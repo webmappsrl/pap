@@ -29,6 +29,10 @@ export interface FeatureProperties {
 
 export interface UserType {
   id: number;
+  created_at: string;
+  updated_at: string;
+  company_id: number;
+  slug: string;
   label: {
     it: string;
     en: string;
