@@ -1,36 +1,43 @@
 <ng-container *ngIf="calendarView$|async as calendarView">
-  <ion-header>
+  <ion-header class="pap-calendar-header">
     <pap-header></pap-header>
+    <ion-item lines="none">
+      <ion-grid>
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col size="12" class="ion-text-center">
+            <h1 class="pap-calendar-title">Calendario</h1>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col size="12" class="ion-text-center">
+            <ion-select
+              placeholder="Select address"
+              (ionChange)="selectAddress($event)"
+              [value]="0"
+            >
+              <ion-select-option
+                [value]="idx"
+                *ngFor="let calendar of calendarView.calendars;let idx= index"
+                >{{calendar.address.address}}</ion-select-option
+              >
+            </ion-select>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="currentAddress$|async as addressView" class="ion-justify-content-between">
+          <ion-col size="auto">
+            <ion-badge>{{addressView?.address?.user_type?.label?.it}}</ion-badge>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-label class="pap-calendar-current-zone-label">
+              {{addressView?.address?.zone?.label}}</ion-label
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
   </ion-header>
   <ion-content padding class="pap-calendar">
     <ion-card>
-      <ion-card-header>
-        <ion-card-title>Calendario</ion-card-title>
-        <ion-label class="ion-text-wrap pap-calendar-info"
-          >Per tutte le informazioni non presenti nel calendario sottostante fare riferimento al
-          sito di Esa, clicca sul bottone "Vedi"</ion-label
-        >
-        <div class="pap-calendar-infobuttoncontainer">
-          <ion-button
-            class="pap-calendar-infobutton"
-            fill="outline"
-            shape="round"
-            (click)="openLink()"
-            >Vedi</ion-button
-          >
-        </div>
-
-        <ion-item lines="none">
-          <ion-select placeholder="Select address" (ionChange)="selectAddress($event)" [value]="0">
-            <ion-select-option
-              [value]="idx"
-              *ngFor="let calendar of calendarView.calendars;let idx= index"
-              >{{calendar.address.address}}</ion-select-option
-            >
-          </ion-select>
-        </ion-item>
-      </ion-card-header>
-
       <ion-list lines="full">
         <ng-container *ngIf="currentAddress$|async as currentAddress">
           <ion-item
@@ -80,6 +87,31 @@
         </ng-container>
       </ion-list>
     </ion-card>
+    <div class="pap-calendar-info-footer-content">
+      <ion-grid>
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col size="12" class="ion-text-center">
+            <ion-label class="ion-text-wrap pap-calendar-info">
+              Per tutte le informazioni non presenti nel calendario fare riferimento al sito di Esa,
+              clicca sul bottone "Vedi"
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col size="12" class="ion-text-center">
+            <div class="pap-calendar-infobuttoncontainer">
+              <ion-button
+                class="pap-calendar-infobutton"
+                fill="outline"
+                shape="round"
+                (click)="openLink()"
+                >Vedi</ion-button
+              >
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
   </ion-content>
   <ion-footer collapse="fade">
     <pap-footer></pap-footer>

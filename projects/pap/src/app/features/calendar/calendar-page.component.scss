@@ -1,8 +1,13 @@
 pap-calendar-page {
+  ion-header {
+    ion-row {
+      margin: -15px 0px -5px 0px;
+    }
+  }
   ion-list {
     overflow: auto;
     overflow-x: hidden !important;
-    max-height: calc(100% - 45%);
+    max-height: 99%;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -16,12 +21,12 @@ pap-calendar-page {
   }
   ion-card {
     display: flow;
-    height: calc(100% - 80px);
+    height: 70%;
   }
   ion-select {
-    font-size: 13px;
+    font-size: 20px;
+    width: 100%;
   }
-
   ion-select,
   ion-label {
     max-width: 100%;
@@ -55,14 +60,33 @@ pap-calendar-page {
       }
     }
   }
+  .pap-calendar-title {
+    margin: 5px 0px 0px 0px;
+  }
   .pap-calendar-weekday {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 800;
     font-style: italic;
     text-transform: uppercase;
-    color: var(--ion-color-medium);
+    color: var(--ion-color-primary);
   }
   .pap-calendar-time {
     color: var(--ion-color-medium);
+  }
+  .pap-calendar-info-footer-content {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .pap-calendar-day {
+    font-size: 50px;
+    color: var(--ion-color-primary);
+  }
+  .pap-calendar-month {
+    font-size: 20px;
+    color: var(--ion-color-primary);
+  }
+  .pap-calendar-current-zone-label {
+    color: var(--ion-color-primary) !important;
+    font-style: italic;
   }
 }

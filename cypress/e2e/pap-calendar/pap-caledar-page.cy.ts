@@ -54,6 +54,8 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
       const trashTypesColors = apiData[0].calendar[apiDate][0].trash_types.map(
         (trashType: TrashBookType) => trashType.color,
       );
+      const addressZoneLabel = apiData[0]?.address?.zone?.label;
+      const addressUserTypeLabel = apiData[0]?.address?.user_type?.label?.it;
 
       cy.get('ion-select').click();
       apiAddresses.forEach((addressObj: Address) => {
@@ -75,6 +77,8 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
           .eq(index)
           .should('have.css', 'color', trashColorRgb);
       });
+      cy.get('.pap-calendar-current-zone-label').should('include.text', addressZoneLabel);
+      cy.get('ion-badge').should('include.text', addressUserTypeLabel);
 
       cy.get('.pap-calendar-trashlist').first().click();
       cy.get('pap-trash-book-type').should('exist');
@@ -115,15 +119,18 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
   });
 
   it('should have the correct environment color for weekday and time', () => {
+    const primaryColorRegex = /--ion-color-primary: (\#\w+);/;
     const mediumColorRegex = /--ion-color-medium: (\#\w+);/;
-    const match = environment.config.resources.variables.match(mediumColorRegex);
-    const environmentMediumColor = match ? match[1] : null;
-    if (environmentMediumColor) {
+    const matchMedium = environment.config.resources.variables.match(mediumColorRegex);
+    const matchPrimary = environment.config.resources.variables.match(primaryColorRegex);
+    const environmentMediumColor = matchMedium ? matchMedium[1] : null;
+    const environmentPrimaryColor = matchPrimary ? matchPrimary[1] : null;
+    if (environmentMediumColor && environmentPrimaryColor) {
       cy.get('div.pap-calendar-time').should('have.css', 'color', hexToRgb(environmentMediumColor));
       cy.get('div.pap-calendar-weekday').should(
         'have.css',
         'color',
-        hexToRgb(environmentMediumColor),
+        hexToRgb(environmentPrimaryColor),
       );
     } else {
       throw new Error('Color not found in environment variables.');
