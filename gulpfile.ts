@@ -136,6 +136,19 @@ gulp.task('serve', async () => {
   await setAssets(config);
   await execCmd(`ionic serve`);
 });
+gulp.task('surge-deploy', async () => {
+  const companyId = args.id || null;
+  const paths: Paths = getPaths(companyId);
+  const config: Config = await getConfig(paths.apiUrl);
+
+  await setAssets(config);
+  await ionicPlathforms(config.resources);
+  await setEnvironment(paths, config);
+  await writeFile(paths.variablesConfigPath, config.resources.variables);
+  await writeFile(paths.devVariablesConfigPath, config.resources.variables);
+  await setAssets(config);
+  await ionicBuild('');
+});
 
 gulp.task('init', init);
 // Task predefinito
@@ -307,9 +320,9 @@ const createFolder = (path: string): Promise<void> => {
   });
 };
 
-const ionicBuild = (): Promise<void> => {
+const ionicBuild = (env = '--prod'): Promise<void> => {
   return new Promise(async (resolve, reject) => {
-    const cmd = `ionic  build --prod`;
+    const cmd = `ionic  build ${env}`;
     console.log(`EXEC: ${cmd}`);
     await exec(cmd, (error, stdout, stderr) => {
       if (error) {

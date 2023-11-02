@@ -1,8 +1,15 @@
-name: job_test
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: ci_lint_test_deploy_dev
+
 on:
-  workflow_call:
+  push:
+    branches: [develop]
 jobs:
-  deploy-dev:
+  lint:
+    uses: webmappsrl/pap/.github/workflows/job_lint.yml@develop
+  surge:
     if: ${{ always() }}
     name: deploy on surge
     runs-on: ubuntu-latest
@@ -28,43 +35,22 @@ jobs:
           EMAIL: ${{ secrets.PAP_EMAIL }}
           PASSWORD: ${{ secrets.PAP_PASSWORD }}
         run: npx gulp surge-deploy --id 4
-      - name: Deploy to dev.pap.surge.sh
+      - name: Deploy to esa.pap.surge.sh
         uses: dswistowski/surge-sh-action@v1
         with:
-          domain: 'dev.pap.surge.sh'
+          domain: 'esa.pap.surge.sh'
           project: 'dist/pap'
           login: ${{ secrets.SURGE_EMAIL }}
           token: ${{ secrets.SURGE_TOKEN }}
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.19.1]
-    env:
-      CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-      CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
-      CYPRESS_baseurl: http://dev.pap.surge.sh
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Run Gulp ERSU
+        env:
+          EMAIL: ${{ secrets.PAP_EMAIL }}
+          PASSWORD: ${{ secrets.PAP_PASSWORD }}
+        run: npx gulp surge-deploy --id 1
+      - name: Deploy to ersu.pap.surge.sh
+        uses: dswistowski/surge-sh-action@v1
         with:
-          node-version: 14
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          config: 'baseurl=http://dev.app.portapporta.webmapp.it'
-          browser: chrome
-
-      - name: Upload screenshots
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+          domain: 'ersu.pap.surge.sh'
+          project: 'dist/pap'
+          login: ${{ secrets.SURGE_EMAIL }}
+          token: ${{ secrets.SURGE_TOKEN }}
