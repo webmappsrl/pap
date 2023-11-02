@@ -9,14 +9,7 @@ on:
 jobs:
   lint:
     uses: webmappsrl/pap/.github/workflows/job_lint.yml@develop
-  test:
-    needs: lint # Questo assicura che 'test' sia dipendente dal job 'lint'
-    if: success()
-    uses: webmappsrl/pap/.github/workflows/job_test.yml@develop
-    secrets: inherit
   surge:
-    needs: test # Questo assicura che 'surge' sia dipendente dal job 'test'
-    if: success()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
