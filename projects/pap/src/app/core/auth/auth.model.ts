@@ -1,4 +1,4 @@
-import {UserType} from '../../shared/form/location/location.model';
+import {UserType, Zone} from '../../shared/form/location/location.model';
 
 export interface User {
   addresses: Address[];
@@ -37,20 +37,10 @@ export interface Address {
   location: string;
   updated_at: string;
   user_id: number;
-  user_type_id: number;
-  zone_id: number;
-  zone: Zone;
   user_type: UserType;
-}
-
-export interface Zone {
-  id: number;
-  created_at: string;
-  updated_at: string;
-  company_id: number;
-  comune: string;
-  label: string;
-  url: string;
+  user_type_id: number;
+  zone: Zone;
+  zone_id: number;
 }
 
 export interface LoginCredentials {

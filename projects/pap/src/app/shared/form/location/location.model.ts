@@ -28,15 +28,15 @@ export interface FeatureProperties {
 }
 
 export interface UserType {
-  id: number;
-  created_at: string;
-  updated_at: string;
   company_id: number;
-  slug: string;
+  created_at: string;
+  id: number;
   label: {
     it: string;
     en: string;
   };
+  slug: string;
+  updated_at: string;
 }
 
 export interface Geometry {
@@ -50,9 +50,16 @@ export interface AddressEvent {
 }
 
 export interface Zone {
+  company_id?: number;
+  comune?: string;
+  created_at?: string;
   geometry: ZoneGeometry;
+  id?: number;
+  label?: string;
   properties?: ZoneProperties;
   type: string;
+  updated_at?: string;
+  url?: string;
 }
 
 export interface ZoneProperties {
