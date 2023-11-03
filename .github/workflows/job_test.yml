@@ -82,6 +82,7 @@ jobs:
           CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
           CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
         with:
+          config: 'baseurl=http://${{env.DOMAIN_URL}}'
           browser: chrome
 
       - name: Upload screenshots
