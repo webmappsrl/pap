@@ -7,7 +7,7 @@ on:
         type: string
 env:
   DEPLOY_ID: 4
-  DOMAIN_URL: 'dev.pap.surge.sh'
+  DOMAIN_URL: 'http://dev.pap.surge.sh'
 jobs:
   deploy-dev:
     name: deploy on surge
@@ -65,6 +65,10 @@ jobs:
     strategy:
       matrix:
         node-version: [16.19.1]
+    env:
+      CYPRESS_baseurl: http://dev.pap.surge.sh
+      CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+      CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -77,10 +81,6 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        env:
-          CYPRESS_baseurl: ${{env.DOMAIN_URL}}
-          CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-          CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
         with:
           config: 'baseurl=http://${{env.DOMAIN_URL}}'
           browser: chrome
