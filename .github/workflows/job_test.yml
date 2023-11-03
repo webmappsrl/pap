@@ -65,7 +65,7 @@ jobs:
     env:
       CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
       CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
-      CYPRESS_baseurl: http://dev.pap.surge.sh
+      CYPRESS_baseurl: ${{ env.DOMAIN_NAME }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -81,7 +81,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          config: 'baseurl=http://dev.app.portapporta.webmapp.it'
+          config: 'baseurl=${{ env.DOMAIN_NAME }}'
           browser: chrome
 
       - name: Upload screenshots
