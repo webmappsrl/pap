@@ -1,5 +1,7 @@
 name: ci_pr_format__lint_test
 on:
+  push:
+    branches: [surge]
   pull_request:
     types:
       - opened
