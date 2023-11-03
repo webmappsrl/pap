@@ -29,23 +29,27 @@ before(() => {
   e2eLogin();
 });
 
-describe('pap-abandonment-ticket: test the correct behaviour of form at first step', () => {
-  it('should navigate correctly to report abandonment', () => {
-    if (servicesButton && abandonmentTicketButton) {
-      cy.contains(servicesButton.label).click();
-      cy.contains(abandonmentTicketButton.text).click();
-    } else {
-      throw new Error('Services button not found in homeButtons.');
-    }
-  });
+describe(
+  Cypress.env('baseurl') +
+    'pap-abandonment-ticket: test the correct behaviour of form at first step',
+  () => {
+    it('should navigate correctly to report abandonment', () => {
+      if (servicesButton && abandonmentTicketButton) {
+        cy.contains(servicesButton.label).click();
+        cy.contains(abandonmentTicketButton.text).click();
+      } else {
+        throw new Error('Services button not found in homeButtons.');
+      }
+    });
 
-  it('should display the correct ticket type, label and status back button should be hidden', () => {
-    cy.get('.pap-form-first-step').should('include.text', abandonmentTicketForm.label);
-    const expectedLabelText = abandonmentTicketForm.step[0].label;
-    cy.get('.pap-form-label-first-step').should('include.text', expectedLabelText);
-    cy.get('.pap-status-back-button').should('be.hidden');
-  });
-});
+    it('should display the correct ticket type, label and status back button should be hidden', () => {
+      cy.get('.pap-form-first-step').should('include.text', abandonmentTicketForm.label);
+      const expectedLabelText = abandonmentTicketForm.step[0].label;
+      cy.get('.pap-form-label-first-step').should('include.text', expectedLabelText);
+      cy.get('.pap-status-back-button').should('be.hidden');
+    });
+  },
+);
 
 describe('pap-abandonment-ticket: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no trash type selected', () => {
