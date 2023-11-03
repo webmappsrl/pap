@@ -8,6 +8,9 @@ pap-calendar-page {
     margin-top: 13px;
     font-size: 20px;
   }
+  ion-content {
+    overflow: unset !important;
+  }
   ion-list {
     overflow: auto;
     overflow-x: hidden !important;
@@ -26,7 +29,7 @@ pap-calendar-page {
   }
   ion-card {
     display: flow;
-    height: 75%;
+    height: 80%;
   }
   ion-label {
     max-width: 100%;
@@ -70,5 +73,13 @@ pap-calendar-page {
   }
   .pap-calendar-infobutton {
     width: 100%;
+  }
+  .inner-scroll {
+    overflow-y: hidden !important;
+  }
+  ion-content {
+    main.scroll-y {
+      overflow: unset !important;
+    }
   }
 }
