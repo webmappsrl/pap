@@ -5,6 +5,9 @@ on:
       branch_name:
         required: true
         type: string
+env:
+  DOMAIN_NAME: 'dev.pap.surge.sh'
+  DEPLOY_ID: 4
 jobs:
   deploy-dev:
     name: deploy on surge
@@ -14,20 +17,19 @@ jobs:
       - name: Set Domain Name
         id: setdomain
         run: |
-          if [ "${{ github.ref }}" == "refs/heads/develop" ]; then
-            echo "DOMAIN_NAME=dev.pap.surge.sh" >> $GITHUB_ENV
-          else
+          if [ "${{ github.ref }}" != "refs/heads/develop" ]; then
             BRANCH_NAME=$(echo ${{ github.ref }} | sed -e "s/refs\/heads\///" | sed -e "s/[^a-zA-Z0-9]/-/g")
             echo "DOMAIN_NAME=${BRANCH_NAME:0:4}.pap.surge.sh" >> $GITHUB_ENV
+          fi
       - name: Extract ID from commit message or use default
         id: extract_id
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)
-          ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+')
+          ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+') || echo "ID not found in commit message, using default."
           if [ -z "$ID" ]; then
-            ID=4
+            ID=$DEPLOY_ID
+            echo "DEPLOY_ID=$ID" >> $GITHUB_ENV
           fi
-          echo "DEPLOY_ID=$ID" >> $GITHUB_ENV
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -65,7 +67,6 @@ jobs:
     env:
       CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
       CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
-      CYPRESS_baseurl: ${{ env.DOMAIN_NAME }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
