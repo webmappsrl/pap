@@ -6,8 +6,6 @@ on:
         required: true
         type: string
 env:
-  DEPLOY_ID: 4
-  DOMAIN_URL: 'http://dev.pap.surge.sh'
 jobs:
   deploy-dev:
     name: deploy on surge
@@ -17,19 +15,20 @@ jobs:
       - name: Set Domain Name
         id: setdomain
         run: |
-          if [ "${{ github.ref }}" != "refs/heads/develop" ]; then
+          if [ "${{ github.ref }}" == "refs/heads/develop" ]; then
+            echo "DOMAIN_NAME=http://dev.pap.surge.sh" >> $GITHUB_ENV
+          else
             BRANCH_NAME=$(echo ${{ github.ref }} | sed -e "s/refs\/heads\///" | sed -e "s/[^a-zA-Z0-9]/-/g")
-            echo "DOMAIN_URL=${BRANCH_NAME:0:10}.pap.surge.sh" >> $GITHUB_ENV
-          fi
+            echo "DOMAIN_NAME=${BRANCH_NAME:0:4}.pap.surge.sh" >> $GITHUB_ENV
       - name: Extract ID from commit message or use default
         id: extract_id
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)
-          ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+') || echo "ID not found in commit message, using default."
+          ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+')
           if [ -z "$ID" ]; then
-            ID=$DEPLOY_ID
-            echo "DEPLOY_ID=$ID" >> $GITHUB_ENV
+            ID=4
           fi
+          echo "DEPLOY_ID=$ID" >> $GITHUB_ENV
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
