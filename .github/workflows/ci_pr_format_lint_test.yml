@@ -10,7 +10,7 @@ jobs:
   lint:
     uses: webmappsrl/pap/.github/workflows/job_lint.yml@develop
   test:
-    uses: webmappsrl/pap/.github/workflows/job_test.yml@surge
+    uses: webmappsrl/pap/.github/workflows/job_test.yml@surge-pr
     secrets: inherit
     with:
       branch_name: ${{ github.head_ref }}

@@ -1,74 +1,93 @@
 name: job_test
+
 on:
   workflow_call:
     inputs:
       branch_name:
         required: true
         type: string
+
 jobs:
   deploy-dev:
     name: deploy on surge
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Set Domain Name
-        id: setdomain
         run: |
-          if [ "${{ github.ref }}" == "refs/heads/develop" ]; then
+          if [ "${{ inputs.branch_name }}" == "develop" ]; then
             echo "DOMAIN_NAME=dev.pap.surge.sh" >> $GITHUB_ENV
           else
-            BRANCH_NAME=$(echo ${{ github.ref }} | sed -e "s/refs\/heads\///" | sed -e "s/[^a-zA-Z0-9]/-/g")
-            echo "DOMAIN_NAME=${BRANCH_NAME:0:4}.pap.surge.sh" >> $GITHUB_ENV
+            BRANCH_NAME=$(echo ${{ inputs.branch_name }} | sed -e "s/[^a-zA-Z0-9]/-/g")
+            DOMAIN_NAME="${BRANCH_NAME:0:4}.pap.surge.sh"
+            echo "DOMAIN_NAME=$DOMAIN_NAME" >> $GITHUB_ENV
+          fi
+        shell: bash
+
       - name: Extract ID from commit message or use default
-        id: extract_id
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)
-          ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+')
+          ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+') || echo "ID not found in commit message, using default."
           if [ -z "$ID" ]; then
             ID=4
           fi
           echo "DEPLOY_ID=$ID" >> $GITHUB_ENV
+        shell: bash
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x' # Sostituisci con la versione di Node.js che usi
+          node-version: '16.x'
           cache: 'npm'
+
       - name: Create .env file
         run: |
-          echo EMAIL = ${{ secrets.PAP_EMAIL }} >> .env
-          echo PASSWORD = ${{ secrets.PAP_PASSWORD }} >> .env
+          echo "EMAIL=${{ secrets.PAP_EMAIL }}" >> .env
+          echo "PASSWORD=${{ secrets.PAP_PASSWORD }}" >> .env
+        shell: bash
+
       - name: Create theme directory
-        run: |
-          mkdir -p projects/pap/src/theme
+        run: mkdir -p projects/pap/src/theme
+        shell: bash
+
       - name: Install Ionic CLI
         run: npm install -g @ionic/cli
+        shell: bash
+
       - run: npm install
-      - name: Run Gulp  ${{ env.DOMAIN_NAME }}
+        shell: bash
+
+      - name: Run Gulp with Domain Name
         env:
           EMAIL: ${{ secrets.PAP_EMAIL }}
           PASSWORD: ${{ secrets.PAP_PASSWORD }}
         run: npx gulp surge-deploy --id ${{ env.DEPLOY_ID }}
-      - name: Deploy to  ${{ env.DOMAIN_NAME }}
+        shell: bash
+
+      - name: Deploy to Surge
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: ${{ env.DOMAIN_NAME }}
           project: 'dist/pap'
           login: ${{ secrets.SURGE_EMAIL }}
           token: ${{ secrets.SURGE_TOKEN }}
+
       - name: Display Domain Name
-        run: echo "DOMAIN_NAME=${{ env.DOMAIN_NAME }}"
+        run: echo "Domain Name is ${{ env.DOMAIN_NAME }}"
+        shell: bash
+
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.19.1]
     env:
-      CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-      CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
+      CYPRESS_email: ${{ secrets.CYPRESS_EMAIL }}
+      CYPRESS_password: ${{ secrets.CYPRESS_PASSWORD }}
       CYPRESS_baseurl: ${{ env.DOMAIN_NAME }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -77,16 +96,17 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+        shell: bash
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          config: 'baseurl=${{ env.DOMAIN_NAME }}'
+          config: baseurl=${{ env.DOMAIN_NAME }}
           browser: chrome
 
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
         if: failure()
+        uses: actions/upload-artifact@v2
         with:
           name: cypress-screenshots
           path: cypress/screenshots
