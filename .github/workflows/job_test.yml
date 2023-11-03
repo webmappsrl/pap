@@ -65,7 +65,7 @@ jobs:
     env:
       CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
       CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
-      CYPRESS_baseurl: http://dev.pap.surge.sh
+      CYPRESS_baseurl: ${{ env.DOMAIN_NAME }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
