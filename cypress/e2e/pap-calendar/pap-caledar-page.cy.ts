@@ -57,12 +57,17 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
       const addressZoneLabel = apiData[0]?.address?.zone?.label;
       const addressUserTypeLabel = apiData[0]?.address?.user_type?.label?.it;
 
-      cy.get('ion-select').click();
+      cy.get('.pap-calendar-address-button').click();
       apiAddresses.forEach((addressObj: Address) => {
-        cy.get('ion-select-option').should('include.text', addressObj.address);
+        cy.log(addressObj.address);
+        cy.get(
+          'ion-popover > ion-list > ion-item > ion-grid > ion-row > ion-col > ion-label',
+        ).should('include.text', addressObj.address);
       });
+      cy.get('ion-popover > ion-list > ion-item > ion-grid > ion-row > ion-col > ion-label')
+        .first()
+        .click();
 
-      cy.get('.alert-button-role-cancel').click();
       cy.get('.pap-calendar-day').contains(formattedDay).should('exist');
       cy.get('.pap-calendar-month').contains(formattedMonth).should('exist');
       cy.get('.pap-calendar-weekday').contains(formattedWeekDay).should('exist');
