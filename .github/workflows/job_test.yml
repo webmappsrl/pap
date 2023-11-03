@@ -6,10 +6,8 @@ on:
         required: true
         type: string
 env:
-  CYPRESS_baseurl: 'dev.pap.surge.sh'
-  CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-  CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
   DEPLOY_ID: 4
+  DOMAIN_URL: 'dev.pap.surge.sh'
 jobs:
   deploy-dev:
     name: deploy on surge
@@ -21,7 +19,7 @@ jobs:
         run: |
           if [ "${{ github.ref }}" != "refs/heads/develop" ]; then
             BRANCH_NAME=$(echo ${{ github.ref }} | sed -e "s/refs\/heads\///" | sed -e "s/[^a-zA-Z0-9]/-/g")
-            echo "CYPRESS_baseurl=${BRANCH_NAME:0:10}.pap.surge.sh" >> $GITHUB_ENV
+            echo "DOMAIN_URL=${BRANCH_NAME:0:10}.pap.surge.sh" >> $GITHUB_ENV
           fi
       - name: Extract ID from commit message or use default
         id: extract_id
@@ -41,26 +39,33 @@ jobs:
         run: |
           echo EMAIL = ${{ secrets.PAP_EMAIL }} >> .env
           echo PASSWORD = ${{ secrets.PAP_PASSWORD }} >> .env
+      - name: Create cypress.env.json file
+        run: |
+          echo {  
+          echo    "baseurl": "${{env.DOMAIN_URL}}"
+          echo    "email": "${{secrets.CYPRESS_EMAIL}}"
+          echo    "password": "${{secrets.CYPRESS_PASSWORD}}"
+          echo }
       - name: Create theme directory
         run: |
           mkdir -p projects/pap/src/theme
       - name: Install Ionic CLI
         run: npm install -g @ionic/cli
       - run: npm install
-      - name: Run Gulp  ${{ env.CYPRESS_baseurl }}
+      - name: Run Gulp  ${{ env.DOMAIN_URL }}
         env:
           EMAIL: ${{ secrets.PAP_EMAIL }}
           PASSWORD: ${{ secrets.PAP_PASSWORD }}
         run: npx gulp surge-deploy --id ${{ env.DEPLOY_ID }}
-      - name: Deploy to  ${{ env.CYPRESS_baseurl }}
+      - name: Deploy to  ${{ env.DOMAIN_URL }}
         uses: dswistowski/surge-sh-action@v1
         with:
-          domain: ${{ env.CYPRESS_baseurl }}
+          domain: ${{ env.DOMAIN_URL }}
           project: 'dist/pap'
           login: ${{ secrets.SURGE_EMAIL }}
           token: ${{ secrets.SURGE_TOKEN }}
       - name: Display Domain Name
-        run: echo "DOMAIN_NAME=${{ env.CYPRESS_baseurl }}"
+        run: echo "DOMAIN_NAME=${{ env.DOMAIN_URL }}"
   test:
     runs-on: ubuntu-latest
     strategy:
