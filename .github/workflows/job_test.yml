@@ -12,22 +12,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Set Domain Name
-        id: setdomain
+        id: domain
         run: |
-          if [ "${{ github.ref }}" == "refs/heads/develop" ]; then
-            echo "DOMAIN_NAME=http://dev.pap.surge.sh" >> $GITHUB_ENV
+          if [ "${{ inputs.branch_name }}" == "develop" ]; then
+            DOMAIN_NAME="dev.pap.surge.sh"
           else
-            BRANCH_NAME=$(echo ${{ github.ref }} | sed -e "s/refs\/heads\///" | sed -e "s/[^a-zA-Z0-9]/-/g")
-            echo "DOMAIN_NAME=${BRANCH_NAME:0:4}.pap.surge.sh" >> $GITHUB_ENV
+            BRANCH_NAME=$(echo ${{ inputs.branch_name }} | sed -e "s/[^a-zA-Z0-9]/-/g")
+            DOMAIN_NAME="${BRANCH_NAME:0:4}.pap.surge.sh"
+          fi
+          echo "::set-output name=DOMAIN_NAME::$DOMAIN_NAME"
+        shell: bash
       - name: Extract ID from commit message or use default
-        id: extract_id
+        id: deploy_id
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)
-          ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+')
+          ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+') || echo "ID not found in commit message, using default."
           if [ -z "$ID" ]; then
             ID=4
           fi
-          echo "DEPLOY_ID=$ID" >> $GITHUB_ENV
+          echo "::set-output name=DEPLOY_ID::$ID"
+        shell: bash
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
