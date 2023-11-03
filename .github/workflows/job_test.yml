@@ -6,7 +6,9 @@ on:
         required: true
         type: string
 env:
-  DOMAIN_NAME: 'dev.pap.surge.sh'
+  CYPRESS_baseurl: 'dev.pap.surge.sh'
+  CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+  CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
   DEPLOY_ID: 4
 jobs:
   deploy-dev:
@@ -19,7 +21,7 @@ jobs:
         run: |
           if [ "${{ github.ref }}" != "refs/heads/develop" ]; then
             BRANCH_NAME=$(echo ${{ github.ref }} | sed -e "s/refs\/heads\///" | sed -e "s/[^a-zA-Z0-9]/-/g")
-            echo "DOMAIN_NAME=${BRANCH_NAME:0:4}.pap.surge.sh" >> $GITHUB_ENV
+            echo "CYPRESS_baseurl=${BRANCH_NAME:0:10}.pap.surge.sh" >> $GITHUB_ENV
           fi
       - name: Extract ID from commit message or use default
         id: extract_id
@@ -45,46 +47,39 @@ jobs:
       - name: Install Ionic CLI
         run: npm install -g @ionic/cli
       - run: npm install
-      - name: Run Gulp  ${{ env.DOMAIN_NAME }}
+      - name: Run Gulp  ${{ env.CYPRESS_baseurl }}
         env:
           EMAIL: ${{ secrets.PAP_EMAIL }}
           PASSWORD: ${{ secrets.PAP_PASSWORD }}
         run: npx gulp surge-deploy --id ${{ env.DEPLOY_ID }}
-      - name: Deploy to  ${{ env.DOMAIN_NAME }}
+      - name: Deploy to  ${{ env.CYPRESS_baseurl }}
         uses: dswistowski/surge-sh-action@v1
         with:
-          domain: ${{ env.DOMAIN_NAME }}
+          domain: ${{ env.CYPRESS_baseurl }}
           project: 'dist/pap'
           login: ${{ secrets.SURGE_EMAIL }}
           token: ${{ secrets.SURGE_TOKEN }}
       - name: Display Domain Name
-        run: echo "DOMAIN_NAME=${{ env.DOMAIN_NAME }}"
+        run: echo "DOMAIN_NAME=${{ env.CYPRESS_baseurl }}"
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.19.1]
-    env:
-      CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-      CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 14
-
       - name: Install Dependencies
         run: npm install
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          config: 'baseurl=${{ env.DOMAIN_NAME }}'
           browser: chrome
-
       - name: Upload screenshots
         uses: actions/upload-artifact@v2
         if: failure()
