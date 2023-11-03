@@ -65,10 +65,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16.19.1]
-    env:
-      CYPRESS_baseurl: http://dev.pap.surge.sh
-      CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-      CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -78,11 +75,13 @@ jobs:
           node-version: 14
       - name: Install Dependencies
         run: npm install
-
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_baseurl: ${{env.DOMAIN_URL}}
+          CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+          CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
         with:
-          config: 'baseurl=http://${{env.DOMAIN_URL}}'
           browser: chrome
 
       - name: Upload screenshots
