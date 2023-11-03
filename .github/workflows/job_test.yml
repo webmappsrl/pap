@@ -56,7 +56,7 @@ jobs:
           login: ${{ secrets.SURGE_EMAIL }}
           token: ${{ secrets.SURGE_TOKEN }}
       - name: Display Domain Name
-        run: echo "DOMAIN_NAME=${{ env.DOMAIN_NAME }}"
+        run: echo "PR DEV URL ==> ${{ env.DOMAIN_NAME }}"
   test:
     runs-on: ubuntu-latest
     strategy:
