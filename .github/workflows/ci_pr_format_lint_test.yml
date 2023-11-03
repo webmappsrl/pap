@@ -12,5 +12,3 @@ jobs:
   test:
     uses: webmappsrl/pap/.github/workflows/job_test.yml@develop
     secrets: inherit
-    with:
-      branch_name: ${{ github.head_ref }}
