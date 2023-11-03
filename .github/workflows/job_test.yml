@@ -39,13 +39,6 @@ jobs:
         run: |
           echo EMAIL = ${{ secrets.PAP_EMAIL }} >> .env
           echo PASSWORD = ${{ secrets.PAP_PASSWORD }} >> .env
-      - name: Create cypress.env.json file
-        run: |
-          echo {  >> .cypress.env.json
-          echo    "baseurl": "${{env.DOMAIN_URL}}"  >> .cypress.env.json
-          echo    "email": "${{secrets.CYPRESS_EMAIL}}"  >> .cypress.env.json
-          echo    "password": "${{secrets.CYPRESS_PASSWORD}}"  >> .cypress.env.json
-          echo }  >> .cypress.env.json
       - name: Create theme directory
         run: |
           mkdir -p projects/pap/src/theme
@@ -84,8 +77,13 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_baseurl: ${{env.DOMAIN_URL}}
+          CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+          CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
         with:
           browser: chrome
+
       - name: Upload screenshots
         uses: actions/upload-artifact@v2
         if: failure()
