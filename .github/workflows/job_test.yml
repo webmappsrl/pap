@@ -41,11 +41,11 @@ jobs:
           echo PASSWORD = ${{ secrets.PAP_PASSWORD }} >> .env
       - name: Create cypress.env.json file
         run: |
-          echo {  
-          echo    "baseurl": "${{env.DOMAIN_URL}}"
-          echo    "email": "${{secrets.CYPRESS_EMAIL}}"
-          echo    "password": "${{secrets.CYPRESS_PASSWORD}}"
-          echo }
+          echo {  >> .cypress.env.json
+          echo    "baseurl": "${{env.DOMAIN_URL}}"  >> .cypress.env.json
+          echo    "email": "${{secrets.CYPRESS_EMAIL}}"  >> .cypress.env.json
+          echo    "password": "${{secrets.CYPRESS_PASSWORD}}"  >> .cypress.env.json
+          echo }  >> .cypress.env.json
       - name: Create theme directory
         run: |
           mkdir -p projects/pap/src/theme
