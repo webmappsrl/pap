@@ -67,6 +67,7 @@ jobs:
       - name: Display Domain Name
         run: echo "DOMAIN_NAME=${{ env.DOMAIN_URL }}"
   test:
+    needs: deploy-dev
     runs-on: ubuntu-latest
     strategy:
       matrix:
