@@ -59,7 +59,7 @@ export const reducer = createReducer(
       user: action.user.data.user,
       isVerified: action.user.data.email_verified_at != null ? true : false,
       noAddress:
-        action.user.data.user.addresses == null || action.user.addresses.length === 0
+        action.user.data.user.addresses == null || action.user.addresses?.length === 0
           ? true
           : false,
       error: undefined,
