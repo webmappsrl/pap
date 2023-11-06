@@ -19,7 +19,7 @@ jobs:
       - name: Extract ID from commit message or use default
         id: extract_id
         run: |
-          COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           echo "Commit message: '$COMMIT_MESSAGE'"
           ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+') || echo "ID not found in commit message, using default."
           echo "Extracted ID: '$ID'"
