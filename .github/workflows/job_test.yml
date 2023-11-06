@@ -4,34 +4,80 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.19.1]
-    env:
-      CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
-      CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
-      CYPRESS_baseurl: http://dev.app.portapporta.webmapp.it
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
+      - name: Set Domain Name
+        run: |
+          if [ "${{ github.ref_name }}" == "develop" ]; then
+            echo "DOMAIN_NAME=dev.pap.surge.sh" >> $GITHUB_ENV
+          else
+            BRANCH_NAME=$(echo ${{ github.ref_name }} | sed -e "s/[^a-zA-Z0-9]/-/g")
+            DOMAIN_NAME="${BRANCH_NAME}.pap.surge.sh"
+            echo "DOMAIN_NAME=$DOMAIN_NAME" >> $GITHUB_ENV
+          fi
+      - name: Extract ID from commit message or use default
+        id: extract_id
+        run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:%s)
+          echo "Commit message: '$COMMIT_MESSAGE'"
+          ID=$(echo $COMMIT_MESSAGE | grep -oP '(?<=--id )\d+') || echo "ID not found in commit message, using default."
+          echo "Extracted ID: '$ID'"
+          if [[ -z "$ID" ]]; then
+            echo "No ID found in commit message, using default ID 4."
+            ID=4
+          else
+            echo "Found ID in commit message: $ID"
+          fi
+          echo "ID to use: $ID"
+          echo "DEPLOY_ID=$ID" >> $GITHUB_ENV
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14
-
+          node-version: 16
       - name: Install Dependencies
         run: npm install
-
+      - name: Create .env file
+        run: |
+          echo EMAIL = ${{ secrets.PAP_EMAIL }} >> .env
+          echo PASSWORD = ${{ secrets.PAP_PASSWORD }} >> .env
+      - name: Create theme directory
+        run: |
+          mkdir -p projects/pap/src/theme
+      - name: Install Ionic CLI
+        run: npm install -g @ionic/cli
+      - run: npm install
+      - name: Run Gulp
+        env:
+          EMAIL: ${{ secrets.PAP_EMAIL }}
+          PASSWORD: ${{ secrets.PAP_PASSWORD }}
+        run: npx gulp surge-deploy --id  ${{ env.DEPLOY_ID }}
+      - name: Deploy to ${{ env.DOMAIN_NAME }}
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          domain: ${{ env.DOMAIN_NAME }}
+          project: 'dist/pap'
+          login: ${{ secrets.SURGE_EMAIL }}
+          token: ${{ secrets.SURGE_TOKEN }}
+      - name: Add clickable domain name to summary
+        run: |
+          echo "[${{ env.DOMAIN_NAME }}](http://${{ env.DOMAIN_NAME }}) run with appCompanyID ${{ env.DEPLOY_ID }}">> $GITHUB_STEP_SUMMARY
+      - name: Start Server
+        run: nohup ionic serve > ionic-serve.log 2>&1 &
       - name: Cypress run
+        env:
+          CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+          CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
+          CYPRESS_baseurl: http://${{env.DOMAIN_NAME}}
+        if: success()
         uses: cypress-io/github-action@v6
         with:
-          config: 'baseurl=http://dev.app.portapporta.webmapp.it'
           browser: chrome
-
+          wait-on: http://${{env.DOMAIN_NAME}}
+          wait-on-timeout: 180
       - name: Upload screenshots
-        uses: actions/upload-artifact@v2
         if: failure()
+        uses: actions/upload-artifact@v2
         with:
           name: cypress-screenshots
           path: cypress/screenshots
