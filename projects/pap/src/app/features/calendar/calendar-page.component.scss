@@ -29,13 +29,18 @@ pap-calendar-page {
   }
   ion-card {
     display: flow;
-    height: 80%;
+    height: calc(100% - 55px);
   }
   ion-label {
     max-width: 100%;
     white-space: normal !important;
     overflow-wrap: break-word !important;
     color: var(--ion-color-light-contrast);
+  }
+  ion-content {
+    main.scroll-y {
+      overflow: unset !important;
+    }
   }
   .pap-calendar-title {
     margin: 5px 0px 0px 0px;
@@ -74,12 +79,10 @@ pap-calendar-page {
   .pap-calendar-infobutton {
     width: 100%;
   }
-  .inner-scroll {
-    overflow-y: hidden !important;
-  }
-  ion-content {
-    main.scroll-y {
-      overflow: unset !important;
-    }
+  .pap-calendar-infobutton-container {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 40px;
   }
 }

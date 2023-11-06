@@ -133,21 +133,21 @@
         </ng-container>
       </ion-list>
     </ion-card>
-    <ion-grid>
-      <ion-row class="ion-padding ion-align-items-center ion-justify-content-center">
-        <ion-col size="12" class="ion-text-center">
-          <ion-button
-            class="ion-text-wrap pap-calendar-infobutton"
-            expand="block"
-            fill="outline"
-            shape="round"
-            (click)="openLink()"
-            >Altre informazioni</ion-button
-          >
-        </ion-col>
-      </ion-row>
-    </ion-grid>
   </ion-content>
+  <ion-grid class="pap-calendar-infobutton-container">
+    <ion-row class="ion-padding ion-align-items-center ion-justify-content-center">
+      <ion-col size="12" class="ion-text-center">
+        <ion-button
+          class="ion-text-wrap pap-calendar-infobutton"
+          expand="block"
+          fill="outline"
+          shape="round"
+          (click)="openLink()"
+          >Altre informazioni</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-footer collapse="fade">
     <pap-footer></pap-footer>
   </ion-footer>
