@@ -100,37 +100,32 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
   });
 
   it('should click on a random position on the pap-map and verify address', () => {
-    cy.wait(1000); //TODO manage waiting time without wait
-    //Start intercepting requests to Nominatim
+    cy.wait(1000); //TODO manage waiting without wait
+    // Start intercepting requests to Nominatim
     cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
-    //Perform the random click on the map as intended
-    cy.get('pap-map').then($map => {
+    // Perform the click on the center of the map
+    cy.get('pap-form-location').then($map => {
       const width = $map.width();
       const height = $map.height();
       if (width && height) {
-        //Find the center of the element
+        // Find the center of the element
         const centerX = width / 2;
         const centerY = height / 2;
-        //Determine the random offset. For example, within a range of +/- 10 pixels from the center.
-        const maxOffset = 10;
-        const offsetX = Math.floor(Math.random() * (2 * maxOffset + 1)) - maxOffset;
-        const offsetY = Math.floor(Math.random() * (2 * maxOffset + 1)) - maxOffset;
-        //Calculate the click coordinates
-        const clickX = centerX + offsetX;
-        const clickY = centerY + offsetY;
-        cy.wrap($map).click(clickX, clickY);
+        // Click on the center of the map
+        cy.wait(1000);
+        cy.wrap($map).click(centerX, centerY);
       }
     });
-    //Wait for the request to Nominatim to be made
+    // Wait for the request to Nominatim to be made
     cy.wait('@nominatimRequest').then(interception => {
       const url = new URL(interception.request.url);
       const lat = url.searchParams.get('lat');
       const lon = url.searchParams.get('lon');
-      //Now you have the coordinates in `lat` and `lon`
-      //Make a new request to Nominatim to get the `display_name`
-      //and then check that the `ion-textarea` element contains that value
+      // Now you have the coordinates in `lat` and `lon`
+      // Make a new request to Nominatim to get the `display_name`
+      // and then check that the `ion-textarea` element contains that value
       cy.request(
-        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=it`,
+        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
       ).then(response => {
         // const nominatimDisplayName = response.body.display_name;
         cy.get('pap-form-location ion-item ion-textarea').should('not.be.empty');
