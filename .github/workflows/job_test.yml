@@ -27,7 +27,7 @@ jobs:
             echo "No ID found in commit message, using default ID 4."
             ID=4
           else
-            echo "Found ID in commit message: $ID"
+            echo "Found ID in commit message:$ID"
           fi
           echo "ID to use: $ID"
           echo "DEPLOY_ID=$ID" >> $GITHUB_ENV
