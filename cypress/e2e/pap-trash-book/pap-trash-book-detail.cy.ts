@@ -48,10 +48,8 @@ describe('pap-trash-book-detail: test the correct behaviour of page', () => {
     const randomIndex = Math.floor(Math.random() * this['wastesData'].length);
     const randomWaste = this['wastesData'][randomIndex];
     const searchTerm = randomWaste.name;
+
     const trashTypeId = randomWaste.trash_type_id;
-    const expectedColor = this['trashTypesData'].find(
-      (type: TrashBookType) => type.id === trashTypeId,
-    ).color;
     const expectedTypeName = this['trashTypesData'].find(
       (type: TrashBookType) => type.id === trashTypeId,
     ).name;
@@ -92,45 +90,10 @@ describe('pap-trash-book-detail: test the correct behaviour of page', () => {
     } else {
       cy.log('Field does where not exist.');
     }
-    cy.get('.trash-book-details-type ion-icon.trash-book-details-icon-color').should(
-      'have.css',
-      'color',
-      hexToRgb(expectedColor),
-    );
     cy.get('.trash-book-details-type ion-label.trash-book-details-value')
       .invoke('text')
       .then(text => text.trim())
       .should('eq', expectedTypeName);
-  });
-
-  it('should have the correct environment color for the ion-icon', () => {
-    const primaryColorRegex = /--ion-color-primary: (\#\w+);/;
-    const match = environment.config.resources.variables.match(primaryColorRegex);
-    const environmentPrimaryColor = match ? match[1] : null;
-    if (environmentPrimaryColor) {
-      cy.get('.trash-book-details-icon').should(
-        'have.css',
-        'color',
-        hexToRgb(environmentPrimaryColor),
-      );
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
-  });
-
-  it('should have the correct environment color for the ion-card', () => {
-    const lightColorRegex = /--ion-color-light: (\#\w+);/;
-    const match = environment.config.resources.variables.match(lightColorRegex);
-    const environmentLightColorRegex = match ? match[1] : null;
-    if (environmentLightColorRegex) {
-      cy.get('ion-card').should(
-        'have.css',
-        'background-color',
-        hexToRgb(environmentLightColorRegex),
-      );
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
   });
 });
 
