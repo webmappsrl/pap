@@ -63,11 +63,10 @@ export const homeButtons = [
     action: buttonAction.NAVIGATION,
   },
   {
-    label: 'Centri raccolta',
-    icon: 'map',
-    url: 'waste-center-collection',
+    label: 'Calendario',
+    icon: 'calendar',
+    url: 'calendar',
     action: buttonAction.NAVIGATION,
-    hideInMenu: true,
   },
   {
     label: 'Servizi',
@@ -77,15 +76,22 @@ export const homeButtons = [
     buttons: servicesButtons,
   },
   {
-    label: 'Calendari',
-    icon: 'calendar',
-    url: 'calendar',
-    action: buttonAction.NAVIGATION,
-  },
-  {
     label: 'I miei ticket',
     icon: 'archive',
     url: 'reports',
+    action: buttonAction.NAVIGATION,
+  },
+  {
+    label: 'Centri raccolta',
+    icon: 'map',
+    url: 'waste-center-collection',
+    action: buttonAction.NAVIGATION,
+    hideInMenu: true,
+  },
+  {
+    label: 'Rifiutario',
+    icon: 'document-text',
+    url: 'trashbook',
     action: buttonAction.NAVIGATION,
   },
   {
@@ -93,12 +99,6 @@ export const homeButtons = [
     url: 'notification',
     action: buttonAction.NAVIGATION,
     hideInHome: true,
-  },
-  {
-    label: 'Rifiutario',
-    icon: 'document-text',
-    url: 'trashbook',
-    action: buttonAction.NAVIGATION,
   },
   {
     label: 'Impostazioni',
