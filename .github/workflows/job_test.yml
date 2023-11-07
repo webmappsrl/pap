@@ -25,7 +25,7 @@ jobs:
           echo "Extracted ID: '$ID'"
           if [[ -z "$ID" ]]; then
             echo "No ID found in commit message, using default ID 4."
-            ID=4
+            ID=1
           else
             echo "Found ID in commit message: $ID"
           fi
