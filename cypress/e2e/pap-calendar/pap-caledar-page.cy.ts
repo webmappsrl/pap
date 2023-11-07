@@ -4,7 +4,7 @@ import {environment} from 'projects/pap/src/environments/environment';
 import {Address} from 'cluster';
 import {e2eLogin, formatDateUsingPapDatePipe, hexToRgb} from 'cypress/utils/test-utils';
 
-const calendarsButton = homeButtons.find(button => button.label === 'Calendari');
+const calendarsButton = homeButtons.find(button => button.label === 'Calendario');
 const apiCalendar = `${environment.api}/c/${environment.companyId}/calendar`;
 
 before(() => {
