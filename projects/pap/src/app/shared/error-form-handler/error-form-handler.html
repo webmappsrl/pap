@@ -8,5 +8,8 @@
     <ion-label color="danger" *ngIf="err.key === 'confirmedValidator'">
       Questo campo deve essere ugale al campo password
     </ion-label>
+    <ion-label color="danger" *ngIf="err.key === 'pattern'">
+      Numero di telefono non valido
+    </ion-label>
   </ng-container>
 </ion-list>

@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {environment} from 'projects/pap/src/environments/environment';
 import {TicketFormConf, ticketReservationForm} from '../../shared/models/form.model';
 
 @Component({

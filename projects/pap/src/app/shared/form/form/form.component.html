@@ -23,20 +23,11 @@
 
             <ng-template #otherSteps>
               <ion-label class="pap-form-label" *ngIf="currentStep.label != null">
-                {{ currentStep.label }}
+                {{ currentStep.label }} {{currentStep.required?'*':''}}
               </ion-label>
               <br />
             </ng-template>
 
-            <ion-input
-              *ngIf="['text','phone'].includes(currentStep.type)"
-              #focusInput
-              class="pap-form-input"
-              [type]="currentStep.type|inputType"
-              [pattern]="currentStep.type|inputPattern"
-              [formControlName]="currentStep.type"
-            >
-            </ion-input>
             <ion-textarea
               *ngIf="['note'].includes(currentStep.type)"
               #focusInput
@@ -47,6 +38,25 @@
               [formControlName]="currentStep.type"
             ></ion-textarea>
             <ng-container [ngSwitch]="currentStep.type">
+              <ion-input
+                *ngSwitchCase="'text'"
+                #focusInput
+                class="pap-form-input"
+                [type]="currentStep.type|inputType"
+                [pattern]="currentStep.type|inputPattern"
+                [formControlName]="currentStep.type"
+              >
+              </ion-input>
+              <ion-input
+                *ngSwitchCase="'phone'"
+                #focusInput
+                class="pap-form-input"
+                pattern="^[789]\d{9,9}$"
+                [type]="currentStep.type|inputType"
+                [pattern]="currentStep.type|inputPattern"
+                [formControlName]="currentStep.type"
+              >
+              </ion-input>
               <div *ngSwitchCase="'switch'" class="pap-form-toggle">
                 <ion-toggle block name="toggle" [checked]="currentStep.value"> </ion-toggle>
               </div>
