@@ -39,10 +39,10 @@
         ></pap-error-form-handler>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Codice Utenza</ion-label>
+        <ion-label position="stacked">Codice Utenza/TARI</ion-label>
         <ion-input
           formControlName="user_code"
-          placeholder="Inserire il codice utente"
+          placeholder="Inserire il codice Utenza/TARI"
           [disabled]="disable.indexOf('user_code')> -1"
         >
         </ion-input>
@@ -53,11 +53,12 @@
         ></pap-error-form-handler>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Codice Fiscale</ion-label>
+        <ion-label position="stacked">Codice fiscale dell'intestatario della bolletta</ion-label>
         <ion-input
           formControlName="fiscal_code"
           placeholder="Inserire il codice fiscale"
           [disabled]="disable.indexOf('fiscal_code')> -1"
+          class="ion-text-wrap"
         >
         </ion-input>
       </ion-item>
