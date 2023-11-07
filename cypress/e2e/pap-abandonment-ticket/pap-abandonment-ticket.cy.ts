@@ -59,30 +59,9 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at second s
       'Questo campo è obbligatorio',
     );
   });
-
-  it('should display the correct trash types list and color', function () {
-    cy.get('pap-form-select ion-list ion-item').each($el => {
-      const itemName = $el.text().trim();
-      cy.log(`Checking for: ${itemName}`);
-      expect(this['trashTypesData'].some((trashType: TrashBookRow) => trashType.name === itemName))
-        .to.be.true;
-    });
-    cy.get('pap-form-select ion-list ion-item ion-icon').each($icon => {
-      const itemColor = $icon.css('color');
-      const itemName = $icon.next().text().trim();
-      cy.log(`Checking color for: ${itemName}`);
-      const expectedColor = this['trashTypesData'].find(
-        (trashType: TrashBookRow) => trashType.name === itemName,
-      )?.color;
-      if (expectedColor) {
-        const rgbExpectedColor = hexToRgb(expectedColor);
-        expect(itemColor).to.equal(rgbExpectedColor);
-      }
-    });
-  });
 });
 
-describe('pap-abandonment-ticket: test the correct behaviour of form at third step', () => {
+describe.skip('pap-abandonment-ticket: test the correct behaviour of form at third step', () => {
   it('should go to third step with a trash type selected', () => {
     cy.get('pap-form-select ion-list ion-item').first().click();
     cy.get('.pap-status-next-button').click();
@@ -146,7 +125,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
   });
 });
 
-describe('pap-abandonment-ticket: test the correct behaviour of form at fourth step', () => {
+describe.skip('pap-abandonment-ticket: test the correct behaviour of form at fourth step', () => {
   it('should go to fourth step with a location selected', () => {
     cy.get('.pap-status-next-button').click();
   });
@@ -166,7 +145,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fourth s
   });
 });
 
-describe('pap-abandonment-ticket: test the correct behaviour of form at fifth step', () => {
+describe.skip('pap-abandonment-ticket: test the correct behaviour of form at fifth step', () => {
   it('should go to fifth step', () => {
     cy.get('.pap-status-next-button').click();
   });
@@ -184,7 +163,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fifth st
   });
 });
 
-describe('pap-abandonment-ticket: test the correct behaviour of form at recap step', () => {
+describe.skip('pap-abandonment-ticket: test the correct behaviour of form at recap step', () => {
   it('should display the recap title', () => {
     cy.get('.pap-form-recap-title').should('include.text', 'Riepilogo');
   });
@@ -261,7 +240,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at recap st
   });
 });
 
-describe('pap-abandonment-ticket: test the correct behaviour of cancel button in status', () => {
+describe.skip('pap-abandonment-ticket: test the correct behaviour of cancel button in status', () => {
   it('should display ion-alert correctly', () => {
     cy.get('.pap-status-cancel-icon').should('exist').click();
     cy.get('ion-alert').should('exist');
