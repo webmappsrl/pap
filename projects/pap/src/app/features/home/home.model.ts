@@ -63,7 +63,7 @@ export const homeButtons = [
     action: buttonAction.NAVIGATION,
   },
   {
-    label: 'Calendario',
+    label: 'Calendari',
     icon: 'calendar',
     url: 'calendar',
     action: buttonAction.NAVIGATION,
