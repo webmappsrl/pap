@@ -165,9 +165,11 @@ export class AuthEffects {
       ofType(AuthActions.UpdateUser),
       switchMap(action =>
         this._authSvc.update(action.updates).pipe(
-          map(user => {
-            this._alertEVT.emit(SUCESSFULLY_UPDATE);
-            return AuthActions.UpdateUserSuccess({user});
+          map((res: any) => {
+            if (res.message != 'phone_number: changed successfully.') {
+              this._alertEVT.emit(SUCESSFULLY_UPDATE);
+            }
+            return AuthActions.UpdateUserSuccess({user: res});
           }),
           catchError(error => {
             return of(AuthActions.UpdateUserFailure({error}));
