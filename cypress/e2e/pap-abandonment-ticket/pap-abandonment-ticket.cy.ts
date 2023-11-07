@@ -159,6 +159,10 @@ describe.skip('pap-abandonment-ticket: test the correct behaviour of form at fif
 
   it('should write a text into text area and go to recap', () => {
     cy.get('ion-textarea').type('this is a text for e2e test by Rubens');
+    cy.get('.pap-status-next-button').click();
+  });
+  it('should write a text into text area and go to recap', () => {
+    cy.get('ion-input').type('356273894');
     cy.get('.pap-status-checkmark-button').should('exist').click();
   });
 });
