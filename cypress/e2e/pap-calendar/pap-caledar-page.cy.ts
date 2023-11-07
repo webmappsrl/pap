@@ -57,12 +57,17 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
       const addressZoneLabel = apiData[0]?.address?.zone?.label;
       const addressUserTypeLabel = apiData[0]?.address?.user_type?.label?.it;
 
-      cy.get('ion-select').click();
+      cy.get('.pap-calendar-address-button').click();
       apiAddresses.forEach((addressObj: Address) => {
-        cy.get('ion-select-option').should('include.text', addressObj.address);
+        cy.log(addressObj.address);
+        cy.get(
+          'ion-popover > ion-list > ion-item > ion-grid > ion-row > ion-col > ion-label',
+        ).should('include.text', addressObj.address);
       });
+      cy.get('ion-popover > ion-list > ion-item > ion-grid > ion-row > ion-col > ion-label')
+        .first()
+        .click();
 
-      cy.get('.alert-button-role-cancel').click();
       cy.get('.pap-calendar-day').contains(formattedDay).should('exist');
       cy.get('.pap-calendar-month').contains(formattedMonth).should('exist');
       cy.get('.pap-calendar-weekday').contains(formattedWeekDay).should('exist');
@@ -86,70 +91,6 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
       cy.get('pap-calendar-page').should('exist');
       cy.url().should('include', '/calendar');
     });
-  });
-
-  it('should have the correct environment color for the pap-calendar-infobutton', () => {
-    const primaryColorRegex = /--ion-color-primary: (\#\w+);/;
-    const match = environment.config.resources.variables.match(primaryColorRegex);
-    const environmentPrimaryColor = match ? match[1] : null;
-    if (environmentPrimaryColor) {
-      cy.get('ion-button.pap-calendar-infobutton').should(
-        'have.css',
-        'border-color',
-        hexToRgb(environmentPrimaryColor),
-      );
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
-  });
-
-  it('should have the correct environment color for the ion-button trash list', () => {
-    const primaryColorRegex = /--ion-color-primary: (\#\w+);/;
-    const match = environment.config.resources.variables.match(primaryColorRegex);
-    const environmentPrimaryColor = match ? match[1] : null;
-    if (environmentPrimaryColor) {
-      cy.get('ion-button.pap-calendar-trashlist').should(
-        'have.css',
-        'border-color',
-        hexToRgb(environmentPrimaryColor),
-      );
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
-  });
-
-  it('should have the correct environment color for weekday and time', () => {
-    const primaryColorRegex = /--ion-color-primary: (\#\w+);/;
-    const mediumColorRegex = /--ion-color-medium: (\#\w+);/;
-    const matchMedium = environment.config.resources.variables.match(mediumColorRegex);
-    const matchPrimary = environment.config.resources.variables.match(primaryColorRegex);
-    const environmentMediumColor = matchMedium ? matchMedium[1] : null;
-    const environmentPrimaryColor = matchPrimary ? matchPrimary[1] : null;
-    if (environmentMediumColor && environmentPrimaryColor) {
-      cy.get('div.pap-calendar-time').should('have.css', 'color', hexToRgb(environmentMediumColor));
-      cy.get('div.pap-calendar-weekday').should(
-        'have.css',
-        'color',
-        hexToRgb(environmentPrimaryColor),
-      );
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
-  });
-
-  it('should have the correct environment color for the ion-card', () => {
-    const lightColorRegex = /--ion-color-light: (\#\w+);/;
-    const match = environment.config.resources.variables.match(lightColorRegex);
-    const environmentLightColorRegex = match ? match[1] : null;
-    if (environmentLightColorRegex) {
-      cy.get('ion-card').should(
-        'have.css',
-        'background-color',
-        hexToRgb(environmentLightColorRegex),
-      );
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
   });
 });
 

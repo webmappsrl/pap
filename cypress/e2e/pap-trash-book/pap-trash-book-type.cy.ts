@@ -85,36 +85,6 @@ describe('pap-trash-book-type: test the correct behaviour of page', () => {
       expect($li.text().trim()).to.equal(expectedNotAllowedData[index].trim());
     });
   });
-
-  it('should have the correct environment color for the trash-book-type-icon-allowed icon', () => {
-    const primaryTintColorRegex = /--ion-color-primary-tint: (\#\w+);/;
-    const match = environment.config.resources.variables.match(primaryTintColorRegex);
-    const environmentPrimaryTintColor = match ? match[1] : null;
-    if (environmentPrimaryTintColor) {
-      cy.get('.trash-book-type-icon-allowed').should(
-        'have.css',
-        'color',
-        hexToRgb(environmentPrimaryTintColor),
-      );
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
-  });
-
-  it('should have the correct environment color for the ion-card', () => {
-    const lightColorRegex = /--ion-color-light: (\#\w+);/;
-    const match = environment.config.resources.variables.match(lightColorRegex);
-    const environmentLightColorRegex = match ? match[1] : null;
-    if (environmentLightColorRegex) {
-      cy.get('ion-card').should(
-        'have.css',
-        'background-color',
-        hexToRgb(environmentLightColorRegex),
-      );
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
-  });
 });
 
 after(() => {

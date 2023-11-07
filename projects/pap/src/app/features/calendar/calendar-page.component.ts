@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 import {ModalController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
@@ -22,6 +22,8 @@ import {selectCalendarState} from './state/calendar.selectors';
 export class CalendarPageComponent {
   calendarView$ = this._store.pipe(select(selectCalendarState));
   currentAddress$: BehaviorSubject<Calendar | null> = new BehaviorSubject<Calendar | null>(null);
+  @ViewChild('popover') popover: any;
+  isOpen = false;
 
   constructor(
     private _store: Store<AppState>,
@@ -53,16 +55,21 @@ export class CalendarPageComponent {
     this._inAppBrowser.create('https://www.esaspa.it/cittadini/calendario-pap');
   }
 
-  selectAddress(event: Event): void {
-    const ionChangeEvent = event as CustomEvent<{value: number}>;
+  presentPopover(e: Event) {
+    this.popover.event = e;
+    this.isOpen = true;
+  }
+
+  selectPopoverAddress(index: number) {
     this.calendarView$
       .pipe(
         filter(f => f != null),
         take(1),
       )
       .subscribe(calendarView => {
-        if (calendarView != null && calendarView.calendars != null) {
-          this.currentAddress$.next(calendarView.calendars[ionChangeEvent.detail.value]);
+        if (calendarView && calendarView.calendars) {
+          this.currentAddress$.next(calendarView.calendars[index]);
+          this.isOpen = false;
         }
       });
   }

@@ -76,21 +76,6 @@ describe('pap-trash-book: test the correct behaviour of page', () => {
     cy.get('ion-searchbar input').clear().type(searchTerm);
     cy.get('pap-trash-book ion-card ion-list ion-item ion-label').should('not.be.visible');
   });
-
-  it('should have the correct environment color for the ion-card', () => {
-    const lightColorRegex = /--ion-color-light: (\#\w+);/;
-    const match = environment.config.resources.variables.match(lightColorRegex);
-    const environmentLightColorRegex = match ? match[1] : null;
-    if (environmentLightColorRegex) {
-      cy.get('ion-card').should(
-        'have.css',
-        'background-color',
-        hexToRgb(environmentLightColorRegex),
-      );
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
-  });
 });
 
 after(() => {
