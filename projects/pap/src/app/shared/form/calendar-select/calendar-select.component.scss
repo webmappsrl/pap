@@ -9,4 +9,16 @@ pap-form-calendar-select {
       display: contents;
     }
   }
+  ion-badge {
+    margin-top: 13px;
+    font-size: 20px;
+  }
+  .pap-calendar-day {
+    font-size: 50px;
+    color: var(--ion-color-primary);
+  }
+  .pap-calendar-month {
+    font-size: 20px;
+    color: var(--ion-color-primary);
+  }
 }

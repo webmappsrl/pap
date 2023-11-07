@@ -5,9 +5,13 @@ import {it} from 'date-fns/locale';
   name: 'papDate',
 })
 export class PapDatePipe implements PipeTransform {
-  transform(value: string, format = 'MMMM'): string {
-    return fm(new Date(value), format, {
-      locale: it,
-    });
+  transform(value: string | undefined, format = 'MMMM'): string {
+    if (value) {
+      return fm(new Date(value), format, {
+        locale: it,
+      });
+    } else {
+      return '';
+    }
   }
 }
