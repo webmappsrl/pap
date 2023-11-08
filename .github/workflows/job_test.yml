@@ -68,12 +68,12 @@ jobs:
         env:
           CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
           CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
-          CYPRESS_baseurl: http://${{env.DOMAIN_NAME}}
+          CYPRESS_baseurl: http://localhost:8100/
         if: success()
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
-          wait-on: http://${{env.DOMAIN_NAME}}
+          wait-on: http://localhost:8100/
           wait-on-timeout: 280
           headed: false
       - name: Upload screenshots
