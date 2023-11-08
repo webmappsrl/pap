@@ -113,15 +113,18 @@ export class LocationComponent implements OnDestroy {
   setPosition(coords: number[]): void {
     this.myPosition$.next(coords);
     this.form.get('location')?.setValue(coords);
-    this.locationService.getAddress(coords).subscribe(
-      res => {
-        this.setAddress(res as string);
-      },
-      (error: string) => {
-        const res = `${coords[0]} ${coords[1]}`;
-        this.setAddress(res);
-      },
-    );
+    this.locationService
+      .getAddress(coords)
+      .pipe(take(1))
+      .subscribe(
+        res => {
+          this.setAddress(res as string);
+        },
+        (error: string) => {
+          const res = `${coords[0]} ${coords[1]}`;
+          this.setAddress(res);
+        },
+      );
     this.currentZone$.pipe(take(1)).subscribe(zone => {
       if (zone == null) {
         this.form.get('location')!.setErrors({'incorrect': true});
