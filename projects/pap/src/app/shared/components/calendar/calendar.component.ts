@@ -44,7 +44,10 @@ export class CalendarComponent implements OnInit {
     return 0;
   };
 
-  constructor(private _inAppBrowser: InAppBrowser, private _cdr: ChangeDetectorRef) {}
+  constructor(
+    private _inAppBrowser: InAppBrowser,
+    private _cdr: ChangeDetectorRef,
+  ) {}
 
   info(trashDate: string, tbType: TrashBookType, idxItem: number, idxTrashType: number): void {
     this.selectedIdxItem$.next(idxItem);
