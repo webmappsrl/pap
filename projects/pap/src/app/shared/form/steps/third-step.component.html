@@ -29,7 +29,7 @@
               <ion-col size="auto">
                 <ion-button
                   class="pap-first-step-signup-form-remove-address"
-                  (click)="deleteAddress(address)"
+                  (click)="presentAlert(address)"
                   expand="block"
                   color="danger"
                   *ngIf="zones.length > 1|| zone.addresses.length> 1"

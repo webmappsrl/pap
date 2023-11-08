@@ -51,6 +51,7 @@ export class thirdStepComponent implements OnInit {
     private _settingsSvc: SettingsService,
     private _alertCtrl: AlertController,
     private _parent: FormGroupDirective,
+    private alertController: AlertController,
   ) {
     this._store.dispatch(loadCalendarSettings());
     this._store.dispatch(loadConfiniZone());
@@ -108,6 +109,30 @@ export class thirdStepComponent implements OnInit {
 
   ngOnInit(): void {
     this.thirdStep = this._parent.form.get('thirdStep') as UntypedFormGroup;
+  }
+
+  async presentAlert(address: Address) {
+    const alert = await this.alertController.create({
+      cssClass: 'pap-status-alert',
+      header: 'Conferma eliminazione',
+      message: 'Sei sicuro di voler eliminare questo indirizzo?',
+      buttons: [
+        {
+          text: 'Annulla',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Elimina',
+          role: 'destructive',
+          handler: () => {
+            this.deleteAddress(address);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   reset(): void {
