@@ -42,23 +42,24 @@
         <ion-label position="stacked">Codice Utenza/TARI</ion-label>
         <ion-input
           formControlName="user_code"
-          placeholder="Inserire il codice Utenza/TARI"
+          placeholder="digita il codice Utenza/TARI"
           [disabled]="disable.indexOf('user_code')> -1"
         >
         </ion-input>
       </ion-item>
-      <ion-item *ngIf="firstStep.get('user_code')!=null &&firstStep.get('user_code')!.valid">
+      <ion-item *ngIf="firstStep.get('user_code')!=null && firstStep.get('user_code')!.valid">
         <pap-error-form-handler
           [errors]="firstStep.get('user_code')!.errors"
         ></pap-error-form-handler>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Codice fiscale dell'intestatario della bolletta</ion-label>
+        <ion-label class="ion-text-wrap" position="stacked"
+          >Codice fiscale dell'intestatario della bolletta</ion-label
+        >
         <ion-input
           formControlName="fiscal_code"
-          placeholder="Inserire il codice fiscale"
+          placeholder="digita il CF dell'intestatario della bolletta"
           [disabled]="disable.indexOf('fiscal_code')> -1"
-          class="ion-text-wrap"
         >
         </ion-input>
       </ion-item>
