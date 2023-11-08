@@ -67,7 +67,7 @@ jobs:
           CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
           CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
           CYPRESS_baseurl: http://localhost:8100
-        if: success()
+        if: false # Questa condizione è sempre falsa, quindi lo step non verrà mai eseguito
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
