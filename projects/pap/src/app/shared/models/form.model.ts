@@ -68,6 +68,12 @@ export const ticketReservationForm: TicketFormConf = {
       recap: 'Note',
     },
     {
+      label: 'Inserisci un numero di telefono',
+      type: 'phone',
+      required: true,
+      recap: 'Telefono',
+    },
+    {
       label: '',
       type: 'recap',
       required: false,
@@ -78,7 +84,7 @@ export const ticketReservationForm: TicketFormConf = {
 export const abandonmentTicketForm: TicketFormConf = {
   cancel: 'Sicuro di voler cancellare la prenotazione?',
   finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
-  pages: 5,
+  pages: 6,
   ticketType: 'abandonment',
   label: 'Segnalazione di abbandono',
   step: [
@@ -112,6 +118,12 @@ export const abandonmentTicketForm: TicketFormConf = {
       recap: 'Note',
     },
     {
+      label: 'Inserisci un numero di telefono',
+      type: 'phone',
+      required: true,
+      recap: 'Telefono',
+    },
+    {
       label: '',
       type: 'recap',
       required: false,
@@ -123,7 +135,7 @@ export const reportTicketForm: TicketFormConf = {
   ticketType: 'report',
   cancel: 'Sicuro di voler cancellare la prenotazione?',
   finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
-  pages: 5,
+  pages: 6,
   label: 'Segnalazione mancato ritiro',
   step: [
     {
@@ -150,6 +162,12 @@ export const reportTicketForm: TicketFormConf = {
       recap: 'Note',
     },
     {
+      label: 'Inserisci un numero di telefono',
+      type: 'phone',
+      required: true,
+      recap: 'Telefono',
+    },
+    {
       label: '',
       type: 'recap',
       required: false,
@@ -168,7 +186,7 @@ export const infoTicketForm: TicketFormConf = {
     },
   },
   label: 'Richiesta informazioni',
-  pages: 3,
+  pages: 4,
   step: [
     {
       label: `Questo serivizio ti permette di richiedere informazioni direttamente a ${environment.config.name}. Al termine ti verrà assegnato un codice della richiesta e verrà inviata una email a ${environment.config.name}: verrai ricontattato appena possibile. Clicca sul bottone ' >          ' per iniziare.`,
@@ -191,6 +209,12 @@ export const infoTicketForm: TicketFormConf = {
           companyName: 'APP.company',
         },
       },
+    },
+    {
+      label: 'Inserisci un numero di telefono',
+      type: 'phone',
+      required: true,
+      recap: 'Telefono',
     },
     {
       label: '',

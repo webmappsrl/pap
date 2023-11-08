@@ -1,3 +1,4 @@
+import {FEATURE_NAME} from './../../../features/feature.state';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,7 +12,7 @@ import {UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators} from '@an
 import {AlertController, IonInput, NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {filter, map, switchMap} from 'rxjs/operators';
+import {filter, map, switchMap, take} from 'rxjs/operators';
 import {AppState} from '../../../core/core.state';
 import {selectCalendarState} from '../../../features/calendar/state/calendar.selectors';
 import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
@@ -25,6 +26,8 @@ import {
   ticketLoading,
   ticketSuccess,
 } from '../state/form.selectors';
+import {UpdateUser} from '../../../core/auth/state/auth.actions';
+import {user} from '../../../core/auth/state/auth.selectors';
 
 @Component({
   selector: 'pap-form',
@@ -35,6 +38,7 @@ import {
 })
 export class FormComponent implements OnDestroy {
   private _ticketSub: Subscription = Subscription.EMPTY;
+  private _user$ = this._store.select(user);
 
   @Input() set ticketFormConf(ticketFormConf: TicketFormConf) {
     this.ticketFormConf$.next(ticketFormConf);
@@ -43,13 +47,21 @@ export class FormComponent implements OnDestroy {
       if (step.required) {
         validators.push(Validators.required);
       }
-
-      const formControl = new UntypedFormControl('', validators);
+      let value = '';
+      if (step.type === 'phone') {
+        this._user$.pipe(take(1)).subscribe(user => {
+          if (user != null && user['phone_number'] != null) {
+            value = user['phone_number'];
+          }
+        });
+      }
+      const formControl = new UntypedFormControl(value, validators);
       this.ticketForm.addControl(step.type, formControl);
       if (step.type === 'location') {
         const formControl = new UntypedFormControl('', validators);
         this.ticketForm.addControl('location_address', formControl);
       }
+
       this.trashBookTypesOpts$ = this._store.pipe(
         select(trashBookTypes),
         map(trashBookTypes =>
@@ -162,6 +174,10 @@ export class FormComponent implements OnDestroy {
 
   sendData(): void {
     let formValue = this.ticketForm.value;
+    if (formValue['phone'] != null && this.ticketForm.controls['phone'].dirty) {
+      const updates = {phone_number: formValue['phone']};
+      this._store.dispatch(UpdateUser({updates}));
+    }
     if (formValue['calendar_trash_type_id'] != null) {
       const calendar = formValue['calendar_trash_type_id'];
       delete formValue['calendar_trash_type_id'];

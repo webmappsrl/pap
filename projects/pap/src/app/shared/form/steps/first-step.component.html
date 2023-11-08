@@ -2,7 +2,7 @@
   <form [formGroup]="firstStep">
     <ion-list lines="inset">
       <ion-item>
-        <ion-label position="stacked">Nome</ion-label>
+        <ion-label position="stacked">Nome*</ion-label>
         <ion-input label="Nome" formControlName="name" required placeholder="Inserire il nome">
         </ion-input>
       </ion-item>
@@ -10,7 +10,7 @@
         <pap-error-form-handler [errors]="firstStep.get('name')!.errors"></pap-error-form-handler>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Email</ion-label>
+        <ion-label position="stacked">Email*</ion-label>
         <ion-input
           formControlName="email"
           required
