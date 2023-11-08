@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {AppState} from '../../../core/core.state';
 import {currentZone} from '../../map/state/map.selectors';
 import {AddressEvent} from './location.model';
@@ -14,6 +14,8 @@ import {AddressEvent} from './location.model';
   encapsulation: ViewEncapsulation.None,
 })
 export class LocationModalComponent {
+  private _zoneSubscription: Subscription = Subscription.EMPTY;
+
   availableUserTypes: any[];
   currentZone$: Observable<any> = this._store.select(currentZone);
   features: any[];
@@ -38,6 +40,25 @@ export class LocationModalComponent {
 
   confirm(): void {
     this._modalCtrl.dismiss(this.modalForm.value);
+  }
+
+  ngOnDestroy() {
+    this._zoneSubscription.unsubscribe();
+  }
+
+  ngOnInit() {
+    // Subscribe to the currentZone$ observable to listen for changes.
+    this._zoneSubscription = this.currentZone$.subscribe(zone => {
+      if (zone && zone.properties && zone.properties.availableUserTypes) {
+        if (zone.properties.availableUserTypes.length > 0) {
+          // Get the ID of the first user type.
+          const firstUserTypeId = zone.properties.availableUserTypes[0].id;
+          this.modalForm.get('user_type_id')?.setValue(firstUserTypeId);
+        } else {
+          this.modalForm.get('user_type_id')?.reset();
+        }
+      }
+    });
   }
 
   setAddress(event: AddressEvent): void {
