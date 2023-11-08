@@ -2,110 +2,108 @@
 <ng-template #ticket>
   <ng-container *ngIf="ticketFormConf$|async as ticketFormConf">
     <ng-container *ngIf="ticketFormConf.step[(pos$|async)||0] as currentStep">
-      <ion-card>
-        <form
-          [formGroup]="ticketForm"
-          class="pap-form"
-          *ngIf="ticketFormConf.step && ticketFormConf.step[0]"
-        >
-          <div class="pap-form-content">
-            <ng-container *ngIf="ticketFormConf.label as label">
-              <div [ngClass]="{'pap-form-first-step' : (pos$|async)===0}">
-                {{ label }}
-              </div>
-            </ng-container>
+      <form
+        [formGroup]="ticketForm"
+        class="pap-form"
+        *ngIf="ticketFormConf.step && ticketFormConf.step[0]"
+      >
+        <div class="pap-form-content">
+          <ng-container *ngIf="ticketFormConf.label as label">
+            <div [ngClass]="{'pap-form-first-step' : (pos$|async)===0}">
+              {{ label }}
+            </div>
+          </ng-container>
 
-            <ng-container *ngIf="(pos$|async)===0; else otherSteps">
-              <ion-label class="pap-form-label-first-step" *ngIf="currentStep.label != null">
-                {{ currentStep.label }}
-              </ion-label>
-            </ng-container>
+          <ng-container *ngIf="(pos$|async)===0; else otherSteps">
+            <ion-label class="pap-form-label-first-step" *ngIf="currentStep.label != null">
+              {{ currentStep.label }}
+            </ion-label>
+          </ng-container>
 
-            <ng-template #otherSteps>
-              <ion-label class="pap-form-label" *ngIf="currentStep.label != null">
-                {{ currentStep.label }} {{currentStep.required?'*':''}}
-              </ion-label>
-              <br />
-            </ng-template>
+          <ng-template #otherSteps>
+            <ion-label class="pap-form-label" *ngIf="currentStep.label != null">
+              {{ currentStep.label }} {{currentStep.required?'*':''}}
+            </ion-label>
+            <br />
+          </ng-template>
 
-            <ion-textarea
-              *ngIf="['note'].includes(currentStep.type)"
+          <ion-textarea
+            *ngIf="['note'].includes(currentStep.type)"
+            #focusInput
+            class="pap-form-textarea"
+            rows="4"
+            [autoGrow]="true"
+            placeholder="Eventuali note..."
+            [formControlName]="currentStep.type"
+          ></ion-textarea>
+          <ng-container [ngSwitch]="currentStep.type">
+            <ion-input
+              *ngSwitchCase="'text'"
               #focusInput
-              class="pap-form-textarea"
-              rows="4"
-              [autoGrow]="true"
-              placeholder="Eventuali note..."
+              class="pap-form-input"
+              [type]="currentStep.type|inputType"
+              [pattern]="currentStep.type|inputPattern"
               [formControlName]="currentStep.type"
-            ></ion-textarea>
-            <ng-container [ngSwitch]="currentStep.type">
-              <ion-input
-                *ngSwitchCase="'text'"
-                #focusInput
-                class="pap-form-input"
-                [type]="currentStep.type|inputType"
-                [pattern]="currentStep.type|inputPattern"
-                [formControlName]="currentStep.type"
+            >
+            </ion-input>
+            <ion-input
+              *ngSwitchCase="'phone'"
+              #focusInput
+              class="pap-form-input"
+              pattern="^[789]\d{9,9}$"
+              [type]="currentStep.type|inputType"
+              [pattern]="currentStep.type|inputPattern"
+              [formControlName]="currentStep.type"
+            >
+            </ion-input>
+            <div *ngSwitchCase="'switch'" class="pap-form-toggle">
+              <ion-toggle block name="toggle" [checked]="currentStep.value"> </ion-toggle>
+            </div>
+            <div *ngSwitchCase="'checkbox'" class="pap-form-checkbox">
+              <ion-checkbox name="checkbox" [checked]="currentStep.value"> </ion-checkbox>
+              <ion-label
+                floating
+                [innerHTML]="(currentStep.placeholder||'')| translate: currentStep.translationsObj?.placeholder"
               >
-              </ion-input>
-              <ion-input
-                *ngSwitchCase="'phone'"
-                #focusInput
-                class="pap-form-input"
-                pattern="^[789]\d{9,9}$"
-                [type]="currentStep.type|inputType"
-                [pattern]="currentStep.type|inputPattern"
-                [formControlName]="currentStep.type"
-              >
-              </ion-input>
-              <div *ngSwitchCase="'switch'" class="pap-form-toggle">
-                <ion-toggle block name="toggle" [checked]="currentStep.value"> </ion-toggle>
-              </div>
-              <div *ngSwitchCase="'checkbox'" class="pap-form-checkbox">
-                <ion-checkbox name="checkbox" [checked]="currentStep.value"> </ion-checkbox>
-                <ion-label
-                  floating
-                  [innerHTML]="(currentStep.placeholder||'')| translate: currentStep.translationsObj?.placeholder"
-                >
-                </ion-label>
-              </div>
-              <pap-form-location
-                *ngSwitchCase="'location'"
-                #focusInput
-                [form]="ticketForm"
-                [formControlName]="currentStep.type"
-                [features]="confiniZone$|async"
-              >
-              </pap-form-location>
-              <pap-form-calendar-select
-                *ngSwitchCase="'calendar_trash_type_id'"
-                [calendars]="(calendars$|async)!"
-                [formControlName]="currentStep.type"
-              ></pap-form-calendar-select>
-              <pap-form-select
-                *ngSwitchCase="'trash_type_id'"
-                #focusInput
-                [formControlName]="currentStep.type"
-                [selected]="currentTrashbookType$|async"
-                [options]="(trashBookTypesOpts$|async)??[]"
-              ></pap-form-select>
-              <pap-form-image-picker
-                *ngSwitchCase="'image'"
-                #focusInput
-                [formControlName]="currentStep.type"
-              >
-              </pap-form-image-picker>
-              <pap-form-recap
-                *ngSwitchCase="'recap'"
-                [form]="ticketForm"
-                [conf]="(ticketFormConf$|async)!"
-              ></pap-form-recap>
-            </ng-container>
-          </div>
-        </form>
-        <ion-item lines="none" *ngIf="ticketForm.controls[currentStep.type].errors as errors">
-          <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
-        </ion-item>
-      </ion-card>
+              </ion-label>
+            </div>
+            <pap-form-location
+              *ngSwitchCase="'location'"
+              #focusInput
+              [form]="ticketForm"
+              [formControlName]="currentStep.type"
+              [features]="confiniZone$|async"
+            >
+            </pap-form-location>
+            <pap-form-calendar-select
+              *ngSwitchCase="'calendar_trash_type_id'"
+              [calendars]="(calendars$|async)!"
+              [formControlName]="currentStep.type"
+            ></pap-form-calendar-select>
+            <pap-form-select
+              *ngSwitchCase="'trash_type_id'"
+              #focusInput
+              [formControlName]="currentStep.type"
+              [selected]="currentTrashbookType$|async"
+              [options]="(trashBookTypesOpts$|async)??[]"
+            ></pap-form-select>
+            <pap-form-image-picker
+              *ngSwitchCase="'image'"
+              #focusInput
+              [formControlName]="currentStep.type"
+            >
+            </pap-form-image-picker>
+            <pap-form-recap
+              *ngSwitchCase="'recap'"
+              [form]="ticketForm"
+              [conf]="(ticketFormConf$|async)!"
+            ></pap-form-recap>
+          </ng-container>
+        </div>
+      </form>
+      <ion-item lines="none" *ngIf="ticketForm.controls[currentStep.type].errors as errors">
+        <pap-error-form-handler [errors]="errors"></pap-error-form-handler>
+      </ion-item>
       <ng-container *ngIf="formError$|async as error">
         <ion-label color="danger">{{error}}</ion-label>
       </ng-container>

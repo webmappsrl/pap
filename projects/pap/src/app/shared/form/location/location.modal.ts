@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ModalController} from '@ionic/angular';
 import {Store} from '@ngrx/store';
@@ -11,6 +11,7 @@ import {AddressEvent} from './location.model';
   selector: 'pap-location-modal',
   templateUrl: 'location.modal.html',
   styleUrls: ['./location.modal.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class LocationModalComponent {
   availableUserTypes: any[];
@@ -18,6 +19,8 @@ export class LocationModalComponent {
   features: any[];
   modalForm: FormGroup = this._formBuilder.group({
     address: ['', [Validators.required]],
+    city: ['', [Validators.required]],
+    house_number: [''],
     zone_id: ['', [Validators.required]],
     user_type_id: ['', [Validators.required]],
     location: [[], [Validators.required]],
@@ -38,10 +41,9 @@ export class LocationModalComponent {
   }
 
   setAddress(event: AddressEvent): void {
-    const address = event.address;
-    if (address != null) {
-      this.modalForm.get('address')?.setValue(address);
-    }
+    this.modalForm.get('city')?.setValue(event.city);
+    this.modalForm.get('address')?.setValue(event.address);
+    this.modalForm.get('house_number')?.setValue(event.house_number);
   }
 
   setUserType(event: Event): void {

@@ -46,6 +46,8 @@ export interface Geometry {
 
 export interface AddressEvent {
   address: string;
+  city: string;
+  house_number?: string;
   location: [number, number] | number[];
 }
 

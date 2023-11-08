@@ -7,7 +7,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {take} from 'rxjs/operators';
@@ -21,7 +21,6 @@ import {AddressEvent, GeoJsonFeatureCollection, Zone} from './location.model';
   selector: 'pap-form-location',
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class LocationComponent {
@@ -37,22 +36,33 @@ export class LocationComponent {
 
   currentZone$: Observable<Zone> = this._store.select(currentZone);
   myPosition$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
-  myPositionString: string = '';
-
+  formAddress: FormGroup;
   constructor(
     private locationService: LocationService,
     private _store: Store<AppState>,
     private _cdr: ChangeDetectorRef,
-  ) {}
-
-  get address() {
-    return this.myPositionString;
+  ) {
+    this.formAddress = new FormGroup({
+      city: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
+      house_number: new FormControl('', Validators.required),
+    });
+    this.formAddress.valueChanges.subscribe(addr => {
+      console.log(addr);
+      this.addressEVT.emit({
+        location: this.myPosition$.value,
+        address: addr.address,
+        city: addr.city,
+        house_number: addr.house_number,
+      });
+    });
   }
 
-  set address(addr: string) {
+  set address(addr: any) {
     this.addressEVT.emit({
       location: this.myPosition$.value,
-      address: addr,
+      address: addr.address,
+      city: addr.city,
     });
     this.setAddress(addr);
   }
@@ -72,8 +82,22 @@ export class LocationComponent {
     this.setPosition(ev);
   }
 
-  setAddress(address: string): void {
-    this.myPositionString = address;
+  setAddress(address: any): void {
+    if (address.address != null && address.address != '') {
+      this.formAddress.patchValue({
+        address: address.address,
+      });
+    }
+    if (address.city != null && address.city != '') {
+      this.formAddress.patchValue({
+        city: address.city,
+      });
+    }
+    if (address.house_number != null && address.house_number != '') {
+      this.formAddress.patchValue({
+        house_number: address.house_number,
+      });
+    }
     this.form.get('location_address')?.setValue(address);
     this._cdr.detectChanges();
   }
@@ -84,18 +108,10 @@ export class LocationComponent {
     this.locationService.getAddress(coords).subscribe(
       res => {
         this.setAddress(res as string);
-        this.addressEVT.emit({
-          location: coords,
-          address: res,
-        });
       },
       (error: string) => {
         const res = `${coords[0]} ${coords[1]}`;
         this.setAddress(res);
-        this.addressEVT.emit({
-          location: coords,
-          address: res,
-        });
       },
     );
     this.currentZone$.pipe(take(1)).subscribe(zone => {

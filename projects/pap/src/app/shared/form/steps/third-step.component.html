@@ -11,7 +11,20 @@
           <ion-card-header>
             <ion-row>
               <ion-col>
-                <ion-card-subtitle> {{address.address}}</ion-card-subtitle>
+                <ion-card-subtitle>
+                  {{address.city
+
+                  }}{{address.city && (address.address||address.house_number?', ':'')}}
+                  {{address.address
+                  }}{{address.address && address.house_number?', ':''
+
+
+
+
+
+
+                  }}{{address.house_number}}</ion-card-subtitle
+                >
               </ion-col>
               <ion-col size="auto">
                 <ion-button
