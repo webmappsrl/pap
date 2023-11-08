@@ -1,9 +1,7 @@
-<ng-container *ngIf="(currentZone$|async) as zone; else noValidZone">
-  <ion-label color="success">{{zone.properties?.label}}</ion-label>
-</ng-container>
 <form [formGroup]="formAddress">
   <ion-grid>
     <ion-row>
+      <ion-col> </ion-col>
       <ion-col size-sm="12" size-xs="12">
         <ion-item>
           <ion-label class="ion-text-wrap" position="stacked">Città</ion-label>
@@ -36,21 +34,25 @@
           [center]="(myPosition$|async)!"
           [featureCollection]="features"
         >
+          <span top-right>
+            <ng-container *ngIf="(currentZone$|async) as zone; else noValidZone">
+              <ion-badge color="success">{{zone.properties?.label}}</ion-badge>
+            </ng-container>
+          </span>
+          <span bottom-center class="pap-form-location-infocontainer">
+            <ion-button expand="block" shape="round" (click)="getLocation()">
+              <ion-icon slot="start" name="location-sharp"></ion-icon>
+              {{ 'La mia posizione' | translate }}
+            </ion-button>
+          </span>
         </pap-map>
 
         <div class="pap-form-location-padding"></div>
-
-        <div class="pap-form-location-infocontainer">
-          <ion-button expand="block" fill="outline" shape="round" (click)="getLocation()">
-            <ion-icon slot="start" name="location-sharp"></ion-icon>
-            {{ 'La mia posizione' | translate }}
-          </ion-button>
-        </div>
       </div>
     </ion-col>
   </ion-row>
 </ion-grid>
 
 <ng-template #noValidZone>
-  <ion-label color="danger">seleziona una zona valida</ion-label>
+  <ion-badge color="danger" top-right>seleziona una zona valida</ion-badge>
 </ng-template>

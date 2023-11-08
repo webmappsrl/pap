@@ -10,4 +10,17 @@ pap-map {
   #map {
     height: 100%;
   }
+  .top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1111;
+  }
+  .bottom-center {
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    left: 50%;
+    z-index: 1111;
+  }
 }

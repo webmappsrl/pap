@@ -301,7 +301,11 @@ ion-popover {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 570px !important;
+    margin: 0 !important;
+    max-width: 100%;
+    ion-card-content {
+      padding: 0;
+    }
     .pap-location-modal-address-label {
       font-size: 30px;
       font-weight: 500;
@@ -321,16 +325,7 @@ ion-popover {
     width: 100% !important;
   }
   pap-map {
-    height: 70% !important;
     margin-top: 0px !important;
-  }
-  pap-form-location {
-    max-height: 411px;
-    .pap-form-location-infocontainer {
-      ion-button {
-        margin-top: -90px !important;
-      }
-    }
   }
 }
 /************ end pap-location-modal ***************/
