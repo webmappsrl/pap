@@ -74,7 +74,8 @@ jobs:
         with:
           browser: chrome
           wait-on: http://${{env.DOMAIN_NAME}}
-          wait-on-timeout: 180
+          wait-on-timeout: 280
+          headed: false
       - name: Upload screenshots
         if: failure()
         uses: actions/upload-artifact@v2
