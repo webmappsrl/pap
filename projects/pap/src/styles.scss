@@ -11,7 +11,7 @@ body {
 ion-card {
   display: flex;
   flex-direction: column;
-  max-width: 93%;
+  max-width: 98%;
   margin: auto !important;
   padding: 10px;
   top: 15px;
@@ -86,9 +86,6 @@ ion-modal {
 .pap-trashlist-details-label {
   margin: 10px;
   flex: 1 1 80%;
-}
-.pap-trash-book-details-icon {
-  font-size: 15px;
 }
 ion-popover {
   --backdrop-opacity: 0.5;
