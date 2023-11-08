@@ -67,6 +67,14 @@ export class LocationComponent implements OnDestroy {
         city: addr.city,
         house_number: addr.house_number,
       });
+      if (this.form != null) {
+        this.form.patchValue({
+          location: this.myPosition$.value,
+          address: addr.address,
+          city: addr.city,
+          house_number: addr.house_number,
+        });
+      }
     });
   }
 
@@ -106,7 +114,9 @@ export class LocationComponent implements OnDestroy {
         house_number: address.house_number,
       });
     }
-    this.form.get('location_address')?.setValue(address);
+    this.form.get('address')?.setValue(address.address);
+    this.form.get('city')?.setValue(address.city);
+    this.form.get('house_number')?.setValue(address.house_number);
     this._cdr.detectChanges();
   }
 

@@ -58,8 +58,9 @@ export class FormComponent implements OnDestroy {
       const formControl = new UntypedFormControl(value, validators);
       this.ticketForm.addControl(step.type, formControl);
       if (step.type === 'location') {
-        const formControl = new UntypedFormControl('', validators);
-        this.ticketForm.addControl('location_address', formControl);
+        this.ticketForm.addControl('address', new UntypedFormControl('', validators));
+        this.ticketForm.addControl('city', new UntypedFormControl('', validators));
+        this.ticketForm.addControl('house_number', new UntypedFormControl(''));
       }
 
       this.trashBookTypesOpts$ = this._store.pipe(

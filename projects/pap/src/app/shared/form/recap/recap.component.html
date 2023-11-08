@@ -16,9 +16,24 @@
             <ion-note class="pap-form-recap-note" *ngSwitchCase="'trash_type_id'">
               {{(currentTrashBookType$|async)?.name}}
             </ion-note>
-            <ion-note class="pap-form-recap-note" *ngSwitchCase="'location'">
-              {{form.controls['location_address'].value|json}}
-            </ion-note>
+            <span *ngSwitchCase="'location'">
+              <ion-note class="pap-form-recap-note" *ngIf="form.controls['city'].value as city">
+                {{city}}
+              </ion-note>
+              <ion-note
+                class="pap-form-recap-note"
+                *ngIf="form.controls['address'].value as address"
+              >
+                {{address}}
+              </ion-note>
+              <ion-note
+                class="pap-form-recap-note"
+                *ngIf="form.controls['house_number'].value as house_number"
+              >
+                {{house_number}}
+              </ion-note>
+            </span>
+
             <ion-note class="pap-form-recap-note" *ngSwitchCase="'phone'">
               {{form.controls[item.type].value}}
             </ion-note>
