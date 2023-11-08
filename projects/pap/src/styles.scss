@@ -258,7 +258,8 @@ ion-popover {
         flex: 0 1 44%;
         align-self: flex-start;
       }
-      .alert-button-role-ok {
+      .alert-button-role-ok,
+      .alert-button-role-destructive {
         flex: 0 1 33%;
         align-self: flex-start;
         background-color: var(--ion-color-primary) !important;
