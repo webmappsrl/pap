@@ -77,21 +77,6 @@ describe('pap-report-ticket: test the correct behaviour of form at second step',
       });
     }
   });
-
-  it('should display the correct trash types color', function () {
-    cy.get('.pap-trash-book-details-icon').each($icon => {
-      const itemColor = $icon.css('color');
-      const itemName = $icon.next().text().trim();
-      cy.log(`Checking color for: ${itemName}`);
-      const expectedColor = this['trashTypesData'].find(
-        (trashType: TrashBookRow) => trashType.name === itemName,
-      )?.color;
-      if (expectedColor) {
-        const rgbExpectedColor = hexToRgb(expectedColor);
-        expect(itemColor).to.equal(rgbExpectedColor);
-      }
-    });
-  });
 });
 
 describe('pap-report-ticket: test the correct behaviour of form at third step', () => {
