@@ -4,49 +4,60 @@
 <ion-content *ngIf="report as rep">
   <ion-card>
     <ion-card-header>
-      <ion-card-subtitle>Dettaglio ticket</ion-card-subtitle>
       <ion-card-title>Ticket {{rep.ticket_type|papTicket}}</ion-card-title>
+      <ion-card-subtitle>Dettaglio ticket</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <ion-item lines="none" *ngIf="rep.trashType as trashType">
-        <ul class="pap-reports-detail-outer-list">
-          <li>
-            <ion-label class="pap-form-recap-note"> Servizio prenotato </ion-label>
-            <ul class="pap-reports-detail-inner-list">
-              <li class="pap-reports-detail-list">
-                <ion-icon slot="end" [ngStyle]="{color:trashType.color}" name="ellipse"></ion-icon>
-                {{trashType.name}}
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <ion-item *ngIf="rep.trashType as trashType">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="pap-form-recap-label ion-text-wrap">
+                Servizio prenotato:
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-badge
+                [style.background-color]="trashType.color"
+                class="pap-reports-name">
+                {{ trashType.name }}
+              </ion-badge>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
-      <ion-item lines="none" *ngIf="rep.location_address as locationAddress">
-        <ul class="pap-reports-detail-outer-list">
-          <li>
-            <ion-label>Indirizzo:</ion-label>
-            <ul class="pap-reports-detail-inner-list">
-              <li>
-                <ion-note class="pap-form-recap-note">
-                  {{rep.location_address}}
-                </ion-note>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <ion-item *ngIf="rep.location_address as locationAddress">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="pap-form-recap-label ion-text-wrap">Indirizzo:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label class="ion-text-wrap">
+                {{rep.location_address}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
-      <ion-accordion-group *ngIf="rep.location as loc" [value]="['location']">
+      <ion-accordion-group
+        *ngIf="rep.location as loc"
+        [value]="['location']">
         <ion-accordion value="location">
-          <ion-item slot="header" color="light">
+          <ion-item
+            slot="header"
+            color="light">
             <ul class="pap-reports-detail-outer-list">
               <li>
                 <ion-label>Indirizzo:</ion-label>
               </li>
             </ul>
           </ion-item>
-          <div class="ion-padding" slot="content">
+          <div
+            class="ion-padding"
+            slot="content">
             <div class="map">
               <pap-map [positionMarker]="loc"></pap-map>
             </div>
@@ -54,58 +65,62 @@
         </ion-accordion>
       </ion-accordion-group>
 
-      <ion-item *ngIf="rep.created_at as createdAt" lines="none">
-        <ul class="pap-reports-detail-outer-list">
-          <li>
-            <ion-label>Data prenotazione:</ion-label>
-            <ul class="pap-reports-detail-inner-list">
-              <li>
-                <ion-note class="pap-form-recap-note">
-                  {{createdAt|papDate:'MM/dd/yyyy'}}
-                </ion-note>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <ion-item *ngIf="rep.created_at as createdAt">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="pap-form-recap-label">Data prenotazione:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label class="ion-text-wrap">
+                {{createdAt|papDate:'MM/dd/yyyy'}}
+              </ion-label></ion-col
+            >
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
-      <ion-item *ngIf="rep.image as img" lines="none">
-        <ul class="pap-reports-detail-outer-list">
-          <li>
-            <ion-label>Foto</ion-label>
-            <img [src]="img" />
-          </li>
-        </ul>
+      <ion-item *ngIf="rep.image as img">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="pap-form-recap-label">Foto:</ion-label>
+            </ion-col>
+            <ion-col>
+              <img [src]="img" />
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
-      <ion-item lines="none" *ngIf="rep.note as note">
-        <ul class="pap-reports-detail-outer-list">
-          <li>
-            <ion-label>Note:</ion-label>
-            <ul class="pap-reports-detail-inner-list">
-              <li>
-                <ion-note class="pap-form-recap-note">
-                  {{note}}
-                </ion-note>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <ion-item *ngIf="rep.note as note">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="pap-form-recap-label">Note:</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label class="ion-text-wrap">
+                {{note}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
-      <ion-item lines="none" *ngIf="rep.phone as phone">
-        <ul class="pap-reports-detail-outer-list">
-          <li>
-            <ion-label class="pap-form-recap-note">Telefono: </ion-label>
-            <ul class="pap-reports-detail-inner-list">
-              <li>
-                <ion-note class="pap-form-recap-note">
-                  {{phone}}
-                </ion-note>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <ion-item *ngIf="rep.phone as phone">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label class="pap-form-recap-label">Telefono: </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label class="ion-text-wrap">
+                {{phone}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
     </ion-card-content>
   </ion-card>
