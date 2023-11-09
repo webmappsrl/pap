@@ -14,64 +14,12 @@ pap-reports {
   ion-card-content {
     height: 90%;
   }
-  ion-icon {
-    margin-right: 5px;
-  }
-
   ion-list {
     overflow-y: auto;
     height: 98%;
     background-color: var(--ion-color-light) !important;
     &::-webkit-scrollbar {
       display: none;
-    }
-  }
-  .pap-reports-item {
-    // margin-bottom: 4px;
-    // margin-top: 4px;
-    // display: flex;
-    // flex-direction: row;
-    // justify-content: flex-start;
-    .pap-user-type {
-      border-radius: 25px;
-      color: white;
-      padding: 4px;
-      margin-left: 10px;
-      margin-right: 10px;
-      width: min-content;
-      display: block;
-      right: 0;
-      position: absolute;
-      top: 0;
-    }
-    .pap-reports-date {
-      flex: 1 1 auto;
-      align-self: flex-start;
-    }
-    .pap-reports-label-info {
-      // order: -1;
-      // margin-left: 15px;
-      // white-space: normal;
-      // overflow-wrap: break-word;
-      // span {
-      //   font-size: 18px;
-      //   font-weight: 400;
-      //   line-height: 18.75px;
-      // }
-      // p {
-      //   font-size: 16px;
-      //   font-weight: 400;
-      //   line-height: 16.41px;
-      // }
-    }
-
-    .input-wrapper {
-      flex: 0 1 auto;
-    }
-    .pap-reports-weekday {
-      font-size: 0.9em;
-      font-weight: 600;
-      font-style: italic;
     }
   }
   .pap-reports-spinner {
@@ -84,8 +32,5 @@ pap-reports {
       width: 50px;
       height: 50px;
     }
-  }
-  .input-wrapper {
-    flex: 0 1 0% !important;
   }
 }
