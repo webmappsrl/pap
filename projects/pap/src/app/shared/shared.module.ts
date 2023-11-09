@@ -41,6 +41,7 @@ import {PapTicketPipe} from './pipes/pap-ticket.pipe';
 import {SortPipe} from './pipes/sort.pipe';
 import {BroadcastNotificationService} from './services/broadcast-notification.service';
 import {LocalNotificationService} from './services/local-notification.service';
+import {DateComponent} from './components/date/date.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -69,6 +70,7 @@ import {LocalNotificationService} from './services/local-notification.service';
     GetZoneFromLocationPipe,
     CalendarSelectComponent,
     CalendarComponent,
+    DateComponent,
   ],
   imports: [
     CommonModule,
@@ -88,6 +90,7 @@ import {LocalNotificationService} from './services/local-notification.service';
   providers: [LocalNotificationService, BroadcastNotificationService],
   exports: [
     CommonModule,
+    DateComponent,
     FooterComponent,
     RouterModule,
     FormsModule,

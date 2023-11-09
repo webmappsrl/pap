@@ -34,15 +34,14 @@ export class CalendarComponent implements OnInit {
   currentAddress$: BehaviorSubject<Address | null> = new BehaviorSubject<Address | null>(null);
   currentCalendar$: BehaviorSubject<Calendar | null> = new BehaviorSubject<Calendar | null>(null);
   isOpen: boolean = false;
-  selectedIdxItem$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
-  selectedIdxBtn$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
-
   keyDescOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
     return a.key > b.key ? -1 : b.key > a.key ? 1 : 0;
   };
   originalOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
     return 0;
   };
+  selectedIdxBtn$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+  selectedIdxItem$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
 
   constructor(
     private _inAppBrowser: InAppBrowser,

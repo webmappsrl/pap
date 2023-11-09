@@ -1,12 +1,13 @@
 <ion-list lines="full">
   <ion-grid>
     <ion-row class="ion-align-items-center ion-justify-content-center">
-      <ion-col size="12" class="ion-text-center">
+      <ion-col
+        size="12"
+        class="ion-text-center">
         <ion-button
           shape="round"
           class="ion-text-wrap pap-calendar-address-button"
-          (click)="presentPopover($event)"
-        >
+          (click)="presentPopover($event)">
           <ion-grid>
             <ion-row>
               <ion-col size="12">
@@ -19,8 +20,7 @@
               <ion-col size="12">
                 <ion-label
                   *ngIf="currentCalendar$|async as currentCalendar"
-                  class="pap-calendar-address-button-label ion-text-wrap"
-                >
+                  class="pap-calendar-address-button-label ion-text-wrap">
                   {{ currentCalendar.address.address }}
                 </ion-label>
               </ion-col>
@@ -30,13 +30,16 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-popover #popover alignment="center" [isOpen]="isOpen" (didDismiss)="isOpen = false">
+  <ion-popover
+    #popover
+    alignment="center"
+    [isOpen]="isOpen"
+    (didDismiss)="isOpen = false">
     <ng-template>
       <ion-list>
         <ion-item
           *ngFor="let calendar of calendars; let idx = index"
-          (click)="selectPopoverAddress(idx)"
-        >
+          (click)="selectPopoverAddress(idx)">
           <ion-grid>
             <ion-row>
               <ion-col size="12">
@@ -60,21 +63,16 @@
     <div class="pap-calendar-scrollable-item">
       <ion-item
         *ngFor="let item of currentCalendar.calendar| keyvalue:reverse?keyDescOrder:originalOrder; let idxItem = index"
-        class="pap-calendar-item"
-      >
+        class="pap-calendar-item">
         <ion-grid [ngClass]="{'selected-item': (selectedIdxItem$ | async) === idxItem}">
           <ion-row>
             <ion-col size="4">
-              <ion-label class="pap-calendar-date ion-text-wrap">
-                <div class="pap-calendar-day">{{item.key|papDate: 'd' }}</div>
-                <div class="pap-calendar-month">{{item.key|papDate: 'MMMM' }}</div>
-              </ion-label>
+              <pap-date [dateKey]="item.key"></pap-date>
             </ion-col>
             <ion-col
               size="8"
               *ngFor="let trash of item.value; let idxBtn = index"
-              class="pap-calendar-event ion-align-items-end ion-justify-content-end"
-            >
+              class="pap-calendar-event ion-align-items-end ion-justify-content-end">
               <div>
                 <ion-button
                   shape="round"
@@ -83,15 +81,13 @@
                   *ngFor="let trashType of trash.trash_types; let idxTrashType = index"
                   (click)="info(item.key, trashType, idxItem, idxTrashType)"
                   class="pap-calendar-trashlist"
-                  [ngClass]="{'selected-btn': (selectedIdxItem$ | async) === idxItem && (selectedIdxBtn$ | async) === idxTrashType}"
-                >
+                  [ngClass]="{'selected-btn': (selectedIdxItem$ | async) === idxItem && (selectedIdxBtn$ | async) === idxTrashType}">
                   <ion-icon
                     size="medium"
                     slot="start"
                     [ngStyle]="{color:trashType?.color}"
                     name="ellipse"
-                    class="pap-trash-book-details-icon"
-                  ></ion-icon>
+                    class="pap-trash-book-details-icon"></ion-icon>
                   <ion-label class="pap-trashlist-details-label ion-text-wrap">
                     {{trashType.name['it']}}
                   </ion-label>

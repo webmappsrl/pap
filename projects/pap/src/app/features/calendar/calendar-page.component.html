@@ -5,12 +5,15 @@
       <ion-grid>
         <ion-row
           *ngIf="currentAddress$|async as addressView"
-          class="ion-align-items-center ion-justify-content-center"
-        >
-          <ion-col size="auto" class="ion-text-center">
+          class="ion-align-items-center ion-justify-content-center">
+          <ion-col
+            size="auto"
+            class="ion-text-center">
             <h1 class="pap-calendar-title">Calendario</h1>
           </ion-col>
-          <ion-col size="auto" class="ion-text-center">
+          <ion-col
+            size="auto"
+            class="ion-text-center">
             <ion-badge
               *ngIf="addressView.address.user_type.label.it"
               >{{addressView.address.user_type.label.it|translate}}</ion-badge
@@ -22,8 +25,7 @@
             <ion-button
               shape="round"
               class="ion-text-wrap pap-calendar-address-button"
-              (click)="presentPopover($event)"
-            >
+              (click)="presentPopover($event)">
               <ion-grid>
                 <ion-row>
                   <ion-col size="12">
@@ -36,8 +38,7 @@
                   <ion-col size="12">
                     <ion-label
                       *ngIf="currentAddress$?.value?.address?.address"
-                      class="pap-calendar-address-button-label"
-                    >
+                      class="pap-calendar-address-button-label">
                       {{ currentAddress$.value?.address?.address}}
                     </ion-label>
                   </ion-col>
@@ -45,19 +46,19 @@
               </ion-grid>
             </ion-button>
           </ion-col>
-          <ion-col size="12" class="ion-text-center">
+          <ion-col
+            size="12"
+            class="ion-text-center">
             <ion-popover
               #popover
               alignment="center"
               [isOpen]="isOpen"
-              (didDismiss)="isOpen = false"
-            >
+              (didDismiss)="isOpen = false">
               <ng-template>
                 <ion-list>
                   <ion-item
                     *ngFor="let calendar of calendarView.calendars; let idx = index"
-                    (click)="selectPopoverAddress(idx)"
-                  >
+                    (click)="selectPopoverAddress(idx)">
                     <ion-grid>
                       <ion-row>
                         <ion-col size="12">
@@ -88,19 +89,18 @@
         <ng-container *ngIf="currentAddress$|async as currentAddress">
           <ion-item
             *ngFor="let item of currentAddress.calendar| keyvalue"
-            class="pap-calendar-item"
-          >
+            class="pap-calendar-item">
             <ion-grid>
               <ion-row>
                 <ion-col size="4">
-                  <ion-label class="pap-calendar-date">
-                    <div class="pap-calendar-day">{{item.key|papDate: 'd' }}</div>
-                    <div class="pap-calendar-month">{{item.key|papDate: 'MMMM' }}</div>
-                  </ion-label>
+                  <pap-date [dateKey]="item.key"></pap-date>
                 </ion-col>
                 <ion-col size="8">
                   <div class="pap-calendar-weekday">{{item.key|papDate: 'EEEE' }}</div>
-                  <div div *ngFor="let trash of item.value" class="pap-calendar-event">
+                  <div
+                    div
+                    *ngFor="let trash of item.value"
+                    class="pap-calendar-event">
                     <div class="pap-calendar-time">
                       Dalle {{trash.start_time}} alle {{trash.stop_time}}
                     </div>
@@ -111,16 +111,16 @@
                         size="small"
                         *ngFor="let trashType of trash.trash_types"
                         (click)="info(trashType)"
-                        class="pap-calendar-trashlist"
-                      >
+                        class="pap-calendar-trashlist">
                         <ion-icon
                           class="trash-book-details-icon"
                           size="medium"
                           slot="start"
                           [ngStyle]="{color:trashType?.color}"
-                          name="ellipse"
-                        ></ion-icon>
-                        <ion-label class="pap-trashlist-details-label" *ngIf="trashType.name">
+                          name="ellipse"></ion-icon>
+                        <ion-label
+                          class="pap-trashlist-details-label"
+                          *ngIf="trashType.name">
                           {{trashType.name|papLang}}
                         </ion-label>
                       </ion-button>
@@ -136,7 +136,9 @@
   </ion-content>
   <ion-grid class="pap-calendar-infobutton-container">
     <ion-row class="ion-padding ion-align-items-center ion-justify-content-center">
-      <ion-col size="12" class="ion-text-center">
+      <ion-col
+        size="12"
+        class="ion-text-center">
         <ion-button
           class="ion-text-wrap pap-calendar-infobutton"
           expand="block"
