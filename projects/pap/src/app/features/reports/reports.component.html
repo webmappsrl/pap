@@ -19,13 +19,35 @@
           (click)="openDetail(report)">
           <ion-grid>
             <ion-row>
-              <ion-col size="6">
+              <ion-col size="5">
                 <pap-date [dateKey]="report.created_at"></pap-date>
               </ion-col>
-              <ion-col size="6">
-                <ion-badge class="pap-reports-label-info">
-                  Ticket {{ report.ticket_type | papTicket }}
-                </ion-badge>
+              <ion-col size="7">
+                <ion-grid class="pap-reports-tiket-type">
+                  <ion-row>
+                    <ion-col size="2">
+                      <ng-container [ngSwitch]="report.ticket_type">
+                        <ion-icon
+                          name="trash-bin"
+                          *ngSwitchCase="'abandonment'"></ion-icon>
+                        <ion-icon
+                          name="create"
+                          *ngSwitchCase="'reservation'"></ion-icon>
+                        <ion-icon
+                          name="alert-circle"
+                          *ngSwitchCase="'report'"></ion-icon>
+                        <ion-icon
+                          name="information-circle"
+                          *ngSwitchCase="'info'"></ion-icon>
+                      </ng-container>
+                    </ion-col>
+                    <ion-col size="10">
+                      <ion-label class="ion-text-wrap">
+                        {{ report.ticket_type | papTicket }}
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
                 <ion-badge
                   *ngIf="report.trashType as trashType"
                   [style.background-color]="trashType.color"
@@ -33,6 +55,7 @@
                   {{ trashType.name }}
                 </ion-badge>
               </ion-col>
+              <ion-col> </ion-col>
             </ion-row>
           </ion-grid>
         </ion-item>

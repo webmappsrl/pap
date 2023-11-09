@@ -1,8 +1,15 @@
 pap-reports-detail {
   ion-card {
+    ion-card-header {
+      padding: 0px;
+    }
     ion-card-content {
       height: 90%;
     }
+  }
+  ion-icon {
+    color: var(--ion-color-primary);
+    margin-top: 3px;
   }
   .pap-form-recap-label {
     font-weight: bold;
