@@ -6,7 +6,9 @@
     <ion-card-header>
       <ion-card-title>I miei ticket</ion-card-title>
     </ion-card-header>
-    <div class="pap-reports-spinner" *ngIf="!(reportsView$|async)">
+    <div
+      class="pap-reports-spinner"
+      *ngIf="!(reportsView$|async)">
       <ion-spinner></ion-spinner>
     </div>
     <ng-container *ngIf="reportsView$|async as reports">
@@ -14,27 +16,33 @@
         <ion-item
           *ngFor="let report of reports"
           class="pap-reports-item"
-          (click)="openDetail(report)"
-        >
-          <ion-label slot="start" class="pap-reports-date">
-            <div class="pap-reports-monthday">{{report.created_at|papDate: 'd' }}</div>
-            <div class="pap-reports-monthname">{{report.created_at|papDate: 'MMMM' }}</div>
-          </ion-label>
-          <ion-label class="pap-reports-label-info" slot="end">
-            <span>Ticket {{report.ticket_type|papTicket}}</span>
-            <div class="pap-reports-item" *ngIf="report.trashType as trashType">
-              <ion-icon slot="end" [ngStyle]="{color:trashType.color}" name="ellipse"></ion-icon>
-              <ion-label class="pap-reports-name">
-                {{trashType.name}}
-              </ion-label>
-            </div>
-          </ion-label>
+          (click)="openDetail(report)">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                <pap-date [dateKey]="report.created_at"></pap-date>
+              </ion-col>
+              <ion-col size="6">
+                <ion-badge class="pap-reports-label-info">
+                  Ticket {{ report.ticket_type | papTicket }}
+                </ion-badge>
+                <ion-badge
+                  *ngIf="report.trashType as trashType"
+                  [style.background-color]="trashType.color"
+                  class="pap-reports-name">
+                  {{ trashType.name }}
+                </ion-badge>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-item>
       </ion-list>
       <ion-grid *ngIf="reports.length === 0">
         <ion-row>
           <ion-col> </ion-col>
-          <ion-col size="10" class="ion-align-self-center">
+          <ion-col
+            size="10"
+            class="ion-align-self-center">
             <ion-label>Non hai effettuato nessuna segnalazione al momento.</ion-label>
           </ion-col>
           <ion-col> </ion-col>

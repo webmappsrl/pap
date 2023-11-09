@@ -27,11 +27,11 @@ pap-reports {
     }
   }
   .pap-reports-item {
-    margin-bottom: 4px;
-    margin-top: 4px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    // margin-bottom: 4px;
+    // margin-top: 4px;
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: flex-start;
     .pap-user-type {
       border-radius: 25px;
       color: white;
@@ -49,47 +49,22 @@ pap-reports {
       align-self: flex-start;
     }
     .pap-reports-label-info {
-      order: -1;
-      margin-left: 15px;
-      white-space: normal;
-      overflow-wrap: break-word;
-      span {
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 18.75px;
-      }
-      p {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 16.41px;
-      }
+      // order: -1;
+      // margin-left: 15px;
+      // white-space: normal;
+      // overflow-wrap: break-word;
+      // span {
+      //   font-size: 18px;
+      //   font-weight: 400;
+      //   line-height: 18.75px;
+      // }
+      // p {
+      //   font-size: 16px;
+      //   font-weight: 400;
+      //   line-height: 16.41px;
+      // }
     }
-    .pap-reports-date {
-      max-width: 70px;
-      color: var(--ion-color-primary);
-      font-weight: 300;
-      font-size: 50px;
-      text-align: center;
-      overflow: visible;
-      display: flex;
-      flex-direction: column;
-      .pap-reports-monthday {
-        font-weight: 400;
-        font-size: 18px;
-        text-transform: uppercase;
-        align-self: center;
-        color: var(--ion-color-light-contrast);
-      }
 
-      .pap-reports-monthname {
-        font-weight: 400;
-        font-size: 18px;
-        text-transform: uppercase;
-        text-transform: uppercase;
-        align-self: flex-start;
-        color: var(--ion-color-light-contrast);
-      }
-    }
     .input-wrapper {
       flex: 0 1 auto;
     }
