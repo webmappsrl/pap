@@ -12,8 +12,7 @@
         <ion-badge
           [style.background-color]="select?.tbType?.color"
           class="ion-text-center ion-text-wrap"
-          *ngIf="select?.tbType?.name"
-        >
+          *ngIf="select?.tbType?.name">
           {{select?.tbType?.name!=null? ''+select?.tbType?.name!['it']:''}}
         </ion-badge>
       </ion-col>
@@ -23,5 +22,4 @@
 <pap-calendar
   [calendars]="(calendars$|async)??[]"
   [reverse]="true"
-  (selectedTrashTypeEVT)="writeValue($event)"
-></pap-calendar>
+  (selectedTrashTypeEVT)="writeValue($event)"></pap-calendar>
