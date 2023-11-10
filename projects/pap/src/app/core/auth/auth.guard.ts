@@ -6,14 +6,14 @@ import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable, Subscription} from 'rxjs';
 import {delay, map, switchMap, tap} from 'rxjs/operators';
 import {AppState} from '../core.state';
-import {resendEmail} from './state/auth.actions';
+import {logout, resendEmail} from './state/auth.actions';
 import {user} from './state/auth.selectors';
 import {noLoggedButtons} from '../../features/home/home.model';
 
 const NO_LOGGED: AlertOptions = {
   header: 'Non sei loggato',
   message: `Puoi accedere a questa pagina dopo aver effettuato il login o la registrazione`,
-  cssClass: 'pap-alert-login',
+  cssClass: 'pap-alert',
   buttons: noLoggedButtons,
 };
 
@@ -27,9 +27,12 @@ const NO_VERIFIED: AlertOptions = {
       role: 'resend',
     },
     {
+      text: 'log-out',
+      role: 'logout',
+    },
+    {
       text: 'ok',
       role: 'ok',
-      cssClass: 'pap-alert-btn-ok',
     },
   ],
 };
@@ -56,10 +59,12 @@ export class AuthGuard implements CanActivate, OnDestroy {
       .subscribe(res => {
         if (res && res.role) {
           if (res.role === 'forgot-password') {
-            const url = `${env.api}/password/reset`;
+            const url = `${env.api.replace('/api/v1', '')}/password/reset`;
             window.open(url, '_system');
           } else if (res.role === 'resend') {
             this._store.dispatch(resendEmail());
+          } else if (res.role === 'logout') {
+            this._store.dispatch(logout());
           } else {
             this._navCtrl.navigateForward(res.role);
           }
@@ -79,6 +84,10 @@ export class AuthGuard implements CanActivate, OnDestroy {
         if (!isL) {
           this._alertEVT.emit(NO_LOGGED);
         } else if (!isV) {
+          const notVerified = NO_VERIFIED;
+          notVerified.message = `${NO_VERIFIED.message}${
+            user.email != null ? ' a ' + user.email : ''
+          }`;
           this._alertEVT.emit(NO_VERIFIED);
         }
 

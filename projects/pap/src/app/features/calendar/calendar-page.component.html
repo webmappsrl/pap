@@ -106,18 +106,12 @@
                     </div>
                     <div>
                       <ion-button
-                        shape="round"
-                        fill="outline"
-                        size="small"
                         *ngFor="let trashType of trash.trash_types"
+                        shape="round"
+                        size="small"
+                        [style.--background]="trashType?.color"
                         (click)="info(trashType)"
                         class="pap-calendar-trashlist">
-                        <ion-icon
-                          class="trash-book-details-icon"
-                          size="medium"
-                          slot="start"
-                          [ngStyle]="{color:trashType?.color}"
-                          name="ellipse"></ion-icon>
                         <ion-label
                           class="pap-trashlist-details-label"
                           *ngIf="trashType.name">
