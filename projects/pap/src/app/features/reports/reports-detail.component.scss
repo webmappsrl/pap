@@ -15,4 +15,7 @@ pap-reports-detail {
     font-weight: bold;
     color: var(--ion-color-primary) !important;
   }
+  .pap-col-reports-detail-ticket-type {
+    display: flex;
+  }
 }

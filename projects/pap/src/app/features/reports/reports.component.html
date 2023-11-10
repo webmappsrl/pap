@@ -25,7 +25,9 @@
               <ion-col size="7">
                 <ion-grid class="pap-reports-tiket-type">
                   <ion-row>
-                    <ion-col size="2">
+                    <ion-col
+                      size="12"
+                      class="pap-col-reports-ticket-type">
                       <ng-container [ngSwitch]="report.ticket_type">
                         <ion-icon
                           name="trash-bin"
@@ -40,8 +42,6 @@
                           name="information-circle"
                           *ngSwitchCase="'info'"></ion-icon>
                       </ng-container>
-                    </ion-col>
-                    <ion-col size="10">
                       <ion-label class="ion-text-wrap">
                         {{ report.ticket_type | papTicket }}
                       </ion-label>
