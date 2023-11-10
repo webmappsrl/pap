@@ -17,6 +17,7 @@ import {SettingsService} from '../../../features/settings/state/settings.service
 import {loadConfiniZone} from '../../map/state/map.actions';
 import {confiniZone, currentZone} from '../../map/state/map.selectors';
 import {Address} from '../../../core/auth/auth.model';
+import {AddressEvent} from '../location/location.model';
 
 @Component({
   selector: 'pap-third-step-signup-form',
@@ -57,8 +58,6 @@ export class thirdStepSignupComponent implements OnInit {
   }
 
   selectUserType(address: Address, userTypeEVT: any): void {
-    console.log(address, userTypeEVT);
-    const newAddress = {...address, ...{user_type_id: userTypeEVT.detail.value}};
     this._settingSvc
       .updateAddress({...address, ...{user_type_id: userTypeEVT.detail.value}})
       .pipe(
@@ -71,16 +70,21 @@ export class thirdStepSignupComponent implements OnInit {
           }
         }),
       )
-      .subscribe(v => {
-        console.log(v);
-      });
+      .subscribe();
   }
 
-  setAddess(event: any): void {
-    const address = event.address;
-    if (address != null) {
-      this.thirdStep.get('address')?.setValue(address);
-    }
+  setAddress(event: AddressEvent): void {
+    this.thirdStep.get('city')?.setValue(event.city);
+    this.thirdStep.get('address')?.setValue(event.address);
+    this.thirdStep.get('house_number')?.setValue(event.house_number);
+    this.currentZone$.pipe(take(1)).subscribe(zone => {
+      if (zone && zone.properties && zone.properties.availableUserTypes) {
+        if (zone.properties.availableUserTypes.length > 0) {
+          const firstUserTypeId = zone.properties.availableUserTypes[0].id;
+          this.thirdStep.get('user_type_id')?.setValue(firstUserTypeId);
+        }
+      }
+    });
   }
 
   setUserType(event: Event): void {

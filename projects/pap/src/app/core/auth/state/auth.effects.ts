@@ -17,7 +17,7 @@ const SUCESSFULLY_UPDATE: AlertOptions = {
   buttons: [
     {
       text: 'ok',
-      cssClass: 'pap-alert-btn-ok',
+      role: 'ok',
     },
   ],
 };
@@ -28,7 +28,7 @@ const SUCESSFULLY_DELETE: AlertOptions = {
   buttons: [
     {
       text: 'ok',
-      cssClass: 'pap-alert-btn-ok',
+      role: 'ok',
     },
   ],
 };
@@ -39,18 +39,18 @@ const SUCESSFULLY_LOGIN: AlertOptions = {
   buttons: [
     {
       text: 'ok',
-      cssClass: 'pap-alert-btn-ok',
+      role: 'ok',
     },
   ],
 };
 const SUCESSFULLY_REGISTRATION: AlertOptions = {
   cssClass: 'pap-alert',
   header: 'REGISTRAZIONE',
-  message: 'avvenuta con successo',
+  message: 'per confermare la registrazione clicca sul link ricevuto via mail',
   buttons: [
     {
       text: 'ok',
-      cssClass: 'pap-alert-btn-ok',
+      role: 'ok',
     },
   ],
 };
@@ -61,7 +61,7 @@ const SUCESSFULLY_RESEND: AlertOptions = {
   buttons: [
     {
       text: 'ok',
-      cssClass: 'pap-alert-btn-ok',
+      role: 'ok',
     },
   ],
 };
