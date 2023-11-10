@@ -43,10 +43,7 @@ export class CalendarComponent implements OnInit {
   selectedIdxBtn$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
   selectedIdxItem$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
 
-  constructor(
-    private _inAppBrowser: InAppBrowser,
-    private _cdr: ChangeDetectorRef,
-  ) {}
+  constructor(private _inAppBrowser: InAppBrowser, private _cdr: ChangeDetectorRef) {}
 
   info(trashDate: string, tbType: TrashBookType, idxItem: number, idxTrashType: number): void {
     this.selectedIdxItem$.next(idxItem);
