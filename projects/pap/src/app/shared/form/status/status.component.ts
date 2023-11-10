@@ -50,13 +50,11 @@ export class FormStatusComponent implements OnInit {
   async presentAlert() {
     const headerText = this.conf.label ? `Vuoi annullare ${this.conf.label}?` : `Vuoi annullare?`;
     const alert = await this.alertController.create({
-      cssClass: 'pap-status-alert',
+      cssClass: 'pap-alert',
       header: headerText,
       buttons: [
         {
           text: 'Annulla',
-          role: 'cancel',
-          cssClass: 'secondary',
         },
         {
           text: 'Ok',
