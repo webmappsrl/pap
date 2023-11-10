@@ -14,8 +14,6 @@ import {isLogged} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {buttonAction} from '../../features/home/home.model';
 import {selectHomeState} from '../../features/home/state/home.selectors';
-import {closeMenu, loadMenu, openMenu} from './state/menu.actions';
-import {selectMenuState} from './state/menu.selectors';
 
 interface ActionEvt {
   action: string;
@@ -38,7 +36,6 @@ export class MenuComponent implements OnDestroy {
 
   homeView$ = this._store.pipe(select(selectHomeState));
   isLogged$ = this._store.pipe(select(isLogged));
-  menuView$ = this._store.pipe(select(selectMenuState));
 
   constructor(
     private _store: Store<AppState>,
@@ -48,7 +45,6 @@ export class MenuComponent implements OnDestroy {
   ) {
     this._actionEVTSub = this._actionEVT$.subscribe(evt => {
       if (evt.action === 'open-menu') {
-        this._store.dispatch(openMenu());
         this._menuCtrl.open('mainmenu');
         this._menuCtrl.enable(true);
       }
@@ -57,7 +53,6 @@ export class MenuComponent implements OnDestroy {
         this._navCtrl.navigateForward(evt.url);
       }
     });
-    this._store.dispatch(loadMenu());
   }
 
   public action(action: string, url?: string): void {
@@ -70,7 +65,6 @@ export class MenuComponent implements OnDestroy {
 
   public closedMenu(): void {
     this._menuCtrl.close('mainmenu');
-    this._store.dispatch(closeMenu());
   }
 
   logout(): void {

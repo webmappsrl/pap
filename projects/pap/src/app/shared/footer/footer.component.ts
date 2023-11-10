@@ -12,8 +12,6 @@ import {Subscription} from 'rxjs';
 import {AppState} from '../../core/core.state';
 import {buttonAction} from '../../features/home/home.model';
 import {selectHomeState} from '../../features/home/state/home.selectors';
-import {closeMenu, loadFooters, openMenu} from './state/footer.actions';
-import {selectFooterState} from './state/footer.selectors';
 
 interface ActionEvt {
   action: string;
@@ -34,7 +32,6 @@ export class FooterComponent implements OnDestroy {
   @Input() modal: boolean = false;
   @Input() startButton: boolean = false;
 
-  footerView$ = this._store.pipe(select(selectFooterState));
   homeView$ = this._store.pipe(select(selectHomeState));
 
   constructor(
@@ -45,7 +42,6 @@ export class FooterComponent implements OnDestroy {
   ) {
     this._actionEVTSub = this._actionEVT$.subscribe(evt => {
       if (evt.action === 'open-menu') {
-        this._store.dispatch(openMenu());
         this._menuCtrl.open('mainmenu');
         this._menuCtrl.enable(true);
       }
@@ -54,7 +50,6 @@ export class FooterComponent implements OnDestroy {
         this._navCtrl.navigateForward(evt.url);
       }
     });
-    this._store.dispatch(loadFooters());
   }
 
   public action(action: string, url?: string): void {
@@ -67,7 +62,6 @@ export class FooterComponent implements OnDestroy {
 
   public closedMenu(): void {
     this._menuCtrl.close('mainmenu');
-    this._store.dispatch(closeMenu());
   }
 
   public ngOnDestroy(): void {
