@@ -2,25 +2,15 @@ pap-form-recap {
   padding-top: 10px;
   display: block;
   margin-top: 15px;
-  ul {
-    overflow: auto;
-    max-height: 450px;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-  li {
-    font-size: 17px;
-    line-height: 24px;
-    color: var(--ion-color-light-contrast);
-    list-style-type: disc;
-  }
   .pap-form-recap-title {
     margin-top: -47px;
-    margin-bottom: -8px;
     color: var(--ion-color-light-contrast);
     font-weight: 500;
     font-size: 26px;
+  }
+  .pap-form-recap-label {
+    font-weight: bold;
+    color: var(--ion-color-primary) !important;
   }
   .pap-form-recap-note {
     font-weight: 400;

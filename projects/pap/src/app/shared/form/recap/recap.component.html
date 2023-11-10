@@ -1,91 +1,77 @@
 <h1 class="pap-form-recap-title">
-  {{'Riepilogo'|translate}}
+  {{ 'Riepilogo' | translate }}
 </h1>
-<ul>
-  <ng-container *ngFor="let item of steps$|async">
-    <li *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''">
-      <span class="pap-form-recap-label">
-        {{(item.recap||'') | translate}}
-      </span>
-      <ul>
-        <ng-container [ngSwitch]="item.type">
-          <li class="pap-form-recap-note-internal">
-            <ion-note class="pap-form-recap-note" *ngSwitchCase="'text'">
-              {{form.controls[item.type].value}}
-            </ion-note>
-            <ion-note class="pap-form-recap-note" *ngSwitchCase="'trash_type_id'">
-              {{(currentTrashBookType$|async)?.name}}
-            </ion-note>
-            <span *ngSwitchCase="'location'">
-              <ion-note class="pap-form-recap-note" *ngIf="form.controls['city'].value as city">
-                {{city}}
-              </ion-note>
-              <ion-note
-                class="pap-form-recap-note"
-                *ngIf="form.controls['address'].value as address"
+<ng-container *ngFor="let item of steps$ | async">
+  <ion-item *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''">
+    <ion-grid>
+      <ion-row>
+        <ion-col
+          size-sm="4"
+          size-xs="12">
+          <ion-label class="pap-form-recap-label">
+            {{ (item.recap || '') | translate }}:
+          </ion-label>
+        </ion-col>
+        <ion-col
+          size-sm="8"
+          size-xs="12">
+          <ion-label class="ion-text-wrap">
+            <ng-container [ngSwitch]="item.type">
+              <!-- Text Type -->
+              <ion-label *ngSwitchCase="'text'">{{ form.controls[item.type].value }}</ion-label>
+              <!-- Trash Type ID -->
+              <ion-badge
+                *ngSwitchCase="'trash_type_id'"
+                >{{ (currentTrashBookType$ | async)?.name }}</ion-badge
               >
-                {{address}}
-              </ion-note>
-              <ion-note
-                class="pap-form-recap-note"
-                *ngIf="form.controls['house_number'].value as house_number"
-              >
-                {{house_number}}
-              </ion-note>
-            </span>
-
-            <ion-note class="pap-form-recap-note" *ngSwitchCase="'phone'">
-              {{form.controls[item.type].value}}
-            </ion-note>
-            <ion-note class="pap-form-recap-note" *ngSwitchCase="'note'">
-              {{form.controls[item.type].value}}
-            </ion-note>
-
-            <ng-container *ngSwitchCase="'calendar_trash_type_id'">
-              <ng-container *ngIf="form.controls[item.type].value as value">
-                <div
-                  class="pap-form-recap-calendar-item"
-                  *ngIf="form.controls[item.type].value as value"
+              <!-- Location -->
+              <ng-container *ngSwitchCase="'location'">
+                <ion-label *ngIf="form.controls['city'].value as city">{{ city }}</ion-label>
+                <ion-label
+                  *ngIf="form.controls['address'].value as address"
+                  >{{ address }}</ion-label
                 >
-                  <div class="pap-form-recap-calendar-detail">
-                    <ion-label lines="none"> data: </ion-label>
-                    <ion-note
-                      class="pap-form-recap-note"
-                      *ngIf="value.trashDate as trashDate"
-                      >{{trashDate|date}}</ion-note
-                    >
-                  </div>
-                  <div class="pap-form-recap-calendar-detail">
-                    <ion-label lines="none"> tipo di rifiuto: </ion-label>
-                    <ion-note
-                      class="pap-form-recap-note"
-                      *ngIf="value.tbType as tbType"
-                      >{{tbType.name.it}}</ion-note
-                    >
-                  </div>
-                  <div class="pap-form-recap-calendar-detail">
-                    <ion-label lines="none"> indirizzo: </ion-label>
-                    <ion-note
-                      class="pap-form-recap-note"
-                      *ngIf="value.calendar as calendar"
-                      >{{calendar.address.address}}</ion-note
-                    >
-                  </div>
-                </div>
+                <ion-label
+                  *ngIf="form.controls['house_number'].value as house_number"
+                  >{{ house_number }}</ion-label
+                >
               </ng-container>
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'image'">
-              <div>
+              <!-- Phone -->
+              <ion-label *ngSwitchCase="'phone'">{{ form.controls[item.type].value }}</ion-label>
+              <!-- Note -->
+              <ion-label *ngSwitchCase="'note'">{{ form.controls[item.type].value }}</ion-label>
+              <!-- Calendar Trash Type ID -->
+              <ng-container *ngSwitchCase="'calendar_trash_type_id'">
+                <ng-container *ngIf="form.controls[item.type].value as value">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col>Data:</ion-col>
+                      <ion-col *ngIf="value.trashDate as trashDate">{{ trashDate | date }}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col>Tipo di rifiuto:</ion-col>
+                      <ion-col *ngIf="value.tbType as tbType">{{ tbType.name.it }}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col>Indirizzo:</ion-col>
+                      <ion-col
+                        *ngIf="value.calendar as calendar"
+                        >{{ calendar.address.address }}</ion-col
+                      >
+                    </ion-row>
+                  </ion-grid>
+                </ng-container>
+              </ng-container>
+              <!-- Image -->
+              <ng-container *ngSwitchCase="'image'">
                 <img [src]="form.controls[item.type].value" />
-              </div>
+              </ng-container>
+              <!-- Default -->
+              <ion-label *ngSwitchDefault>{{ 'messages.notInserted' | translate }}</ion-label>
             </ng-container>
-            <ion-note class="pap-form-recap-note" *ngSwitchDefault class="pap-form-recap-note">
-              {{'messages.notInserted' | translate}}
-            </ion-note>
-          </li>
-        </ng-container>
-      </ul>
-    </li>
-  </ng-container>
-</ul>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</ng-container>
