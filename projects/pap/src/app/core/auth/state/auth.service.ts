@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {environment as env} from 'projects/pap/src/environments/environment';
+import {environment as env, environment} from 'projects/pap/src/environments/environment';
 import {Observable} from 'rxjs';
 import {
   LoginCredentials,
@@ -33,6 +33,7 @@ export class AuthService {
       {
         email: credential.email,
         password: credential.password,
+        app_company_id: environment.companyId,
       },
       {
         headers: new HttpHeaders({
