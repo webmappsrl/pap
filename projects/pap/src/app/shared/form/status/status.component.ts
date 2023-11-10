@@ -54,14 +54,14 @@ export class FormStatusComponent implements OnInit {
       header: headerText,
       buttons: [
         {
-          text: 'Annulla',
-        },
-        {
           text: 'Ok',
           role: 'ok',
           handler: () => {
             this.undoEvt.emit();
           },
+        },
+        {
+          text: 'Annulla',
         },
       ],
     });
