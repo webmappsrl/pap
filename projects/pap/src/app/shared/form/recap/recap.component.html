@@ -2,13 +2,73 @@
   {{ 'Riepilogo' | translate }}
 </h1>
 <ng-container *ngFor="let item of steps$ | async">
+  <ng-container *ngIf="form.controls[item.type].value as value">
+    <!-- Trash type -->
+    <ion-item *ngIf="value.tbType">
+      <ion-grid>
+        <ion-row>
+          <ion-col
+            size-sm="4"
+            size-xs="12">
+            <ion-label class="pap-form-recap-label ion-text-wrap">Tipo di rifiuto:</ion-label>
+          </ion-col>
+          <ion-col
+            size-sm="8"
+            size-xs="12">
+            <ion-badge
+              class="ion-text-wrap"
+              [style.background-color]="value.tbType.color"
+              >{{ value.tbType.name.it }}</ion-badge
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <!-- Date -->
+    <ion-item *ngIf="value.trashDate">
+      <ion-grid>
+        <ion-row>
+          <ion-col
+            size-sm="4"
+            size-xs="12">
+            <ion-label class="pap-form-recap-label ion-text-wrap">Data:</ion-label>
+          </ion-col>
+          <ion-col
+            size-sm="8"
+            size-xs="12">
+            <ion-label class="ion-text-wrap">{{ value.trashDate | date }}</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <!-- Address -->
+    <ion-item *ngIf="value.calendar">
+      <ion-grid>
+        <ion-row>
+          <ion-col
+            size-sm="4"
+            size-xs="12">
+            <ion-label class="pap-form-recap-label ion-text-wrap">Indirizzo:</ion-label>
+          </ion-col>
+          <ion-col
+            size-sm="8"
+            size-xs="12">
+            <ion-label class="ion-text-wrap">{{ value.calendar.address.address }}</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngFor="let item of steps$ | async">
   <ion-item *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''">
     <ion-grid>
       <ion-row>
         <ion-col
           size-sm="4"
           size-xs="12">
-          <ion-label class="pap-form-recap-label">
+          <ion-label class="pap-form-recap-label ion-text-wrap">
             {{ (item.recap || '') | translate }}:
           </ion-label>
         </ion-col>
@@ -22,6 +82,7 @@
               <!-- Trash Type ID -->
               <ion-badge
                 *ngSwitchCase="'trash_type_id'"
+                [style.background-color]="(currentTrashBookType$ | async)?.color"
                 >{{ (currentTrashBookType$ | async)?.name }}</ion-badge
               >
               <!-- Location -->
@@ -40,28 +101,6 @@
               <ion-label *ngSwitchCase="'phone'">{{ form.controls[item.type].value }}</ion-label>
               <!-- Note -->
               <ion-label *ngSwitchCase="'note'">{{ form.controls[item.type].value }}</ion-label>
-              <!-- Calendar Trash Type ID -->
-              <ng-container *ngSwitchCase="'calendar_trash_type_id'">
-                <ng-container *ngIf="form.controls[item.type].value as value">
-                  <ion-grid>
-                    <ion-row>
-                      <ion-col>Data:</ion-col>
-                      <ion-col *ngIf="value.trashDate as trashDate">{{ trashDate | date }}</ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col>Tipo di rifiuto:</ion-col>
-                      <ion-col *ngIf="value.tbType as tbType">{{ tbType.name.it }}</ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col>Indirizzo:</ion-col>
-                      <ion-col
-                        *ngIf="value.calendar as calendar"
-                        >{{ calendar.address.address }}</ion-col
-                      >
-                    </ion-row>
-                  </ion-grid>
-                </ng-container>
-              </ng-container>
               <!-- Image -->
               <ng-container *ngSwitchCase="'image'">
                 <img [src]="form.controls[item.type].value" />
