@@ -9,25 +9,32 @@
           *ngIf="ticketFormConf.step && ticketFormConf.step[0]">
           <div class="pap-form-content">
             <ng-container *ngIf="ticketFormConf.label as label">
-              <div [ngClass]="{'pap-form-first-step' : (pos$|async)===0}">
-                <ion-label>
-                  <ng-container [ngSwitch]="ticketFormConf.ticketType">
-                    <ion-icon
-                      name="trash-bin"
-                      *ngSwitchCase="'abandonment'"></ion-icon>
-                    <ion-icon
-                      name="create"
-                      *ngSwitchCase="'reservation'"></ion-icon>
-                    <ion-icon
-                      name="alert-circle"
-                      *ngSwitchCase="'report'"></ion-icon>
-                    <ion-icon
-                      name="information-circle"
-                      *ngSwitchCase="'info'"></ion-icon>
-                  </ng-container>
-                  {{ label }}
-                </ion-label>
-              </div>
+              <ion-grid [ngClass]="{'pap-form-first-step' : (pos$|async)===0}">
+                <ion-row>
+                  <ion-col
+                    size="12"
+                    class="pap-col-reports-detail-ticket-type"
+                    class="pap-form-content-ticket-type">
+                    <ng-container [ngSwitch]="ticketFormConf.ticketType">
+                      <ion-icon
+                        name="trash-bin"
+                        *ngSwitchCase="'abandonment'"></ion-icon>
+                      <ion-icon
+                        name="create"
+                        *ngSwitchCase="'reservation'"></ion-icon>
+                      <ion-icon
+                        name="alert-circle"
+                        *ngSwitchCase="'report'"></ion-icon>
+                      <ion-icon
+                        name="information-circle"
+                        *ngSwitchCase="'info'"></ion-icon>
+                    </ng-container>
+                    <ion-label>
+                      {{ label }}
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
             </ng-container>
 
             <ng-container *ngIf="(pos$|async)===0; else otherSteps">

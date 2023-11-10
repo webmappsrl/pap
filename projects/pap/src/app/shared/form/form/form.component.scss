@@ -4,6 +4,7 @@ pap-form {
   --ion-item-background: var(--ion-color-light);
   ion-icon {
     color: var(--ion-color-primary);
+    margin-top: 1px;
   }
   .pap-form-first-step {
     font-size: 20px;
@@ -105,5 +106,8 @@ pap-form {
     left: 0;
     right: 0;
     padding: 0px 55px 70px 55px;
+  }
+  .pap-form-content-ticket-type {
+    display: flex;
   }
 }
