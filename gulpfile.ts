@@ -66,20 +66,22 @@ gulp.task('build', async () => {
       appName: config.name,
       webDir: 'dist/pap/',
       bundledWebRuntime: false,
-      cordova: {
-        preferences: {
-          ScrollEnabled: 'false',
-          BackupWebStorage: 'none',
-          SplashMaintainAspectRatio: 'true',
-          FadeSplashScreenDuration: '300',
-          SplashShowOnlyFirstTime: 'false',
-          SplashScreen: 'screen',
-          SplashScreenDelay: '3000',
-        },
-      },
       plugins: {
         PushNotifications: {
           presentationOptions: ['badge', 'sound', 'alert'],
+        },
+        SplashScreen: {
+          launchShowDuration: 3000,
+          launchAutoHide: true,
+          backgroundColor: '#ffffffff',
+          androidSplashResourceName: 'splash',
+          androidScaleType: 'CENTER_CROP',
+          showSpinner: true,
+          androidSpinnerStyle: 'large',
+          iosSpinnerStyle: 'small',
+          spinnerColor: '#999999',
+          splashFullScreen: true,
+          splashImmersive: true,
         },
       },
     };
@@ -468,7 +470,8 @@ async function download(url: string, destinationPath: string) {
     const response = await axios.get(url, {responseType: 'arraybuffer'});
     fs.writeFileSync(destinationPath, response.data);
   } catch (error) {
-    console.log(`ERROR: ${error}`);
+    console.error(`ERROR: ${error}`);
+    console.log(`ERROR-url: ${url}`);
   }
 }
 
