@@ -4,7 +4,9 @@
 <ng-container *ngFor="let item of steps$ | async">
   <ng-container *ngIf="form.controls[item.type].value as value">
     <!-- Trash type -->
-    <ion-item *ngIf="value.tbType">
+    <ion-item
+      *ngIf="value.tbType"
+      class="ion-text-wrap">
       <ion-grid>
         <ion-row>
           <ion-col
@@ -63,6 +65,9 @@
 
 <ng-container *ngFor="let item of steps$ | async">
   <ion-item *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''">
+    <ion-grid>
+  <ion-item *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''" 
+  class="ion-text-wrap">
     <ion-grid class="pap-form-recap-list">
       <ion-row>
         <ion-col
