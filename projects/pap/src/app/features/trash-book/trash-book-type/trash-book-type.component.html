@@ -2,16 +2,21 @@
   <pap-header [modal]="true"></pap-header>
 </ion-header>
 
-<ion-content padding class="trash-book-type">
+<ion-content
+  padding
+  class="trash-book-type">
   <ion-card
     *ngIf="trashBookType && trashBookType.name"
-    class="trash-book-type pap-card pap-card-book-type-1"
-  >
-    <h1 class="trash-book-type-title">
+    class="trash-book-type pap-card pap-card-book-type-1">
+    <ion-badge
+      [style.background-color]="trashBookType.color"
+      class="trash-book-type-title ion-text-wrap">
       {{ trashBookType.name|papLang }}
-    </h1>
+    </ion-badge>
 
-    <div class="trash-book-type-content" *ngIf="trashBookType.description">
+    <div
+      class="trash-book-type-content"
+      *ngIf="trashBookType.description">
       {{trashBookType.description|papLang}}
     </div>
   </ion-card>
@@ -27,8 +32,7 @@
     </ng-container>
     <h2
       *ngIf="trashBookType?.allowed || trashBookType?.notallowed"
-      class="trash-book-type-subtitle"
-    >
+      class="trash-book-type-subtitle">
       {{'Cosa'|translate}}
     </h2>
     <ion-grid>
@@ -36,7 +40,10 @@
         <ion-col size="6">
           <ion-list-header>
             <ion-label class="trash-book-type-icon-container">
-              <ion-icon name="checkmark-circle" class="trash-book-type-icon-allowed"> </ion-icon>
+              <ion-icon
+                name="checkmark-circle"
+                class="trash-book-type-icon-allowed">
+              </ion-icon>
             </ion-label>
           </ion-list-header>
           <ul>
@@ -48,7 +55,10 @@
         <ion-col size="6">
           <ion-list-header>
             <ion-label class="trash-book-type-icon-container">
-              <ion-icon name="close-circle" color="danger" class="trash-book-type-icon-notallowed">
+              <ion-icon
+                name="close-circle"
+                color="danger"
+                class="trash-book-type-icon-notallowed">
               </ion-icon>
             </ion-label>
           </ion-list-header>
