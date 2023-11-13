@@ -82,7 +82,7 @@ export const homeButtons = [
     action: buttonAction.NAVIGATION,
   },
   {
-    label: 'Centri raccolta',
+    label: 'Centri di Raccolta',
     icon: 'map',
     url: 'waste-center-collection',
     action: buttonAction.NAVIGATION,

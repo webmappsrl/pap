@@ -272,7 +272,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
               buttons: [
                 {
                   text: 'ok',
-                  cssClass: 'pap-alert-btn-ok',
+                  role: 'ok',
                 },
               ],
             });
