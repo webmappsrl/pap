@@ -66,3 +66,4 @@ cypress/fixtures/cypress.env.json
 cypress.env.json
 
 cypress.config.json
+capacitor.config.ts
