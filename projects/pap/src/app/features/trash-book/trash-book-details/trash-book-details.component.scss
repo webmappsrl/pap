@@ -16,8 +16,7 @@ pap-trash-book-details {
       font-size: 0.9rem;
     }
     ion-card {
-      height: calc(100% - 40%);
-
+      max-height: calc(100% - 30%);
       .trash-book-details-calendar {
         padding: 0px 0px 20px 0px;
         .trash-book-details-button {
