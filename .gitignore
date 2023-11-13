@@ -67,3 +67,5 @@ cypress.env.json
 
 cypress.config.json
 capacitor.config.ts
+capacitor.config.ts
+.vscode/launch.json

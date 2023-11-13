@@ -57,6 +57,7 @@ gulp.task('build', async () => {
     }
     paths = getPaths(companyId);
     const config: Config = await getConfig(paths.apiUrl);
+    await setEnvironment(paths, config);
     await setAssets(config);
     await ionicPlathforms(config.resources);
     await execCmd(`rm -rf ${paths.instancePath}`);
@@ -107,9 +108,9 @@ gulp.task('build', async () => {
     await ionicBuild();
     await ionicBuildIos();
     await ionicBuildIAndroid();
-    await execCmd(`npx capacitor-set-version -v ${version}`);
+    await execCmd(`npx capacitor-set-version -v ${version} -b 0`);
     await ionicCapSync();
-
+    await ionicPlathforms(config.resources);
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
     await moveFoldersToInstance(paths.instancePath);
     const info = ((await readFileContent('./ios-custom/info.plist')) || '').replace(
@@ -164,7 +165,9 @@ async function setEnvironment(paths: Paths, config: Config): Promise<void> {
     //api: 'http://127.0.0.1:8000/',
     GOOOGLEAPIKEY: '',
   };
-
+  console.log(
+    JSON.stringify({...environment, ...{production: true}}, null, 2).replace(/"([^"]+)":/g, '$1:'),
+  );
   await writeFile(
     paths.environmentProdPath,
     `export const environment = ${JSON.stringify(
