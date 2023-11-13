@@ -1,6 +1,5 @@
-import {e2eLogin, hexToRgb} from 'cypress/utils/test-utils';
+import {e2eLogin} from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
-import {TrashBookRow} from 'projects/pap/src/app/features/trash-book/trash-book-model';
 import {Feature} from 'projects/pap/src/app/shared/form/location/location.model';
 import {abandonmentTicketForm} from 'projects/pap/src/app/shared/models/form.model';
 import {environment} from 'projects/pap/src/environments/environment';
@@ -9,6 +8,16 @@ const servicesButton = homeButtons.find(button => button.label === 'Servizi');
 const abandonmentTicketButton = servicesButtons.find(button => button.text === 'Segnala abbandono');
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
+let formMockup = {
+  Telefono: '356273894',
+  Note: 'this is a text note',
+  Servizio: '',
+  Immagine: '',
+  Indirizzo: {
+    city: '',
+    address: '',
+  },
+};
 
 before(() => {
   cy.clearCookies();
@@ -61,8 +70,13 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at second s
   });
 });
 
-describe.skip('pap-abandonment-ticket: test the correct behaviour of form at third step', () => {
+describe('pap-abandonment-ticket: test the correct behaviour of form at third step', () => {
   it('should go to third step with a trash type selected', () => {
+    cy.get('pap-form-select ion-list ion-item')
+      .first()
+      .then(btn => {
+        formMockup.Servizio = btn.text();
+      });
     cy.get('pap-form-select ion-list ion-item').first().click();
     cy.get('.pap-status-next-button').click();
   });
@@ -79,22 +93,22 @@ describe.skip('pap-abandonment-ticket: test the correct behaviour of form at thi
   });
 
   it('should click on a random position on the pap-map and verify address', () => {
-    cy.wait(1000); //TODO manage waiting without wait
     // Start intercepting requests to Nominatim
     cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
     // Perform the click on the center of the map
-    cy.get('pap-form-location').then($map => {
-      const width = $map.width();
-      const height = $map.height();
-      if (width && height) {
-        // Find the center of the element
-        const centerX = width / 2;
-        const centerY = height / 2;
-        // Click on the center of the map
-        cy.wait(1000);
-        cy.wrap($map).click(centerX, centerY);
-      }
-    });
+    cy.get('pap-form-location')
+      .should('be.visible')
+      .then($map => {
+        const width = $map.width();
+        const height = $map.height();
+        if (width && height) {
+          // Find the center of the element
+          const centerX = width / 2;
+          const centerY = height / 2;
+          // Click on the center of the map
+          cy.wrap($map).click(centerX, centerY);
+        }
+      });
     // Wait for the request to Nominatim to be made
     cy.wait('@nominatimRequest').then(interception => {
       const url = new URL(interception.request.url);
@@ -106,14 +120,25 @@ describe.skip('pap-abandonment-ticket: test the correct behaviour of form at thi
       cy.request(
         `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
       ).then(response => {
-        // const nominatimDisplayName = response.body.display_name;
-        cy.get('pap-form-location ion-item ion-textarea').should('not.be.empty');
+        const displayName = response.body.display_name;
+        cy.get('[formControlName="city"]')
+          .invoke('val')
+          .then(cityValue => {
+            formMockup.Indirizzo.city = cityValue as string;
+            expect(displayName).to.include(cityValue);
+          });
+        cy.get('[formControlName="address"]')
+          .invoke('val')
+          .then(addressValue => {
+            formMockup.Indirizzo.address = addressValue as string;
+            expect(displayName).to.include(addressValue);
+          });
       });
     });
   });
 
   it('should have a label that matches one of the apiZonesGeoJson labels', function () {
-    cy.get('pap-form-location ion-label')
+    cy.get('.top-right ion-badge')
       .should('be.visible')
       .invoke('text')
       .then(uiLabelText => {
@@ -125,7 +150,7 @@ describe.skip('pap-abandonment-ticket: test the correct behaviour of form at thi
   });
 });
 
-describe.skip('pap-abandonment-ticket: test the correct behaviour of form at fourth step', () => {
+describe('pap-abandonment-ticket: test the correct behaviour of form at fourth step', () => {
   it('should go to fourth step with a location selected', () => {
     cy.get('.pap-status-next-button').click();
   });
@@ -145,7 +170,7 @@ describe.skip('pap-abandonment-ticket: test the correct behaviour of form at fou
   });
 });
 
-describe.skip('pap-abandonment-ticket: test the correct behaviour of form at fifth step', () => {
+describe('pap-abandonment-ticket: test the correct behaviour of form at fifth step', () => {
   it('should go to fifth step', () => {
     cy.get('.pap-status-next-button').click();
   });
@@ -158,93 +183,53 @@ describe.skip('pap-abandonment-ticket: test the correct behaviour of form at fif
   });
 
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-textarea').type('this is a text for e2e test by Rubens');
+    cy.get('ion-textarea').type(formMockup.Note);
     cy.get('.pap-status-next-button').click();
   });
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-input').type('356273894');
+    cy.get('ion-input').type(formMockup.Telefono);
     cy.get('.pap-status-checkmark-button').should('exist').click();
   });
 });
 
-describe.skip('pap-abandonment-ticket: test the correct behaviour of form at recap step', () => {
-  it('should display the recap title', () => {
-    cy.get('.pap-form-recap-title').should('include.text', 'Riepilogo');
-  });
-
+describe('pap-abandonment-ticket: test the correct behaviour of form at recap step', () => {
+  const recapStep = abandonmentTicketForm.step[abandonmentTicketForm.step.length - 1];
   it('should display sending button in status', () => {
     cy.get('.pap-status-sending-button').should('exist');
   });
 
-  it('should display the text field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("text")')) {
-        cy.get('ion-note[ngSwitchCase="text"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the trash type field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("trash_type_id")')) {
-        cy.get('ion-note[ngSwitchCase="trash_type_id"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the building field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("building")')) {
-        cy.get('ion-note[ngSwitchCase="building"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the floor field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("floor")')) {
-        cy.get('ion-note[ngSwitchCase="floor"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the name field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("name")')) {
-        cy.get('ion-note[ngSwitchCase="name"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the surname field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("surname")')) {
-        cy.get('ion-note[ngSwitchCase="surname"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the image field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("image")')) {
-        cy.get('img').should('be.visible');
-      }
-    });
-  });
-
-  it('should display the default message for not inserted values', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("messages.notInserted")')) {
-        cy.get('ion-note.pap-form-recap-note[ngSwitchDefault]').should(
-          'include.text',
-          'messages.notInserted',
-        );
-      }
+  it('test values', () => {
+    cy.get('.pap-form-recap-list ion-row').each((row, rowIndex) => {
+      let recap: keyof typeof formMockup | null = null;
+      cy.wrap(row)
+        .find('ion-col')
+        .eq(0)
+        .invoke('text')
+        .then(text => {
+          recap = text.replace(':', '').trim() as keyof typeof formMockup;
+        });
+      cy.wrap(row)
+        .find('ion-col')
+        .eq(1)
+        .invoke('text')
+        .then(value => {
+          if (recap && formMockup[recap] != null) {
+            switch (recap) {
+              default:
+                expect(formMockup[recap]).to.equal(value.trim());
+                break;
+              case 'Indirizzo':
+                expect(value).to.include(formMockup[recap].city);
+                expect(value).to.include(formMockup[recap].address);
+                break;
+            }
+          }
+        });
     });
   });
 });
 
-describe.skip('pap-abandonment-ticket: test the correct behaviour of cancel button in status', () => {
+describe('pap-abandonment-ticket: test the correct behaviour of cancel button in status', () => {
   it('should display ion-alert correctly', () => {
     cy.get('.pap-status-cancel-icon').should('exist').click();
     cy.get('ion-alert').should('exist');

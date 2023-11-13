@@ -14,7 +14,8 @@ export function e2eLogin(
   const apiLogin = `${environment.api}/login`;
   cy.intercept('POST', apiLogin).as('loginRequest');
   cy.get('.pap-header-button').click();
-  cy.get('.pap-alert-login .alert-button-role-sign-in').click();
+  cy.get('ion-alert').should('be.visible');
+  cy.get('.alert-button-role-sign-in').click();
   cy.url().should('include', '/sign-in');
   cy.get('form [formControlName="email"]').type(email);
   cy.get('form [formControlName="password"]').type(password);
