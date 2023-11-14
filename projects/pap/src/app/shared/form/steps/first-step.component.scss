@@ -19,4 +19,7 @@ pap-first-step-signup-form {
   .pap-first-step-signup-form-address-container {
     max-height: calc(100vh - 490px);
   }
+  ion-button.ion-float-right {
+    float: right;
+  }
 }
