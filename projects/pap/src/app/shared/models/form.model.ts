@@ -100,7 +100,7 @@ export const abandonmentTicketForm: TicketFormConf = {
       recap: 'Servizio',
     },
     {
-      label: '',
+      label: 'Seleziona il luogo:',
       type: 'location',
       required: true,
       recap: 'Indirizzo',
