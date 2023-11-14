@@ -50,7 +50,7 @@
         (click)="this.sendDataEvt.emit()"
         [disabled]="!(isValid$|async)"
         *ngIf="pos+1 === conf.step.length">
-        invia
+        {{'invia'|translate}}
       </ion-button>
     </ion-col>
   </ion-row>
