@@ -44,7 +44,10 @@ export class CalendarComponent implements OnInit {
   selectedidxRow$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
   selectedidxBtn$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
 
-  constructor(private _inAppBrowser: InAppBrowser, private _cdr: ChangeDetectorRef) {}
+  constructor(
+    private _inAppBrowser: InAppBrowser,
+    private _cdr: ChangeDetectorRef,
+  ) {}
 
   info(
     trashDate: string,
