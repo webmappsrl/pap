@@ -24,4 +24,7 @@ pap-form-select {
       display: none;
     }
   }
+  .selected-item {
+    color: var(--ion-color-secondary) !important;
+  }
 }

@@ -87,9 +87,10 @@ ion-modal {
     }
     .alert-button-role-ok,
     .alert-button-role-sign-in,
-    .alert-button-role-logout-ok {
+    .alert-button-role-logout-ok,
+    .alert-button-role-destructive {
       background-color: var(--ion-color-primary) !important;
-      color: var(--ion-color-primary-contrast);
+      color: var(--ion-color-primary-contrast) !important;
     }
     .alert-button-role-cancel {
       border: unset;

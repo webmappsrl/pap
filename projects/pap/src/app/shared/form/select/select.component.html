@@ -3,23 +3,24 @@
   debounce="200"
   [(ngModel)]="searchString"
   (ionFocus)="onFocus()"
-  (ionBlur)="onBlur()"
-></ion-searchbar>
+  (ionBlur)="onBlur()"></ion-searchbar>
 <ion-list
   *ngIf="(options$|async) as opts"
-  [ngStyle]="{height: (isFocused$|async) ? '80px' : 'auto'}"
->
+  [ngStyle]="{height: (isFocused$|async) ? '80px' : 'auto'}">
   <ion-item
     *ngFor="let opt of opts | sort | filterBy : searchString "
     (click)="writeValue(opt)"
-    [class.selected]="opt.id ===select"
-  >
-    <ion-icon
-      slot="start"
-      [ngStyle]="{color:opt?.color}"
-      [name]="opt.id ===select? 'checkmark-circle':opt.color
-      ?'ellipse':'ellipse-outline'"
-    ></ion-icon>
-    <ion-label>{{opt.name}}</ion-label>
+    [class.selected-btn]="opt.id === select">
+    <ion-button
+      shape="round"
+      [style.--background]="opt?.color"
+      class="pap-calendar-trashlist">
+      <ion-label
+        class="pap-trashlist-details-label ion-text-wrap"
+        *ngIf="opt.name"
+        [ngClass]="{'selected-item': opt.id === select}">
+        {{opt.name|papLang}}
+      </ion-label>
+    </ion-button>
   </ion-item>
 </ion-list>

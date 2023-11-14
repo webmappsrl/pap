@@ -92,7 +92,7 @@ export class thirdStepComponent implements OnInit {
                 buttons: [
                   {
                     text: 'ok',
-                    cssClass: 'pap-alert-btn-ok',
+                    role: 'ok',
                   },
                 ],
               });
@@ -113,14 +113,13 @@ export class thirdStepComponent implements OnInit {
 
   async presentAlert(address: Address) {
     const alert = await this.alertController.create({
-      cssClass: 'pap-status-alert',
+      cssClass: 'pap-alert',
       header: 'Conferma eliminazione',
       message: 'Sei sicuro di voler eliminare questo indirizzo?',
       buttons: [
         {
-          text: 'Annulla',
+          text: 'X',
           role: 'cancel',
-          cssClass: 'secondary',
         },
         {
           text: 'Elimina',
