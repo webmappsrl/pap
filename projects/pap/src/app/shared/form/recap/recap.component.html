@@ -3,7 +3,6 @@
 </h1>
 <ng-container *ngFor="let item of steps$ | async">
   <ng-container *ngIf="form.controls[item.type].value as value">
-    <!-- Trash type -->
     <ion-item
       *ngIf="value.tbType"
       class="ion-text-wrap">
@@ -26,7 +25,6 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-    <!-- Date -->
     <ion-item *ngIf="value.trashDate">
       <ion-grid>
         <ion-row>
@@ -43,7 +41,6 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-    <!-- Address -->
     <ion-item *ngIf="value.calendar">
       <ion-grid>
         <ion-row>
@@ -65,9 +62,6 @@
 
 <ng-container *ngFor="let item of steps$ | async">
   <ion-item *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''">
-    <ion-grid>
-  <ion-item *ngIf="form.controls[item.type].value != null && form.controls[item.type].value != ''" 
-  class="ion-text-wrap">
     <ion-grid class="pap-form-recap-list">
       <ion-row>
         <ion-col
@@ -85,7 +79,7 @@
             <ion-badge
               *ngSwitchCase="'trash_type_id'"
               [style.background-color]="(currentTrashBookType$ | async)?.color"
-              >{{ (currentTrashBookType$ | async)?.name }}</ion-badge
+              >{{ (currentTrashBookType$ | async)?.name}}</ion-badge
             >
             <ng-container *ngSwitchCase="'location'">
               <ion-label *ngIf="form.controls['city'].value as city">{{ city }}</ion-label>

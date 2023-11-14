@@ -216,7 +216,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at recap st
           if (recap && formMockup[recap] != null) {
             switch (recap) {
               default:
-                expect(formMockup[recap]).to.equal(value.trim());
+                expect(formMockup[recap].trim()).to.equal(value.trim());
                 break;
               case 'Indirizzo':
                 expect(value).to.include(formMockup[recap].city);
