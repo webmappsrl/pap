@@ -62,9 +62,9 @@
   <ng-container *ngIf="currentCalendar$|async as currentCalendar">
     <div class="pap-calendar-scrollable-item">
       <ion-item
-        *ngFor="let item of currentCalendar.calendar| keyvalue:reverse?keyDescOrder:originalOrder; let idxItem = index"
+        *ngFor="let item of currentCalendar.calendar| keyvalue:reverse?keyDescOrder:originalOrder; let idxRow = index"
         class="pap-calendar-item">
-        <ion-grid [ngClass]="{'selected-item': (selectedIdxItem$ | async) === idxItem}">
+        <ion-grid [ngClass]="{'selected-item': (selectedidxRow$ | async) === idxRow}">
           <ion-row>
             <ion-col size="4">
               <pap-date [dateKey]="item.key"></pap-date>
@@ -72,19 +72,21 @@
             <ion-col
               size="8"
               class="pap-calendar-event ion-align-items-end ion-justify-content-end">
-              <ng-container *ngFor="let trash of item.value; let idxBtn = index">
-                <ion-button
-                  shape="round"
-                  size="small"
-                  [style.--background]="trashType?.color"
-                  *ngFor="let trashType of trash.trash_types; let idxTrashType = index"
-                  (click)="info(item.key, trashType, idxItem, idxTrashType)"
-                  class="pap-calendar-trashlist"
-                  [ngClass]="{'selected-btn': (selectedIdxItem$ | async) === idxItem && (selectedIdxBtn$ | async) === idxTrashType}">
-                  <ion-label class="pap-trashlist-details-label ion-text-wrap">
-                    {{trashType.name['it']}}
-                  </ion-label>
-                </ion-button>
+              <ng-container *ngFor="let trash of item.value; let idxCol = index">
+                <ng-container *ngIf="trash.trash_types as trashTypes">
+                  <ion-button
+                    shape="round"
+                    size="small"
+                    *ngFor="let trashType of trashTypes; let idxBtn = index"
+                    [style.--background]="trashType?.color"
+                    (click)="info(item.key, trashType, idxRow, idxBtn,idxCol)"
+                    class="pap-calendar-trashlist"
+                    [ngClass]="{'selected-btn': (selectedidxRow$ | async) === idxRow && (selectedidxCol$ | async) === idxCol &&  (selectedidxBtn$ | async) === idxBtn}">
+                    <ion-label class="pap-trashlist-details-label ion-text-wrap">
+                      {{trashType.name['it']}}
+                    </ion-label>
+                  </ion-button>
+                </ng-container>
               </ng-container>
             </ion-col>
           </ion-row>
