@@ -71,9 +71,8 @@
             </ion-col>
             <ion-col
               size="8"
-              *ngFor="let trash of item.value; let idxBtn = index"
               class="pap-calendar-event ion-align-items-end ion-justify-content-end">
-              <div>
+              <ng-container *ngFor="let trash of item.value; let idxBtn = index">
                 <ion-button
                   shape="round"
                   size="small"
@@ -86,7 +85,7 @@
                     {{trashType.name['it']}}
                   </ion-label>
                 </ion-button>
-              </div>
+              </ng-container>
             </ion-col>
           </ion-row>
         </ion-grid>
