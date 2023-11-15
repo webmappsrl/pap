@@ -35,7 +35,7 @@ describe('pap-trash-book-detail: test the correct behaviour of page', () => {
         this['wastesData'].length,
       );
       cy.get('pap-trash-book ion-card ion-list ion-item ion-label').should($labels => {
-        const labelTexts = $labels.map((index, el) => Cypress.$(el).text()).get();
+        const labelTexts = $labels.map((index, el) => Cypress.$(el).text().trim()).get();
         const namesFromWastesApi = this['wastesData'].map((item: TrashBookType) => item.name);
         expect(labelTexts).to.deep.equal(namesFromWastesApi);
       });
@@ -48,7 +48,6 @@ describe('pap-trash-book-detail: test the correct behaviour of page', () => {
     const randomIndex = Math.floor(Math.random() * this['wastesData'].length);
     const randomWaste = this['wastesData'][randomIndex];
     const searchTerm = randomWaste.name;
-
     const trashTypeId = randomWaste.trash_type_id;
     const expectedTypeName = this['trashTypesData'].find(
       (type: TrashBookType) => type.id === trashTypeId,
@@ -90,7 +89,7 @@ describe('pap-trash-book-detail: test the correct behaviour of page', () => {
     } else {
       cy.log('Field does where not exist.');
     }
-    cy.get('.trash-book-details-type ion-label.trash-book-details-value')
+    cy.get('.trash-book-details-type')
       .invoke('text')
       .then(text => text.trim())
       .should('eq', expectedTypeName);

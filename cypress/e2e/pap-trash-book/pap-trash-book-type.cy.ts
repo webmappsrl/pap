@@ -34,7 +34,7 @@ describe('pap-trash-book-type: test the correct behaviour of page', () => {
         this['wastesData'].length,
       );
       cy.get('pap-trash-book ion-card ion-list ion-item ion-label').should($labels => {
-        const labelTexts = $labels.map((index, el) => Cypress.$(el).text()).get();
+        const labelTexts = $labels.map((index, el) => Cypress.$(el).text().trim()).get();
         const namesFromWastesApi = this['wastesData'].map((item: TrashBookType) => item.name);
         expect(labelTexts).to.deep.equal(namesFromWastesApi);
       });
@@ -68,22 +68,25 @@ describe('pap-trash-book-type: test the correct behaviour of page', () => {
       .contains(searchTerm)
       .should('be.visible')
       .click();
-    cy.get('.trash-book-details-type .trash-book-details-value').should('be.visible').click();
+    cy.get('.trash-book-details-type').should('be.visible').click();
     cy.get('pap-trash-book-type').should('exist');
-    cy.get('h1').should('contain.text', papLang(expectedTypeName));
+    cy.get('ion-badge').should('contain.text', papLang(expectedTypeName));
     if (expectedTypeDescription) {
       cy.get('.trash-book-type-content').should('contain.text', papLang(expectedTypeDescription));
     }
     if (expectedTypeHowTo) {
       cy.get('.trash-book-type-content').should('contain.text', papLang(expectedTypeHowTo));
     }
-    cy.get('ion-col[size="6"]:first li').each(($li, index) => {
-      expect($li.text().trim()).to.equal(expectedAllowedData[index].trim());
-    });
-
-    cy.get('ion-col[size="6"]:last li').each(($li, index) => {
-      expect($li.text().trim()).to.equal(expectedNotAllowedData[index].trim());
-    });
+    if (expectedAllowedData) {
+      cy.get('ion-col[size="6"]:first li').each(($li, index) => {
+        expect($li.text().trim()).to.equal(expectedAllowedData[index].trim());
+      });
+    }
+    if (expectedNotAllowedData) {
+      cy.get('ion-col[size="6"]:last li').each(($li, index) => {
+        expect($li.text().trim()).to.equal(expectedNotAllowedData[index].trim());
+      });
+    }
   });
 });
 

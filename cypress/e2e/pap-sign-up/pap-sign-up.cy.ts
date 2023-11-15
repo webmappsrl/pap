@@ -18,7 +18,7 @@ before(() => {
 describe('pap-sign-up: test the correct behaviour of form at first step', () => {
   it('should navigate to /sign-up when sign up button is clicked', () => {
     cy.get('.pap-header-button').click();
-    cy.get('.pap-alert-login .alert-button-role-sign-up').click();
+    cy.get('.pap-alert .alert-button-role-sign-up').click();
     cy.url().should('include', '/sign-up');
   });
 
@@ -61,32 +61,32 @@ describe('pap-sign-up: test the correct behaviour of form at second step', () =>
   });
 
   it('only prev button should be disabled without required fields', () => {
-    cy.get('.ion-align-self-start ion-button').should('exist', 'not.be.disabled');
-    cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.enabled');
+    cy.get('.pap-second-step-signup-form-back-button').should('exist', 'not.be.disabled');
+    cy.get('.pap-second-step-signup-form-next-button').should('exist', 'not.be.enabled');
   });
 
   it('should not be able to go ahead with too short password', () => {
     cy.get('ion-input[formControlName="password"]').type('123');
     cy.get('ion-input[formControlName="password_confirmation"]').type('123');
-    cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.enabled');
+    cy.get('.pap-second-step-signup-form-next-button').should('exist', 'not.be.enabled');
   });
 
   it('should not be able to go ahead with wrong password', () => {
     cy.get('ion-input[formControlName="password"]').type('testpasswordcoretta123');
     cy.get('ion-input[formControlName="password_confirmation"]').type('testpasswordsbagliata321');
-    cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.enabled');
+    cy.get('.pap-second-step-signup-form-next-button').should('exist', 'not.be.enabled');
   });
 
   it('should now able to go ahead with correct password', () => {
     cy.get('ion-input[formControlName="password"]').type('testpasswordcoretta123');
     cy.get('ion-input[formControlName="password_confirmation"]').type('testpasswordcoretta123');
-    cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.disabled');
+    cy.get('.pap-second-step-signup-form-next-button').should('exist', 'not.be.disabled');
   });
 });
 
-describe.skip('pap-sign-up: test the correct behaviour of form at third step', () => {
+describe('pap-sign-up: test the correct behaviour of form at third step', () => {
   it('should navigate to third step correctly', () => {
-    cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.disabled').click();
+    cy.get('.pap-second-step-signup-form-next-button').should('exist', 'not.be.disabled').click();
   });
 
   it('only prev button should be disabled without a selected address', () => {
@@ -99,18 +99,19 @@ describe.skip('pap-sign-up: test the correct behaviour of form at third step', (
     // Start intercepting requests to Nominatim
     cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
     // Perform the click on the center of the map
-    cy.get('pap-form-location').then($map => {
-      const width = $map.width();
-      const height = $map.height();
-      if (width && height) {
-        // Find the center of the element
-        const centerX = width / 2;
-        const centerY = height / 2;
-        // Click on the center of the map
-        cy.wait(1000);
-        cy.wrap($map).click(centerX, centerY);
-      }
-    });
+    cy.get('pap-form-location')
+      .should('be.visible')
+      .then($map => {
+        const width = $map.width();
+        const height = $map.height();
+        if (width && height) {
+          // Find the center of the element
+          const centerX = width / 2;
+          const centerY = height / 2;
+          // Click on the center of the map
+          cy.wrap($map).click(centerX, centerY);
+        }
+      });
     // Wait for the request to Nominatim to be made
     cy.wait('@nominatimRequest').then(interception => {
       const url = new URL(interception.request.url);
@@ -144,7 +145,9 @@ describe.skip('pap-sign-up: test the correct behaviour of form at third step', (
   });
 
   it('should select always first user type from list', () => {
-    cy.get('pap-third-step-signup-form ion-radio-group ion-item').first().click();
+    cy.get('pap-third-step-signup-form ion-radio-group ion-item ion-radio')
+      .first()
+      .should('not.be.disabled');
   });
 
   it('should now able to send your registration with all the required fields', () => {

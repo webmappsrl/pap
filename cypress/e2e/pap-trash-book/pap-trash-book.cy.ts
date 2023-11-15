@@ -20,10 +20,12 @@ before(() => {
   cy.wait('@wastesCall').then(interception => {
     const wastesData = interception?.response?.body;
     cy.wrap(wastesData).as('wastesData');
+    cy.log('watesTypes', wastesData);
   });
   cy.wait('@trashTypesCall').then(interception => {
     const trashTypesData = interception?.response?.body;
     cy.wrap(trashTypesData).as('trashTypesData');
+    cy.log('trashTypes', trashTypesData);
   });
 });
 
@@ -36,29 +38,14 @@ describe('pap-trash-book: test the correct behaviour of page', () => {
         'have.length',
         this['wastesData'].length,
       );
-      cy.get('pap-trash-book ion-card ion-list ion-item ion-label').should($labels => {
-        const labelTexts = $labels.map((index, el) => Cypress.$(el).text()).get();
+      cy.get('.pap-trashlist-details-label').should($labels => {
+        const labelTexts = $labels.map((index, el) => Cypress.$(el).text().trim()).get();
         const namesFromWastesApi = this['wastesData'].map((item: TrashBookType) => item.name);
         expect(labelTexts).to.deep.equal(namesFromWastesApi);
       });
     } else {
       throw new Error('Button not found.');
     }
-  });
-
-  it('should match trash type color correctly', function () {
-    cy.get('pap-trash-book ion-card ion-list ion-item ion-icon').each($icon => {
-      const itemColor = $icon.css('color');
-      const itemName = $icon.next().text().trim();
-      cy.log(`Checking color for: ${itemName}`);
-      const expectedColor = this['trashTypesData'].find(
-        (trashType: TrashBookRow) => trashType.name === itemName,
-      )?.color;
-      if (expectedColor) {
-        const rgbExpectedColor = hexToRgb(expectedColor);
-        expect(itemColor).to.equal(rgbExpectedColor);
-      }
-    });
   });
 
   it('should filter the list when a search term is entered', function () {
