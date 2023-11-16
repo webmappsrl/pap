@@ -1,4 +1,4 @@
-import {e2eLogin, testValidZone} from 'cypress/utils/test-utils';
+import {FormMockup, e2eLogin, testLocation, testValidZone} from 'cypress/utils/test-utils';
 import {Address, User} from 'projects/pap/src/app/core/auth/auth.model';
 import {Feature, UserType} from 'projects/pap/src/app/shared/form/location/location.model';
 import {environment} from 'projects/pap/src/environments/environment';
@@ -13,7 +13,16 @@ let apiUserAddress: any;
 let apiZonesGeoJsonData: any = null;
 const apiUser = `${environment.api}/user`;
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
-
+let formMockup: FormMockup = {
+  Telefono: '356273894',
+  Note: 'this is a text note',
+  Servizio: '',
+  Immagine: '',
+  Indirizzo: {
+    city: '',
+    address: '',
+  },
+};
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
@@ -143,49 +152,10 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
   });
 
   it('should click on a random position on the pap-map and verify address', () => {
-    cy.wait(1000); //TODO manage waiting without wait
-    //Start intercepting requests to Nominatim
-    cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
-    //Perform the random click on the map as intended
-    cy.get('pap-form-location')
-      .should('be.visible')
-      .then($map => {
-        const width = $map.width();
-        const height = $map.height();
-        if (width && height) {
-          //Find the center of the element
-          const centerX = width / 2;
-          const centerY = height / 2;
-          //Determine the random offset. For example, within a range of +/- 10 pixels from the center.
-          const maxOffset = 10;
-          const offsetX = Math.floor(Math.random() * (2 * maxOffset + 1)) - maxOffset;
-          const offsetY = Math.floor(Math.random() * (2 * maxOffset + 1)) - maxOffset;
-          //Calculate the click coordinates
-          const clickX = centerX + offsetX;
-          const clickY = centerY + offsetY;
-          cy.wrap($map).click(clickX, clickY);
-        }
-      });
-    //Wait for the request to Nominatim to be made
-    cy.wait('@nominatimRequest').then(interception => {
-      const url = new URL(interception.request.url);
-      const lat = url.searchParams.get('lat');
-      const lon = url.searchParams.get('lon');
-      //Now you have the coordinates in `lat` and `lon`
-      //Make a new request to Nominatim to get the `display_name`
-      //and then check that the `ion-textarea` element contains that value
-      cy.request(
-        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=it`,
-      ).then(response => {
-        // const nominatimDisplayName = response.body.display_name;
-        cy.get('pap-form-location ion-item ion-textarea').should('not.be.empty');
-      });
-    });
+    testLocation(formMockup);
   });
 
   it('should have a label that matches one of the apiZonesGeoJson labels', () => {
-    cy.wait(1000);
-    cy.log(apiZonesGeoJsonData);
     testValidZone(apiZonesGeoJsonData);
   });
 
