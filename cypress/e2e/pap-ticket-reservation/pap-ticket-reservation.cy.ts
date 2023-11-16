@@ -145,7 +145,7 @@ describe('pap-ticket-reservation: test the correct behaviour of form at fifth st
     cy.get('.pap-status-next-button').click();
   });
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-input').type(formMockup.Telefono);
+    cy.get('ion-input').should('be.visible').type(formMockup.Telefono);
     cy.get('.pap-status-checkmark-button').should('exist').click();
   });
 });
