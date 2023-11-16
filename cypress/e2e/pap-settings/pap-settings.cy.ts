@@ -183,21 +183,8 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
     });
   });
 
-<<<<<<< Updated upstream
-  it('should have a label that matches one of the apiZonesGeoJson labels', function () {
-    cy.get('pap-form-location pap-map ion-badge')
-      .should('exist')
-      .invoke('text')
-      .then(uiLabelText => {
-        const labelsFromApi = this['apiZonesGeoJsonData'].features.map(
-          (feature: Feature) => feature.properties.label,
-        );
-        expect(labelsFromApi).to.include(uiLabelText);
-      });
-=======
   it('should have a label that matches one of the apiZonesGeoJson labels', () => {
     testValidZone(apiZonesGeoJsonData);
->>>>>>> Stashed changes
   });
 
   it('should have a label that matches one of the apiZonesGeoJson user types', function () {
