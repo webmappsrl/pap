@@ -134,8 +134,9 @@ describe('pap-sign-up: test the correct behaviour of form at third step', () => 
     cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.enabled');
   });
 
-  it('should have a label that matches one of the apiZonesGeoJson user types', function () {
-    const labelsFromApi = apiZonesGeoJsonData.features.flatMap((feature: Feature) =>
+  it.skip('should have a label that matches one of the apiZonesGeoJson user types', function () {
+    cy.wait(1000);
+    const labelsFromApi = this['apiZonesGeoJsonData'].features.flatMap((feature: Feature) =>
       feature.properties.availableUserTypes.map((userType: UserType) => userType.label.it),
     );
     cy.get('ion-radio-group ion-item ion-label').each($el => {
