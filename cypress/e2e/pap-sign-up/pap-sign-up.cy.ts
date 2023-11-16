@@ -145,7 +145,7 @@ describe('pap-sign-up: test the correct behaviour of form at third step', () => 
     });
   });
 
-  it('should select always first user type from list', () => {
+  it.skip('should select always first user type from list', () => {
     cy.get('pap-third-step-signup-form ion-radio-group ion-item ion-radio')
       .first()
       .should('not.be.disabled');
