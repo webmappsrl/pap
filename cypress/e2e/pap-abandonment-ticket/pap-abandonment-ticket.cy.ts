@@ -102,7 +102,6 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
 
   it('should have a label that matches one of the apiZonesGeoJson labels', () => {
     cy.wait(1000);
-    cy.log(apiZonesGeoJsonData);
     testValidZone(apiZonesGeoJsonData);
   });
 });
@@ -144,14 +143,14 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fifth st
     cy.get('.pap-status-next-button').click();
   });
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-input').should('be.visible').type(formMockup.Telefono);
+    cy.get('input').should('be.visible').type(formMockup.Telefono);
     cy.get('.pap-status-checkmark-button').should('exist').click();
   });
 });
 
 describe('pap-abandonment-ticket: test the correct behaviour of form at recap step', () => {
   it('should display sending button in status', () => {
-    cy.get('.pap-status-sending-button').should('exist');
+    cy.get('.pap-status-sending-button').should('be.visible').should('exist');
   });
   it('test values inside a recap ticket form', () => testRecapTicketForm(formMockup));
 });

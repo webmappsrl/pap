@@ -197,6 +197,7 @@ export function testRecapTicketForm(formMockup: FormMockup) {
 }
 
 export function testValidZone(zoneGeojson: any) {
+  expect(zoneGeojson).to.be.not.null;
   cy.get('.top-right ion-badge')
     .should('be.visible')
     .invoke('text')

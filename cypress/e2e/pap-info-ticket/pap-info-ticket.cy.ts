@@ -48,7 +48,7 @@ describe('pap-info-ticket: test the correct behaviour of form at second step', (
     cy.get('.pap-status-next-button').click();
   });
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-input').should('be.visible').type(formMockup.Telefono);
+    cy.get('input').should('be.visible').type(formMockup.Telefono);
     cy.get('.pap-status-checkmark-button').should('exist').click();
   });
 });
