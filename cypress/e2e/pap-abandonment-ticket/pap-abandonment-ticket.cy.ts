@@ -100,8 +100,11 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
   it('should click on a random position on the pap-map and verify address', () =>
     testLocation(formMockup));
 
-  it('should have a label that matches one of the apiZonesGeoJson labels', () =>
-    testValidZone(apiZonesGeoJsonData));
+  it('should have a label that matches one of the apiZonesGeoJson labels', () => {
+    cy.wait(5000);
+    cy.log(apiZonesGeoJsonData);
+    testValidZone(apiZonesGeoJsonData);
+  });
 });
 
 describe('pap-abandonment-ticket: test the correct behaviour of form at fourth step', () => {

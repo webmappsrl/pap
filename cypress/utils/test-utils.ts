@@ -122,6 +122,7 @@ export function getApiDateRange(): {startDate: string; stopDate: string} {
 
 export function testLocation(formMockup: any): void {
   // Start intercepting requests to Nominatim
+  cy.screenshot();
   cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
   // Perform the click on the center of the map
   cy.get('pap-form-location')
@@ -132,7 +133,7 @@ export function testLocation(formMockup: any): void {
       if (width && height) {
         // Find the center of the element
         const centerX = width / 2;
-        const centerY = height / 2;
+        const centerY = height / 1.6;
         // Click on the center of the map
         cy.wrap($map).click(centerX, centerY);
       }
@@ -200,6 +201,7 @@ export function testValidZone(zoneGeojson: any) {
     .should('be.visible')
     .invoke('text')
     .then(uiLabelText => {
+      cy.log(uiLabelText);
       const labelsFromApi = zoneGeojson.features.map(
         (feature: Feature) => feature.properties.label,
       );

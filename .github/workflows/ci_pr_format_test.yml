@@ -8,5 +8,5 @@ jobs:
   format:
     uses: webmappsrl/pap/.github/workflows/job_format.yml@develop
   test:
-    uses: webmappsrl/pap/.github/workflows/job_test.yml@e2e_tests_fix
+    uses: webmappsrl/pap/.github/workflows/job_test.yml@develop
     secrets: inherit
