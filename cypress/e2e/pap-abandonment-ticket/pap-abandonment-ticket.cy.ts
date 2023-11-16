@@ -1,6 +1,11 @@
-import {e2eLogin} from 'cypress/utils/test-utils';
+import {
+  FormMockup,
+  e2eLogin,
+  testLocation,
+  testRecapTicketForm,
+  testValidZone,
+} from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
-import {Feature} from 'projects/pap/src/app/shared/form/location/location.model';
 import {abandonmentTicketForm} from 'projects/pap/src/app/shared/models/form.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
@@ -8,7 +13,8 @@ const servicesButton = homeButtons.find(button => button.label === 'Servizi');
 const abandonmentTicketButton = servicesButtons.find(button => button.text === 'Segnala abbandono');
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
-let formMockup = {
+let apiZonesGeoJsonData: any = null;
+let formMockup: FormMockup = {
   Telefono: '356273894',
   Note: 'this is a text note',
   Servizio: '',
@@ -31,7 +37,7 @@ before(() => {
     cy.log(trashTypesData);
   });
   cy.wait('@apiZonesGeoJsonCall').then(interception => {
-    const apiZonesGeoJsonData = interception?.response?.body;
+    apiZonesGeoJsonData = interception?.response?.body;
     cy.wrap(apiZonesGeoJsonData).as('apiZonesGeoJsonData');
     cy.log(apiZonesGeoJsonData);
   });
@@ -91,63 +97,11 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
       'Questo campo è obbligatorio',
     );
   });
+  it('should click on a random position on the pap-map and verify address', () =>
+    testLocation(formMockup));
 
-  it('should click on a random position on the pap-map and verify address', () => {
-    // Start intercepting requests to Nominatim
-    cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
-    // Perform the click on the center of the map
-    cy.get('pap-form-location')
-      .should('be.visible')
-      .then($map => {
-        const width = $map.width();
-        const height = $map.height();
-        if (width && height) {
-          // Find the center of the element
-          const centerX = width / 2;
-          const centerY = height / 2;
-          // Click on the center of the map
-          cy.wrap($map).click(centerX, centerY);
-        }
-      });
-    // Wait for the request to Nominatim to be made
-    cy.wait('@nominatimRequest').then(interception => {
-      const url = new URL(interception.request.url);
-      const lat = url.searchParams.get('lat');
-      const lon = url.searchParams.get('lon');
-      // Now you have the coordinates in `lat` and `lon`
-      // Make a new request to Nominatim to get the `display_name`
-      // and then check that the `ion-textarea` element contains that value
-      cy.request(
-        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
-      ).then(response => {
-        const displayName = response.body.display_name;
-        cy.get('[formControlName="city"]')
-          .invoke('val')
-          .then(cityValue => {
-            formMockup.Indirizzo.city = cityValue as string;
-            expect(displayName).to.include(cityValue);
-          });
-        cy.get('[formControlName="address"]')
-          .invoke('val')
-          .then(addressValue => {
-            formMockup.Indirizzo.address = addressValue as string;
-            expect(displayName).to.include(addressValue);
-          });
-      });
-    });
-  });
-
-  it('should have a label that matches one of the apiZonesGeoJson labels', function () {
-    cy.get('.top-right ion-badge')
-      .should('be.visible')
-      .invoke('text')
-      .then(uiLabelText => {
-        const labelsFromApi = this['apiZonesGeoJsonData'].features.map(
-          (feature: Feature) => feature.properties.label,
-        );
-        expect(labelsFromApi).to.include(uiLabelText.trim());
-      });
-  });
+  it('should have a label that matches one of the apiZonesGeoJson labels', () =>
+    testValidZone(apiZonesGeoJsonData));
 });
 
 describe('pap-abandonment-ticket: test the correct behaviour of form at fourth step', () => {
@@ -183,7 +137,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fifth st
   });
 
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-textarea').type(formMockup.Note);
+    cy.get('ion-textarea').type(formMockup.Note as string);
     cy.get('.pap-status-next-button').click();
   });
   it('should write a text into text area and go to recap', () => {
@@ -193,40 +147,10 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fifth st
 });
 
 describe('pap-abandonment-ticket: test the correct behaviour of form at recap step', () => {
-  const recapStep = abandonmentTicketForm.step[abandonmentTicketForm.step.length - 1];
   it('should display sending button in status', () => {
     cy.get('.pap-status-sending-button').should('exist');
   });
-
-  it('test values', () => {
-    cy.get('.pap-form-recap-list ion-row').each((row, rowIndex) => {
-      let recap: keyof typeof formMockup | null = null;
-      cy.wrap(row)
-        .find('ion-col')
-        .eq(0)
-        .invoke('text')
-        .then(text => {
-          recap = text.replace(':', '').trim() as keyof typeof formMockup;
-        });
-      cy.wrap(row)
-        .find('ion-col')
-        .eq(1)
-        .invoke('text')
-        .then(value => {
-          if (recap && formMockup[recap] != null) {
-            switch (recap) {
-              default:
-                expect(formMockup[recap].trim()).to.equal(value.trim());
-                break;
-              case 'Indirizzo':
-                expect(value).to.include(formMockup[recap].city);
-                expect(value).to.include(formMockup[recap].address);
-                break;
-            }
-          }
-        });
-    });
-  });
+  it('test values inside a recap ticket form', () => testRecapTicketForm(formMockup));
 });
 
 describe('pap-abandonment-ticket: test the correct behaviour of cancel button in status', () => {

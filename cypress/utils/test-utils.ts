@@ -1,7 +1,17 @@
 import {format} from 'date-fns';
 import {it as itLocale} from 'date-fns/locale';
 import {environment} from 'projects/pap/src/environments/environment';
-
+import {Feature} from 'projects/pap/src/app/shared/form/location/location.model';
+export interface FormMockup {
+  Immagine?: string;
+  Indirizzo?: {
+    city: string;
+    address: string;
+  };
+  Note?: string;
+  Servizio?: string;
+  Telefono: string;
+}
 /**
  * Logs into the application.
  * @param email - User's email address.
@@ -108,4 +118,101 @@ export function getApiDateRange(): {startDate: string; stopDate: string} {
     startDate: formatDate(startDate),
     stopDate: formatDate(today),
   };
+}
+
+export function testLocation(formMockup: any): void {
+  // Start intercepting requests to Nominatim
+  cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
+  // Perform the click on the center of the map
+  cy.get('pap-form-location')
+    .should('be.visible')
+    .then($map => {
+      const width = $map.width();
+      const height = $map.height();
+      if (width && height) {
+        // Find the center of the element
+        const centerX = width / 2;
+        const centerY = height / 2;
+        // Click on the center of the map
+        cy.wrap($map).click(centerX, centerY);
+      }
+    });
+  // Wait for the request to Nominatim to be made
+  cy.wait('@nominatimRequest').then(interception => {
+    const url = new URL(interception.request.url);
+    const lat = url.searchParams.get('lat');
+    const lon = url.searchParams.get('lon');
+    // Now you have the coordinates in `lat` and `lon`
+    // Make a new request to Nominatim to get the `display_name`
+    // and then check that the `ion-textarea` element contains that value
+    cy.request(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+    ).then(response => {
+      const displayName = response.body.display_name;
+      cy.get('[formControlName="city"]')
+        .invoke('val')
+        .then(cityValue => {
+          formMockup.Indirizzo.city = cityValue as string;
+          expect(displayName).to.include(cityValue);
+        });
+      cy.get('[formControlName="address"]')
+        .invoke('val')
+        .then(addressValue => {
+          formMockup.Indirizzo.address = addressValue as string;
+          expect(displayName).to.include(addressValue);
+        });
+    });
+  });
+}
+
+export function testRecapTicketForm(formMockup: FormMockup) {
+  cy.get('.pap-form-recap-list ion-row').each((row, rowIndex) => {
+    let recap: keyof typeof formMockup | null = null;
+    cy.wrap(row)
+      .find('ion-col')
+      .eq(0)
+      .invoke('text')
+      .then(text => {
+        recap = text.replace(':', '').trim() as keyof typeof formMockup;
+      });
+    cy.wrap(row)
+      .find('ion-col')
+      .eq(1)
+      .invoke('text')
+      .then(value => {
+        if (recap && formMockup[recap] != null) {
+          switch (recap) {
+            default:
+              expect((formMockup[recap] as string).trim()).to.equal(value.trim());
+              break;
+            case 'Indirizzo':
+              expect(value).to.include((formMockup[recap] as any).city);
+              expect(value).to.include((formMockup[recap] as any).address);
+              break;
+          }
+        }
+      });
+  });
+}
+
+export function testValidZone(zoneGeojson: any) {
+  cy.get('.top-right ion-badge')
+    .should('be.visible')
+    .invoke('text')
+    .then(uiLabelText => {
+      const labelsFromApi = zoneGeojson.features.map(
+        (feature: Feature) => feature.properties.label,
+      );
+      expect(labelsFromApi).to.include(uiLabelText.trim());
+    });
+}
+
+export function testGoToThirdStep(formMockup: FormMockup) {
+  cy.get('.pap-calendar-trashlist')
+    .first()
+    .then(btn => {
+      formMockup.Servizio = btn.text().trim();
+    });
+  cy.get('.pap-calendar-trashlist').first().click();
+  cy.get('.pap-status-next-button').click();
 }

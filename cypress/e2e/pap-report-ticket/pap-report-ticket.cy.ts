@@ -1,11 +1,11 @@
 import {
+  FormMockup,
   e2eLogin,
-  formatDateUsingPapDatePipe,
   getApiDateRange,
-  hexToRgb,
+  testGoToThirdStep,
+  testRecapTicketForm,
 } from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
-import {TrashBookRow} from 'projects/pap/src/app/features/trash-book/trash-book-model';
 import {reportTicketForm} from 'projects/pap/src/app/shared/models/form.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
@@ -16,7 +16,17 @@ const reportTicketoButton = servicesButtons.find(
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
 const {startDate, stopDate} = getApiDateRange();
 const apiCalendarWithDates = `${environment.api}/c/${environment.companyId}/calendar?start_date=${startDate}&stop_date=${stopDate}`;
-let calendarData: any;
+let calendarData: any = null;
+let formMockup: FormMockup = {
+  Telefono: '356273894',
+  Note: 'this is a text note',
+  Servizio: '',
+  Immagine: '',
+  Indirizzo: {
+    city: '',
+    address: '',
+  },
+};
 
 before(() => {
   cy.clearCookies();
@@ -27,6 +37,7 @@ before(() => {
   cy.wait('@trashTypesCall').then(interception => {
     cy.wrap(interception?.response?.body).as('trashTypesData');
   });
+
   e2eLogin();
 });
 
@@ -55,7 +66,6 @@ describe('pap-report-ticket: test the correct behaviour of form at first step', 
 
 describe('pap-report-ticket: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no trash type selected', () => {
-    cy.wait(3000); //TODO manage waiting without wait
     cy.get('.pap-status-next-button').should('be.visible').click();
     cy.get('.pap-form-content').should('include.text', reportTicketForm.label);
     const expectedLabelText = reportTicketForm.step[1].label;
@@ -67,22 +77,25 @@ describe('pap-report-ticket: test the correct behaviour of form at second step',
     );
   });
 
-  it.skip('should verify all addresses from the API response', function () {
+  it('should verify all addresses from the API response', function () {
     if (calendarData && Array.isArray(calendarData.data)) {
-      calendarData.data.forEach((item: any) => {
-        const expectedAddress = item?.address?.address;
-        if (expectedAddress) {
-          cy.contains('ion-select-option', expectedAddress).should('exist');
-        }
+      cy.get('.pap-calendar-address-button-label').should('be.visible').click();
+      calendarData.data.forEach((item: any, index: number) => {
+        cy.get('.pap-popover-address')
+          .eq(index)
+          .invoke('text')
+          .then(text => {
+            expect(text).include(item.address.address);
+          });
       });
+      cy.get('.pap-popover-address').eq(0).should('be.visible').click();
     }
   });
 });
 
 describe('pap-report-ticket: test the correct behaviour of form at third step', () => {
   it('should go to third step with a trash type selected', () => {
-    cy.get('.pap-calendar-trashlist').first().click();
-    cy.get('.pap-status-next-button').click();
+    testGoToThirdStep(formMockup);
   });
 
   it('should display the correct ticket type, ticket label', () => {
@@ -113,90 +126,19 @@ describe('pap-report-ticket: test the correct behaviour of form at fourth step',
   });
 
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-textarea').type('this is a text for e2e test by Rubens');
+    cy.get('ion-textarea').type(formMockup.Note as string);
     cy.get('.pap-status-next-button').click();
   });
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-input').type('356273894');
+    cy.get('ion-input').type(formMockup.Telefono);
     cy.get('.pap-status-checkmark-button').should('exist').click();
   });
 });
-
-describe('pap-report-ticket: test the correct behaviour of form at recap step', () => {
-  it('should display the recap title', () => {
-    cy.get('.pap-form-recap-title').should('include.text', 'Riepilogo');
-  });
-
+describe('pap-abandonment-ticket: test the correct behaviour of form at recap step', () => {
   it('should display sending button in status', () => {
     cy.get('.pap-status-sending-button').should('exist');
   });
-
-  it('should display the text field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("text")')) {
-        cy.get('ion-note[ngSwitchCase="text"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the trash type field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("trash_type_id")')) {
-        cy.get('ion-note[ngSwitchCase="trash_type_id"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the building field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("building")')) {
-        cy.get('ion-note[ngSwitchCase="building"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the floor field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("floor")')) {
-        cy.get('ion-note[ngSwitchCase="floor"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the name field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("name")')) {
-        cy.get('ion-note[ngSwitchCase="name"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the surname field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("surname")')) {
-        cy.get('ion-note[ngSwitchCase="surname"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the image field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("image")')) {
-        cy.get('img').should('be.visible');
-      }
-    });
-  });
-
-  it('should display the default message for not inserted values', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("messages.notInserted")')) {
-        cy.get('ion-note.pap-form-recap-note[ngSwitchDefault]').should(
-          'include.text',
-          'messages.notInserted',
-        );
-      }
-    });
-  });
+  it('test values inside a recap ticket form', () => testRecapTicketForm(formMockup));
 });
 
 describe('pap-report-ticket: test the correct behaviour of cancel button in status', () => {

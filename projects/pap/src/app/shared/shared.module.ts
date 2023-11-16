@@ -42,6 +42,7 @@ import {SortPipe} from './pipes/sort.pipe';
 import {BroadcastNotificationService} from './services/broadcast-notification.service';
 import {LocalNotificationService} from './services/local-notification.service';
 import {DateComponent} from './components/date/date.component';
+import {RecapRowComponent} from './form/recap/recap-row/recap-row.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -61,6 +62,7 @@ import {DateComponent} from './components/date/date.component';
     LocationModalComponent,
     FormStatusComponent,
     RecapComponent,
+    RecapRowComponent,
     ImagePickerComponent,
     SelectComponent,
     PapDatePipe,
@@ -108,6 +110,7 @@ import {DateComponent} from './components/date/date.component';
     FormComponent,
     LocationComponent,
     RecapComponent,
+    RecapRowComponent,
     FormStatusComponent,
     ImagePickerComponent,
     SelectComponent,

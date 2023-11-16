@@ -1,15 +1,22 @@
-import {e2eLogin} from 'cypress/utils/test-utils';
+import {FormMockup, e2eLogin, testRecapTicketForm} from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
 import {infoTicketForm} from 'projects/pap/src/app/shared/models/form.model';
 
 const servicesButton = homeButtons.find(button => button.label === 'Servizi');
 const infoTicketButton = servicesButtons.find(button => button.text === 'Richiedi Informazioni');
-
+let formMockup: FormMockup = {
+  Telefono: '356273894',
+  Note: 'this is a text note',
+  Servizio: '',
+  Immagine: '',
+  Indirizzo: {
+    city: '',
+    address: '',
+  },
+};
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
-  const baseurl = Cypress.env('baseurl');
-  console.log('baseurl:', baseurl);
   cy.visit(Cypress.env('baseurl'));
   e2eLogin();
 });
@@ -37,90 +44,20 @@ describe('pap-info-ticket: test the correct behaviour of form at second step', (
     cy.get('.pap-status-next-button').click();
   });
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-textarea').type('this is a text for e2e test by Rubens');
+    cy.get('ion-textarea').type(formMockup.Note as string);
     cy.get('.pap-status-next-button').click();
   });
   it('should write a text into text area and go to recap', () => {
-    cy.get('ion-input').type('356273894');
+    cy.get('ion-input').type(formMockup.Telefono);
     cy.get('.pap-status-checkmark-button').should('exist').click();
   });
 });
 
 describe('pap-info-ticket: test the correct behaviour of form at recap step', () => {
-  it('should display the recap title', () => {
-    cy.get('.pap-form-recap-title').should('include.text', 'Riepilogo');
-  });
-
   it('should display sending button in status', () => {
     cy.get('.pap-status-sending-button').should('exist');
   });
-
-  it('should display the text field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("text")')) {
-        cy.get('ion-note[ngSwitchCase="text"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the trash type field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("trash_type_id")')) {
-        cy.get('ion-note[ngSwitchCase="trash_type_id"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the building field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("building")')) {
-        cy.get('ion-note[ngSwitchCase="building"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the floor field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("floor")')) {
-        cy.get('ion-note[ngSwitchCase="floor"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the name field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("name")')) {
-        cy.get('ion-note[ngSwitchCase="name"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the surname field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("surname")')) {
-        cy.get('ion-note[ngSwitchCase="surname"]').should('not.be.empty');
-      }
-    });
-  });
-
-  it('should display the image field if present', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("image")')) {
-        cy.get('img').should('be.visible');
-      }
-    });
-  });
-
-  it('should display the default message for not inserted values', () => {
-    cy.get('.pap-form-recap-note-internal').then($elements => {
-      if ($elements.is(':contains("messages.notInserted")')) {
-        cy.get('ion-note.pap-form-recap-note[ngSwitchDefault]').should(
-          'include.text',
-          'messages.notInserted',
-        );
-      }
-    });
-  });
+  it('test values inside a recap ticket form', () => testRecapTicketForm(formMockup));
 });
 
 describe('pap-info-ticket: test the correct behaviour of cancel button in status', () => {

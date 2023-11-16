@@ -25,7 +25,7 @@ jobs:
           echo "Extracted ID: '$ID'"
           if [[ -z "$ID" ]]; then
             echo "No ID found in commit message, using default ID 4."
-            ID=1
+            ID=4
           else
             echo "Found ID in commit message: $ID"
           fi
@@ -67,7 +67,7 @@ jobs:
           CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
           CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
           CYPRESS_baseurl: http://localhost:8100
-        if: false # Questa condizione è sempre falsa, quindi lo step non verrà mai eseguito
+        if: success()
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
