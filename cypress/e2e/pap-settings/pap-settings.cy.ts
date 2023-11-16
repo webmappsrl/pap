@@ -184,6 +184,8 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
   });
 
   it('should have a label that matches one of the apiZonesGeoJson labels', () => {
+    cy.wait(1000);
+    cy.log(apiZonesGeoJsonData);
     testValidZone(apiZonesGeoJsonData);
   });
 

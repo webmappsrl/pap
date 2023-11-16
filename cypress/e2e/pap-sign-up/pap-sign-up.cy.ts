@@ -2,14 +2,14 @@ import {Feature, UserType} from 'projects/pap/src/app/shared/form/location/locat
 import {environment} from 'projects/pap/src/environments/environment';
 
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
-
+let apiZonesGeoJsonData: any = null;
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@apiZonesGeoJsonCall').then(interception => {
-    const apiZonesGeoJsonData = interception?.response?.body;
+    apiZonesGeoJsonData = interception?.response?.body;
     cy.wrap(apiZonesGeoJsonData).as('apiZonesGeoJsonData');
     cy.log(apiZonesGeoJsonData);
   });
@@ -135,7 +135,7 @@ describe('pap-sign-up: test the correct behaviour of form at third step', () => 
   });
 
   it('should have a label that matches one of the apiZonesGeoJson user types', function () {
-    const labelsFromApi = this['apiZonesGeoJsonData'].features.flatMap((feature: Feature) =>
+    const labelsFromApi = apiZonesGeoJsonData.features.flatMap((feature: Feature) =>
       feature.properties.availableUserTypes.map((userType: UserType) => userType.label.it),
     );
     cy.get('ion-radio-group ion-item ion-label').each($el => {
