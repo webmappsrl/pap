@@ -133,7 +133,7 @@ export function testLocation(formMockup: any): void {
       if (width && height) {
         // Find the center of the element
         const centerX = width / 2;
-        const centerY = height / 2;
+        const centerY = height / 1.6;
         // Click on the center of the map
         cy.wrap($map).click(centerX, centerY);
       }
