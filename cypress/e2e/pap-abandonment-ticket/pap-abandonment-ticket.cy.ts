@@ -101,6 +101,8 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
     testLocation(formMockup));
 
   it('should have a label that matches one of the apiZonesGeoJson labels', () => {
+    cy.wait(1000);
+    cy.log(apiZonesGeoJsonData);
     testValidZone(apiZonesGeoJsonData);
   });
 });
