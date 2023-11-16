@@ -24,7 +24,7 @@
                   name="information-circle"
                   *ngSwitchCase="'info'"></ion-icon>
               </ng-container>
-              <ion-label>
+              <ion-label class="pap-reports-detail-ticket-type">
                 {{rep.ticket_type|papTicket}}
               </ion-label>
             </ion-col>
@@ -67,7 +67,7 @@
             <ion-col
               size-sm="8"
               size-xs="12">
-              <ion-label class="ion-text-wrap">
+              <ion-label class="ion-text-wrap pap-form-recap-location-address">
                 {{rep.location_address}}
               </ion-label>
             </ion-col>
@@ -109,7 +109,7 @@
             <ion-col
               size-sm="8"
               size-xs="12">
-              <ion-label class="ion-text-wrap">
+              <ion-label class="ion-text-wrap pap-form-recap-created-at">
                 {{createdAt|papDate:'MM/dd/yyyy'}}
               </ion-label></ion-col
             >
@@ -145,7 +145,7 @@
             <ion-col
               size-sm="8"
               size-xs="12">
-              <ion-label class="ion-text-wrap">
+              <ion-label class="ion-text-wrap pap-form-recap-note">
                 {{note}}
               </ion-label>
             </ion-col>
@@ -164,7 +164,7 @@
             <ion-col
               size-sm="8"
               size-xs="12">
-              <ion-label class="ion-text-wrap">
+              <ion-label class="ion-text-wrap pap-form-recap-phone">
                 {{phone}}
               </ion-label>
             </ion-col>

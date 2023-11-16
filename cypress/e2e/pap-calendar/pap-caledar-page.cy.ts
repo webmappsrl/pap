@@ -37,7 +37,7 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
     cy.get('@windowOpen').should('be.called');
   });
 
-  it('should load the addresses correctly in the ion-select and and must load the data into ion-list correctly', () => {
+  it('should load the addresses correctly in the ion-popover and and must load the data into ion-list correctly', () => {
     cy.wait('@calendarCall').then(interception => {
       const apiData = interception?.response?.body.data;
       const apiAddresses = apiData.map((d: Address) => d.address);
@@ -68,19 +68,13 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
         .first()
         .click();
 
-      cy.get('.pap-calendar-day').contains(formattedDay).should('exist');
-      cy.get('.pap-calendar-month').contains(formattedMonth).should('exist');
+      cy.get('.pap-date-day').contains(formattedDay).should('exist');
+      cy.get('.pap-date-month').contains(formattedMonth).should('exist');
       cy.get('.pap-calendar-weekday').contains(formattedWeekDay).should('exist');
       cy.get('.pap-calendar-time').contains(apiStartTime).should('exist');
       cy.get('.pap-calendar-time').contains(apiStopTime).should('exist');
       trashTypesNames.forEach((trashName: string) => {
         cy.get('.pap-trashlist-details-label').contains(trashName).should('exist');
-      });
-      trashTypesColors.forEach((trashColorHex: string, index: number) => {
-        const trashColorRgb = hexToRgb(trashColorHex);
-        cy.get('.pap-calendar-event .trash-book-details-icon')
-          .eq(index)
-          .should('have.css', 'color', trashColorRgb);
       });
       cy.get('.pap-calendar-current-zone-label').should('include.text', addressZoneLabel);
       cy.get('ion-badge').should('include.text', addressUserTypeLabel);

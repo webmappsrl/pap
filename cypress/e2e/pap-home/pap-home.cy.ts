@@ -49,24 +49,24 @@ describe('pap-home: test the correct presences of home buttons', () => {
 describe('pap-home: test no logged user', () => {
   it('should display the correct alert .pap-alert-login when .pap-header-button is clicked', () => {
     cy.get('.pap-header-button').click();
-    cy.get('.pap-alert-login button').should('have.length', noLoggedButtons.length);
+    cy.get('.pap-alert button').should('have.length', noLoggedButtons.length);
     noLoggedButtons.forEach((button, index) => {
-      cy.get('.pap-alert-login button').eq(index).should('have.text', button.text);
+      cy.get('.pap-alert button').eq(index).should('have.text', button.text);
     });
     cy.get('.alert-button-role-cancel').click();
-    cy.get('.pap-alert-login').should('not.exist');
+    cy.get('.pap-alert').should('not.exist');
   });
 
   it('should navigate to /sign-in when sign in button is clicked', () => {
     cy.get('.pap-header-button').click();
-    cy.get('.pap-alert-login .alert-button-role-sign-in').click();
+    cy.get('.pap-alert .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
     cy.go('back');
   });
 
   it('should navigate to /sign-up when sign up button is clicked', () => {
     cy.get('.pap-header-button').click();
-    cy.get('.pap-alert-login .alert-button-role-sign-up').click();
+    cy.get('.pap-alert .alert-button-role-sign-up').click();
     cy.url().should('include', '/sign-up');
     cy.go('back');
   });
@@ -76,19 +76,19 @@ describe('pap-home: test no logged user', () => {
       cy.stub(win, 'open').as('windowOpen');
     });
     cy.get('.pap-header-button').click();
-    cy.get('.pap-alert-login .alert-button-role-forgot-password').click();
+    cy.get('.pap-alert .alert-button-role-forgot-password').click();
     cy.get('@windowOpen').should('be.called');
   });
 });
 
-describe.only('pap-home: test logged user', () => {
+describe('pap-home: test logged user', () => {
   before(() => {
     cy.intercept('POST', apiLogin).as('loginRequest');
   });
 
   it('should login successfully using provided credentials, navigate correctly path when button is clicked and logout successfully ', () => {
     cy.get('.pap-header-button').click();
-    cy.get('.pap-alert-login .alert-button-role-sign-in').click();
+    cy.get('.pap-alert .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
     cy.get('form [formControlName="email"]').type(Cypress.env('email'));
     cy.get('form [formControlName="password"]').type(Cypress.env('password'));

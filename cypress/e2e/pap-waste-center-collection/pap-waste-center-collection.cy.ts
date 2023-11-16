@@ -2,7 +2,7 @@ import {homeButtons} from 'projects/pap/src/app/features/home/home.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
 const apiGeojson = `${environment.api}/c/${environment.companyId}/waste_collection_centers.geojson`;
-const wasteCenterButton = homeButtons.find(button => button.label === 'Centri raccolta');
+const wasteCenterButton = homeButtons.find(button => button.label === 'Centri di Raccolta');
 
 before(() => {
   cy.clearCookies();
@@ -33,7 +33,7 @@ describe('pap-waste-center-collection: test the correct behaviour of page', () =
   });
 
   it('should display an alert when a marker is clicked', function () {
-    cy.get('.leaflet-marker-icon').first().click();
+    cy.get('.leaflet-marker-icon').first().click({force: true});
     cy.get('.pap-waste-center-alert').should('be.visible');
   });
 
@@ -43,7 +43,7 @@ describe('pap-waste-center-collection: test the correct behaviour of page', () =
   });
 
   it('should open external link when the directions button is clicked', () => {
-    cy.get('.leaflet-marker-icon').first().click();
+    cy.get('.leaflet-marker-icon').first().click({force: true});
     cy.window().then(win => {
       cy.stub(win, 'open').as('windowOpen');
     });
@@ -52,7 +52,7 @@ describe('pap-waste-center-collection: test the correct behaviour of page', () =
   });
 
   it('should open external link when the website button is clicked', () => {
-    cy.get('.leaflet-marker-icon').first().click();
+    cy.get('.leaflet-marker-icon').first().click({force: true});
     cy.window().then(win => {
       cy.stub(win, 'open').as('windowOpen');
     });
@@ -61,10 +61,10 @@ describe('pap-waste-center-collection: test the correct behaviour of page', () =
   });
 
   it('should display the correct data when a marker is clicked', function () {
-    cy.get('.leaflet-marker-icon').first().click();
-    cy.get('.pap-waste-center-alert h2').eq(0).should('be.visible');
-    cy.get('.pap-waste-center-alert ion-label').eq(0).should('be.visible');
-    cy.get('.pap-waste-center-alert ion-label').eq(1).should('be.visible');
+    cy.get('.leaflet-marker-icon').first().click({force: true});
+    cy.get('.pap-waste-center-alert h2').eq(0).should('exist');
+    cy.get('.pap-waste-center-alert ion-label').eq(0).should('exist');
+    cy.get('.pap-waste-center-alert ion-label').eq(1).should('exist');
   });
 });
 

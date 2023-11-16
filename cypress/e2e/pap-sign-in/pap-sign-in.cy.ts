@@ -11,7 +11,7 @@ describe('pap-sign-in: test the correct behaviour with wrong credentials', () =>
 
   it('should navigate to /sign-in when sign in button is clicked', () => {
     cy.get('.pap-header-button').click();
-    cy.get('.pap-alert-login .alert-button-role-sign-in').click();
+    cy.get('.pap-alert .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
   });
 
@@ -50,7 +50,7 @@ describe('pap-sign-in: test the correct behaviour with correct credentials', () 
 
   it('should login successfully using correct credentials and not display an error message', () => {
     cy.get('.pap-header-button').click();
-    cy.get('.pap-alert-login .alert-button-role-sign-in').click();
+    cy.get('.pap-alert .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
     cy.get('form [formControlName="email"]').type(Cypress.env('email'));
     cy.get('form [formControlName="password"]').type(Cypress.env('password'));

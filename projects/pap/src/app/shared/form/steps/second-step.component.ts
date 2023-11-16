@@ -42,7 +42,8 @@ import {FormProvider} from '../form-provider';
           <ion-button
             shape="round"
             (click)="prev.emit()"
-            expand="block">
+            expand="block"
+            class="pap-second-step-signup-form-back-button">
             <ion-icon
               slot="start"
               name="chevron-back"></ion-icon>
@@ -57,7 +58,7 @@ import {FormProvider} from '../form-provider';
             [disabled]="secondStep.invalid"
             (click)="next.emit()"
             expand="block"
-            class="ion-float-right">
+            class="ion-float-right pap-second-step-signup-form-next-button">
             <ion-icon
               slot="end"
               name="chevron-forward"></ion-icon>

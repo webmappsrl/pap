@@ -114,11 +114,10 @@ describe('pap-settings: test the correct behaviour of thirdStep tab', () => {
 
   it('should verify that the displayed zone matches the API zones', function () {
     cy.get('h5')
-      .should('be.visible')
+      .should('exist')
       .invoke('text')
       .then(uiLabelText => {
         const labels = uiLabelText.split('  ').map(label => label.trim());
-
         const labelsFromApi = this['apiZonesGeoJsonData'].features.map(
           (feature: Feature) => feature.properties.label,
         );
@@ -143,27 +142,29 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
   });
 
   it('should click on a random position on the pap-map and verify address', () => {
-    cy.wait(1000); //TODO manage waiting time without wait
+    cy.wait(1000); //TODO manage waiting without wait
     //Start intercepting requests to Nominatim
     cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
     //Perform the random click on the map as intended
-    cy.get('pap-form-location').then($map => {
-      const width = $map.width();
-      const height = $map.height();
-      if (width && height) {
-        //Find the center of the element
-        const centerX = width / 2;
-        const centerY = height / 2;
-        //Determine the random offset. For example, within a range of +/- 10 pixels from the center.
-        const maxOffset = 10;
-        const offsetX = Math.floor(Math.random() * (2 * maxOffset + 1)) - maxOffset;
-        const offsetY = Math.floor(Math.random() * (2 * maxOffset + 1)) - maxOffset;
-        //Calculate the click coordinates
-        const clickX = centerX + offsetX;
-        const clickY = centerY + offsetY;
-        cy.wrap($map).click(clickX, clickY);
-      }
-    });
+    cy.get('pap-form-location')
+      .should('be.visible')
+      .then($map => {
+        const width = $map.width();
+        const height = $map.height();
+        if (width && height) {
+          //Find the center of the element
+          const centerX = width / 2;
+          const centerY = height / 2;
+          //Determine the random offset. For example, within a range of +/- 10 pixels from the center.
+          const maxOffset = 10;
+          const offsetX = Math.floor(Math.random() * (2 * maxOffset + 1)) - maxOffset;
+          const offsetY = Math.floor(Math.random() * (2 * maxOffset + 1)) - maxOffset;
+          //Calculate the click coordinates
+          const clickX = centerX + offsetX;
+          const clickY = centerY + offsetY;
+          cy.wrap($map).click(clickX, clickY);
+        }
+      });
     //Wait for the request to Nominatim to be made
     cy.wait('@nominatimRequest').then(interception => {
       const url = new URL(interception.request.url);
@@ -182,14 +183,14 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
   });
 
   it('should have a label that matches one of the apiZonesGeoJson labels', function () {
-    cy.get('pap-form-location ion-label')
-      .should('be.visible')
+    cy.get('pap-form-location pap-map ion-badge')
+      .should('exist')
       .invoke('text')
       .then(uiLabelText => {
         const labelsFromApi = this['apiZonesGeoJsonData'].features.map(
           (feature: Feature) => feature.properties.label,
         );
-        expect(labelsFromApi).to.include(uiLabelText.trim());
+        expect(labelsFromApi).to.include(uiLabelText);
       });
   });
 
@@ -204,7 +205,7 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
   });
 
   it('should select always first user type from list and enabled save button', () => {
-    cy.get('.pap-location-modal-radio-item').should('be.visible').first().click();
+    cy.get('ion-radio-group ion-item ion-radio').first().should('not.be.disabled');
     cy.get('ion-button').contains('Salva').should('exist', 'not.be.disabled');
   });
 

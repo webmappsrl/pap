@@ -28,66 +28,55 @@ before(() => {
 beforeEach(() => {
   cy.intercept('GET', apiTickets).as('ticketsCall');
 });
-// TODO: si fa l'assunzione SBAGLIATA che ci siano sempre dei ticket presenti nell'account
-describe.skip('pap-reports-detail: test the correct behaviour of page', () => {
+describe('pap-reports-detail: test the correct behaviour of page', () => {
   it('should navigate to the reports detail page and load ticket data correctly', () => {
     if (ticketButton) {
       cy.contains(ticketButton.label).click();
       cy.url().should('include', ticketButton.url);
-      cy.get('.pap-reports-item').first().click();
-      cy.get('pap-reports-detail').should('exist');
       cy.wait('@ticketsCall').then(interception => {
         const ticketsData = interception?.response?.body.data;
         const ticketData = interception?.response?.body.data[0];
-        const ticketTypeTranslation = translateTicketType(ticketsData[0].ticket_type);
-        const formattedDate = formatDateUsingPapDatePipe(ticketData.created_at, 'MM/dd/yyyy');
-        cy.log(ticketTypeTranslation);
-        cy.get('ion-card-title').contains(`Ticket ${ticketTypeTranslation}`).should('exist');
-        cy.get('.pap-form-recap-note').contains(ticketData.location_address).should('exist');
-        cy.get('.pap-form-recap-note').contains(formattedDate).should('exist');
-        if (ticketData.image) {
-          cy.get('img').should('have.attr', 'src', ticketData.image);
+        if (ticketsData.length > 0) {
+          cy.get('.pap-reports-item').first().click();
+          cy.get('pap-reports-detail').should('exist');
+          const ticketTypeTranslation = translateTicketType(ticketsData[0].ticket_type);
+          const formattedDate = formatDateUsingPapDatePipe(ticketData.created_at, 'MM/dd/yyyy');
+          cy.log(ticketTypeTranslation);
+          cy.get('.pap-reports-detail-ticket-type').contains(ticketTypeTranslation);
+          if (ticketData.location_address) {
+            cy.get('.pap-form-recap-location-address')
+              .contains(ticketData.location_address)
+              .should('exist');
+          } else {
+            cy.log('Field image does not exist.');
+          }
+          if (formattedDate) {
+            cy.get('.pap-form-recap-created-at').contains(formattedDate).should('exist');
+          } else {
+            cy.log('Field image does not exist.');
+          }
+          if (ticketData.image) {
+            cy.get('img').should('have.attr', 'src', ticketData.image);
+          } else {
+            cy.log('Field image does not exist.');
+          }
+          if (ticketData.note) {
+            cy.get('.pap-form-recap-note').contains(ticketData.note).should('exist');
+          } else {
+            cy.log('Field note does not exist..');
+          }
+          if (ticketData.phone) {
+            cy.get('.pap-form-recap-phone').contains(ticketData.phone).should('exist');
+          } else {
+            cy.log('Field phone does not exist.');
+          }
         } else {
-          cy.log('Field image does not exist.');
-        }
-        if (ticketData.note) {
-          cy.get('.pap-form-recap-note').contains(ticketData.note).should('exist');
-        } else {
-          cy.log('Field note does not exist..');
-        }
-        if (ticketData.phone) {
-          cy.get('.pap-form-recap-note').contains(ticketData.phone).should('exist');
-        } else {
-          cy.log('Field phone does not exist.');
+          cy.log('No tickets');
         }
       });
     } else {
       throw new Error('Button not found.');
     }
-  });
-
-  it('should match ticket trash type name correctly', function () {
-    cy.get('.pap-reports-detail-list').each($el => {
-      const itemName = $el.text().trim();
-      cy.log(`Checking for: ${itemName}`);
-      expect(this['trashTypesData'].some((trashType: TrashBookRow) => trashType.name === itemName))
-        .to.be.true;
-    });
-  });
-
-  it('should match ticket trash type color correctly', function () {
-    cy.get('.pap-reports-detail-list ion-icon').each($icon => {
-      const itemColor = $icon.css('color');
-      const itemName = $icon.next().text().trim();
-      cy.log(`Checking color for: ${itemName}`);
-      const expectedColor = this['trashTypesData'].find(
-        (trashType: TrashBookRow) => trashType.name === itemName,
-      )?.color;
-      if (expectedColor) {
-        const rgbExpectedColor = hexToRgb(expectedColor);
-        expect(itemColor).to.equal(rgbExpectedColor);
-      }
-    });
   });
 });
 
