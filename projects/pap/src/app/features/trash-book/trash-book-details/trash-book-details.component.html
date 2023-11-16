@@ -6,9 +6,7 @@
     padding
     class="trash-book-details ion-padding">
     <ion-card class="pap-card">
-      <h1 class="trash-book-details-title">
-        {{ view.name }}
-      </h1>
+      <h1 class="trash-book-details-title">{{ view.name }}</h1>
 
       <ion-item
         *ngIf="view.trashBookType?.name"
@@ -50,9 +48,9 @@
         <ng-template #noPap>
           <ion-label
             class="trash-book-details-value ion-text-wrap"
-            slot="end">
-            non pianificato
-          </ion-label>
+            slot="end"
+            >non pianificato</ion-label
+          >
         </ng-template>
       </ion-item>
 
@@ -69,9 +67,9 @@
           shape="round"
           class="trash-book-details-button"
           slot="end"
-          (click)="openWasteCenterCollection()">
-          Vedi
-        </ion-button>
+          (click)="openWasteCenterCollection()"
+          >Vedi</ion-button
+        >
       </ion-item>
 
       <ion-item
@@ -85,9 +83,9 @@
         >
         <ion-label
           class="trash-book-details-value  ion-text-wrap"
-          slot="end">
-          {{view.where}}
-        </ion-label>
+          slot="end"
+          >{{view.where}}</ion-label
+        >
       </ion-item>
 
       <ion-item
@@ -103,9 +101,9 @@
           shape="round"
           class="trash-book-details-button"
           slot="end"
-          (click)="book(view.trashBookType)">
-          Prenota
-        </ion-button>
+          (click)="book(view.trashBookType)"
+          >Prenota</ion-button
+        >
       </ion-item>
     </ion-card>
   </ion-content>

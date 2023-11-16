@@ -1,4 +1,4 @@
-import {e2eLogin} from 'cypress/utils/test-utils';
+import {e2eLogin, testValidZone} from 'cypress/utils/test-utils';
 import {Address, User} from 'projects/pap/src/app/core/auth/auth.model';
 import {Feature, UserType} from 'projects/pap/src/app/shared/form/location/location.model';
 import {environment} from 'projects/pap/src/environments/environment';
@@ -10,6 +10,7 @@ let apiPhoneNumber: User;
 let apiFiscalCode: User;
 let apiUserCode: User;
 let apiUserAddress: any;
+let apiZonesGeoJsonData: any = null;
 const apiUser = `${environment.api}/user`;
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
 
@@ -19,7 +20,7 @@ before(() => {
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@apiZonesGeoJsonCall').then(interception => {
-    const apiZonesGeoJsonData = interception?.response?.body;
+    apiZonesGeoJsonData = interception?.response?.body;
     cy.wrap(apiZonesGeoJsonData).as('apiZonesGeoJsonData');
     cy.log(apiZonesGeoJsonData);
   });
@@ -182,6 +183,7 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
     });
   });
 
+<<<<<<< Updated upstream
   it('should have a label that matches one of the apiZonesGeoJson labels', function () {
     cy.get('pap-form-location pap-map ion-badge')
       .should('exist')
@@ -192,6 +194,10 @@ describe('pap-settings: test the correct behaviour of add address button', () =>
         );
         expect(labelsFromApi).to.include(uiLabelText);
       });
+=======
+  it('should have a label that matches one of the apiZonesGeoJson labels', () => {
+    testValidZone(apiZonesGeoJsonData);
+>>>>>>> Stashed changes
   });
 
   it('should have a label that matches one of the apiZonesGeoJson user types', function () {
