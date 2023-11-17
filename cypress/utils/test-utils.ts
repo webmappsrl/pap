@@ -2,6 +2,7 @@ import {format} from 'date-fns';
 import {it as itLocale} from 'date-fns/locale';
 import {environment} from 'projects/pap/src/environments/environment';
 import {Feature} from 'projects/pap/src/app/shared/form/location/location.model';
+import {TicketFormConf} from 'projects/pap/src/app/shared/models/form.model';
 export interface FormMockup {
   Immagine?: string;
   Indirizzo?: {
@@ -12,6 +13,7 @@ export interface FormMockup {
   Servizio?: string;
   Telefono: string;
 }
+
 /**
  * Logs into the application.
  * @param email - User's email address.
@@ -120,20 +122,32 @@ export function getApiDateRange(): {startDate: string; stopDate: string} {
   };
 }
 
+/**
+ * Tests location selection on a map.
+ * Interacts with the map, makes requests to Nominatim for geolocation data,
+ * and verifies that the data matches with the form inputs.
+ * @param formMockup - Mock object of the form containing address data.
+ */
 export function testLocation(formMockup: any): void {
   // Start intercepting requests to Nominatim
-  cy.screenshot();
   cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
   // Perform the click on the center of the map
   cy.get('pap-form-location')
     .should('be.visible')
     .then($map => {
+      cy.get('.leaflet-control-zoom-in').should('be.visible').click({multiple: true, force: true});
+      cy.wait(500);
+      cy.get('.leaflet-control-zoom-in').should('be.visible').click({multiple: true, force: true});
+      cy.wait(500);
+      cy.get('.leaflet-control-zoom-in').should('be.visible').click({multiple: true, force: true});
+      cy.wait(500);
+
       const width = $map.width();
       const height = $map.height();
       if (width && height) {
         // Find the center of the element
         const centerX = width / 2;
-        const centerY = height / 1.6;
+        const centerY = height / 2;
         // Click on the center of the map
         cy.wrap($map).click(centerX, centerY);
       }
@@ -166,7 +180,12 @@ export function testLocation(formMockup: any): void {
   });
 }
 
-export function testRecapTicketForm(formMockup: FormMockup) {
+/**
+ * Tests the recap of the ticket form.
+ * Verifies that each row in the recap matches the data entered in the form.
+ * @param formMockup - Mock object of the form containing ticket data.
+ */
+export function testRecapTicketForm(formMockup: FormMockup): void {
   cy.get('.pap-form-recap-list ion-row').each((row, rowIndex) => {
     let recap: keyof typeof formMockup | null = null;
     cy.wrap(row)
@@ -196,7 +215,11 @@ export function testRecapTicketForm(formMockup: FormMockup) {
   });
 }
 
-export function testValidZone(zoneGeojson: any) {
+/**
+ * Tests the validity of a geographical zone.
+ * @param zoneGeojson - GeoJSON data of the zone.
+ */
+export function testValidZone(zoneGeojson: any): void {
   expect(zoneGeojson).to.be.not.null;
   cy.get('.top-right ion-badge')
     .should('be.visible')
@@ -210,7 +233,11 @@ export function testValidZone(zoneGeojson: any) {
     });
 }
 
-export function testGoToThirdStep(formMockup: FormMockup) {
+/**
+ * Tests navigation to the third step of the form.
+ * @param formMockup - Mock object of the form.
+ */
+export function testGoToThirdStep(formMockup: FormMockup): void {
   cy.get('.pap-calendar-trashlist')
     .first()
     .then(btn => {
@@ -218,4 +245,122 @@ export function testGoToThirdStep(formMockup: FormMockup) {
     });
   cy.get('.pap-calendar-trashlist').first().click();
   cy.get('.pap-status-next-button').click();
+}
+
+/**
+ * Clears the test state.
+ * This function uses Cypress to clear cookies and local storage.
+ * It is useful for resetting the application state between end-to-end tests.
+ */
+export function clearTestState(): void {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+}
+
+/**
+ * Navigates to a page by clicking a button and verifies the URL.
+ * Assumes that the navigation might require interaction with an alert.
+ *
+ * @param buttonLabel - CSS selector for the header button to initiate navigation.
+ * @param expectedUrl - Expected URL to navigate to.
+ */
+export function navigateToPageAndVerifyUrl(buttonLabel: string, expectedUrl: string): void {
+  cy.contains(buttonLabel).click();
+  cy.url().should('include', expectedUrl);
+}
+
+/**
+ * Verifies the day and month of a given date in the format used in PAP reports.
+ * @param dateStr - The date string to be verified.
+ */
+export function verifyPapDateComponents(dateStr: string): void {
+  const formattedDay = formatDateUsingPapDatePipe(dateStr, 'd');
+  const formattedMonth = formatDateUsingPapDatePipe(dateStr, 'MMMM');
+
+  cy.get('.pap-date-day').contains(formattedDay).should('exist');
+  cy.get('.pap-date-month').contains(formattedMonth).should('exist');
+}
+
+/**
+ * Tests the form step to ensure the correct ticket type and label are displayed,
+ * and that the back button is hidden.
+ *
+ * @param {Object} ticketForm - The ticket form data object.
+ * @param {number} stepIndex - The index of the step to test.
+ */
+export function testTicketFormStep(
+  ticketForm: TicketFormConf,
+  stepIndex: number,
+  nextButtonShouldBeDisabled: boolean = false,
+  shouldCheckErrorMessage: boolean = false,
+  mandatoryMessage: string = 'Questo campo è obbligatorio',
+): void {
+  const expectedLabelText = ticketForm.step[stepIndex].label;
+  switch (stepIndex) {
+    case 0:
+      cy.get('.pap-form-first-step').should('include.text', ticketForm.label);
+      cy.get('.pap-form-label-first-step').should('include.text', expectedLabelText);
+      cy.get('.pap-status-back-button').should('be.hidden');
+      break;
+
+    case 1:
+      cy.get('.pap-status-next-button').click();
+      cy.get('.pap-form-content').should('include.text', ticketForm.label);
+      cy.get('.pap-form-label').should('include.text', expectedLabelText);
+      cy.get('.pap-status-next-button').should('not.be.enabled');
+      cy.get('pap-error-form-handler ion-list ion-label').should('include.text', mandatoryMessage);
+      break;
+
+    case 2:
+      cy.get('.pap-form-content').should('include.text', ticketForm.label);
+      cy.get('.pap-form-label').should('include.text', expectedLabelText);
+
+      if (nextButtonShouldBeDisabled) {
+        cy.get('.pap-status-next-button').should('not.be.enabled');
+      }
+
+      if (shouldCheckErrorMessage) {
+        cy.get('pap-error-form-handler ion-list ion-label').should(
+          'include.text',
+          mandatoryMessage,
+        );
+      } else {
+        cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
+      }
+      break;
+
+    case 3:
+    case 4:
+      cy.get('.pap-form-content').should('include.text', ticketForm.label);
+      cy.get('.pap-form-label').should('include.text', expectedLabelText);
+      cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
+      break;
+
+    default:
+      cy.log(`Unknown step index: ${stepIndex}`);
+  }
+}
+
+/**
+ * Handles image selection.
+ * Opens the image picker, verifies its presence, and closes the picker.
+ */
+export function testImagePicker(): void {
+  cy.get('pap-form-image-picker ion-button').click();
+  cy.get('ion-action-sheet').should('exist');
+  cy.get('.action-sheet-group-cancel').click();
+  cy.get('ion-action-sheet').should('not.exist');
+}
+
+/**
+ * Verifies the alert title based on the given ticket form.
+ *
+ * @param {Object} ticketForm - The ticket form data object.
+ */
+export function testAlertTitle(ticketForm: any): void {
+  const alertTitle =
+    ticketForm && ticketForm.label ? `Vuoi annullare ${ticketForm.label}?` : 'Vuoi annullare?';
+
+  cy.get('.alert-title').should('have.text', alertTitle);
+  cy.get('ion-alert').should('exist');
 }

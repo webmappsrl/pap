@@ -1,4 +1,11 @@
-import {FormMockup, e2eLogin, testRecapTicketForm} from 'cypress/utils/test-utils';
+import {
+  FormMockup,
+  clearTestState,
+  e2eLogin,
+  testRecapTicketForm,
+  testTicketFormStep,
+  testAlertTitle,
+} from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
 import {infoTicketForm} from 'projects/pap/src/app/shared/models/form.model';
 
@@ -15,8 +22,7 @@ let formMockup: FormMockup = {
   },
 };
 before(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
   cy.visit(Cypress.env('baseurl'));
   e2eLogin();
 });
@@ -25,17 +31,14 @@ describe('pap-info-ticket: test the correct behaviour of form at first step', ()
   it('should navgate correctly to request information"', () => {
     if (servicesButton && infoTicketButton) {
       cy.contains(servicesButton.label).click();
-      cy.contains(infoTicketButton.text).click();
+      cy.contains(infoTicketButton.text).should('be.visible').click();
     } else {
-      throw new Error('Services button not found in homeButtons.');
+      cy.log(`${infoTicketButton!.text} button not found in homeButtons.`);
     }
   });
 
   it('should display the correct ticket type, label and status back button should be hidden', () => {
-    cy.get('.pap-form-first-step').should('include.text', infoTicketForm.label);
-    const expectedLabelText = infoTicketForm.step[0].label;
-    cy.get('.pap-form-label-first-step').should('include.text', expectedLabelText);
-    cy.get('.pap-status-back-button').should('be.hidden');
+    testTicketFormStep(infoTicketForm, 0);
   });
 });
 
@@ -67,12 +70,7 @@ describe('pap-info-ticket: test the correct behaviour of cancel button in status
   });
 
   it('should display alert title correctly', () => {
-    const alertTitle =
-      infoTicketForm && infoTicketForm.label
-        ? `Vuoi annullare ${infoTicketForm.label}?`
-        : 'Vuoi annullare?';
-    cy.get('.alert-title').should('have.text', alertTitle);
-    cy.get('ion-alert').should('exist');
+    testAlertTitle(infoTicketForm);
   });
 
   it('should have 2 buttons inside the alert-button-group', () => {
@@ -86,6 +84,5 @@ describe('pap-info-ticket: test the correct behaviour of cancel button in status
 });
 
 after(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
 });

@@ -1,11 +1,11 @@
+import {clearTestState} from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
 
 const servicesButton = homeButtons.find(button => button.label === 'Servizi');
 const closeButton = servicesButtons.find(button => button.text === 'CHIUDI');
 
 before(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
   cy.visit(Cypress.env('baseurl'));
 });
 
@@ -47,6 +47,5 @@ describe('pap-home-servizi: test the correct presences of action sheet buttons',
 });
 
 after(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
 });

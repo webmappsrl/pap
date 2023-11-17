@@ -1,8 +1,19 @@
+import {FormMockup, testLocation, testValidZone} from 'cypress/utils/test-utils';
 import {Feature, UserType} from 'projects/pap/src/app/shared/form/location/location.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
 let apiZonesGeoJsonData: any = null;
+let formMockup: FormMockup = {
+  Telefono: '356273894',
+  Note: 'this is a text note',
+  Servizio: '',
+  Immagine: '',
+  Indirizzo: {
+    city: '',
+    address: '',
+  },
+};
 before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
@@ -95,38 +106,7 @@ describe('pap-sign-up: test the correct behaviour of form at third step', () => 
   });
 
   it('should click on the center of the pap-map and verify address', () => {
-    cy.wait(1000); //TODO manage waiting without wait
-    // Start intercepting requests to Nominatim
-    cy.intercept('https://nominatim.openstreetmap.org/reverse*').as('nominatimRequest');
-    // Perform the click on the center of the map
-    cy.get('pap-form-location')
-      .should('be.visible')
-      .then($map => {
-        const width = $map.width();
-        const height = $map.height();
-        if (width && height) {
-          // Find the center of the element
-          const centerX = width / 2;
-          const centerY = height / 2;
-          // Click on the center of the map
-          cy.wrap($map).click(centerX, centerY);
-        }
-      });
-    // Wait for the request to Nominatim to be made
-    cy.wait('@nominatimRequest').then(interception => {
-      const url = new URL(interception.request.url);
-      const lat = url.searchParams.get('lat');
-      const lon = url.searchParams.get('lon');
-      // Now you have the coordinates in `lat` and `lon`
-      // Make a new request to Nominatim to get the `display_name`
-      // and then check that the `ion-textarea` element contains that value
-      cy.request(
-        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
-      ).then(response => {
-        // const nominatimDisplayName = response.body.display_name;
-        cy.get('pap-form-location ion-item ion-textarea').should('not.be.empty');
-      });
-    });
+    testLocation(formMockup);
   });
 
   it('only prev button should be disabled with a selected address and without a user type selected', () => {
@@ -134,25 +114,18 @@ describe('pap-sign-up: test the correct behaviour of form at third step', () => 
     cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.enabled');
   });
 
-  it.skip('should have a label that matches one of the apiZonesGeoJson user types', function () {
-    cy.wait(1000);
-    const labelsFromApi = this['apiZonesGeoJsonData'].features.flatMap((feature: Feature) =>
-      feature.properties.availableUserTypes.map((userType: UserType) => userType.label.it),
-    );
-    cy.get('ion-radio-group ion-item ion-label').each($el => {
-      const text = $el.text().trim();
-      expect(labelsFromApi).to.include(text);
-    });
+  it('should have a label that matches one of the apiZonesGeoJson user types', function () {
+    testValidZone(apiZonesGeoJsonData);
   });
 
-  it.skip('should select always first user type from list', () => {
+  it('should select always first user type from list', () => {
     cy.get('pap-third-step-signup-form ion-radio-group ion-item ion-radio')
       .first()
       .should('not.be.disabled');
   });
 
   it('should now able to send your registration with all the required fields', () => {
-    cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.disabled');
+    cy.get('.pap-third-step-signup-checkmark-button').should('exist', 'not.be.disabled');
   });
 });
 

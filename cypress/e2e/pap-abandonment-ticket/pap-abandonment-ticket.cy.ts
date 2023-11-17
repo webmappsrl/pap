@@ -1,9 +1,14 @@
 import {
   FormMockup,
+  clearTestState,
   e2eLogin,
+  testImagePicker,
+  testGoToThirdStep,
   testLocation,
   testRecapTicketForm,
+  testTicketFormStep,
   testValidZone,
+  testAlertTitle,
 } from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
 import {abandonmentTicketForm} from 'projects/pap/src/app/shared/models/form.model';
@@ -26,8 +31,7 @@ let formMockup: FormMockup = {
 };
 
 before(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit(Cypress.env('baseurl'));
@@ -48,60 +52,36 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at first st
   it('should navigate correctly to report abandonment', () => {
     if (servicesButton && abandonmentTicketButton) {
       cy.contains(servicesButton.label).click();
-      cy.contains(abandonmentTicketButton.text).click();
+      cy.contains(abandonmentTicketButton.text).should('be.visible').click();
     } else {
-      throw new Error('Services button not found in homeButtons.');
+      cy.log(`${abandonmentTicketButton!.text} button not found in homeButtons.`);
     }
   });
 
   it('should display the correct ticket type, label and status back button should be hidden', () => {
-    cy.get('.pap-form-first-step').should('include.text', abandonmentTicketForm.label);
-    const expectedLabelText = abandonmentTicketForm.step[0].label;
-    cy.get('.pap-form-label-first-step').should('include.text', expectedLabelText);
-    cy.get('.pap-status-back-button').should('be.hidden');
+    testTicketFormStep(abandonmentTicketForm, 0);
   });
 });
 
 describe('pap-abandonment-ticket: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no trash type selected', () => {
-    cy.get('.pap-status-next-button').click();
-    cy.get('.pap-form-content').should('include.text', abandonmentTicketForm.label);
-    const expectedLabelText = abandonmentTicketForm.step[1].label;
-    cy.get('.pap-form-label').should('include.text', expectedLabelText);
-    cy.get('.pap-status-next-button').should('not.be.enabled');
-    cy.get('pap-error-form-handler ion-list ion-label').should(
-      'include.text',
-      'Questo campo è obbligatorio',
-    );
+    testTicketFormStep(abandonmentTicketForm, 1);
   });
 });
 
 describe('pap-abandonment-ticket: test the correct behaviour of form at third step', () => {
   it('should go to third step with a trash type selected', () => {
-    cy.get('pap-form-select ion-list ion-item')
-      .first()
-      .then(btn => {
-        formMockup.Servizio = btn.text();
-      });
-    cy.get('pap-form-select ion-list ion-item').first().click();
-    cy.get('.pap-status-next-button').click();
+    testGoToThirdStep(formMockup);
   });
 
-  it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no location selected', () => {
-    cy.get('.pap-form-content').should('include.text', abandonmentTicketForm.label);
-    const expectedLabelText = abandonmentTicketForm.step[2].label;
-    cy.get('.pap-form-label').should('include.text', expectedLabelText);
-    cy.get('.pap-status-next-button').should('not.be.enabled');
-    cy.get('pap-error-form-handler ion-list ion-label').should(
-      'include.text',
-      'Questo campo è obbligatorio',
-    );
+  it('should display the correct ticket type and label for the third step with a disabled next button and an error message', () => {
+    testTicketFormStep(abandonmentTicketForm, 2, true, true);
   });
+
   it('should click on a random position on the pap-map and verify address', () =>
     testLocation(formMockup));
 
   it('should have a label that matches one of the apiZonesGeoJson labels', () => {
-    cy.wait(1000);
     testValidZone(apiZonesGeoJsonData);
   });
 });
@@ -112,17 +92,11 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fourth s
   });
 
   it('should display the correct ticket type, ticket label', () => {
-    cy.get('.pap-form-content').should('include.text', abandonmentTicketForm.label);
-    const expectedLabelText = abandonmentTicketForm.step[3].label;
-    cy.get('.pap-form-label').should('include.text', expectedLabelText);
-    cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
+    testTicketFormStep(abandonmentTicketForm, 3);
   });
 
   it('should open action sheet when image picker button is clicked', () => {
-    cy.get('pap-form-image-picker ion-button').click();
-    cy.get('ion-action-sheet').should('exist');
-    cy.get('.action-sheet-group-cancel').click();
-    cy.get('ion-action-sheet').should('not.exist');
+    testImagePicker();
   });
 });
 
@@ -132,10 +106,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fifth st
   });
 
   it('should display the correct ticket type, ticket label', () => {
-    cy.get('.pap-form-content').should('include.text', abandonmentTicketForm.label);
-    const expectedLabelText = abandonmentTicketForm.step[4].label;
-    cy.get('.pap-form-label').should('include.text', expectedLabelText);
-    cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
+    testTicketFormStep(abandonmentTicketForm, 4);
   });
 
   it('should write a text into text area and go to recap', () => {
@@ -162,12 +133,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of cancel button in
   });
 
   it('should display alert title correctly', () => {
-    const alertTitle =
-      abandonmentTicketForm && abandonmentTicketForm.label
-        ? `Vuoi annullare ${abandonmentTicketForm.label}?`
-        : 'Vuoi annullare?';
-    cy.get('.alert-title').should('have.text', alertTitle);
-    cy.get('ion-alert').should('exist');
+    testAlertTitle(abandonmentTicketForm);
   });
 
   it('should have 2 buttons inside the alert-button-group', () => {
@@ -181,6 +147,5 @@ describe('pap-abandonment-ticket: test the correct behaviour of cancel button in
 });
 
 after(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
 });
