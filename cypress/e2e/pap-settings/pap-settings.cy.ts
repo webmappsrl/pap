@@ -1,4 +1,10 @@
-import {FormMockup, e2eLogin, testLocation, testValidZone} from 'cypress/utils/test-utils';
+import {
+  clearTestState,
+  FormMockup,
+  e2eLogin,
+  testLocation,
+  testValidZone,
+} from 'cypress/utils/test-utils';
 import {Address, User} from 'projects/pap/src/app/core/auth/auth.model';
 import {Feature, UserType} from 'projects/pap/src/app/shared/form/location/location.model';
 import {environment} from 'projects/pap/src/environments/environment';
@@ -24,8 +30,7 @@ let formMockup: FormMockup = {
   },
 };
 before(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
   cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@apiZonesGeoJsonCall').then(interception => {
@@ -192,6 +197,5 @@ describe('pap-settings: test the correct behaviour of log out button', () => {
 });
 
 after(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
 });

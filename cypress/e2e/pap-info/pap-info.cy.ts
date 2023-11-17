@@ -1,11 +1,11 @@
+import {clearTestState} from 'cypress/utils/test-utils';
 import {environment} from 'projects/pap/src/environments/environment';
 
 const companyInfo = environment.config.resources.company_page;
 const infoButton = environment.config.name;
 
 before(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
   cy.visit(Cypress.env('baseurl'));
 });
 
@@ -17,6 +17,5 @@ describe('pap-info: test the correct behaviour of page', () => {
 });
 
 after(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
 });

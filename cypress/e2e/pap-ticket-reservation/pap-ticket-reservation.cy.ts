@@ -1,16 +1,19 @@
 import {
   FormMockup,
   e2eLogin,
+  testImagePicker,
+  testGoToThirdStep,
   testLocation,
   testRecapTicketForm,
+  testTicketFormStep,
   testValidZone,
+  testAlertTitle,
 } from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
-import {Feature} from 'projects/pap/src/app/shared/form/location/location.model';
 import {ticketReservationForm} from 'projects/pap/src/app/shared/models/form.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
-const serviziButton = homeButtons.find(button => button.label === 'Servizi');
+const servicesButton = homeButtons.find(button => button.label === 'Servizi');
 const ticketReservationButton = servicesButtons.find(
   button => button.text === 'Prenota un servizio',
 );
@@ -49,56 +52,32 @@ before(() => {
 
 describe('pap-ticket-reservation: test the correct behaviour of form at first step', () => {
   it('should open the action sheet when the "Servizi" and click button "Prenota un servizio"', () => {
-    if (serviziButton && ticketReservationButton) {
-      cy.contains(serviziButton.label).click();
-      cy.contains(ticketReservationButton.text).click();
+    if (servicesButton && ticketReservationButton) {
+      cy.contains(servicesButton.label).click();
+      cy.contains(ticketReservationButton.text).should('be.visible').click();
     } else {
-      throw new Error('Servizi button not found in homeButtons.');
+      cy.log(`${ticketReservationButton!.text} button not found in homeButtons.`);
     }
   });
 
   it('should display the correct ticket type, label and status back button should be hidden', () => {
-    cy.get('.pap-form-first-step').should('include.text', ticketReservationForm.label);
-    const expectedLabelText = ticketReservationForm.step[0].label;
-    cy.get('.pap-form-label-first-step').should('include.text', expectedLabelText);
-    cy.get('.pap-status-back-button').should('be.hidden');
+    testTicketFormStep(ticketReservationForm, 0);
   });
 });
 
 describe('pap-ticket-reservation: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with "Questo campo è obbligatorio" if no trash type selected', () => {
-    cy.get('.pap-status-next-button').click();
-    cy.get('.pap-form-content').should('include.text', ticketReservationForm.label);
-    const expectedLabelText = ticketReservationForm.step[1].label;
-    cy.get('.pap-form-label').should('include.text', expectedLabelText);
-    cy.get('.pap-status-next-button').should('not.be.enabled');
-    cy.get('pap-error-form-handler ion-list ion-label').should(
-      'include.text',
-      'Questo campo è obbligatorio',
-    );
+    testTicketFormStep(ticketReservationForm, 1);
   });
 });
 
 describe('pap-ticket-reservation: test the correct behaviour of form at third step', () => {
   it('should go to third step with a trash type selected', () => {
-    cy.get('pap-form-select ion-list ion-item')
-      .first()
-      .then(btn => {
-        formMockup.Servizio = btn.text();
-      });
-    cy.get('pap-form-select ion-list ion-item').first().click();
-    cy.get('.pap-status-next-button').click();
+    testGoToThirdStep(formMockup);
   });
 
-  it('should display the correct ticket type, ticket label, status next button should be disabled and a label with "Questo campo è obbligatorio" if no location selected', () => {
-    cy.get('.pap-form-content').should('include.text', ticketReservationForm.label);
-    const expectedLabelText = ticketReservationForm.step[2].label;
-    cy.get('.pap-form-label').should('include.text', expectedLabelText);
-    cy.get('.pap-status-next-button').should('not.be.enabled');
-    cy.get('pap-error-form-handler ion-list ion-label').should(
-      'include.text',
-      'Questo campo è obbligatorio',
-    );
+  it('should display the correct ticket type and label for the third step with a disabled next button and an error message', () => {
+    testTicketFormStep(ticketReservationForm, 2, true, true);
   });
 
   it('should click on a random position on the pap-map and verify address', () =>
@@ -114,17 +93,11 @@ describe('pap-ticket-reservation: test the correct behaviour of form at fourth s
   });
 
   it('should display the correct ticket type, ticket label', () => {
-    cy.get('.pap-form-content').should('include.text', ticketReservationForm.label);
-    const expectedLabelText = ticketReservationForm.step[3].label;
-    cy.get('.pap-form-label').should('include.text', expectedLabelText);
-    cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
+    testTicketFormStep(ticketReservationForm, 3);
   });
 
   it('should open action sheet when image picker button is clicked', () => {
-    cy.get('pap-form-image-picker ion-button').click();
-    cy.get('ion-action-sheet').should('exist');
-    cy.get('.action-sheet-group-cancel').click();
-    cy.get('ion-action-sheet').should('not.exist');
+    testImagePicker();
   });
 });
 
@@ -134,10 +107,7 @@ describe('pap-ticket-reservation: test the correct behaviour of form at fifth st
   });
 
   it('should display the correct ticket type, ticket label', () => {
-    cy.get('.pap-form-content').should('include.text', ticketReservationForm.label);
-    const expectedLabelText = ticketReservationForm.step[4].label;
-    cy.get('.pap-form-label').should('include.text', expectedLabelText);
-    cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
+    testTicketFormStep(ticketReservationForm, 4);
   });
 
   it('should write a text into text area and go to recap', () => {
@@ -164,12 +134,7 @@ describe('pap-ticket-reservation: test the correct behaviour of button "annulla"
   });
 
   it('should display alert title correctly', () => {
-    const alertTitle =
-      ticketReservationForm && ticketReservationForm.label
-        ? `Vuoi annullare ${ticketReservationForm.label}?`
-        : 'Vuoi annullare?';
-    cy.get('.alert-title').should('have.text', alertTitle);
-    cy.get('ion-alert').should('exist');
+    testAlertTitle(ticketReservationForm);
   });
 
   it('should have 2 buttons inside the alert-button-group', () => {

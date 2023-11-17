@@ -2,14 +2,19 @@ import {TrashBookType} from './../../../projects/pap/src/app/features/trash-book
 import {homeButtons} from 'projects/pap/src/app/features/home/home.model';
 import {environment} from 'projects/pap/src/environments/environment';
 import {Address} from 'cluster';
-import {e2eLogin, formatDateUsingPapDatePipe, hexToRgb} from 'cypress/utils/test-utils';
+import {
+  clearTestState,
+  e2eLogin,
+  formatDateUsingPapDatePipe,
+  navigateToPageAndVerifyUrl,
+  verifyPapDateComponents,
+} from 'cypress/utils/test-utils';
 
 const calendarsButton = homeButtons.find(button => button.label === 'Calendari');
 const apiCalendar = `${environment.api}/c/${environment.companyId}/calendar`;
 
 before(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
   cy.visit(Cypress.env('baseurl'));
   e2eLogin();
 });
@@ -21,8 +26,7 @@ beforeEach(() => {
 describe('pap-calendar-page: test the correct behaviour of page', () => {
   it('should navigate to the calendar page and make a successful GET request to the calendar API', () => {
     if (calendarsButton) {
-      cy.contains(calendarsButton.label).click();
-      cy.url().should('include', calendarsButton.url);
+      navigateToPageAndVerifyUrl(calendarsButton.label, calendarsButton.url);
       cy.wait('@calendarCall').its('response.statusCode').should('eq', 200); //success status code
     } else {
       throw new Error('Button not found.');
@@ -43,8 +47,6 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
       const apiAddresses = apiData.map((d: Address) => d.address);
       const calendarObject = apiData[0].calendar;
       const apiDate = Object.keys(calendarObject)[0];
-      const formattedDay = formatDateUsingPapDatePipe(apiDate, 'd');
-      const formattedMonth = formatDateUsingPapDatePipe(apiDate, 'MMMM');
       const formattedWeekDay = formatDateUsingPapDatePipe(apiDate, 'EEEE');
       const apiStartTime = calendarObject[apiDate][0].start_time;
       const apiStopTime = calendarObject[apiDate][0].stop_time;
@@ -67,9 +69,7 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
       cy.get('ion-popover > ion-list > ion-item > ion-grid > ion-row > ion-col > ion-label')
         .first()
         .click();
-
-      cy.get('.pap-date-day').contains(formattedDay).should('exist');
-      cy.get('.pap-date-month').contains(formattedMonth).should('exist');
+      verifyPapDateComponents(apiDate);
       cy.get('.pap-calendar-weekday').contains(formattedWeekDay).should('exist');
       cy.get('.pap-calendar-time').contains(apiStartTime).should('exist');
       cy.get('.pap-calendar-time').contains(apiStopTime).should('exist');
@@ -89,6 +89,5 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
 });
 
 after(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
 });

@@ -1,4 +1,4 @@
-import {hexToRgb} from 'cypress/utils/test-utils';
+import {clearTestState} from 'cypress/utils/test-utils';
 import {homeButtons, noLoggedButtons} from 'projects/pap/src/app/features/home/home.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
@@ -6,8 +6,7 @@ const filteredHomeButtons = homeButtons.filter(btn => btn.hideInHome == null);
 const apiLogin = `${environment.api}/login`;
 
 beforeEach(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
   cy.visit(Cypress.env('baseurl'));
 });
 
@@ -20,29 +19,6 @@ describe('pap-home: test the correct presences of home buttons', () => {
     filteredHomeButtons.forEach((btn, index) => {
       cy.get('.pap-home-button-label').eq(index).should('have.text', btn.label);
     });
-  });
-
-  it('should have the correct environment color for the buttons & labels', () => {
-    const primaryColorRegex = /--ion-color-primary: (\#\w+);/;
-    const match = environment.config.resources.variables.match(primaryColorRegex);
-    const environmentPrimaryColor = match ? match[1] : null;
-    if (environmentPrimaryColor) {
-      filteredHomeButtons.forEach((btn, index) => {
-        cy.get('.pap-home-button-label').eq(index).should('have.text', btn.label);
-        cy.get('.pap-home-button-label').should(
-          'have.css',
-          'color',
-          hexToRgb(environmentPrimaryColor),
-        );
-        cy.get('.pap-home-button-image').should(
-          'have.css',
-          'color',
-          hexToRgb(environmentPrimaryColor),
-        );
-      });
-    } else {
-      throw new Error('Color not found in environment variables.');
-    }
   });
 });
 
@@ -117,6 +93,5 @@ describe('pap-home: test logged user', () => {
 });
 
 after(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
 });

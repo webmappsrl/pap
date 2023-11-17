@@ -1,11 +1,11 @@
 import {
+  clearTestState,
   e2eLogin,
   formatDateUsingPapDatePipe,
-  hexToRgb,
+  navigateToPageAndVerifyUrl,
   translateTicketType,
 } from 'cypress/utils/test-utils';
 import {homeButtons} from 'projects/pap/src/app/features/home/home.model';
-import {TrashBookRow} from 'projects/pap/src/app/features/trash-book/trash-book-model';
 import {environment} from 'projects/pap/src/environments/environment';
 
 const apiTickets = `${environment.api}/c/${environment.companyId}/tickets`;
@@ -13,8 +13,7 @@ const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types
 const ticketButton = homeButtons.find(button => button.label === 'I miei ticket');
 
 before(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@trashTypesCall').then(interception => {
@@ -31,8 +30,7 @@ beforeEach(() => {
 describe('pap-reports-detail: test the correct behaviour of page', () => {
   it('should navigate to the reports detail page and load ticket data correctly', () => {
     if (ticketButton) {
-      cy.contains(ticketButton.label).click();
-      cy.url().should('include', ticketButton.url);
+      navigateToPageAndVerifyUrl(ticketButton.label, ticketButton.url);
       cy.wait('@ticketsCall').then(interception => {
         const ticketsData = interception?.response?.body.data;
         const ticketData = interception?.response?.body.data[0];
@@ -63,7 +61,7 @@ describe('pap-reports-detail: test the correct behaviour of page', () => {
           if (ticketData.note) {
             cy.get('.pap-form-recap-note').contains(ticketData.note).should('exist');
           } else {
-            cy.log('Field note does not exist..');
+            cy.log('Field note does not exist.');
           }
           if (ticketData.phone) {
             cy.get('.pap-form-recap-phone').contains(ticketData.phone).should('exist');
@@ -81,6 +79,5 @@ describe('pap-reports-detail: test the correct behaviour of page', () => {
 });
 
 after(() => {
-  cy.clearCookies();
-  cy.clearLocalStorage();
+  clearTestState();
 });

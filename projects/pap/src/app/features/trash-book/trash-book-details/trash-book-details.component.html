@@ -16,9 +16,9 @@
         <ion-badge
           [style.background-color]="view.trashBookType?.color"
           slot="start"
-          class="ion-text-wrap">
-          {{view.trashBookType?.name}}
-        </ion-badge>
+          class="ion-text-wrap"
+          >{{view.trashBookType?.name}}</ion-badge
+        >
 
         <ion-icon
           [style.--color]="view.trashBookType?.color"
@@ -34,22 +34,22 @@
         <ion-label
           class="trash-book-details-label ion-text-wrap"
           slot="start"
-          >PAP</ion-label
+          >{{'PAP'|translate}}</ion-label
         >
         <ion-button
           shape="round"
           class="trash-book-details-button"
           slot="end"
           *ngIf="view.pap;else noPap"
-          (click)="openCalendar()">
-          calendario
-        </ion-button>
+          (click)="openCalendar()"
+          >calendario</ion-button
+        >
 
         <ng-template #noPap>
           <ion-label
             class="trash-book-details-value ion-text-wrap"
             slot="end"
-            >non pianificato</ion-label
+            >{{'non pianificato'|translate}}</ion-label
           >
         </ng-template>
       </ion-item>
@@ -61,14 +61,14 @@
         <ion-label
           class="trash-book-details-label"
           slot="start"
-          >Centro di Raccolta</ion-label
+          >{{'Centro di Raccolta'|translate}}</ion-label
         >
         <ion-button
           shape="round"
           class="trash-book-details-button"
           slot="end"
           (click)="openWasteCenterCollection()"
-          >Vedi</ion-button
+          >{{'Vedi'|translate}}</ion-button
         >
       </ion-item>
 
@@ -79,7 +79,7 @@
         <ion-label
           class="trash-book-details-label"
           slot="start"
-          >Dove lo getto</ion-label
+          >{{'Dove lo getto'|translate}}</ion-label
         >
         <ion-label
           class="trash-book-details-value  ion-text-wrap"
@@ -95,14 +95,14 @@
         <ion-label
           class="trash-book-details-label"
           slot="start"
-          >Ritiro ingombranti</ion-label
+          >{{'Ritiro ingombranti'|translate}}</ion-label
         >
         <ion-button
           shape="round"
           class="trash-book-details-button"
           slot="end"
           (click)="book(view.trashBookType)"
-          >Prenota</ion-button
+          >{{'Prenota'|translate}}</ion-button
         >
       </ion-item>
     </ion-card>
