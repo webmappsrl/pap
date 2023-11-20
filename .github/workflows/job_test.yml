@@ -65,6 +65,7 @@ jobs:
       - name: Cypress run
         env:
           CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+          CYPRESS_email_no_address: no_address@webmapp.it
           CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
           CYPRESS_baseurl: http://localhost:8100
         if: success()

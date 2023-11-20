@@ -20,9 +20,10 @@ export interface FormMockup {
  * @param password - User's password.
  */
 export function e2eLogin(
-  email: string = Cypress.env('email'),
+  email: string = 'email',
   password: string = Cypress.env('password'),
 ): Cypress.Chainable {
+  email = Cypress.env(email);
   const apiLogin = `${environment.api}/login`;
   cy.intercept('POST', apiLogin).as('loginRequest');
   cy.get('.pap-header-button').click();
