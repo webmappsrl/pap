@@ -21,7 +21,7 @@ import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {filter, map, switchMap, take} from 'rxjs/operators';
 import {UpdateUser, deleteUser, logout} from '../../core/auth/state/auth.actions';
-import {error} from '../../core/auth/state/auth.selectors';
+import {error, noAddress} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {FormProvider} from '../../shared/form/form-provider';
 import {LocationModalComponent} from '../../shared/form/location/location.modal';
@@ -93,6 +93,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _addressFormArray: UntypedFormArray = this._formBuilder.array([]);
   private _alertEVT: EventEmitter<AlertOptions> = new EventEmitter<AlertOptions>();
   private _alertSub: Subscription = Subscription.EMPTY;
+  private _noAddress$: Observable<boolean> = this._store.select(noAddress);
   private _settingsFormSub: Subscription = Subscription.EMPTY;
 
   confiniZone$: Observable<Zone[]> = this._store.select(confiniZone);
@@ -209,6 +210,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._store.dispatch(showButtons({show: false}));
+    this._noAddress$
+      .pipe(
+        filter(noAddress => noAddress),
+        take(1),
+      )
+      .subscribe(_ => this.openModalLocation());
   }
 
   openModalLocation(): void {
