@@ -80,7 +80,10 @@ export class LocalNotificationService {
                     const startHour = +calendarRow.start_time.split(':')[0];
                     const startMinute = +calendarRow.start_time.split(':')[1];
                     const startDate = atDate.setHours(startHour, startMinute);
-                    const at = subHours(startDate, 7);
+                    let at = subHours(startDate, 12);
+                    if (+startHour >= 12) {
+                      at = subHours(startDate, 7);
+                    }
                     const body = this._getBodyNotificationFromCalendarRows(calendarRow);
                     notifications.push({
                       id: +`${at.getTime()}`.toString().slice(0, 8),
