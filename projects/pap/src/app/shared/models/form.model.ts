@@ -33,7 +33,7 @@ export interface TicketFormOption {
 
 export const ticketReservationForm: TicketFormConf = {
   ticketType: 'reservation',
-  label: 'Prenotazione servizio',
+  label: 'Prenotazione servizio di ritiro',
   cancel: 'Sicuro di voler cancellare la prenotazione?',
   finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
   pages: 6,

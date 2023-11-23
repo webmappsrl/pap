@@ -15,7 +15,7 @@ import {environment} from 'projects/pap/src/environments/environment';
 
 const servicesButton = homeButtons.find(button => button.label === 'Servizi');
 const ticketReservationButton = servicesButtons.find(
-  button => button.text === 'Prenota un servizio',
+  button => button.text === 'Prenota un servizio di ritiro',
 );
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
@@ -51,7 +51,7 @@ before(() => {
 });
 
 describe('pap-ticket-reservation: test the correct behaviour of form at first step', () => {
-  it('should open the action sheet when the "Servizi" and click button "Prenota un servizio"', () => {
+  it('should open the action sheet when the "Servizi" and click button "Prenota un servizio di ritiro"', () => {
     if (servicesButton && ticketReservationButton) {
       cy.contains(servicesButton.label).click();
       cy.contains(ticketReservationButton.text).should('be.visible').click();

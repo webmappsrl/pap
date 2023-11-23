@@ -22,7 +22,7 @@ export enum buttonAction {
 
 export const servicesButtons = [
   {
-    text: 'Prenota un servizio',
+    text: 'Prenota un servizio di ritiro',
     icon: 'create',
     data: {
       action: 'ticket-reservation',
