@@ -108,7 +108,7 @@ gulp.task('build', async () => {
     await ionicBuild();
     await ionicBuildIos();
     await ionicBuildIAndroid();
-    await execCmd(`npx capacitor-set-version -v ${version} -b 0`);
+    await execCmd(`npx capacitor-set-version -v ${version} -b 1`);
     await ionicCapSync();
     await ionicPlathforms(config.resources);
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
