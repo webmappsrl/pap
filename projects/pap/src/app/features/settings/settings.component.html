@@ -1,17 +1,25 @@
 <ng-container *ngIf="settingsView$|async as settingsView">
   <ion-header><pap-header></pap-header></ion-header>
 
-  <ion-content padding class="pap-settings">
+  <ion-content
+    padding
+    class="pap-settings">
     <ion-card class="main-card">
       <ion-segment value="{{initStep}}">
-        <ion-segment-button value="firstStep" (click)="currentStep$.next('firstStep')">
-          <ion-label>Generali</ion-label>
+        <ion-segment-button
+          value="firstStep"
+          (click)="currentStep$.next('firstStep')">
+          <ion-label>{{'Generali'|translate}}</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="secondStep" (click)="currentStep$.next('secondStep')">
-          <ion-label>Password</ion-label>
+        <ion-segment-button
+          value="secondStep"
+          (click)="currentStep$.next('secondStep')">
+          <ion-label>{{'Password'|translate}}</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="thirdStep" (click)="currentStep$.next('thirdStep')">
-          <ion-label>Indirizzi</ion-label>
+        <ion-segment-button
+          value="thirdStep"
+          (click)="currentStep$.next('thirdStep')">
+          <ion-label>{{'Indirizzi'|translate}}</ion-label>
         </ion-segment-button>
       </ion-segment>
 
@@ -21,16 +29,13 @@
             <pap-first-step-signup-form
               *ngSwitchCase="'firstStep'"
               [buttons]="false"
-              [disable]="['email']"
-            ></pap-first-step-signup-form>
+              [disable]="['email']"></pap-first-step-signup-form>
             <pap-second-step-signup-form
               *ngSwitchCase="'secondStep'"
-              [buttons]="false"
-            ></pap-second-step-signup-form>
+              [buttons]="false"></pap-second-step-signup-form>
             <pap-third-step-form
               *ngSwitchCase="'thirdStep'"
-              [buttons]="false"
-            ></pap-third-step-form>
+              [buttons]="false"></pap-third-step-form>
           </ng-container>
         </ion-list>
       </form>
@@ -38,35 +43,46 @@
     <ion-grid class="footer">
       <ion-row>
         <ion-col class="ion-align-self-start">
-          <ion-button fill="outline" shape="round" expand="full" (click)="logout()">
-            Log out
+          <ion-button
+            fill="outline"
+            shape="round"
+            expand="full"
+            (click)="logout()">
+            {{'Log out'|translate}}
           </ion-button>
         </ion-col>
-        <ion-col class="ion-align-self-end" *ngIf="(currentStep$|async) as currentStep">
+        <ion-col
+          class="ion-align-self-end"
+          *ngIf="(currentStep$|async) as currentStep">
           <ion-button
             fill="solid"
             shape="round"
             expand="full"
             *ngIf="currentStep !== 'thirdStep'"
             [disabled]="isDisabled()"
-            (click)="update()"
-          >
-            Salva
+            (click)="update()">
+            {{'Salva'|translate}}
           </ion-button>
           <ion-button
             (click)="openModalLocation()"
             expand="block"
             shape="round"
             *ngIf="currentStep === 'thirdStep'"
-            >Aggiungi indirizzo</ion-button
+            >{{'Aggiungi indirizzo'|translate}}</ion-button
           >
         </ion-col>
       </ion-row>
       <ion-row *ngIf="(currentStep$|async) === 'firstStep'">
         <ion-col class="ion-align-self-start"> </ion-col>
-        <ion-col class="ion-align-self-center" size="8">
-          <ion-button fill="outline" shape="round" expand="full" (click)="delete()">
-            elimina account
+        <ion-col
+          class="ion-align-self-center"
+          size="8">
+          <ion-button
+            fill="outline"
+            shape="round"
+            expand="full"
+            (click)="delete()">
+            {{'elimina account'|translate}}
           </ion-button>
         </ion-col>
         <ion-col class="ion-align-self-end"> </ion-col>

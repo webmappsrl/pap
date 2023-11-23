@@ -43,6 +43,7 @@ import {BroadcastNotificationService} from './services/broadcast-notification.se
 import {LocalNotificationService} from './services/local-notification.service';
 import {DateComponent} from './components/date/date.component';
 import {RecapRowComponent} from './form/recap/recap-row/recap-row.component';
+import {addr2StringPipe} from './pipes/addr-2-string.pipe';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -69,6 +70,7 @@ import {RecapRowComponent} from './form/recap/recap-row/recap-row.component';
     PapLangPipe,
     SortPipe,
     FilterByPipe,
+    addr2StringPipe,
     GetZoneFromLocationPipe,
     CalendarSelectComponent,
     CalendarComponent,
@@ -118,6 +120,7 @@ import {RecapRowComponent} from './form/recap/recap-row/recap-row.component';
     PapLangPipe,
     FilterByPipe,
     SortPipe,
+    addr2StringPipe,
     firstStepSignupComponent,
     secondStepSignupComponent,
     thirdStepComponent,

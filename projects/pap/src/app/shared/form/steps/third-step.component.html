@@ -1,6 +1,8 @@
 <form [formGroup]="thirdStep">
-  <div class="scrollable" *ngIf="calendarSettings$|async as zones">
-    <ion-item-group *ngFor="let zone of zones">
+  <div
+    class="scrollable"
+    *ngIf="calendarSettings$|async as zones">
+    <ion-item-group *ngFor="let zone of zones;let idx=index">
       <ion-item-divider>
         <h5>
           {{zone.label}}
@@ -11,20 +13,16 @@
           <ion-card-header>
             <ion-row>
               <ion-col>
-                <ion-card-subtitle>
-                  {{address.city
-
-                  }}{{address.city && (address.address||address.house_number?', ':'')}}
-                  {{address.address
-                  }}{{address.address && address.house_number?', ':''
-
-
-
-
-
-
-                  }}{{address.house_number}}</ion-card-subtitle
-                >
+                <ion-card-subtitle
+                  color="warning"
+                  *ngIf="idx === 0"
+                  >{{'solo questo a questo indirizzo arriveranno le notifiche'|translate}}</ion-card-subtitle
+                ></ion-col
+              >
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-card-title> {{address|addr2string}}</ion-card-title>
               </ion-col>
               <ion-col size="auto">
                 <ion-button
@@ -32,8 +30,7 @@
                   (click)="presentAlert(address)"
                   expand="block"
                   color="danger"
-                  *ngIf="zones.length > 1|| zone.addresses.length> 1"
-                >
+                  *ngIf="zones.length > 1|| zone.addresses.length> 1">
                   <ion-icon name="trash-sharp"></ion-icon> </ion-button
               ></ion-col>
             </ion-row>
@@ -44,17 +41,17 @@
                 [positionMarker]="address.location"
                 [center]="address.location"
                 [edit]="false"
-                [featureCollection]="confiniZone$|async"
-              >
+                [featureCollection]="confiniZone$|async">
               </pap-map>
             </ion-item>
             <ion-radio-group
               [value]="address.user_type_id"
-              (ionChange)="selectUserType(address, $event)"
-            >
+              (ionChange)="selectUserType(address, $event)">
               <ion-item *ngFor="let userType of zone.avalaible_user_types">
                 <ion-label> {{userType.label.it}}</ion-label>
-                <ion-radio slot="end" [value]="userType.id"></ion-radio>
+                <ion-radio
+                  slot="end"
+                  [value]="userType.id"></ion-radio>
               </ion-item>
             </ion-radio-group>
           </ion-card-content>
@@ -66,14 +63,21 @@
   <ion-grid *ngIf="buttons">
     <ion-row>
       <ion-col class="ion-align-self-start">
-        <ion-button (click)="prev.emit()" expand="full">
+        <ion-button
+          (click)="prev.emit()"
+          expand="full">
           <ion-icon name="chevron-back"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col class="ion-align-self-center"></ion-col>
       <ion-col class="ion-align-self-end">
-        <ion-button [disabled]="thirdStep.invalid" (click)="next.emit()" expand="full">
-          <ion-icon color="light" name="checkmark"></ion-icon>
+        <ion-button
+          [disabled]="thirdStep.invalid"
+          (click)="next.emit()"
+          expand="full">
+          <ion-icon
+            color="light"
+            name="checkmark"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
