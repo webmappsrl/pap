@@ -39,7 +39,7 @@ export const ticketReservationForm: TicketFormConf = {
   pages: 6,
   step: [
     {
-      label: `Questo serivizio ti permette di inviare una richiesta di prenotazione di un servizio ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice della segnalazione e verrà inviata una email a ${environment.config.name}: verrai ricontattato concordare i dettagli della prenotazione. Clicca sul bottone “Procedi” per iniziare.`,
+      label: `Questo serivizio ti permette di inviare una richiesta di prenotazione di un servizio ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice della segnalazione e verrà inviata una email a ${environment.config.name}: verrai ricontattato concordare i dettagli della prenotazione. Vai avanti per iniziare.`,
       type: 'label',
       required: false,
     },
@@ -89,7 +89,7 @@ export const abandonmentTicketForm: TicketFormConf = {
   label: 'Segnalazione di abbandono',
   step: [
     {
-      label: `Questo serivizio ti permette di inviare una segnalazione di abbandono ad ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice e verrà inviata una email a ${environment.config.name}. Clicca sul bottone “Procedi” per iniziare.`,
+      label: `Questo serivizio ti permette di inviare una segnalazione di abbandono ad ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice e verrà inviata una email a ${environment.config.name}. Vai avanti per iniziare.`,
       type: 'label',
       required: false,
     },
@@ -139,7 +139,7 @@ export const reportTicketForm: TicketFormConf = {
   label: 'Segnalazione mancato ritiro',
   step: [
     {
-      label: `Questo servizio ti permette di segnalare ad ${environment.config.name} un mancato ritiro del servizio di raccolta porta a porta. Al termine ti verrà assegnato un codice e verrà inviata una email a ${environment.config.name}: verrai ricontattato in caso di necessità. Clicca sul bottone “Procedi” per iniziare.`,
+      label: `Questo servizio ti permette di segnalare ad ${environment.config.name} un mancato ritiro del servizio di raccolta porta a porta. Al termine ti verrà assegnato un codice e verrà inviata una email a ${environment.config.name}: verrai ricontattato in caso di necessità. Vai avanti per iniziare.`,
       type: 'label',
       required: false,
     },
