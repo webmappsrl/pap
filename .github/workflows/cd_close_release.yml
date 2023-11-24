@@ -1,19 +1,15 @@
 name: cd_pr_close_release
-
 on:
   push:
     branches:
       - develop
-
 jobs:
   merge-develop-to-main:
     if: startsWith(github.ref, 'refs/heads/develop')
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
       - name: Check commit message
         run: |
           commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
