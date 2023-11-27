@@ -21,6 +21,7 @@ interface Config {
     logo: string;
     header_image: string;
     footer_image: string;
+    other_info_url: string;
     push_notification_plist_url: string;
     push_notification_json_url: string;
   };
