@@ -12,6 +12,7 @@ import {TrashBookTypeComponent} from '../trash-book/trash-book-type/trash-book-t
 import {Calendar} from './calendar.model';
 import {loadCalendars} from './state/calendar.actions';
 import {selectCalendarState} from './state/calendar.selectors';
+import {environment} from 'projects/pap/src/environments/environment';
 
 @Component({
   selector: 'pap-calendar-page',
@@ -20,9 +21,10 @@ import {selectCalendarState} from './state/calendar.selectors';
   encapsulation: ViewEncapsulation.None,
 })
 export class CalendarPageComponent {
+  @ViewChild('popover') popover: any;
+
   calendarView$ = this._store.pipe(select(selectCalendarState));
   currentAddress$: BehaviorSubject<Calendar | null> = new BehaviorSubject<Calendar | null>(null);
-  @ViewChild('popover') popover: any;
   isOpen = false;
 
   constructor(
@@ -52,7 +54,7 @@ export class CalendarPageComponent {
   }
 
   openLink(): void {
-    this._inAppBrowser.create('https://www.esaspa.it/cittadini/calendario-pap');
+    this._inAppBrowser.create(this._getOtherInfoUrl());
   }
 
   presentPopover(e: Event) {
@@ -72,5 +74,19 @@ export class CalendarPageComponent {
           this.isOpen = false;
         }
       });
+  }
+
+  private _getOtherInfoUrl(): string {
+    let otherInfoUrl = environment.config.resources?.other_info_url ?? '';
+    const currentAddress = this.currentAddress$.value;
+    if (
+      currentAddress != null &&
+      currentAddress.address != null &&
+      currentAddress.address.zone != null &&
+      currentAddress.address.zone.url != null
+    ) {
+      otherInfoUrl = currentAddress.address.zone.url;
+    }
+    return otherInfoUrl;
   }
 }
