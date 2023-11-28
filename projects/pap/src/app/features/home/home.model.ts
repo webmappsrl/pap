@@ -58,7 +58,7 @@ export const servicesButtons = [
 export const homeButtons = [
   {
     label: environment.config.name,
-    img: 'assets/icons/logo.png',
+    img: 'assets/icons/app_icon.png',
     url: 'info',
     action: buttonAction.NAVIGATION,
   },

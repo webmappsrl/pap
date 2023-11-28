@@ -16,6 +16,7 @@ interface Config {
   name: string;
   resources: {
     icon: string;
+    app_icon: string;
     splash: string;
     variables: string;
     logo: string;
@@ -189,6 +190,7 @@ async function setEnvironment(paths: Paths, config: Config): Promise<void> {
 
 async function setAssets(config: Config): Promise<void> {
   await download(config.resources.logo, `projects/pap/src/assets/icons/logo.png`);
+  await download(config.resources.app_icon, `projects/pap/src/assets/icons/app_icon.png`);
   await download(config.resources.header_image, `projects/pap/src/assets/images/header.png`);
   await download(config.resources.footer_image, `projects/pap/src/assets/images/footer.png`);
 }
