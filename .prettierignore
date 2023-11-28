@@ -1,1 +1,3 @@
 projects/pap/src/environment/*
+projects/pap/src/environments/environment.ts
+projects/pap/src/environments/environment.prod.ts

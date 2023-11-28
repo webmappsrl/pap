@@ -40,14 +40,11 @@ export class CalendarComponent implements OnInit {
   originalOrder = (a: KeyValue<string, any>, b: KeyValue<string, any>): number => {
     return 0;
   };
+  selectedidxBtn$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
   selectedidxCol$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
   selectedidxRow$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
-  selectedidxBtn$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
 
-  constructor(
-    private _inAppBrowser: InAppBrowser,
-    private _cdr: ChangeDetectorRef,
-  ) {}
+  constructor(private _inAppBrowser: InAppBrowser, private _cdr: ChangeDetectorRef) {}
 
   info(
     trashDate: string,
