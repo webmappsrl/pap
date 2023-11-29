@@ -1,5 +1,82 @@
 # Changelog pap
 
+## [1.1.0](https://github.com/webmappsrl/pap/compare/v1.0.10...v1.1.0) (2023-11-29)
+
+
+### Features
+
+* **calendar:** translate calendar page component ([83e7daf](https://github.com/webmappsrl/pap/commit/83e7dafa1ee11209e3bc7938e1e8702d9c238733))
+* tickect_add_phone ([#34](https://github.com/webmappsrl/pap/issues/34)) ([58852cb](https://github.com/webmappsrl/pap/commit/58852cbdb50e2bca79956fa3969c6d41a372f88c))
+
+
+### Bug Fixes
+
+* Add Alessio's foothpath to README ([78f3726](https://github.com/webmappsrl/pap/commit/78f37269b0a0629ee1879f74f1620e98c542bde3))
+* **calendar-page:** fix other_info_url ([20b2ab9](https://github.com/webmappsrl/pap/commit/20b2ab961b3e0f4c2676dbb673ca8a98e25c2e94))
+* Fix conditional check for user addresses length ([d0d681e](https://github.com/webmappsrl/pap/commit/d0d681ef8ad52c7135dc66fa0a3ffdbbc40a77b4))
+* **form:** change welcome text id: 2110 ([2d7665b](https://github.com/webmappsrl/pap/commit/2d7665b2bd2a9a253d9c69542a3bed10273808e6))
+* General update ([6ba7770](https://github.com/webmappsrl/pap/commit/6ba7770e12fa55d7cd65d7c7ff26f4c6eb956b0f))
+* **gulp:** set build number to 1 ([2dd3ae2](https://github.com/webmappsrl/pap/commit/2dd3ae255beaf3d89264dc4d59d2b0852e7a7b55))
+* handling right ng for position ([054a82f](https://github.com/webmappsrl/pap/commit/054a82f9c8faae367b33bfe4d266f878430da5e1))
+* handling select button ([e67a34c](https://github.com/webmappsrl/pap/commit/e67a34c3651ae8ffec80b6b68c1dbc5c7e5ee75b))
+* **labelling:** id:2115 ([6170c9e](https://github.com/webmappsrl/pap/commit/6170c9e6f9745f1fcf3d914c6fba5fd5d1b09c43))
+* **local-notification:** timing id:2122 ([beea9fa](https://github.com/webmappsrl/pap/commit/beea9fa35136a87105657f8880e26cdce3671721))
+* recap view ([ee1ebb9](https://github.com/webmappsrl/pap/commit/ee1ebb95941b76596ce407c7ee75b232190feba7))
+* set position in map by click in my position ([b1dfd0d](https://github.com/webmappsrl/pap/commit/b1dfd0dc5097d30b45cae60619b0fc1c09f814ed))
+* status position ([0923702](https://github.com/webmappsrl/pap/commit/0923702f9343a9f191a8b61cf7c5c47d0f2d820b))
+* update settings.component.ts ([1dc4c59](https://github.com/webmappsrl/pap/commit/1dc4c59c482735c696de40305645fb95f365028e))
+* viewport ([2512b66](https://github.com/webmappsrl/pap/commit/2512b66c8a884606880462cce4bf223af704928e))
+* **warning:** add warning id:2121 ([36bcf49](https://github.com/webmappsrl/pap/commit/36bcf49e9d5b963a019a01a1449af6fbde3bb32f))
+
+
+### Miscellaneous
+
+* add additional information to recap component ([e847bf2](https://github.com/webmappsrl/pap/commit/e847bf2923d4ac1dfe0e2d8e33aeb5a75bb64265))
+* **auth:** add logic to check if user has no address ([f6f181f](https://github.com/webmappsrl/pap/commit/f6f181fb2c2ffdc273a080fec14bb4883867bde8))
+* fix node version ([bcbee81](https://github.com/webmappsrl/pap/commit/bcbee810142bf797c6461c9193361ea7940806ff))
+* Remove unnecessary test cases and comments in pap-report-ticket and pap-reports ([6db9a10](https://github.com/webmappsrl/pap/commit/6db9a10c5e88f940a4ae09367548924e267d2519))
+* reorganize buttons in FormStatusComponent ([10dad6b](https://github.com/webmappsrl/pap/commit/10dad6b542ece621550048135e860d07d5bf6c83))
+* Update .gitignore and gulpfile.ts ([61737f5](https://github.com/webmappsrl/pap/commit/61737f5858c42342be494887dfc4b3720c9a1337))
+* Update .gitignore and gulpfile.ts, bump package version ([9ef2d52](https://github.com/webmappsrl/pap/commit/9ef2d52b02981bb3dafdc99d6fe30d666fa3ab84))
+* Update auth.service.ts ([72ba696](https://github.com/webmappsrl/pap/commit/72ba6962c05500a48c223595bea66d5aab266400))
+* Update branch name in cd_surge.yml workflow ([d8e52f8](https://github.com/webmappsrl/pap/commit/d8e52f8fabc0c62cc76f249065cafd3e5b7e9d8c))
+* Update branch name in ci_lint_test_deploy_dev.yml ([bc13fb9](https://github.com/webmappsrl/pap/commit/bc13fb9843f00e7676fd8dc4c0ffeebcd21212ff))
+* Update calendar component template ([1069c16](https://github.com/webmappsrl/pap/commit/1069c16fc0f4fcfe577eb90141ce487c05fff2ea))
+* Update calendar-select.component.ts ([779271e](https://github.com/webmappsrl/pap/commit/779271e0288d21962c0669e230ba00db751c7e81))
+* Update cd_surge.yml workflow ([091ab15](https://github.com/webmappsrl/pap/commit/091ab15384adb10295f185553522813601563a30))
+* Update cd_surge.yml workflow ([f649263](https://github.com/webmappsrl/pap/commit/f649263e64a4e103e4f48c064291178d91fb5b1e))
+* Update ci_lint_test_deploy_dev.yml ([748fe53](https://github.com/webmappsrl/pap/commit/748fe53dfeda343cb03040e3c086a3e3dc325600))
+* Update CI/CD workflows ([8d05562](https://github.com/webmappsrl/pap/commit/8d05562548fc1a025d85ecc3ac34cd65ff4052cf))
+* Update CI/CD workflows for linting, testing, and deployment ([c262e59](https://github.com/webmappsrl/pap/commit/c262e59f83c39296788bdcc8ecfb6643b9760532))
+* Update default ID in job_test.yml ([1684694](https://github.com/webmappsrl/pap/commit/1684694821c84caad437d29a8323bd8073db6e1a))
+* Update first-step.component.html ([fc9bb43](https://github.com/webmappsrl/pap/commit/fc9bb4368abcb846424df042ece2bc0550ad6228))
+* Update form component HTML and SCSS ([393ceba](https://github.com/webmappsrl/pap/commit/393cebaa6fabb321bda447271ac74f6f483deb4f))
+* Update home buttons ([#33](https://github.com/webmappsrl/pap/issues/33)) ([2c7917c](https://github.com/webmappsrl/pap/commit/2c7917c5a68ee6aefa17b57edfc11e0a2fecbddc))
+* Update job_format.yml workflow ([6a73ad7](https://github.com/webmappsrl/pap/commit/6a73ad7a789c4cd35eb2da7f307a72fd93a1177a))
+* Update job_test workflow ([#27](https://github.com/webmappsrl/pap/issues/27)) ([98159df](https://github.com/webmappsrl/pap/commit/98159dfa9e34ebc477b85f5c6959964be277c21d))
+* Update job_test.yml ([15fed1d](https://github.com/webmappsrl/pap/commit/15fed1df63a7576d802ef4fc88a1f5f8edfc633d))
+* Update job_test.yml ([1610b81](https://github.com/webmappsrl/pap/commit/1610b819222b888f318bb427674e6bcc6ed84110))
+* Update job_test.yml ([853eb04](https://github.com/webmappsrl/pap/commit/853eb041c0c513aacd775fc4e9cf4edbe33b12d5))
+* Update job_test.yml ([b29aed5](https://github.com/webmappsrl/pap/commit/b29aed597691a70a95a640f3de137cccb429eb11))
+* Update job_test.yml --id 1 ([#29](https://github.com/webmappsrl/pap/issues/29)) ([6d07ed1](https://github.com/webmappsrl/pap/commit/6d07ed1cd44ad7dce4bdbbe4f3e65cd75b215649))
+* Update job_test.yml to extract commit ID from git log ([5fcfcfd](https://github.com/webmappsrl/pap/commit/5fcfcfdd6f23422ec8de53362948789b74b79fe6))
+* Update job_test.yml to extract ID from commit message ([380163c](https://github.com/webmappsrl/pap/commit/380163c2e4aa461538ffd22809d101de61261aff))
+* Update job_test.yml to extract ID from commit message ([78ab152](https://github.com/webmappsrl/pap/commit/78ab152acf24049f5e5f06fa68d8580687da40ea))
+* Update location component and map component styles ([5c3352a](https://github.com/webmappsrl/pap/commit/5c3352a7dfacf119f7c184d698a55ad858bdbda7))
+* Update location.modal.ts ([e697aae](https://github.com/webmappsrl/pap/commit/e697aae46c99cc98931a0ddaa90e84308348c1ce))
+* Update location.modal.ts ([#37](https://github.com/webmappsrl/pap/issues/37)) ([7e19d49](https://github.com/webmappsrl/pap/commit/7e19d492d52ec1e494f0455beedbd9a844b9e865))
+* Update package version to 2.2.22 ([38815f9](https://github.com/webmappsrl/pap/commit/38815f9dd289e98a09925de7af1e55ec91c75fd9))
+* Update package version to 2.2.22 ([9eb06fb](https://github.com/webmappsrl/pap/commit/9eb06fb8d2b32ab2f627471e4bc33b6e9a9ac887))
+* Update package.json version to 2.2.2 ([bc44ed8](https://github.com/webmappsrl/pap/commit/bc44ed8e30b605130a620a46fd2c276ccef1adc4))
+* Update recap.component.html ([7d7d941](https://github.com/webmappsrl/pap/commit/7d7d941007c9de29f2f589c45036b1392eaa6cad))
+* Update recap.component.html formatting and translations ([60e99e6](https://github.com/webmappsrl/pap/commit/60e99e692b6ddddc491fb1040f0d3eeeaf664800))
+* Update reports-detail.component.html and reports.component.html ([ac6d963](https://github.com/webmappsrl/pap/commit/ac6d9631acfb7935e7f079d8ee35fd59b57b8ed7))
+* Update splash screen configuration ([fc3f2c4](https://github.com/webmappsrl/pap/commit/fc3f2c421fdd396f24fe1236e4b55935b579c89a))
+* Update status component and alert styles ([29e43c4](https://github.com/webmappsrl/pap/commit/29e43c477372b4e41d17862de9f496fe7cd428e2))
+* Update subproject ([fe24998](https://github.com/webmappsrl/pap/commit/fe2499894cd9967ac4eb37ee9a2693ee12343f8f))
+* Update subproject ([d213f64](https://github.com/webmappsrl/pap/commit/d213f641fdf0f0eef566a200f60731d59dc0b0dc))
+* Update third-step.component.html and third-step.component.ts ([#36](https://github.com/webmappsrl/pap/issues/36)) ([20883e2](https://github.com/webmappsrl/pap/commit/20883e249480b55da70d8adf620803414a8b87b3)), closes [#2072](https://github.com/webmappsrl/pap/issues/2072)
+
 ## [1.0.10](https://github.com/webmappsrl/pap/compare/v1.0.9...v1.0.10) (2023-10-18)
 
 
