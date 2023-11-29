@@ -11,7 +11,7 @@ import {of} from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class InfoComponent {
-  public infoView$ = of({
+  infoView$ = of({
     imageUrl: '/assets/icons/logo.png',
     pageBody: this._sanitizer.bypassSecurityTrustHtml(
       environment?.config?.resources?.company_page ?? '',

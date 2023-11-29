@@ -24,11 +24,11 @@ import {BehaviorSubject} from 'rxjs';
   ],
 })
 export class ImagePickerComponent implements ControlValueAccessor {
-  public disabled = false;
+  disabled = false;
   image$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public onChange = (image: string) => {};
-  public onTouched = () => {};
-  public touched = false;
+  onChange = (image: string) => {};
+  onTouched = () => {};
+  touched = false;
 
   constructor(
     private _camera: Camera,
@@ -36,7 +36,7 @@ export class ImagePickerComponent implements ControlValueAccessor {
     private _cdr: ChangeDetectorRef,
   ) {}
 
-  public getImage(type: any): void {
+  getImage(type: any): void {
     let source = this._camera.PictureSourceType.CAMERA;
 
     if (type == 1) source = this._camera.PictureSourceType.SAVEDPHOTOALBUM;
@@ -62,7 +62,7 @@ export class ImagePickerComponent implements ControlValueAccessor {
       );
   }
 
-  public imageSheet(): void {
+  imageSheet(): void {
     let actionSheet = this._actionSheetCtrl.create({
       cssClass: 'pap-image-picker-action-sheet',
       buttons: [
@@ -86,22 +86,22 @@ export class ImagePickerComponent implements ControlValueAccessor {
     });
   }
 
-  public markAsTouched() {
+  markAsTouched(): void {
     if (!this.touched) {
       this.onTouched();
       this.touched = true;
     }
   }
 
-  public registerOnChange(onChange: any) {
+  registerOnChange(onChange: any): void {
     this.onChange = onChange;
   }
 
-  public registerOnTouched(onTouched: any) {
+  registerOnTouched(onTouched: any): void {
     this.onTouched = onTouched;
   }
 
-  public writeValue(image: string): void {
+  writeValue(image: string): void {
     this.image$.next(image);
     this.onChange(image);
   }

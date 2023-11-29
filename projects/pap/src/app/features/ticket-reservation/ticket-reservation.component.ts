@@ -10,15 +10,15 @@ import {TicketFormConf, ticketReservationForm} from '../../shared/models/form.mo
   encapsulation: ViewEncapsulation.None,
 })
 export class TicketReservationComponent {
-  public form: TicketFormConf = ticketReservationForm;
+  form: TicketFormConf = ticketReservationForm;
 
-  constructor(private navController: NavController) {}
+  constructor(private _navCtrl: NavController) {}
 
-  exitPage() {
-    this.navController.pop();
+  exitPage(): void {
+    this._navCtrl.pop();
   }
 
-  formFilled(event: any) {
+  formFilled(event: any): void {
     this.form = event;
   }
 }

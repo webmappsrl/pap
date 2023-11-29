@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
-import {environment} from 'projects/pap/src/environments/environment';
 import {first} from 'rxjs/operators';
 import {AuthService} from '../../core/auth/state/auth.service';
 import {AppState} from '../../core/core.state';
@@ -19,23 +18,23 @@ import {selectInfoTicketState} from './state/info-ticket.selectors';
   encapsulation: ViewEncapsulation.None,
 })
 export class InfoTicketComponent implements OnInit {
-  public end = false;
-  public formConf: TicketFormConf = infoTicketForm;
+  end = false;
+  formConf: TicketFormConf = infoTicketForm;
   infoTicketView$ = this._store.pipe(select(selectInfoTicketState));
-  public privacyCheck: boolean = false;
+  privacyCheck: boolean = false;
 
   constructor(
-    private navController: NavController,
-    private authSErvice: AuthService,
+    private _navCtrl: NavController,
+    private _authSvc: AuthService,
     private _store: Store<AppState>,
-    private reportService: ReportService,
+    private _reportSvc: ReportService,
   ) {}
 
-  exitPage() {
-    this.navController.pop();
+  exitPage(): void {
+    this._navCtrl.pop();
   }
 
-  formFilled(event: any) {
+  formFilled(event: any): void {
     this.end = true;
   }
 
@@ -43,16 +42,16 @@ export class InfoTicketComponent implements OnInit {
     this._store.dispatch(loadInfoTickets());
   }
 
-  openForm() {
+  openForm(): void {
     this.end = !this.end;
   }
 
-  saveData() {
-    this.authSErvice
+  saveData(): void {
+    this._authSvc
       .getUser()
       .pipe(first())
       .subscribe(user => {
-        let report = this.reportService.createReport(this.formConf, user, ApiTicketType.INFO);
+        let report = this._reportSvc.createReport(this.formConf, user, ApiTicketType.INFO);
         this._store.dispatch(sendReportInfoTickets({data: report}));
       });
   }

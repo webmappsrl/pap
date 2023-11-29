@@ -43,7 +43,7 @@ export class HeaderComponent implements OnDestroy {
     private _store: Store<AppState>,
     private _navCtrl: NavController,
     private _menuCtrl: MenuController,
-    private modalCtrl: ModalController,
+    private _modalCtrl: ModalController,
   ) {
     this._actionEVTSub = this._actionEVT$.subscribe(evt => {
       if (evt.action === 'open-menu') {
@@ -59,20 +59,20 @@ export class HeaderComponent implements OnDestroy {
     this._store.dispatch(loadHeaders());
   }
 
-  public action(action: string, url?: string): void {
+  action(action: string, url?: string): void {
     this._actionEVT$.emit({action, url});
   }
 
-  public closeModal() {
-    this.modalCtrl.dismiss();
+  closeModal(): void {
+    this._modalCtrl.dismiss();
   }
 
-  public closedMenu(): void {
+  closedMenu(): void {
     this._menuCtrl.close('mainmenu');
     this._store.dispatch(closeMenu());
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this._actionEVTSub.unsubscribe();
   }
 }

@@ -41,7 +41,7 @@ export class MenuComponent implements OnDestroy {
     private _store: Store<AppState>,
     private _navCtrl: NavController,
     private _menuCtrl: MenuController,
-    private modalCtrl: ModalController,
+    private _modalCtrl: ModalController,
   ) {
     this._actionEVTSub = this._actionEVT$.subscribe(evt => {
       if (evt.action === 'open-menu') {
@@ -55,15 +55,15 @@ export class MenuComponent implements OnDestroy {
     });
   }
 
-  public action(action: string, url?: string): void {
+  action(action: string, url?: string): void {
     this._actionEVT$.emit({action, url});
   }
 
-  public closeModal() {
-    this.modalCtrl.dismiss();
+  closeModal(): void {
+    this._modalCtrl.dismiss();
   }
 
-  public closedMenu(): void {
+  closedMenu(): void {
     this._menuCtrl.close('mainmenu');
   }
 
@@ -72,7 +72,7 @@ export class MenuComponent implements OnDestroy {
     this.closedMenu();
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this._actionEVTSub.unsubscribe();
   }
 }

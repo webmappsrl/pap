@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {TicketFormConf, abandonmentTicketForm} from '../../shared/models/form.model';
-import {environment} from 'projects/pap/src/environments/environment';
 
 @Component({
   selector: 'pap-abandonment-ticket',
@@ -11,15 +10,15 @@ import {environment} from 'projects/pap/src/environments/environment';
   encapsulation: ViewEncapsulation.None,
 })
 export class AbandonmentTicketComponent {
-  public form: TicketFormConf = abandonmentTicketForm;
+  form: TicketFormConf = abandonmentTicketForm;
 
-  constructor(private navController: NavController) {}
+  constructor(private _navCtrl: NavController) {}
 
-  exitPage() {
-    this.navController.pop();
+  exitPage(): void {
+    this._navCtrl.pop();
   }
 
-  formFilled(event: any) {
+  formFilled(event: any): void {
     this.form = event;
   }
 }

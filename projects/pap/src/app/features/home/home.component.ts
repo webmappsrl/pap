@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     this._store.dispatch(yHomes());
   }
 
-  public action(button: buttonInfo) {
+  action(button: buttonInfo): void {
     if (button.action === buttonAction.NAVIGATION && button.url) {
       this._navCtrl.navigateForward(button.url);
     }
