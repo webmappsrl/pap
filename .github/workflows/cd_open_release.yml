@@ -2,7 +2,8 @@ name: cd_open_release
 
 on:
   push:
-    branches: [develop]
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -16,7 +17,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: node
-          package-name: 'name'
+          package-name: release-please-action
           changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
-          pull-request-title-pattern: 'release: ${version}'
+          pull-request-title-pattern: 'release${component} ${version}'
           pull-request-header: ':robot: I have created a release. Changelog updated with this data:'
