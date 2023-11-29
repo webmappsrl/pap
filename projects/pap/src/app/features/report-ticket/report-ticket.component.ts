@@ -15,7 +15,10 @@ import {loadCalendars} from '../calendar/state/calendar.actions';
 export class ReportTicketComponent {
   form: TicketFormConf = reportTicketForm;
 
-  constructor(private _navCtrl: NavController, private _store: Store<AppState>) {
+  constructor(
+    private _navCtrl: NavController,
+    private _store: Store<AppState>,
+  ) {
     const stop_date = fm(new Date(), 'd-M-Y');
     const start_date = fm(subDays(new Date(), 14), 'd-M-Y');
     this._store.dispatch(loadCalendars({start_date, stop_date}));
