@@ -70,7 +70,7 @@ export class CalendarComponent implements OnInit {
     this._inAppBrowser.create('https://www.esaspa.it/index.php/rifiuti-ingombranti.html');
   }
 
-  presentPopover(e: Event) {
+  presentPopover(e: Event): void {
     this.popover.event = e;
     this.isOpen = true;
   }
