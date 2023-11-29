@@ -1,6 +1,5 @@
 import {KeyValue} from '@angular/common';
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -9,7 +8,6 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import {InAppBrowser} from '@awesome-cordova-plugins/in-app-browser/ngx';
 import {BehaviorSubject} from 'rxjs';
 import {Calendar} from '../../../features/calendar/calendar.model';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
@@ -44,11 +42,6 @@ export class CalendarComponent implements OnInit {
   selectedidxCol$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
   selectedidxRow$: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
 
-  constructor(
-    private _inAppBrowser: InAppBrowser,
-    private _cdr: ChangeDetectorRef,
-  ) {}
-
   info(
     trashDate: string,
     tbType: TrashBookType,
@@ -66,11 +59,6 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentCalendar$.next(this.calendars[0]);
-    this._cdr.detectChanges();
-  }
-
-  openLink(): void {
-    this._inAppBrowser.create('https://www.esaspa.it/index.php/rifiuti-ingombranti.html');
   }
 
   presentPopover(e: Event): void {
