@@ -65,19 +65,19 @@ export class CalendarSelectComponent implements ControlValueAccessor {
 
   constructor(private _cdr: ChangeDetectorRef) {}
 
-  markAsTouched() {
+  markAsTouched(): void {
     if (!this.touched) {
       this.onTouched();
       this.touched = true;
     }
   }
 
-  registerOnChange(onChange: any) {
+  registerOnChange(onChange: any): void {
     this.onChange = onChange;
     this.calendarForm.valueChanges.subscribe(onChange);
   }
 
-  registerOnTouched(onTouched: any) {
+  registerOnTouched(onTouched: any): void {
     this.onTouched = onTouched;
   }
 

@@ -1,4 +1,3 @@
-import {FEATURE_NAME} from './../../../features/feature.state';
 import {
   ChangeDetectionStrategy,
   Component,

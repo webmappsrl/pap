@@ -52,19 +52,19 @@ export class FooterComponent implements OnDestroy {
     });
   }
 
-  public action(action: string, url?: string): void {
+  action(action: string, url?: string): void {
     this._actionEVT$.emit({action, url});
   }
 
-  public closeModal() {
+  closeModal() {
     this.modalCtrl.dismiss();
   }
 
-  public closedMenu(): void {
+  closedMenu(): void {
     this._menuCtrl.close('mainmenu');
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this._actionEVTSub.unsubscribe();
   }
 }
