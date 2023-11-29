@@ -49,7 +49,7 @@ export class CalendarSelectComponent implements ControlValueAccessor {
     this.calendars$.next(calendars);
   }
 
-  public calendarForm: FormGroup = new FormGroup({
+  calendarForm: FormGroup = new FormGroup({
     calendar: new FormControl(null, [Validators.required]),
     tbType: new FormControl(null, [Validators.required]),
     trashDate: new FormControl('', [Validators.required]),
