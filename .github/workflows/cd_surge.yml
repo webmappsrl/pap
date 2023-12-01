@@ -55,3 +55,15 @@ jobs:
           project: 'dist/pap'
           login: ${{ secrets.SURGE_EMAIL }}
           token: ${{ secrets.SURGE_TOKEN }}
+      - name: Run Gulp REA
+        env:
+          EMAIL: ${{ secrets.PAP_EMAIL }}
+          PASSWORD: ${{ secrets.PAP_PASSWORD }}
+        run: npx gulp surge-deploy --id 3
+      - name: Deploy to rea.pap.surge.sh
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          domain: 'rea.pap.surge.sh'
+          project: 'dist/pap'
+          login: ${{ secrets.SURGE_EMAIL }}
+          token: ${{ secrets.SURGE_TOKEN }}
