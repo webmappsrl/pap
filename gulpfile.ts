@@ -3,13 +3,15 @@ import * as yargs from 'yargs';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as fsExtra from 'fs-extra';
+import * as xml2js from 'xml2js';
 import axios from 'axios';
 import {exec} from 'child_process';
 import {CapacitorConfig} from '@capacitor/cli';
 const args: any = <any>yargs.argv;
 let version = '';
 let paths: Paths = {} as Paths;
-const api = 'https://dev.portapporta.webmapp.it/api/v1';
+// const api = 'https://dev.portapporta.webmapp.it/api/v1';
+const api = 'https://portapporta.webmapp.it/api/v1';
 // const api = 'http://127.0.0.1:8000/api/v1';
 interface Config {
   id: number;
@@ -110,6 +112,7 @@ gulp.task('build', async () => {
     await ionicBuild();
     await ionicBuildIos();
     await ionicBuildIAndroid();
+    await addPermissionsToAndroidManifest();
     await execCmd(`npx capacitor-set-version -v ${version} -b 1`);
     await ionicCapSync();
     await ionicPlathforms(config.resources);
@@ -370,6 +373,37 @@ const ionicBuildIAndroid = (): Promise<void> => {
       console.log(`EXEC: ${cmd}`);
       resolve();
     });
+  });
+};
+const addPermissionsToAndroidManifest = (): Promise<void> => {
+  const androidManifestPath = './android/app/src/main/AndroidManifest.xml';
+  return new Promise(async (resolve, reject) => {
+    try {
+      const parser = new xml2js.Parser();
+      const builder = new xml2js.Builder();
+      const manifestXML = fs.readFileSync(androidManifestPath, 'utf8');
+      const manifest = await parser.parseStringPromise(manifestXML);
+
+      const permissions = ['ACCESS_FINE_LOCATION', 'ACCESS_COARSE_LOCATION'];
+      permissions.forEach(permission => {
+        if (
+          !manifest['manifest']['uses-permission'] ||
+          !manifest['manifest']['uses-permission'].some(
+            (perm: any) => perm['$']['android:name'] === `android.permission.${permission}`,
+          )
+        ) {
+          manifest['manifest']['uses-permission'] = manifest['manifest']['uses-permission'] || [];
+          manifest['manifest']['uses-permission'].push({
+            '$': {'android:name': `android.permission.${permission}`},
+          });
+        }
+      });
+      const updatedManifestXML = builder.buildObject(manifest);
+      fs.writeFileSync(androidManifestPath, updatedManifestXML);
+      resolve();
+    } catch (e) {
+      reject();
+    }
   });
 };
 const ionicPlathforms = (resources: {icon: string; splash: string}): Promise<void> => {
