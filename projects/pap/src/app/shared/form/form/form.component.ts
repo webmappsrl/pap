@@ -98,6 +98,7 @@ export class FormComponent implements OnDestroy {
     private _navCtrl: NavController,
     private _alertCtrl: AlertController,
   ) {
+    this.currentTrashbookType$.subscribe(val => console.log(val));
     this.alertEvt$.pipe(switchMap(obj => this._alertCtrl.create(obj)));
     this._ticketSub = this.formSuccess$
       .pipe(

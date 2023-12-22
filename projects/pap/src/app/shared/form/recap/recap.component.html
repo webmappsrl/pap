@@ -29,7 +29,7 @@
               <ion-label
                 secondCol
                 class="ion-text-wrap"
-                >{{ trashDate | date }}</ion-label
+                >{{ trashDate | date:'dd/MM/yyyy' }}</ion-label
               >
             </pap-form-recap-row>
             <pap-form-recap-row *ngIf="value.calendar as calendar">

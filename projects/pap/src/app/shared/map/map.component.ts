@@ -14,6 +14,7 @@ import {AppState} from '@capacitor/app';
 import {Store} from '@ngrx/store';
 import {
   Icon,
+  LatLngBounds,
   LatLngExpression,
   LeafletEvent,
   LeafletMouseEvent,
@@ -128,14 +129,21 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   makeMarkers(features: GeoJson[]): void {
+    let bounds: LatLngBounds | null = null;
     for (const feature of features) {
       const lon = feature.geometry.coordinates[0];
       const lat = feature.geometry.coordinates[1];
-      const myMarker = marker([lat, lon], {icon: this.getIcon('wastecenter')});
 
+      const myMarker = marker([lat, lon], {icon: this.getIcon('wastecenter')});
+      if (bounds == null) {
+        bounds = new LatLngBounds([lat, lon] as any);
+      } else {
+        bounds.extend([lat, lon] as any);
+      }
       myMarker.on('click', e => this.clickedMarker(e, feature));
       myMarker.addTo(this.map);
     }
+    this.map.fitBounds(bounds as LatLngBounds);
   }
 
   makePositionMarker(coords: number[]): void {

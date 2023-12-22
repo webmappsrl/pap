@@ -35,6 +35,8 @@ pap-calendar {
     width: 100%;
     height: 100%;
     text-transform: capitalize;
+    --color: var(--ion-color-primary);
+    --background: var(--ion-color-primary-contrast);
   }
   .pap-calendar-address-button-label {
     font-size: 17px !important;

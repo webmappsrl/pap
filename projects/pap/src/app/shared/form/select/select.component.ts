@@ -16,8 +16,8 @@ import {currentTrashBookType} from '../state/form.actions';
   selector: 'pap-form-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -33,7 +33,9 @@ export class SelectComponent implements ControlValueAccessor {
 
   @Input() set selected(value: TrashBookType | null | undefined) {
     if (value) {
-      this.writeValue(value);
+      setTimeout(() => {
+        this.writeValue(value);
+      }, 0);
     }
   }
 
@@ -72,6 +74,9 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   writeValue(obj: TrashBookType | number): void {
+    if ((obj as any) === '') {
+      return;
+    }
     if (typeof obj === 'number') {
       const currentObj = this.options$.value.filter(f => f.id === obj);
       obj = (currentObj.length > 0 ? currentObj[0] : undefined) as TrashBookType;
@@ -85,5 +90,6 @@ export class SelectComponent implements ControlValueAccessor {
       this._store.dispatch(currentTrashBookType({currentTrashBookType: undefined}));
       this._cdr.detectChanges();
     }
+    this._cdr.detectChanges();
   }
 }

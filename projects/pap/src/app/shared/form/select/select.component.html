@@ -19,7 +19,7 @@
         class="pap-trashlist-details-label ion-text-wrap"
         *ngIf="opt.name"
         [ngClass]="{'selected-item': opt.id === select}">
-        {{opt.name|papLang}}
+        {{opt.id}} {{opt.name|papLang}}
       </ion-label>
     </ion-button>
   </ion-item>

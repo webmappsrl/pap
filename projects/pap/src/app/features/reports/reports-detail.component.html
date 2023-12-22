@@ -104,13 +104,13 @@
             <ion-col
               size-sm="4"
               size-xs="12">
-              <ion-label class="pap-form-recap-label">Data prenotazione:</ion-label>
+              <ion-label class="pap-form-recap-label">Data:</ion-label>
             </ion-col>
             <ion-col
               size-sm="8"
               size-xs="12">
               <ion-label class="ion-text-wrap pap-form-recap-created-at">
-                {{createdAt|papDate:'MM/dd/yyyy'}}
+                {{createdAt|date:'dd/MM/yyyy'}}
               </ion-label></ion-col
             >
           </ion-row>
