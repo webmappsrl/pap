@@ -65,6 +65,7 @@ describe('pap-report-ticket: test the correct behaviour of form at first step', 
 
 describe('pap-report-ticket: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no trash type selected', () => {
+    cy.wait(500);
     testTicketFormStep(reportTicketForm, 1);
   });
 });
