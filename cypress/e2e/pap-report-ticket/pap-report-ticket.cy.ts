@@ -72,6 +72,7 @@ describe('pap-report-ticket: test the correct behaviour of form at second step',
 
 describe('pap-report-ticket: test the correct behaviour of form at third step', () => {
   it('should go to third step with a trash type selected', () => {
+    cy.wait(500);
     testGoToThirdStep(formMockup);
   });
 
