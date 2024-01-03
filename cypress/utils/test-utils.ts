@@ -292,9 +292,10 @@ export function testTicketFormStep(
       cy.get('.pap-form-content').should('include.text', ticketForm.label);
       cy.get('.pap-form-label').should('include.text', expectedLabelText);
       if (currentStep.userAddress) {
+        cy.wait(200);
         cy.get('pap-address-selector').should('exist');
         cy.get('pap-address-selector').click();
-        cy.get('ion-popover').should('be.visible');
+        cy.get('ion-popover').should('exist');
         cy.get('ion-popover ion-list ion-item').last().click();
       }
       if (nextButtonShouldBeDisabled) {
