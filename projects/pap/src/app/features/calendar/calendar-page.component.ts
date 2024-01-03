@@ -21,11 +21,8 @@ import {environment} from 'projects/pap/src/environments/environment';
   encapsulation: ViewEncapsulation.None,
 })
 export class CalendarPageComponent {
-  @ViewChild('popover') popover: any;
-
   calendarView$ = this._store.pipe(select(selectCalendarState));
-  currentAddress$: BehaviorSubject<Calendar | null> = new BehaviorSubject<Calendar | null>(null);
-  isOpen = false;
+  currentCalendar$: BehaviorSubject<Calendar | null> = new BehaviorSubject<Calendar | null>(null);
 
   constructor(
     private _store: Store<AppState>,
@@ -37,7 +34,7 @@ export class CalendarPageComponent {
     this._store.dispatch(showButtons({show: false}));
     this.calendarView$.pipe(filter(f => f != null)).subscribe(calendarView => {
       if (calendarView != null && calendarView.calendars != null) {
-        this.currentAddress$.next(calendarView.calendars[0]);
+        this.currentCalendar$.next(calendarView.calendars[0]);
       }
     });
   }
@@ -57,11 +54,6 @@ export class CalendarPageComponent {
     this._inAppBrowser.create(this._getOtherInfoUrl());
   }
 
-  presentPopover(e: Event) {
-    this.popover.event = e;
-    this.isOpen = true;
-  }
-
   selectPopoverAddress(index: number) {
     this.calendarView$
       .pipe(
@@ -70,22 +62,21 @@ export class CalendarPageComponent {
       )
       .subscribe(calendarView => {
         if (calendarView && calendarView.calendars) {
-          this.currentAddress$.next(calendarView.calendars[index]);
-          this.isOpen = false;
+          this.currentCalendar$.next(calendarView.calendars[index]);
         }
       });
   }
 
   private _getOtherInfoUrl(): string {
     let otherInfoUrl = environment.config.resources?.other_info_url ?? '';
-    const currentAddress = this.currentAddress$.value;
+    const currentCalendar = this.currentCalendar$.value;
     if (
-      currentAddress != null &&
-      currentAddress.address != null &&
-      currentAddress.address.zone != null &&
-      currentAddress.address.zone.url != null
+      currentCalendar != null &&
+      currentCalendar.address != null &&
+      currentCalendar.address.zone != null &&
+      currentCalendar.address.zone.url != null
     ) {
-      otherInfoUrl = currentAddress.address.zone.url;
+      otherInfoUrl = currentCalendar.address.zone.url;
     }
     return otherInfoUrl;
   }

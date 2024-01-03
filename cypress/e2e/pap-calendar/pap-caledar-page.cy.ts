@@ -43,6 +43,7 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
 
   it('should load the addresses correctly in the ion-popover and and must load the data into ion-list correctly', () => {
     cy.wait('@calendarCall').then(interception => {
+      setTimeout(() => {
       const apiData = interception?.response?.body.data;
       const apiAddresses = apiData.map((d: Address) => d.address);
       const calendarObject = apiData[0].calendar;
@@ -59,7 +60,7 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
       const addressZoneLabel = apiData[0]?.address?.zone?.label;
       const addressUserTypeLabel = apiData[0]?.address?.user_type?.label?.it;
 
-      cy.get('.pap-calendar-address-button').click();
+      cy.get('pap-address-selector').click();
       apiAddresses.forEach((addressObj: Address) => {
         cy.log(addressObj.address);
         cy.get(
@@ -85,6 +86,8 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
       cy.get('pap-calendar-page').should('exist');
       cy.url().should('include', '/calendar');
     });
+  }, 500);
+
   });
 });
 

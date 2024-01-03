@@ -44,16 +44,28 @@ import {LocalNotificationService} from './services/local-notification.service';
 import {DateComponent} from './components/date/date.component';
 import {RecapRowComponent} from './form/recap/recap-row/recap-row.component';
 import {addr2StringPipe} from './pipes/addr-2-string.pipe';
+import {AddressSelectorComponent} from './components/address-selector/address-selector.component';
+import {papAddressesFromCalendars} from './pipes/pap-addresses-from-calendars';
+const pipes = [
+  InputTypePipe,
+  InputPatternPipe,
+  PapTicketPipe,
+  PapDatePipe,
+  PapLangPipe,
+  SortPipe,
+  FilterByPipe,
+  addr2StringPipe,
+  GetZoneFromLocationPipe,
+  papAddressesFromCalendars,
+];
 @NgModule({
   declarations: [
+    AddressSelectorComponent,
     HeaderComponent,
     FooterComponent,
     MenuComponent,
     ErrorFormHandlerComponent,
     MapComponent,
-    InputTypePipe,
-    InputPatternPipe,
-    PapTicketPipe,
     FormComponent,
     firstStepSignupComponent,
     secondStepSignupComponent,
@@ -66,15 +78,10 @@ import {addr2StringPipe} from './pipes/addr-2-string.pipe';
     RecapRowComponent,
     ImagePickerComponent,
     SelectComponent,
-    PapDatePipe,
-    PapLangPipe,
-    SortPipe,
-    FilterByPipe,
-    addr2StringPipe,
-    GetZoneFromLocationPipe,
     CalendarSelectComponent,
     CalendarComponent,
     DateComponent,
+    ...pipes,
   ],
   imports: [
     CommonModule,
@@ -106,9 +113,6 @@ import {addr2StringPipe} from './pipes/addr-2-string.pipe';
     MenuComponent,
     ErrorFormHandlerComponent,
     TranslateModule,
-    InputTypePipe,
-    InputPatternPipe,
-    PapTicketPipe,
     FormComponent,
     LocationComponent,
     RecapComponent,
@@ -116,19 +120,15 @@ import {addr2StringPipe} from './pipes/addr-2-string.pipe';
     FormStatusComponent,
     ImagePickerComponent,
     SelectComponent,
-    PapDatePipe,
-    PapLangPipe,
-    FilterByPipe,
-    SortPipe,
-    addr2StringPipe,
     firstStepSignupComponent,
     secondStepSignupComponent,
     thirdStepComponent,
     thirdStepSignupComponent,
-    GetZoneFromLocationPipe,
     CalendarSelectComponent,
     CalendarComponent,
     LocationModalComponent,
+    AddressSelectorComponent,
+    ...pipes,
   ],
 })
 export class SharedModule {}

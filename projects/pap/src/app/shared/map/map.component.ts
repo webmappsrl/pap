@@ -30,6 +30,8 @@ import {environment} from 'projects/pap/src/environments/environment';
 import {GeoJson} from '../../features/waste-center-collection/waste-center-collection-model';
 import {setMarker} from './state/map.actions';
 import {GeoJsonFeatureCollection} from '../form/location/location.model';
+import {BehaviorSubject} from 'rxjs';
+import {debounceTime, filter, take} from 'rxjs/operators';
 
 const DEFAULT_CENTER_ZOOM = 12;
 
@@ -48,6 +50,8 @@ const MAP_OPTIONS = {
   encapsulation: ViewEncapsulation.None,
 })
 export class MapComponent implements OnInit, OnDestroy {
+  private _isInit$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   static index = 0;
 
   @Input() set center(value: number[]) {
@@ -58,15 +62,28 @@ export class MapComponent implements OnInit, OnDestroy {
 
   @Input() set featureCollection(features: GeoJsonFeatureCollection[]) {
     if (features.length > 0) {
-      geoJson(features).addTo(this.map);
+      this._isInit$
+        .pipe(
+          filter(v => v),
+          take(1),
+        )
+        .subscribe(() => {
+          geoJson(features).addTo(this.map);
+        });
     }
   }
 
   @Input() set markers(value: GeoJson[]) {
-    if (this.map == null) {
-      this.initMap();
+    if (value.length > 0) {
+      this._isInit$
+        .pipe(
+          filter(v => v),
+          take(1),
+        )
+        .subscribe(() => {
+          this.makeMarkers(value);
+        });
     }
-    this.makeMarkers(value);
   }
 
   @Input() set positionMarker(value: number[]) {
@@ -89,18 +106,18 @@ export class MapComponent implements OnInit, OnDestroy {
     private _el: ElementRef,
   ) {
     MapComponent.index += 1;
-    setTimeout(() => {
-      if (this.map == null) {
-        this.initMap();
-      }
-    }, 500);
   }
 
   centerToPoint(coord: number[]): void {
-    if (this.map != null) {
-      const zoom = this.map.getZoom();
-      this.map.setView(latLng(coord[1], coord[0]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
-    }
+    this._isInit$
+      .pipe(
+        filter(v => v),
+        take(1),
+      )
+      .subscribe(() => {
+        const zoom = this.map.getZoom();
+        this.map.setView(latLng(coord[1], coord[0]), Math.max(DEFAULT_CENTER_ZOOM, zoom));
+      });
   }
 
   clickOnMap(ev: LeafletMouseEvent): void {
@@ -143,22 +160,27 @@ export class MapComponent implements OnInit, OnDestroy {
       myMarker.on('click', e => this.clickedMarker(e, feature));
       myMarker.addTo(this.map);
     }
-    this.map.fitBounds(bounds as LatLngBounds);
+    try {
+      this.map.fitBounds(bounds as LatLngBounds);
+    } catch (_) {}
   }
 
   makePositionMarker(coords: number[]): void {
     if (this.myPositionMarker) {
       this.myPositionMarker.remove();
     }
-    if (this.map == null) {
-      this.initMap();
-    }
-    if (this.map != null) {
-      this.myPositionMarker = marker(latLng(coords[1], coords[0]), {
-        icon: this.getIcon('position'),
+    this._isInit$
+      .pipe(
+        filter(v => v),
+        take(1),
+        debounceTime(300),
+      )
+      .subscribe(() => {
+        this.myPositionMarker = marker(latLng(coords[1], coords[0]), {
+          icon: this.getIcon('position'),
+        });
+        this.myPositionMarker.addTo(this.map);
       });
-      this.myPositionMarker.addTo(this.map);
-    }
   }
 
   ngOnDestroy(): void {
@@ -167,13 +189,23 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.map == null) {
+      this.initMap();
+    }
     if (this.edit === false) {
-      this.map.dragging.disable();
-      this.map.scrollWheelZoom.disable();
-      this.map.touchZoom.disable();
-      this.map.doubleClickZoom.disable();
-      this.map.boxZoom.disable();
-      this.map.keyboard.disable();
+      this._isInit$
+        .pipe(
+          filter(v => v),
+          take(1),
+        )
+        .subscribe(() => {
+          this.map.dragging.disable();
+          this.map.scrollWheelZoom.disable();
+          this.map.touchZoom.disable();
+          this.map.doubleClickZoom.disable();
+          this.map.boxZoom.disable();
+          this.map.keyboard.disable();
+        });
     }
   }
 
@@ -195,5 +227,8 @@ export class MapComponent implements OnInit, OnDestroy {
     }, 400);
 
     this.map.on('click', e => this.clickOnMap(e as LeafletMouseEvent));
+    setTimeout(() => {
+      this._isInit$.next(true);
+    }, 200);
   }
 }

@@ -4,7 +4,7 @@
     <ion-item lines="none">
       <ion-grid>
         <ion-row
-          *ngIf="currentAddress$|async as addressView"
+          *ngIf="currentCalendar$|async as currentCalendar"
           class="ion-align-items-center ion-justify-content-center">
           <ion-col
             size="auto"
@@ -15,82 +15,21 @@
             size="auto"
             class="ion-text-center">
             <ion-badge
-              *ngIf="addressView.address.user_type.label.it"
-              >{{addressView.address.user_type.label.it|translate}}</ion-badge
+              *ngIf="currentCalendar.address.user_type.label.it"
+              >{{currentCalendar.address.user_type.label.it|translate}}</ion-badge
             >
           </ion-col>
         </ion-row>
-        <ion-row class="ion-align-items-center ion-justify-content-center">
-          <ion-col size="12">
-            <ion-button
-              shape="round"
-              class="ion-text-wrap pap-calendar-address-button"
-              (click)="presentPopover($event)">
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="11">
-                    <ion-label
-                      *ngIf="currentAddress$|async as addressView"
-                      class="pap-calendar-current-zone-label ion-text-wrap"
-                      >{{addressView.address.zone.label}}</ion-label
-                    ><br />
-                    <ion-label
-                      *ngIf="currentAddress$?.value?.address?.address"
-                      class="pap-calendar-address-button-label ion-text-wrap">
-                      {{ currentAddress$.value?.address?.address}}
-                    </ion-label>
-                  </ion-col>
-                  <ion-col size="1">
-                    <ion-icon
-                      style="zoom:2.0;height: 38px;"
-                      color="white"
-                      name="chevron-down-outline"></ion-icon>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-button>
-          </ion-col>
-          <ion-col
-            size="12"
-            class="ion-text-center">
-            <ion-popover
-              #popover
-              alignment="center"
-              [isOpen]="isOpen"
-              (didDismiss)="isOpen = false">
-              <ng-template>
-                <ion-list>
-                  <ion-item
-                    *ngFor="let calendar of calendarView.calendars; let idx = index"
-                    (click)="selectPopoverAddress(idx)">
-                    <ion-grid>
-                      <ion-row>
-                        <ion-col size="12">
-                          <ion-badge
-                            *ngIf="calendar.address.user_type.label.it"
-                            >{{calendar.address.user_type.label.it|translate}}</ion-badge
-                          >
-                        </ion-col>
-                        <ion-col size="12">
-                          <ion-label class="ion-text-wrap">
-                            {{ calendar.address.address }}
-                          </ion-label>
-                        </ion-col>
-                      </ion-row>
-                    </ion-grid>
-                  </ion-item>
-                </ion-list>
-              </ng-template>
-            </ion-popover>
-          </ion-col>
-        </ion-row>
+        <pap-address-selector
+          [addresses]="calendarView.calendars|papAddressesFromCalendars"
+          (currentIndexEVT)="selectPopoverAddress($event)"></pap-address-selector>
       </ion-grid>
     </ion-item>
   </ion-header>
   <ion-content scroll-y="false">
     <ion-card>
       <ion-list lines="full">
-        <ng-container *ngIf="currentAddress$|async as currentAddress">
+        <ng-container *ngIf="currentCalendar$|async as currentAddress">
           <ion-item
             *ngFor="let item of currentAddress.calendar| keyvalue"
             class="pap-calendar-item">

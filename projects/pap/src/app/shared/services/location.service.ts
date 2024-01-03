@@ -44,6 +44,11 @@ export class LocationService {
         }),
       );
   }
+  getCoordinates(address: string): Observable<any> {
+    return this._http.get(
+      `https://nominatim.openstreetmap.org/search?q=${address}&format=json&polygon=1&addressdetails=1`,
+    );
+  }
 
   getConfiniZone(): Observable<GeoJsonFeatureCollection> {
     return this._http.get(
