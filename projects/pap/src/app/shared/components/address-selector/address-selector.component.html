@@ -63,7 +63,9 @@
                 </ion-row>
               </ion-grid>
             </ion-item>
-            <ion-item (click)="popoverClick(-1,'altro')">
+            <ion-item
+              (click)="popoverClick(-1,'altro')"
+              *ngIf="other">
               <ion-grid>
                 <ion-row>
                   <ion-col size="12">
