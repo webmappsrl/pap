@@ -142,6 +142,7 @@ export class LocationComponent implements OnDestroy, ControlValueAccessor {
       this.form.get('house_number')?.reset();
       this.form.get('location')?.reset();
       this.formAddress.reset();
+      this._store.dispatch(setMarker({coords: [0, 0]}));
     } else {
       if (address.address != null && address.address != '') {
         this.formAddress.patchValue({

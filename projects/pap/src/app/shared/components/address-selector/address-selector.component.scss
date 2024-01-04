@@ -4,7 +4,7 @@ pap-address-selector {
     font-style: italic;
     margin-top: 10px;
   }
-  .pap-calendar-address-button {
+  .pap-address-selector-btn {
     width: 100%;
     height: 100%;
     text-transform: capitalize;
@@ -13,5 +13,18 @@ pap-address-selector {
   }
   .pap-calendar-address-button-label {
     font-size: 17px !important;
+  }
+  .centered-content {
+    display: flex;
+    align-items: center;
+    .pap-address-selector-icn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .pap-address-selector-icn {
+        zoom: 2;
+      }
+    }
   }
 }
