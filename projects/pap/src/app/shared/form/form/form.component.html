@@ -105,6 +105,7 @@
                 *ngSwitchCase="'location'"
                 #focusInput
                 [form]="ticketForm"
+                [userAddress]="currentStep.userAddress??false"
                 [formControlName]="currentStep.type"
                 [features]="confiniZone$|async">
               </pap-form-location>

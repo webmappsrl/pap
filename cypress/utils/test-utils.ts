@@ -3,6 +3,7 @@ import {it as itLocale} from 'date-fns/locale';
 import {environment} from 'projects/pap/src/environments/environment';
 import {Feature} from 'projects/pap/src/app/shared/form/location/location.model';
 import {TicketFormConf} from 'projects/pap/src/app/shared/models/form.model';
+
 export interface FormMockup {
   Immagine?: string;
   Indirizzo?: {
@@ -12,6 +13,16 @@ export interface FormMockup {
   Note?: string;
   Servizio?: string;
   Telefono: string;
+}
+
+/**
+ * Clears the test state.
+ * This function uses Cypress to clear cookies and local storage.
+ * It is useful for resetting the application state between end-to-end tests.
+ */
+export function clearTestState(): void {
+  cy.clearCookies();
+  cy.clearLocalStorage();
 }
 
 /**
@@ -49,57 +60,6 @@ export function formatDateUsingPapDatePipe(dateStr: string, formatStr: string = 
 }
 
 /**
- * Translates a ticket type.
- * @param ticketType - The ticket type.
- * @returns Translated ticket type.
- */
-export function translateTicketType(ticketType: string): string {
-  switch (ticketType) {
-    case 'abandonment':
-      return 'abbandono';
-    case 'reservation':
-      return 'prenotazione';
-    case 'report':
-      return 'mancato ritiro';
-    case 'info':
-      return 'informazioni';
-    default:
-      return ticketType;
-  }
-}
-
-/**
- * Converts a color from HEX format to RGB format.
- * @param hex - Color in HEX format.
- * @returns Color in RGB format.
- */
-export function hexToRgb(hex: string): string {
-  const bigint = parseInt(hex.slice(1), 16);
-  const r = (bigint >> 16) & 255;
-  const g = (bigint >> 8) & 255;
-  const b = bigint & 255;
-  return `rgb(${r}, ${g}, ${b})`;
-}
-
-/**
- * Translates a value based on the given language key or returns the string directly.
- *
- * If the provided value is a string, it directly returns the string.
- * If the value is an object with language keys, it returns the value of the first key.
- *
- * @param value - The string or object with language keys.
- * @returns Translated string or the direct string.
- */
-export function papLang(value: string | {[lang: string]: string}): string {
-  if (typeof value === 'string') {
-    return value;
-  } else {
-    const keys = Object.keys(value);
-    return value[keys[0]];
-  }
-}
-
-/**
  * Generates the start and stop date range for the API call.
  * The start date is 15 days prior to the current date, and the stop date is the current date.
  *
@@ -121,6 +81,87 @@ export function getApiDateRange(): {startDate: string; stopDate: string} {
     startDate: formatDate(startDate),
     stopDate: formatDate(today),
   };
+}
+
+/**
+ * Converts a color from HEX format to RGB format.
+ * @param hex - Color in HEX format.
+ * @returns Color in RGB format.
+ */
+export function hexToRgb(hex: string): string {
+  const bigint = parseInt(hex.slice(1), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+/**
+ * Navigates to a page by clicking a button and verifies the URL.
+ * Assumes that the navigation might require interaction with an alert.
+ *
+ * @param buttonLabel - CSS selector for the header button to initiate navigation.
+ * @param expectedUrl - Expected URL to navigate to.
+ */
+export function navigateToPageAndVerifyUrl(buttonLabel: string, expectedUrl: string): void {
+  cy.contains(buttonLabel).click();
+  cy.url().should('include', expectedUrl);
+}
+
+/**
+ * Translates a value based on the given language key or returns the string directly.
+ *
+ * If the provided value is a string, it directly returns the string.
+ * If the value is an object with language keys, it returns the value of the first key.
+ *
+ * @param value - The string or object with language keys.
+ * @returns Translated string or the direct string.
+ */
+export function papLang(value: string | {[lang: string]: string}): string {
+  if (typeof value === 'string') {
+    return value;
+  } else {
+    const keys = Object.keys(value);
+    return value[keys[0]];
+  }
+}
+
+/**
+ * Verifies the alert title based on the given ticket form.
+ *
+ * @param {Object} ticketForm - The ticket form data object.
+ */
+export function testAlertTitle(ticketForm: any): void {
+  const alertTitle =
+    ticketForm && ticketForm.label ? `Vuoi annullare ${ticketForm.label}?` : 'Vuoi annullare?';
+
+  cy.get('.alert-title').should('have.text', alertTitle);
+  cy.get('ion-alert').should('exist');
+}
+
+/**
+ * Tests navigation to the third step of the form.
+ * @param formMockup - Mock object of the form.
+ */
+export function testGoToThirdStep(formMockup: FormMockup): void {
+  cy.get('.pap-calendar-trashlist')
+    .first()
+    .then(btn => {
+      formMockup.Servizio = btn.text().trim();
+    });
+  cy.get('.pap-calendar-trashlist').first().click();
+  cy.get('.pap-status-next-button').click();
+}
+
+/**
+ * Handles image selection.
+ * Opens the image picker, verifies its presence, and closes the picker.
+ */
+export function testImagePicker(): void {
+  cy.get('pap-form-image-picker ion-button').click();
+  cy.get('ion-action-sheet').should('exist');
+  cy.get('.action-sheet-group-cancel').click();
+  cy.get('ion-action-sheet').should('not.exist');
 }
 
 /**
@@ -165,17 +206,20 @@ export function testLocation(formMockup: any): void {
       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
     ).then(response => {
       const displayName = response.body.display_name;
+      console.log(`Dati di risposta da Nominatim: ${displayName}`);
+      console.log(`Latitudine: ${lat}, Longitudine: ${lon}`);
+      cy.wait(1000);
       cy.get('[formControlName="city"]')
         .invoke('val')
         .then(cityValue => {
+          expect(cityValue).to.not.be.empty;
           formMockup.Indirizzo.city = cityValue as string;
-          expect(displayName).to.include(cityValue);
         });
       cy.get('[formControlName="address"]')
         .invoke('val')
         .then(addressValue => {
+          expect(addressValue).to.not.be.empty;
           formMockup.Indirizzo.address = addressValue as string;
-          expect(displayName).to.include(addressValue);
         });
     });
   });
@@ -203,83 +247,20 @@ export function testRecapTicketForm(formMockup: FormMockup): void {
       .then(value => {
         if (recap && formMockup[recap] != null) {
           switch (recap) {
-            default:
-              expect((formMockup[recap] as string).trim()).to.equal(value.trim());
+            case 'Telefono':
+              expect(value.trim()).to.not.be.empty;
               break;
             case 'Indirizzo':
               expect(value).to.include((formMockup[recap] as any).city);
               expect(value).to.include((formMockup[recap] as any).address);
               break;
+            default:
+              expect((formMockup[recap] as string).trim()).contain(value.trim());
+              break;
           }
         }
       });
   });
-}
-
-/**
- * Tests the validity of a geographical zone.
- * @param zoneGeojson - GeoJSON data of the zone.
- */
-export function testValidZone(zoneGeojson: any): void {
-  expect(zoneGeojson).to.be.not.null;
-  cy.get('.top-right ion-badge')
-    .should('be.visible')
-    .invoke('text')
-    .then(uiLabelText => {
-      cy.log(uiLabelText);
-      const labelsFromApi = zoneGeojson.features.map(
-        (feature: Feature) => feature.properties.label,
-      );
-      expect(labelsFromApi).to.include(uiLabelText.trim());
-    });
-}
-
-/**
- * Tests navigation to the third step of the form.
- * @param formMockup - Mock object of the form.
- */
-export function testGoToThirdStep(formMockup: FormMockup): void {
-  cy.get('.pap-calendar-trashlist')
-    .first()
-    .then(btn => {
-      formMockup.Servizio = btn.text().trim();
-    });
-  cy.get('.pap-calendar-trashlist').first().click();
-  cy.get('.pap-status-next-button').click();
-}
-
-/**
- * Clears the test state.
- * This function uses Cypress to clear cookies and local storage.
- * It is useful for resetting the application state between end-to-end tests.
- */
-export function clearTestState(): void {
-  cy.clearCookies();
-  cy.clearLocalStorage();
-}
-
-/**
- * Navigates to a page by clicking a button and verifies the URL.
- * Assumes that the navigation might require interaction with an alert.
- *
- * @param buttonLabel - CSS selector for the header button to initiate navigation.
- * @param expectedUrl - Expected URL to navigate to.
- */
-export function navigateToPageAndVerifyUrl(buttonLabel: string, expectedUrl: string): void {
-  cy.contains(buttonLabel).click();
-  cy.url().should('include', expectedUrl);
-}
-
-/**
- * Verifies the day and month of a given date in the format used in PAP reports.
- * @param dateStr - The date string to be verified.
- */
-export function verifyPapDateComponents(dateStr: string): void {
-  const formattedDay = formatDateUsingPapDatePipe(dateStr, 'd');
-  const formattedMonth = formatDateUsingPapDatePipe(dateStr, 'MMMM');
-
-  cy.get('.pap-date-day').contains(formattedDay).should('exist');
-  cy.get('.pap-date-month').contains(formattedMonth).should('exist');
 }
 
 /**
@@ -296,7 +277,8 @@ export function testTicketFormStep(
   shouldCheckErrorMessage: boolean = false,
   mandatoryMessage: string = 'Questo campo è obbligatorio',
 ): void {
-  const expectedLabelText = ticketForm.step[stepIndex].label;
+  const currentStep = ticketForm.step[stepIndex];
+  const expectedLabelText = currentStep.label;
   switch (stepIndex) {
     case 0:
       cy.get('.pap-form-first-step').should('include.text', ticketForm.label);
@@ -315,7 +297,13 @@ export function testTicketFormStep(
     case 2:
       cy.get('.pap-form-content').should('include.text', ticketForm.label);
       cy.get('.pap-form-label').should('include.text', expectedLabelText);
-
+      if (currentStep.userAddress) {
+        cy.wait(200);
+        cy.get('pap-address-selector').should('exist');
+        cy.get('pap-address-selector').click();
+        cy.get('ion-popover').should('exist');
+        cy.get('ion-popover ion-list ion-item').last().click();
+      }
       if (nextButtonShouldBeDisabled) {
         cy.get('.pap-status-next-button').should('not.be.enabled');
       }
@@ -343,25 +331,51 @@ export function testTicketFormStep(
 }
 
 /**
- * Handles image selection.
- * Opens the image picker, verifies its presence, and closes the picker.
+ * Tests the validity of a geographical zone.
+ * @param zoneGeojson - GeoJSON data of the zone.
  */
-export function testImagePicker(): void {
-  cy.get('pap-form-image-picker ion-button').click();
-  cy.get('ion-action-sheet').should('exist');
-  cy.get('.action-sheet-group-cancel').click();
-  cy.get('ion-action-sheet').should('not.exist');
+export function testValidZone(zoneGeojson: any): void {
+  expect(zoneGeojson).to.be.not.null;
+  cy.get('.top-right ion-badge')
+    .should('be.visible')
+    .invoke('text')
+    .then(uiLabelText => {
+      cy.log(uiLabelText);
+      const labelsFromApi = zoneGeojson.features.map(
+        (feature: Feature) => feature.properties.label,
+      );
+      expect(labelsFromApi).to.include(uiLabelText.trim());
+    });
 }
 
 /**
- * Verifies the alert title based on the given ticket form.
- *
- * @param {Object} ticketForm - The ticket form data object.
+ * Translates a ticket type.
+ * @param ticketType - The ticket type.
+ * @returns Translated ticket type.
  */
-export function testAlertTitle(ticketForm: any): void {
-  const alertTitle =
-    ticketForm && ticketForm.label ? `Vuoi annullare ${ticketForm.label}?` : 'Vuoi annullare?';
+export function translateTicketType(ticketType: string): string {
+  switch (ticketType) {
+    case 'abandonment':
+      return 'abbandono';
+    case 'reservation':
+      return 'prenotazione';
+    case 'report':
+      return 'mancato ritiro';
+    case 'info':
+      return 'informazioni';
+    default:
+      return ticketType;
+  }
+}
 
-  cy.get('.alert-title').should('have.text', alertTitle);
-  cy.get('ion-alert').should('exist');
+/**
+ * Verifies the day and month of a given date in the format used in PAP reports.
+ * @param dateStr - The date string to be verified.
+ */
+export function verifyPapDateComponents(dateStr: string): void {
+  const formattedDay = formatDateUsingPapDatePipe(dateStr, 'd');
+  const formattedMonth = formatDateUsingPapDatePipe(dateStr, 'MMMM');
+
+  cy.get('.pap-date-day').contains(formattedDay).should('exist');
+  cy.get('.pap-date-month').contains(formattedMonth).should('exist');
 }

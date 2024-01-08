@@ -1,4 +1,3 @@
-import {hexToRgb} from 'cypress/utils/test-utils';
 import {homeButtons} from 'projects/pap/src/app/features/home/home.model';
 import {
   TrashBookRow,

@@ -1,82 +1,98 @@
 <form [formGroup]="formAddress">
-  <ion-grid>
-    <ion-row>
-      <ion-col> </ion-col>
-      <ion-col size="12">
-        <ion-item>
-          <ion-label
-            class="ion-text-wrap"
-            position="stacked"
-            >Città</ion-label
-          >
-          <ion-input
-            formControlName="city"
-            type="text"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col
-        size="10"
-        size-xs="8">
-        <ion-item>
-          <ion-label position="stacked">Via</ion-label>
-          <ion-input
-            formControlName="address"
-            type="text"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col
-        size="2"
-        size-xs="4">
-        <ion-item>
-          <ion-label position="stacked">N. Civico</ion-label>
-          <ion-input
-            formControlName="house_number"
-            type="text"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ng-container *ngIf="userAddress">
+    <ng-container *ngIf="(user$|async) as user">
+      <ng-container *ngIf="user.addresses as addresses">
+        <pap-address-selector
+          [addresses]="addresses"
+          [other]="true"
+          (currentIndexEVT)="currentAddressIdx$.next($event)"
+          (currentAddressEVT)="setAddress($event)">
+        </pap-address-selector>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="(currentAddressIdx$|async)===-1||userAddress===false">
+    <ng-container *ngTemplateOutlet="addressForm"></ng-container>
+  </ng-container>
+  <ng-template #addressForm>
+    <ion-grid>
+      <ion-row>
+        <ion-col> </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label
+              class="ion-text-wrap"
+              position="stacked"
+              >Città</ion-label
+            >
+            <ion-input
+              formControlName="city"
+              type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col
+          size="10"
+          size-xs="8">
+          <ion-item>
+            <ion-label position="stacked">Via</ion-label>
+            <ion-input
+              formControlName="address"
+              type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col
+          size="2"
+          size-xs="4">
+          <ion-item>
+            <ion-label position="stacked">N. Civico</ion-label>
+            <ion-input
+              formControlName="house_number"
+              type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="pap-form-location">
+            <pap-map
+              class="pap-form-location-map"
+              (genericClickEvt)="mapClick($event)"
+              [positionMarker]="(myPosition$|async)!"
+              [center]="(myPosition$|async)!"
+              [featureCollection]="features">
+              <span top-right>
+                <ng-container *ngIf="(currentZone$|async) as zone; else noValidZone">
+                  <ion-badge color="success">{{zone.properties?.label}}</ion-badge>
+                </ng-container>
+              </span>
+              <span
+                bottom-center
+                class="pap-form-location-infocontainer">
+                <ion-button
+                  expand="block"
+                  shape="round"
+                  (click)="getLocation()">
+                  <ion-icon
+                    slot="start"
+                    name="location-sharp"></ion-icon>
+                  {{ 'La mia posizione' | translate }}
+                </ion-button>
+              </span>
+            </pap-map>
+
+            <div class="pap-form-location-padding"></div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+  <ng-template #noValidZone>
+    <ion-badge
+      color="danger"
+      top-right
+      >seleziona una zona valida</ion-badge
+    >
+  </ng-template>
 </form>
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <div class="pap-form-location">
-        <pap-map
-          class="pap-form-location-map"
-          (genericClickEvt)="mapClick($event)"
-          [positionMarker]="(myPosition$|async)!"
-          [center]="(myPosition$|async)!"
-          [featureCollection]="features">
-          <span top-right>
-            <ng-container *ngIf="(currentZone$|async) as zone; else noValidZone">
-              <ion-badge color="success">{{zone.properties?.label}}</ion-badge>
-            </ng-container>
-          </span>
-          <span
-            bottom-center
-            class="pap-form-location-infocontainer">
-            <ion-button
-              expand="block"
-              shape="round"
-              (click)="getLocation()">
-              <ion-icon
-                slot="start"
-                name="location-sharp"></ion-icon>
-              {{ 'La mia posizione' | translate }}
-            </ion-button>
-          </span>
-        </pap-map>
-
-        <div class="pap-form-location-padding"></div>
-      </div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
-
-<ng-template #noValidZone>
-  <ion-badge
-    color="danger"
-    top-right
-    >seleziona una zona valida</ion-badge
-  >
-</ng-template>

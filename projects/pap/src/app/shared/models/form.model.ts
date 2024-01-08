@@ -1,6 +1,8 @@
 import {environment} from 'projects/pap/src/environments/environment';
 import {TicketFieldTypes, TicketType} from '../form/model';
 
+export type FormFieldTypes = 'label' | 'select';
+
 export interface TicketFormConf {
   cancel: string;
   finalMessage: string;
@@ -9,6 +11,13 @@ export interface TicketFormConf {
   step: TicketFormStep[];
   ticketType: TicketType;
   translationsObj?: any;
+}
+
+export interface TicketFormOption {
+  label: string;
+  show: boolean;
+  translationsObj?: any;
+  value: string;
 }
 
 export interface TicketFormStep {
@@ -20,15 +29,8 @@ export interface TicketFormStep {
   required: boolean;
   translationsObj?: any;
   type: TicketFieldTypes | FormFieldTypes | 'recap';
+  userAddress?: boolean;
   value?: any;
-}
-
-export type FormFieldTypes = 'label' | 'select';
-export interface TicketFormOption {
-  label: string;
-  show: boolean;
-  translationsObj?: any;
-  value: string;
 }
 
 export const ticketReservationForm: TicketFormConf = {
@@ -52,6 +54,7 @@ export const ticketReservationForm: TicketFormConf = {
     {
       label: 'Seleziona il luogo:',
       type: 'location',
+      userAddress: true,
       required: true,
       recap: 'Indirizzo',
     },
@@ -80,7 +83,6 @@ export const ticketReservationForm: TicketFormConf = {
     },
   ],
 };
-
 export const abandonmentTicketForm: TicketFormConf = {
   cancel: 'Sicuro di voler cancellare la prenotazione?',
   finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
@@ -130,7 +132,6 @@ export const abandonmentTicketForm: TicketFormConf = {
     },
   ],
 };
-
 export const reportTicketForm: TicketFormConf = {
   ticketType: 'report',
   cancel: 'Sicuro di voler cancellare la prenotazione?',
@@ -174,7 +175,6 @@ export const reportTicketForm: TicketFormConf = {
     },
   ],
 };
-
 export const infoTicketForm: TicketFormConf = {
   ticketType: 'info',
   cancel: 'Uscendo perderai tutti i dati inseriti. Sicuro di volerlo fare?',

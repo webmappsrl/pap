@@ -64,7 +64,7 @@ jobs:
           echo "[${{ env.DOMAIN_NAME }}](http://${{ env.DOMAIN_NAME }}) run with appCompanyID ${{ env.DEPLOY_ID }}">> $GITHUB_STEP_SUMMARY
       - name: Cypress run
         env:
-          CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
+          CYPRESS_email: git_action@webmapp.it
           CYPRESS_email_no_address: no_address@webmapp.it
           CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}
           CYPRESS_baseurl: http://localhost:8100

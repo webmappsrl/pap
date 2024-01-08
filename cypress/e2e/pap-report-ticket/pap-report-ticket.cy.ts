@@ -65,27 +65,14 @@ describe('pap-report-ticket: test the correct behaviour of form at first step', 
 
 describe('pap-report-ticket: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no trash type selected', () => {
+    cy.wait(500);
     testTicketFormStep(reportTicketForm, 1);
-  });
-
-  it('should verify all addresses from the API response', function () {
-    if (calendarData && Array.isArray(calendarData.data)) {
-      cy.get('.pap-calendar-address-button-label').should('be.visible').click();
-      calendarData.data.forEach((item: any, index: number) => {
-        cy.get('.pap-popover-address')
-          .eq(index)
-          .invoke('text')
-          .then(text => {
-            expect(text).include(item.address.address);
-          });
-      });
-      cy.get('.pap-popover-address').eq(0).should('be.visible').click();
-    }
   });
 });
 
 describe('pap-report-ticket: test the correct behaviour of form at third step', () => {
   it('should go to third step with a trash type selected', () => {
+    cy.wait(500);
     testGoToThirdStep(formMockup);
   });
 

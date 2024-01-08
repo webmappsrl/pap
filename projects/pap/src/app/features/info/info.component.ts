@@ -1,7 +1,8 @@
+import {HttpClient} from '@angular/common/http';
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {environment} from 'projects/pap/src/environments/environment';
-import {of} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'pap-info',
@@ -11,12 +12,14 @@ import {of} from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class InfoComponent {
-  infoView$ = of({
-    imageUrl: '/assets/icons/logo.png',
-    pageBody: this._sanitizer.bypassSecurityTrustHtml(
-      environment?.config?.resources?.company_page ?? '',
-    ),
-  });
-
-  constructor(private _sanitizer: DomSanitizer) {}
+  imageUrl: '/assets/icons/logo.png';
+  pageBody$ = this._http
+    .get(`https://portapporta.webmapp.it/api/c/${environment.companyId}/company_page`, {
+      responseType: 'text',
+    })
+    .pipe(map((page: any) => this._sanitizer.bypassSecurityTrustHtml(page)));
+  constructor(
+    private _sanitizer: DomSanitizer,
+    private _http: HttpClient,
+  ) {}
 }

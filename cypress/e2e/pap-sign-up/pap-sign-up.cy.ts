@@ -114,7 +114,7 @@ describe('pap-sign-up: test the correct behaviour of form at third step', () => 
     cy.get('.ion-align-self-end ion-button').should('exist', 'not.be.enabled');
   });
 
-  it('should have a label that matches one of the apiZonesGeoJson user types', function () {
+  it('should have a label that matches one of the apiZonesGeoJson user types', () => {
     testValidZone(apiZonesGeoJsonData);
   });
 
