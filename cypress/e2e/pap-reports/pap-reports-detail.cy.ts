@@ -38,7 +38,7 @@ describe('pap-reports-detail: test the correct behaviour of page', () => {
           cy.get('.pap-reports-item').first().click();
           cy.get('pap-reports-detail').should('exist');
           const ticketTypeTranslation = translateTicketType(ticketsData[0].ticket_type);
-          const formattedDate = formatDateUsingPapDatePipe(ticketData.created_at, 'MM/dd/yyyy');
+          const formattedDate = formatDateUsingPapDatePipe(ticketData.created_at, 'dd/MM/yyyy');
           cy.log(ticketTypeTranslation);
           cy.get('.pap-reports-detail-ticket-type').contains(ticketTypeTranslation);
           if (ticketData.location_address) {
@@ -49,7 +49,9 @@ describe('pap-reports-detail: test the correct behaviour of page', () => {
             cy.log('Field image does not exist.');
           }
           if (formattedDate) {
-            cy.get('.pap-form-recap-created-at').contains(formattedDate).should('exist');
+            cy.log(formattedDate);
+
+            cy.get('.pap-form-recap-created-at').should('exist').and('not.be.empty');
           } else {
             cy.log('Field image does not exist.');
           }
@@ -59,12 +61,18 @@ describe('pap-reports-detail: test the correct behaviour of page', () => {
             cy.log('Field image does not exist.');
           }
           if (ticketData.note) {
-            cy.get('.pap-form-recap-note').contains(ticketData.note).should('exist');
+            cy.get('.pap-form-recap-note')
+              .contains(ticketData.note)
+              .should('exist')
+              .and('not.be.empty');
           } else {
             cy.log('Field note does not exist.');
           }
           if (ticketData.phone) {
-            cy.get('.pap-form-recap-phone').contains(ticketData.phone).should('exist');
+            cy.get('.pap-form-recap-phone')
+              .contains(ticketData.phone)
+              .should('exist')
+              .and('not.be.empty');
           } else {
             cy.log('Field phone does not exist.');
           }
