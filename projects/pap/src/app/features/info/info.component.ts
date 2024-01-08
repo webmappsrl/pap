@@ -18,5 +18,8 @@ export class InfoComponent {
       responseType: 'text',
     })
     .pipe(map((page: any) => this._sanitizer.bypassSecurityTrustHtml(page)));
-  constructor(private _sanitizer: DomSanitizer, private _http: HttpClient) {}
+  constructor(
+    private _sanitizer: DomSanitizer,
+    private _http: HttpClient,
+  ) {}
 }
