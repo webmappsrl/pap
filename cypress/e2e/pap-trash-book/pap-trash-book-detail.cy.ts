@@ -1,4 +1,4 @@
-import {e2eLogin, hexToRgb} from 'cypress/utils/test-utils';
+import {e2eLogin} from 'cypress/utils/test-utils';
 import {homeButtons} from 'projects/pap/src/app/features/home/home.model';
 import {TrashBookType} from 'projects/pap/src/app/features/trash-book/trash-book-model';
 import {environment} from 'projects/pap/src/environments/environment';

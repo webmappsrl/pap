@@ -113,8 +113,17 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fifth st
     cy.get('ion-textarea').type(formMockup.Note as string);
     cy.get('.pap-status-next-button').click();
   });
-  it('should write a text into text area and go to recap', () => {
-    cy.get('input').should('be.visible').type(formMockup.Telefono);
+  it('should write a telephone number into text area and go to recap', () => {
+    cy.get('input')
+      .should('be.visible')
+      .invoke('val')
+      .then(value => {
+        if (!value) {
+          cy.get('input').type(formMockup.Telefono);
+        } else {
+          cy.log('Input already has a phone number');
+        }
+      });
     cy.get('.pap-status-checkmark-button').should('exist').click();
   });
 });

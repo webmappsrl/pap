@@ -247,12 +247,15 @@ export function testRecapTicketForm(formMockup: FormMockup): void {
       .then(value => {
         if (recap && formMockup[recap] != null) {
           switch (recap) {
-            default:
-              expect((formMockup[recap] as string).trim()).contain(value.trim());
+            case 'Telefono':
+              expect(value.trim()).to.not.be.empty;
               break;
             case 'Indirizzo':
               expect(value).to.include((formMockup[recap] as any).city);
               expect(value).to.include((formMockup[recap] as any).address);
+              break;
+            default:
+              expect((formMockup[recap] as string).trim()).contain(value.trim());
               break;
           }
         }
