@@ -10,7 +10,7 @@ import {CapacitorConfig} from '@capacitor/cli';
 const args: any = <any>yargs.argv;
 let version = '';
 let paths: Paths = {} as Paths;
-const surgeApiConfigUrl = `'https://dev.portapporta.webmapp.it/api/v1/c/4/config.json`;
+const surgeApiConfigUrl = `https://dev.portapporta.webmapp.it/api/c/4/config.json`;
 // const api = 'https://dev.portapporta.webmapp.it/api/v1';
 const api = 'https://portapporta.webmapp.it/api/v1';
 // const api = 'http://127.0.0.1:8000/api/v1';
