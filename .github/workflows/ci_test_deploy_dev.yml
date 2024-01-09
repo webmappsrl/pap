@@ -5,7 +5,7 @@ name: ci_test_deploy_dev
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
 jobs:
   test:
     uses: webmappsrl/pap/.github/workflows/job_test.yml@develop
