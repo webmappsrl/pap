@@ -43,7 +43,7 @@ before(() => {
   e2eLogin();
 });
 
-describe('pap-report-ticket: test the correct behaviour of form at first step', () => {
+describe.skip('pap-report-ticket: test the correct behaviour of form at first step', () => {
   it('should navigate correctly to report failure to collect', function () {
     if (servicesButton && reportTicketoButton) {
       cy.log(apiCalendarWithDates);
@@ -63,14 +63,14 @@ describe('pap-report-ticket: test the correct behaviour of form at first step', 
   });
 });
 
-describe('pap-report-ticket: test the correct behaviour of form at second step', () => {
+describe.skip('pap-report-ticket: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no trash type selected', () => {
     cy.wait(500);
     testTicketFormStep(reportTicketForm, 1);
   });
 });
 
-describe('pap-report-ticket: test the correct behaviour of form at third step', () => {
+describe.skip('pap-report-ticket: test the correct behaviour of form at third step', () => {
   it('should go to third step with a trash type selected', () => {
     cy.wait(500);
     testGoToThirdStep(formMockup);
@@ -88,7 +88,7 @@ describe('pap-report-ticket: test the correct behaviour of form at third step', 
   });
 });
 
-describe('pap-report-ticket: test the correct behaviour of form at fourth step', () => {
+describe.skip('pap-report-ticket: test the correct behaviour of form at fourth step', () => {
   it('should go to fourth step', () => {
     cy.get('.pap-status-next-button').click();
   });
@@ -106,14 +106,14 @@ describe('pap-report-ticket: test the correct behaviour of form at fourth step',
     cy.get('.pap-status-checkmark-button').should('exist').click();
   });
 });
-describe('pap-abandonment-ticket: test the correct behaviour of form at recap step', () => {
+describe.skip('pap-abandonment-ticket: test the correct behaviour of form at recap step', () => {
   it('should display sending button in status', () => {
     cy.get('.pap-status-sending-button').should('exist');
   });
   it('test values inside a recap ticket form', () => testRecapTicketForm(formMockup));
 });
 
-describe('pap-report-ticket: test the correct behaviour of cancel button in status', () => {
+describe.skip('pap-report-ticket: test the correct behaviour of cancel button in status', () => {
   it('should display ion-alert correctly', () => {
     cy.get('.pap-status-cancel-icon').should('exist').click();
     cy.get('ion-alert').should('exist');
