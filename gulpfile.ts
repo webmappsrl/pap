@@ -10,6 +10,7 @@ import {CapacitorConfig} from '@capacitor/cli';
 const args: any = <any>yargs.argv;
 let version = '';
 let paths: Paths = {} as Paths;
+const surgeApi = 'https://dev.portapporta.webmapp.it/api/v1';
 // const api = 'https://dev.portapporta.webmapp.it/api/v1';
 const api = 'https://portapporta.webmapp.it/api/v1';
 // const api = 'http://127.0.0.1:8000/api/v1';
@@ -147,7 +148,7 @@ gulp.task('serve', async () => {
 gulp.task('surge-deploy', async () => {
   const companyId = args.id || null;
   const paths: Paths = getPaths(companyId);
-  const config: Config = await getConfig(paths.apiUrl);
+  const config: Config = await getConfig(surgeApi);
 
   await setAssets(config);
   await ionicPlathforms(config.resources);
