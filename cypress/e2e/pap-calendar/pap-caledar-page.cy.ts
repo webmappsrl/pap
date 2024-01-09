@@ -23,7 +23,7 @@ beforeEach(() => {
   cy.intercept('GET', apiCalendar).as('calendarCall');
 });
 
-describe.skip('pap-calendar-page: test the correct behaviour of page', () => {
+describe('pap-calendar-page: test the correct behaviour of page', () => {
   it('should navigate to the calendar page and make a successful GET request to the calendar API', () => {
     if (calendarsButton) {
       navigateToPageAndVerifyUrl(calendarsButton.label, calendarsButton.url);
