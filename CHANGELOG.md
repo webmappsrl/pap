@@ -1,5 +1,14 @@
 # Changelog pap
 
+## [2.2.24](https://github.com/webmappsrl/pap/compare/v2.2.23...v2.2.24) (2024-01-11)
+
+
+### Miscellaneous
+
+* Update cd_surge.yml workflow ([7ae2392](https://github.com/webmappsrl/pap/commit/7ae239257af84bfe94b8a8aaa91dc6272a84f92d))
+* Update gulpfile.ts and package.json ([31cc711](https://github.com/webmappsrl/pap/commit/31cc71140c25e51d03f5aadbdef4458573374f3b))
+* Update release-please-action version to 2.2.23 ([c56cf06](https://github.com/webmappsrl/pap/commit/c56cf061383dc7e17c220920d3a7530187238ed0))
+
 ## [2.2.23](https://github.com/webmappsrl/pap/compare/v1.0.10...v2.2.23) (2023-11-29)
 
 ### Features
