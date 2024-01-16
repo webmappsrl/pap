@@ -1,5 +1,12 @@
 # Changelog pap
 
+## [2.2.25](https://github.com/webmappsrl/pap/compare/v2.2.24...v2.2.25) (2024-01-16)
+
+
+### Miscellaneous
+
+* Update local notification service ([8243642](https://github.com/webmappsrl/pap/commit/824364219b342ecdf2879d0b1585dc646566a1af))
+
 ## [2.2.24](https://github.com/webmappsrl/pap/compare/v2.2.23...v2.2.24) (2024-01-11)
 
 ### Miscellaneous
