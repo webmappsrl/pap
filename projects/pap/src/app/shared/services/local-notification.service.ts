@@ -89,8 +89,7 @@ export class LocalNotificationService {
                       id: +`${at.getTime()}`.toString().slice(0, 8),
                       title: 'Raccolta differenziata',
                       body,
-                      largeBody: 'largeBody della notifica',
-                      summaryText: 'summaryText della notifica',
+                      largeBody: body,
                       schedule: {
                         at,
                         allowWhileIdle: true,
