@@ -1,5 +1,12 @@
 # Changelog pap
 
+## [2.2.26](https://github.com/webmappsrl/pap/compare/v2.2.25...v2.2.26) (2024-01-17)
+
+
+### Bug Fixes
+
+* **zones:** Improve currentZone selector logic ([8ce9275](https://github.com/webmappsrl/pap/commit/8ce9275fbbabaf29ee60d47a1f94c3c0ab5050e6))
+
 ## [2.2.25](https://github.com/webmappsrl/pap/compare/v2.2.24...v2.2.25) (2024-01-16)
 
 ### Miscellaneous
