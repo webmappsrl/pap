@@ -10,8 +10,9 @@ import {CapacitorConfig} from '@capacitor/cli';
 const args: any = <any>yargs.argv;
 let version = '';
 let paths: Paths = {} as Paths;
-const api = 'https://dev.portapporta.webmapp.it/api/v1';
-// const api = 'https://portapporta.webmapp.it/api/v1';
+// const api = 'https://dev.portapporta.webmapp.it/api/v1';
+const devApi = 'https://dev.portapporta.webmapp.it/api/v1';
+const prodApi = 'https://portapporta.webmapp.it/api/v1';
 // const api = 'http://127.0.0.1:8000/api/v1';
 interface Config {
   id: number;
@@ -31,6 +32,7 @@ interface Config {
   sku: string;
 }
 interface Paths {
+  api: string;
   apiUrl: string;
   capacitorConfigPath: string;
   companyId: string;
@@ -49,18 +51,12 @@ gulp.task('build', async () => {
   try {
     await init();
     const companyId = args.id || null;
-    const release = args.release ? true : false;
+    const prod = args.prod ? true : false;
     const packageJson = await readJsonFile('./package.json');
-    if (release) {
-      version = incrementVersion(packageJson.version);
-      packageJson.version = version;
-      writeFile('./package.json', JSON.stringify(packageJson, null, 2));
-      console.log(version);
-    } else {
-      version = packageJson.version;
-    }
-    paths = getPaths(companyId);
-    const config: Config = await getConfig(paths.apiUrl);
+    version = packageJson.version;
+    console.log('PROD', prod);
+    paths = getPaths(companyId, prod);
+    const config: Config = await getConfig(paths);
     await setEnvironment(paths, config);
     await setAssets(config);
     await ionicPlathforms(config.resources);
@@ -113,7 +109,7 @@ gulp.task('build', async () => {
     await ionicBuildIos();
     await ionicBuildIAndroid();
     await addPermissionsToAndroidManifest();
-    await execCmd(`npx capacitor-set-version -v ${version} -b 1`);
+    await execCmd(`npx capacitor-set-version -v ${version} -b ${buildVersion(version)}`);
     await ionicCapSync();
     await ionicPlathforms(config.resources);
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
@@ -133,8 +129,9 @@ gulp.task('build', async () => {
 
 gulp.task('serve', async () => {
   const companyId = args.id || null;
-  const paths: Paths = getPaths(companyId);
-  const config: Config = await getConfig(paths.apiUrl);
+  const prod = args.prod ? true : false;
+  const paths: Paths = getPaths(companyId, prod);
+  const config: Config = await getConfig(paths);
 
   await setAssets(config);
   await ionicPlathforms(config.resources);
@@ -147,7 +144,7 @@ gulp.task('serve', async () => {
 gulp.task('surge-deploy', async () => {
   const companyId = args.id || null;
   const paths: Paths = getPaths(companyId);
-  const config: Config = await getConfig(paths.apiUrl);
+  const config: Config = await getConfig(paths);
 
   await setAssets(config);
   await ionicPlathforms(config.resources);
@@ -166,7 +163,7 @@ async function setEnvironment(paths: Paths, config: Config): Promise<void> {
   const environment = {
     companyId: paths.companyId,
     config,
-    api,
+    api: paths.api,
     //api: 'http://127.0.0.1:8000/',
     GOOOGLEAPIKEY: '',
   };
@@ -210,11 +207,13 @@ function execCmd(cmd: string): Promise<void> {
     });
   });
 }
-function getPaths(companyId: string): Paths {
+function getPaths(companyId: string, prod = false): Paths {
   const instancePath = `./instances/${companyId}`;
+  const api = `${prod ? prodApi : devApi}`;
   return {
     companyId,
     instancePath,
+    api,
     apiUrl: `${api}/c/${companyId}/config.json`,
     capacitorConfigPath: `${instancePath}/capacitor-config.json`,
     variablesConfigPath: `projects/pap/src/theme/variables.scss`,
@@ -224,7 +223,7 @@ function getPaths(companyId: string): Paths {
   };
 }
 // Funzione per effettuare il login e ottenere il token di autenticazione
-async function loginAndGetAuthToken(email: string, password: string): Promise<string> {
+async function loginAndGetAuthToken(api: string, email: string, password: string): Promise<string> {
   const loginUrl = `${api}/login`; // URL di login dell'API
   const authData = {
     email,
@@ -283,9 +282,9 @@ function init(): Promise<void> {
   });
 }
 
-const getConfig = (apiUrl: string): Promise<any> => {
+const getConfig = (paths: Paths): Promise<any> => {
   return new Promise((resolve, reject) => {
-    exec(`curl -s "${apiUrl}"`, async (err, stdout, stderr) => {
+    exec(`curl -s "${paths.apiUrl}"`, async (err, stdout, stderr) => {
       if (err) {
         console.error("Impossibile recuperare le informazioni dall'API:", err);
         return reject();
@@ -294,9 +293,9 @@ const getConfig = (apiUrl: string): Promise<any> => {
         // Utilizza le variabili d'ambiente nel tuo script
         const email = process.env['EMAIL'] || '';
         const password = process.env['PASSWORD'] || '';
-        const authToken = await loginAndGetAuthToken(email, password);
+        const authToken = await loginAndGetAuthToken(paths.api, email, password);
 
-        const response = await axios.get(apiUrl, {
+        const response = await axios.get(paths.apiUrl, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -521,4 +520,7 @@ function incrementVersion(version: string): string {
   const incremented = parseInt(lastPart) + 1; // Incrementa l'ultimo elemento
   parts[parts.length - 1] = incremented.toString(); // Sostituisci l'ultimo elemento con il valore incrementato
   return parts.join('.'); // Riunisci le parti con il punto come separatore
+}
+function buildVersion(version: string): string {
+  return version.split('.').join('');
 }
