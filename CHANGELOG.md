@@ -2,10 +2,9 @@
 
 ## [2.2.27](https://github.com/webmappsrl/pap/compare/v2.2.26...v2.2.27) (2024-01-18)
 
-
 ### Miscellaneous
 
-* Update launch.json and gulpfile.ts ([9ca8766](https://github.com/webmappsrl/pap/commit/9ca8766c9b13a7c7c0d2a832642e548e7cb2af27))
+- Update launch.json and gulpfile.ts ([9ca8766](https://github.com/webmappsrl/pap/commit/9ca8766c9b13a7c7c0d2a832642e548e7cb2af27))
 
 ## [2.2.26](https://github.com/webmappsrl/pap/compare/v2.2.25...v2.2.26) (2024-01-17)
 
