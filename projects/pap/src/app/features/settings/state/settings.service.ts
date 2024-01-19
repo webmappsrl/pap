@@ -22,7 +22,7 @@ export class SettingsService {
     return this._http.get(`${env.api}/address/delete/${id}`) as Observable<SuccessResponse>;
   }
 
-  updateAddress(address: Address): Observable<any> {
+  updateAddress(address: Partial<Address>): Observable<any> {
     return this._http.post(`${env.api}/address/update`, address);
   }
 }

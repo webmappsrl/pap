@@ -32,3 +32,4 @@ export const loadConfiniZoneFailure = createAction(
   '[Map] Load confini zone Failure',
   props<{error: string}>(),
 );
+export const resetCurrentZone = createAction('[Map] reset current zone');

@@ -17,43 +17,6 @@
   <ng-template #addressForm>
     <ion-grid>
       <ion-row>
-        <ion-col> </ion-col>
-        <ion-col size="12">
-          <ion-item>
-            <ion-label
-              class="ion-text-wrap"
-              position="stacked"
-              >Città</ion-label
-            >
-            <ion-input
-              formControlName="city"
-              type="text"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col
-          size="10"
-          size-xs="8">
-          <ion-item>
-            <ion-label position="stacked">Via</ion-label>
-            <ion-input
-              formControlName="address"
-              type="text"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col
-          size="2"
-          size-xs="4">
-          <ion-item>
-            <ion-label position="stacked">N. Civico</ion-label>
-            <ion-input
-              formControlName="house_number"
-              type="text"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-grid>
-      <ion-row>
         <ion-col>
           <div class="pap-form-location">
             <pap-map
@@ -84,6 +47,46 @@
 
             <div class="pap-form-location-padding"></div>
           </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label
+              class="ion-text-wrap"
+              position="stacked"
+              >Città</ion-label
+            >
+            <ion-input
+              formControlName="city"
+              type="text"></ion-input>
+            <pap-error-form-handler [errors]="form.get('city')?.errors"></pap-error-form-handler>
+          </ion-item>
+        </ion-col>
+        <ion-col
+          size="10"
+          size-xs="12">
+          <ion-item>
+            <ion-label position="stacked">Via</ion-label>
+            <ion-input
+              formControlName="address"
+              type="text"></ion-input>
+            <pap-error-form-handler [errors]="form.get('address')?.errors"></pap-error-form-handler>
+          </ion-item>
+        </ion-col>
+        <ion-col
+          size="2"
+          size-xs="12">
+          <ion-item>
+            <ion-label position="stacked">N. Civico</ion-label>
+            <ion-input
+              formControlName="house_number"
+              type="text"></ion-input>
+            <pap-error-form-handler
+              [errors]="form.get('house_number')?.errors"></pap-error-form-handler>
+          </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>

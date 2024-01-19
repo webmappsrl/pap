@@ -1,5 +1,5 @@
 import {createReducer, on} from '@ngrx/store';
-import {User} from '../auth.model';
+import {Address, User} from '../auth.model';
 import * as AuthActions from './auth.actions';
 
 export const authFeatureKey = 'auth';
@@ -9,6 +9,7 @@ export interface AuthState {
   isLogged: boolean;
   isVerified: boolean;
   noAddress: boolean;
+  noHouseNumber?: Address[];
   user?: User;
 }
 
@@ -23,12 +24,16 @@ export const reducer = createReducer(
 
   on(AuthActions.loadAuths, state => state),
   on(AuthActions.loadAuthsSuccess, (state, action) => {
+    const noHouseNumber = action.user.addresses.filter(
+      a => a.house_number == null || a.house_number == '',
+    );
     return {
       ...state,
       user: action.user,
       isLogged: true,
       isVerified: action.user.email_verified_at != null ? true : false,
       noAddress: action.user.addresses == null || action.user.addresses.length === 0 ? true : false,
+      noHouseNumber: noHouseNumber.length > 0 ? noHouseNumber : undefined,
     };
   }),
   on(AuthActions.loadAuthsFailure, (state, action) => {

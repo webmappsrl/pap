@@ -7,6 +7,7 @@ import {AppState} from '../../../core/core.state';
 import {currentZone} from '../../map/state/map.selectors';
 import {AddressEvent} from './location.model';
 import {take} from 'rxjs/operators';
+import {resetCurrentZone} from '../../map/state/map.actions';
 
 @Component({
   selector: 'pap-location-modal',
@@ -21,7 +22,7 @@ export class LocationModalComponent {
   modalForm: FormGroup = this._formBuilder.group({
     address: ['', [Validators.required]],
     city: ['', [Validators.required]],
-    house_number: [''],
+    house_number: ['', [Validators.required]],
     zone_id: ['', [Validators.required]],
     user_type_id: ['', [Validators.required]],
     location: [[], [Validators.required]],
@@ -31,7 +32,9 @@ export class LocationModalComponent {
     private _modalCtrl: ModalController,
     private _formBuilder: FormBuilder,
     private _store: Store<AppState>,
-  ) {}
+  ) {
+    this._store.dispatch(resetCurrentZone());
+  }
 
   cancel(): void {
     this._modalCtrl.dismiss(null, 'cancel');

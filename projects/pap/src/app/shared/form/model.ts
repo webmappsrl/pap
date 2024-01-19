@@ -51,7 +51,8 @@ export type TicketFieldTypes =
   | 'image'
   | 'note'
   | 'phone'
-  | 'calendar_trash_type_id';
+  | 'calendar_trash_type_id'
+  | 'house_number';
 
 export type TicketType = 'reservation' | 'info' | 'abandonment' | 'report';
 

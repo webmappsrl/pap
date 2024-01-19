@@ -80,6 +80,7 @@ export class LocationComponent implements OnDestroy, ControlValueAccessor {
       city: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
       house_number: new FormControl('', Validators.required),
+      address_id: new FormControl(''),
     });
     this._formAddressValueChangesSub = this.formAddress.valueChanges.subscribe(addr => {
       this.addressEVT.emit({
@@ -135,15 +136,21 @@ export class LocationComponent implements OnDestroy, ControlValueAccessor {
   }
 
   setAddress(address: any): void {
-    console.log(address);
     if (address.address != null && address.address === 'altro') {
       this.form.get('address')?.reset();
       this.form.get('city')?.reset();
       this.form.get('house_number')?.reset();
       this.form.get('location')?.reset();
+      this.form.get('address_id')?.reset();
       this.formAddress.reset();
       this._store.dispatch(setMarker({coords: [0, 0]}));
     } else {
+      if (address.id != null && address.id != '') {
+        this.formAddress.patchValue({
+          address_id: address.id,
+        });
+        this.form.get('address_id')?.setValue(address.id);
+      }
       if (address.address != null && address.address != '') {
         this.formAddress.patchValue({
           address: address.address,

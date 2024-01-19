@@ -60,6 +60,7 @@ export class FormComponent implements OnDestroy {
         this.ticketForm.addControl('address', new UntypedFormControl('', validators));
         this.ticketForm.addControl('city', new UntypedFormControl('', validators));
         this.ticketForm.addControl('house_number', new UntypedFormControl(''));
+        this.ticketForm.addControl('address_id', new UntypedFormControl(''));
       }
 
       this.trashBookTypesOpts$ = this._store.pipe(

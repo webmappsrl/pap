@@ -1,3 +1,4 @@
+import {MissedHouseNumberModal} from './missed-house.number-modal/missed-house-number.modal';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
@@ -81,6 +82,7 @@ const pipes = [
     CalendarSelectComponent,
     CalendarComponent,
     DateComponent,
+    MissedHouseNumberModal,
     ...pipes,
   ],
   imports: [
@@ -128,6 +130,7 @@ const pipes = [
     CalendarComponent,
     LocationModalComponent,
     AddressSelectorComponent,
+    MissedHouseNumberModal,
     ...pipes,
   ],
 })

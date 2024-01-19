@@ -1,0 +1,53 @@
+<ion-header><pap-header></pap-header></ion-header>
+<ion-content class="ion-padding">
+  <ion-label>per favore inserisci il numero civico delle seguenti vie</ion-label>
+  <form [formGroup]="addressesForm">
+    <ion-grid>
+      <div formArrayName="addresses">
+        <ion-row
+          *ngFor="let addressGroup of addressesArray.controls;let idx = index"
+          [formGroupName]="idx">
+          <ion-col size="12">
+            <ion-list>
+              <ion-item lines="none">
+                <ion-label style="opacity: 1;">via</ion-label>
+                <ion-input
+                  formControlName="address"
+                  readonly
+                  type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>numero civico</ion-label>
+                <ion-input
+                  required="true"
+                  formControlName="house_number"
+                  [placeholder]="'fai tap qui'"
+                  type="text">
+                </ion-input>
+                <pap-error-form-handler
+                  [errors]="addressGroup.get('house_number')?.errors"></pap-error-form-handler>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-grid>
+    <div class="pap-location-modal-buttons">
+      <ion-buttons slot="end">
+        <ion-button
+          (click)="save()"
+          [strong]="true"
+          [disabled]="addressesForm.invalid"
+          color="primary"
+          shape="round"
+          fill="solid"
+          >Salva</ion-button
+        >
+      </ion-buttons>
+    </div>
+  </form>
+</ion-content>
+
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>

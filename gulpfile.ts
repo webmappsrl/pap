@@ -109,6 +109,8 @@ gulp.task('build', async () => {
     await ionicBuildIos();
     await ionicBuildIAndroid();
     await addPermissionsToAndroidManifest();
+    console.log('VERSION: ', version);
+    console.log('BUILD VERSION: ', buildVersion(version));
     await execCmd(`npx capacitor-set-version -v ${version} -b ${buildVersion(version)}`);
     await ionicCapSync();
     await ionicPlathforms(config.resources);
@@ -514,13 +516,6 @@ async function download(url: string, destinationPath: string) {
   }
 }
 
-function incrementVersion(version: string): string {
-  const parts = version.split('.'); // Dividi la stringa in parti usando il punto come separatore
-  const lastPart = parts[parts.length - 1]; // Prendi l'ultimo elemento
-  const incremented = parseInt(lastPart) + 1; // Incrementa l'ultimo elemento
-  parts[parts.length - 1] = incremented.toString(); // Sostituisci l'ultimo elemento con il valore incrementato
-  return parts.join('.'); // Riunisci le parti con il punto come separatore
-}
 function buildVersion(version: string): string {
   return version.split('.').join('');
 }

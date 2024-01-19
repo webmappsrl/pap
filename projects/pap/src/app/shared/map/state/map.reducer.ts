@@ -47,4 +47,8 @@ export const reducer = createReducer(
     confiniZone: action.data.features,
   })),
   on(MapActions.loadConfiniZoneFailure, (state, action) => state),
+  on(MapActions.resetCurrentZone, (state, action) => ({
+    ...state,
+    currentMarkerCoords: [-1, -1],
+  })),
 );

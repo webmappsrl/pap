@@ -39,6 +39,7 @@ export interface Address {
   user_id: number;
   user_type: UserType;
   user_type_id: number;
+  house_number: any;
   zone: Zone;
   zone_id: number;
 }
