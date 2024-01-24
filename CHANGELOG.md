@@ -2,10 +2,9 @@
 
 ## [2.2.28](https://github.com/webmappsrl/pap/compare/v2.2.27...v2.2.28) (2024-01-22)
 
-
 ### Miscellaneous
 
-* Update calendar-page.component.scss id:2380 ([e53eb17](https://github.com/webmappsrl/pap/commit/e53eb173436601eddbbc8d2f88fcecd2225db8b6))
+- Update calendar-page.component.scss id:2380 ([e53eb17](https://github.com/webmappsrl/pap/commit/e53eb173436601eddbbc8d2f88fcecd2225db8b6))
 
 ## [2.2.27](https://github.com/webmappsrl/pap/compare/v2.2.26...v2.2.27) (2024-01-18)
 
