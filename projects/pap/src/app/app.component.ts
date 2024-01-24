@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {AlertController, AlertOptions, ModalController, NavController} from '@ionic/angular';
 import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
-import {Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {filter, skip, switchMap, take} from 'rxjs/operators';
 import {loadAuths} from './core/auth/state/auth.actions';
-import {noAddress, noHouseNumber} from './core/auth/state/auth.selectors';
+import {isLogged, noAddress, noHouseNumber} from './core/auth/state/auth.selectors';
 import {AppState} from './core/core.state';
 import {loadCalendars} from './features/calendar/state/calendar.actions';
 import {loadTrashBooks} from './features/trash-book/state/trash-book.actions';
@@ -13,6 +13,7 @@ import {loadConfiniZone} from './shared/map/state/map.actions';
 import {BroadcastNotificationService} from './shared/services/broadcast-notification.service';
 import {LocalNotificationService} from './shared/services/local-notification.service';
 import {Address} from './core/auth/auth.model';
+import {App} from '@capacitor/app';
 import {MissedHouseNumberModal} from './shared/missed-house.number-modal/missed-house-number.modal';
 
 @Component({
@@ -21,12 +22,13 @@ import {MissedHouseNumberModal} from './shared/missed-house.number-modal/missed-
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  isLogged$ = this._store.pipe(select(isLogged));
   noAddress$: Observable<boolean> = this._store.select(noAddress);
   noHouseNumber$: Observable<Address[] | undefined> = this._store.select(noHouseNumber);
 
   constructor(
     private _store: Store<AppState>,
-    _localNotificationSvc: LocalNotificationService,
+    private _localNotificationSvc: LocalNotificationService,
     _broadcastNotificationSvc: BroadcastNotificationService,
     private _navCtrl: NavController,
     private _alertCtrl: AlertController,
@@ -34,8 +36,21 @@ export class AppComponent {
   ) {
     this._store.dispatch(loadAuths());
     this._store.dispatch(loadTrashBooks());
-    this._store.dispatch(loadCalendars());
-    this._store.dispatch(loadConfiniZone());
+    this.isLogged$
+      .pipe(
+        filter(l => l),
+        take(1),
+      )
+      .subscribe(async () => {
+        this._store.dispatch(loadCalendars());
+        this._store.dispatch(loadConfiniZone());
+        this._localNotificationSvc.scheduleNotifications();
+        App.addListener('resume', () => {
+          this._store.dispatch(loadCalendars());
+          this._store.dispatch(loadConfiniZone());
+          this._localNotificationSvc.scheduleNotifications();
+        });
+      });
     this.noAddress$
       .pipe(
         skip(1),

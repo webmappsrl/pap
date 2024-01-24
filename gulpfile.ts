@@ -64,7 +64,7 @@ gulp.task('build', async () => {
     createFolder(paths.instancePath);
     const capacitorConfig: CapacitorConfig = {
       appId: config.sku,
-      appName: config.name,
+      appName: 'PortAPPorta',
       webDir: 'dist/pap/',
       bundledWebRuntime: false,
       plugins: {
@@ -116,10 +116,12 @@ gulp.task('build', async () => {
     await ionicPlathforms(config.resources);
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
     await moveFoldersToInstance(paths.instancePath);
-    const info = ((await readFileContent('./ios-custom/info.plist')) || '').replace(
+
+    const info = (await readFileContent('./ios-custom/info.plist')) || ''; /* .replace(
       '<string>PAP</string>',
       `<string>${config.name}</string>`,
     );
+    å*/
     await writeFile(`${paths.instancePath}/ios/App/App/info.plist`, info);
 
     console.log('Build completed successfully.');
