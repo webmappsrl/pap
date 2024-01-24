@@ -67,7 +67,7 @@ export class LocalNotificationService {
           };
           try {
             await LocalNotifications.schedule(options);
-            console.info(options.notifications.map(n => ({at: n.schedule, text: n.body})));
+            // console.info(options.notifications.map(n => ({at: n.schedule, text: n.body})));
           } catch (e) {
             console.log(`LocalNotifications error: ${e}`);
             console.log(`LocalNotifications error: ${JSON.stringify(options)}`);
