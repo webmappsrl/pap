@@ -2,15 +2,13 @@
 
 ## [2.2.29](https://github.com/webmappsrl/pap/compare/v2.2.28...v2.2.29) (2024-01-24)
 
-
 ### Bug Fixes
 
-* **gulpfile:** minor fix ([220557d](https://github.com/webmappsrl/pap/commit/220557d3791214fa4e76d5d3182c1eb80af63be1))
-
+- **gulpfile:** minor fix ([220557d](https://github.com/webmappsrl/pap/commit/220557d3791214fa4e76d5d3182c1eb80af63be1))
 
 ### Miscellaneous
 
-* Refactor local notification service ([1a47b24](https://github.com/webmappsrl/pap/commit/1a47b2466922801f149b85adfd5f54e1ac6198cb))
+- Refactor local notification service ([1a47b24](https://github.com/webmappsrl/pap/commit/1a47b2466922801f149b85adfd5f54e1ac6198cb))
 
 ## [2.2.28](https://github.com/webmappsrl/pap/compare/v2.2.27...v2.2.28) (2024-01-22)
 
