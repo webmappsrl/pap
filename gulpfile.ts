@@ -519,5 +519,13 @@ async function download(url: string, destinationPath: string) {
 }
 
 function buildVersion(version: string): string {
-  return version.split('.').join('');
+  const numbers = version.split('.');
+
+  // Verificare che ci siano esattamente tre elementi
+  if (numbers.length !== 3) {
+    throw new Error('Formato input non valido');
+  }
+
+  // Concatenare i numeri in una stringa senza punti
+  return numbers.join('');
 }
