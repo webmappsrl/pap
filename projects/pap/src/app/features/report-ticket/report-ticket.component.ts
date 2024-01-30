@@ -15,7 +15,10 @@ import {loadCalendars} from '../calendar/state/calendar.actions';
 export class ReportTicketComponent {
   form: TicketFormConf = reportTicketForm;
 
-  constructor(private _navCtrl: NavController, private _store: Store<AppState>) {}
+  constructor(
+    private _navCtrl: NavController,
+    private _store: Store<AppState>,
+  ) {}
 
   exitPage(): void {
     this._navCtrl.pop();
