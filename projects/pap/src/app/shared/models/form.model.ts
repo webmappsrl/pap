@@ -106,6 +106,7 @@ export const abandonmentTicketForm: TicketFormConf = {
       type: 'location',
       required: true,
       recap: 'Indirizzo',
+      userAddress: true,
     },
     {
       label: 'Aggiungi una foto: ci aiuterà a capire la situazione',
