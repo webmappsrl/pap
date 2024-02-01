@@ -22,7 +22,12 @@ export const initialState: AuthState = {
 export const reducer = createReducer(
   initialState,
 
-  on(AuthActions.loadAuths, state => state),
+  on(AuthActions.loadAuths, state => {
+    return {
+      ...state,
+      error: undefined,
+    };
+  }),
   on(AuthActions.loadAuthsSuccess, (state, action) => {
     const noHouseNumber = action.user.addresses.filter(
       a => a.house_number == null || a.house_number == '',
@@ -46,7 +51,12 @@ export const reducer = createReducer(
       error: undefined,
     };
   }),
-  on(AuthActions.logout, state => state),
+  on(AuthActions.logout, state => {
+    return {
+      ...state,
+      error: undefined,
+    };
+  }),
   on(AuthActions.loadSignIns, (state, action) => {
     localStorage.removeItem('access_token');
     return {
@@ -80,7 +90,12 @@ export const reducer = createReducer(
       error: action.error,
     };
   }),
-  on(AuthActions.loadSignUps, state => state),
+  on(AuthActions.loadSignUps, state => {
+    return {
+      ...state,
+      error: undefined,
+    };
+  }),
   on(AuthActions.loadSignUpsSuccess, (state, action) => {
     localStorage.setItem('access_token', action.user.data.token);
     return {
@@ -100,7 +115,12 @@ export const reducer = createReducer(
       error: action.error,
     };
   }),
-  on(AuthActions.UpdateUser, state => state),
+  on(AuthActions.UpdateUser, state => {
+    return {
+      ...state,
+      error: undefined,
+    };
+  }),
   on(AuthActions.UpdateUserSuccess, (state, action) => {
     return {
       ...state,

@@ -22,9 +22,6 @@
               (next)="register()"
               (prev)="step$.next(step$.value -1)"></pap-third-step-signup-form>
           </ng-container>
-          <ion-item *ngIf="error$|async as error">
-            <pap-error-form-handler [errors]="error"></pap-error-form-handler>
-          </ion-item>
         </ion-list>
       </ion-card>
     </form>
