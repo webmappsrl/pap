@@ -19,40 +19,60 @@ export class LocationService {
       .pipe(
         map((response: any) => {
           const rawAddress = response.address ?? {};
-          let address = '';
-          let city = '';
-          if (rawAddress.road != null) {
-            address = rawAddress.road;
-          } else if (rawAddress.isolated_dwelling != null) {
-            address = rawAddress.isolated_dwelling;
-          } else if (rawAddress.isolated_dwelling != null) {
-            address = rawAddress.isolated_dwelling;
-          }
-          if (rawAddress.city != null) {
-            city = rawAddress.city;
-          } else if (rawAddress.town != null) {
-            city = rawAddress.town;
-          } else if (rawAddress.province != null) {
-            city = rawAddress.province;
-          } else if (rawAddress.village != null) {
-            city = rawAddress.village;
-          }
-          return {
-            address,
-            city,
-          };
+          return this._getAddressAndCityFromNominatim(response.display_name, rawAddress);
         }),
       );
-  }
-  getCoordinates(address: string): Observable<any> {
-    return this._http.get(
-      `https://nominatim.openstreetmap.org/search?q=${address}&format=json&polygon=1&addressdetails=1`,
-    );
   }
 
   getConfiniZone(): Observable<GeoJsonFeatureCollection> {
     return this._http.get(
       `${env.api}/c/${env.companyId}/zones.geojson`,
     ) as Observable<GeoJsonFeatureCollection>;
+  }
+
+  getCoordinates(address: string): Observable<any> {
+    return this._http.get(
+      `https://nominatim.openstreetmap.org/search?q=${address}&format=json&polygon=1&addressdetails=1`,
+    );
+  }
+
+  private _getAddressAndCityFromNominatim(
+    displayName: string,
+    address: {[key: string]: string},
+    keysToRemove: string[] = ['postcode', 'state', 'country', 'house_number'],
+    addressKeys: string[] = ['road', 'isolated_dwelling', 'amenity', 'suburb'],
+  ): {address: string; city: string} {
+    // Verifica la validità di displayName e address
+    if (
+      !displayName ||
+      typeof displayName !== 'string' ||
+      !address ||
+      typeof address !== 'object'
+    ) {
+      return {address: '', city: ''};
+    }
+
+    let addressComponents: string[] = [];
+    let cityComponents: string[] = [];
+    let displayNameParts = displayName.split(', ').filter(part => part.trim() !== '');
+
+    displayNameParts.forEach(part => {
+      let foundInAddressKeys = false;
+      for (const key of addressKeys) {
+        if (address[key] === part) {
+          addressComponents.push(part);
+          foundInAddressKeys = true;
+          break;
+        }
+      }
+      if (!foundInAddressKeys && !keysToRemove.some(key => address[key] === part)) {
+        cityComponents.push(part);
+      }
+    });
+
+    return {
+      address: addressComponents.reverse().join(', '),
+      city: cityComponents.reverse().join(', '),
+    };
   }
 }
