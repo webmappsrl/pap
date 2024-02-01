@@ -4,6 +4,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 import {AuthEffects} from './state/auth.effects';
 import * as fromAuth from './state/auth.reducer';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [],
@@ -11,6 +12,7 @@ import * as fromAuth from './state/auth.reducer';
     CommonModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
     EffectsModule.forFeature([AuthEffects]),
+    TranslateModule,
   ],
 })
 export class AuthModule {}
