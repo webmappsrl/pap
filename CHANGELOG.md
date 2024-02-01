@@ -1,5 +1,18 @@
 # Changelog pap
 
+## [2.3.0](https://github.com/webmappsrl/pap/compare/v2.2.29...v2.3.0) (2024-02-01)
+
+
+### Features
+
+* Add translation module and Italian language support ([377df47](https://github.com/webmappsrl/pap/commit/377df474f941d7ddc75d7345a25e2b04ac28ce78))
+
+
+### Miscellaneous
+
+* Comment out console.info statement in LocalNotificationService ([0d72675](https://github.com/webmappsrl/pap/commit/0d7267581a889a3c5fe67213127a5e2368dfc69f))
+* Update report-ticket.component.ts and form.model.ts ([abc782f](https://github.com/webmappsrl/pap/commit/abc782fbd6d2e5451ce7bd4bf606b7360dc5d47a))
+
 ## [2.2.29](https://github.com/webmappsrl/pap/compare/v2.2.28...v2.2.29) (2024-01-24)
 
 ### Bug Fixes
