@@ -11,23 +11,6 @@ import {FormProvider} from '../../shared/form/form-provider';
 import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 import {loadConfiniZone} from '../../shared/map/state/map.actions';
 
-export function ConfirmedValidator(controlName: string, matchingControlName: string) {
-  return (formGroup: UntypedFormGroup) => {
-    const control = formGroup.controls[controlName];
-    const matchingControl = formGroup.controls[matchingControlName];
-    if (
-      matchingControl == null ||
-      (matchingControl.errors && !matchingControl.errors['confirmedValidator'])
-    ) {
-      return;
-    }
-    if (control.value !== matchingControl.value) {
-      matchingControl.setErrors({confirmedValidator: true});
-    } else {
-      matchingControl.setErrors(null);
-    }
-  };
-}
 @Component({
   selector: 'pap-sign-up',
   templateUrl: './sign-up.component.html',
@@ -39,7 +22,6 @@ export function ConfirmedValidator(controlName: string, matchingControlName: str
 export class SignUpComponent extends FormProvider implements OnDestroy {
   private _isLoggesSub: Subscription = Subscription.EMPTY;
 
-  error$: Observable<string | false | undefined> = this._store.select(error);
   signUpForm: UntypedFormGroup;
   step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
@@ -103,4 +85,22 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
     };
     this._store.dispatch(loadSignUps({data: res}));
   }
+}
+
+export function ConfirmedValidator(controlName: string, matchingControlName: string) {
+  return (formGroup: UntypedFormGroup) => {
+    const control = formGroup.controls[controlName];
+    const matchingControl = formGroup.controls[matchingControlName];
+    if (
+      matchingControl == null ||
+      (matchingControl.errors && !matchingControl.errors['confirmedValidator'])
+    ) {
+      return;
+    }
+    if (control.value !== matchingControl.value) {
+      matchingControl.setErrors({confirmedValidator: true});
+    } else {
+      matchingControl.setErrors(null);
+    }
+  };
 }
