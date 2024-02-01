@@ -1,3 +1,4 @@
+import {TranslateService} from '@ngx-translate/core';
 import * as AuthActions from './auth.actions';
 
 import {EventEmitter, Injectable} from '@angular/core';
@@ -80,7 +81,7 @@ export class AuthEffects {
             return AuthActions.UpdateUserSuccess({user});
           }),
           catchError(error => {
-            return of(AuthActions.UpdateUserFailure({error}));
+            return of(AuthActions.UpdateUserFailure({error: this._generateErrorMsg(error)}));
           }),
         ),
       ),
@@ -93,7 +94,7 @@ export class AuthEffects {
         this._authSvc.getUser().pipe(
           map(user => AuthActions.loadAuthsSuccess({user})),
           catchError(error => {
-            return of(AuthActions.loadAuthsFailure({error}));
+            return of(AuthActions.loadAuthsFailure({error: this._generateErrorMsg(error)}));
           }),
         ),
       ),
@@ -108,7 +109,7 @@ export class AuthEffects {
             return AuthActions.loadSignInsSuccess({user});
           }),
           catchError(error => {
-            return of(AuthActions.loadSignInsFailure({error}));
+            return of(AuthActions.loadSignInsFailure({error: this._generateErrorMsg(error)}));
           }),
         ),
       ),
@@ -125,7 +126,7 @@ export class AuthEffects {
           }),
           tap(_ => this._navCtrl.navigateForward('settings')),
           catchError(error => {
-            return of(AuthActions.loadSignUpsFailure({error}));
+            return of(AuthActions.loadSignUpsFailure({error: this._generateErrorMsg(error)}));
           }),
         ),
       ),
@@ -138,7 +139,7 @@ export class AuthEffects {
         this._authSvc.logout().pipe(
           map(user => AuthActions.loadSignInsSuccess({user})),
           catchError(error => {
-            return of(AuthActions.loadSignInsFailure({error}));
+            return of(AuthActions.loadSignInsFailure({error: this._generateErrorMsg(error)}));
           }),
         ),
       ),
@@ -154,7 +155,7 @@ export class AuthEffects {
             return AuthActions.resendEmailSuccess({res});
           }),
           catchError(error => {
-            return of(AuthActions.resendEmailFailure({error}));
+            return of(AuthActions.resendEmailFailure({error: this._generateErrorMsg(error)}));
           }),
         ),
       ),
@@ -172,7 +173,7 @@ export class AuthEffects {
             return AuthActions.UpdateUserSuccess({user: res});
           }),
           catchError(error => {
-            return of(AuthActions.UpdateUserFailure({error}));
+            return of(AuthActions.UpdateUserFailure({error: this._generateErrorMsg(error)}));
           }),
         ),
       ),
@@ -185,6 +186,7 @@ export class AuthEffects {
     private _alertCtrl: AlertController,
     private _store: Store<AppState>,
     private _navCtrl: NavController,
+    private _translateSvc: TranslateService,
   ) {
     this._alertSub = this._alertEVT
       .pipe(
@@ -197,5 +199,13 @@ export class AuthEffects {
       .subscribe(_ => {
         this._store.dispatch(AuthActions.loadAuths());
       });
+  }
+
+  private _generateErrorMsg(error: any): string {
+    let res = '';
+    if (error != null && error.error != null && error.error.message != null) {
+      res = this._translateSvc.instant(error.error.message);
+    }
+    return res;
   }
 }

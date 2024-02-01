@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {AlertController, AlertOptions, ModalController, NavController} from '@ionic/angular';
-import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
+import {environment as env} from 'projects/pap/src/environments/environment';
 import {Store, select} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {filter, skip, switchMap, take} from 'rxjs/operators';
 import {loadAuths} from './core/auth/state/auth.actions';
-import {isLogged, noAddress, noHouseNumber} from './core/auth/state/auth.selectors';
+import {error, isLogged, noAddress, noHouseNumber} from './core/auth/state/auth.selectors';
 import {AppState} from './core/core.state';
 import {loadCalendars} from './features/calendar/state/calendar.actions';
 import {loadTrashBooks} from './features/trash-book/state/trash-book.actions';
@@ -15,6 +15,8 @@ import {LocalNotificationService} from './shared/services/local-notification.ser
 import {Address} from './core/auth/auth.model';
 import {App} from '@capacitor/app';
 import {MissedHouseNumberModal} from './shared/missed-house.number-modal/missed-house-number.modal';
+import {TranslateService} from '@ngx-translate/core';
+import {IT} from '../assets/i18n/it';
 
 @Component({
   selector: 'pap-root',
@@ -22,6 +24,7 @@ import {MissedHouseNumberModal} from './shared/missed-house.number-modal/missed-
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  authError$ = this._store.pipe(select(error));
   isLogged$ = this._store.pipe(select(isLogged));
   noAddress$: Observable<boolean> = this._store.select(noAddress);
   noHouseNumber$: Observable<Address[] | undefined> = this._store.select(noHouseNumber);
@@ -33,7 +36,9 @@ export class AppComponent {
     private _navCtrl: NavController,
     private _alertCtrl: AlertController,
     private _modalCtrl: ModalController,
+    private _translateSvc: TranslateService,
   ) {
+    this._translateSvc.setTranslation('it', IT);
     this._store.dispatch(loadAuths());
     this._store.dispatch(loadTrashBooks());
     this.isLogged$
@@ -46,10 +51,51 @@ export class AppComponent {
         this._store.dispatch(loadConfiniZone());
         this._localNotificationSvc.scheduleNotifications();
         App.addListener('resume', () => {
-          this._store.dispatch(loadCalendars());
-          this._store.dispatch(loadConfiniZone());
           this._localNotificationSvc.scheduleNotifications();
         });
+      });
+    this.authError$
+      .pipe(
+        filter(f => f != null),
+        switchMap(err => {
+          const opts = {
+            cssClass: 'pap-alert',
+            header: 'Errore',
+            message: err as string,
+            buttons: [
+              {
+                text: 'ok',
+                role: 'ok',
+                cssClass: 'pap-alert-btn-ok',
+              },
+            ],
+          };
+          if (err === 'La mail è gia utilizzata si prega di recuperare la password.') {
+            opts.buttons = [
+              {
+                text: 'recupera password',
+                role: 'forgot-password',
+              },
+              {
+                text: 'X',
+                role: 'cancel',
+              },
+            ] as any;
+          }
+          return this._alertCtrl.create(opts);
+        }),
+        switchMap(alert => {
+          alert.present();
+          return alert.onWillDismiss();
+        }),
+      )
+      .subscribe(res => {
+        if (res && res.role) {
+          if (res.role === 'forgot-password') {
+            const url = `${env.api.replace('/api/v1', '')}/password/reset`;
+            window.open(url, '_system');
+          }
+        }
       });
     this.noAddress$
       .pipe(
@@ -76,7 +122,6 @@ export class AppComponent {
         }),
       )
       .subscribe(_ => {
-        const opt: NavigationOptions = {};
         this._navCtrl.navigateForward('settings/address');
       });
     this.noHouseNumber$
