@@ -56,7 +56,7 @@ export class AppComponent {
       });
     this.authError$
       .pipe(
-        filter(f => f != null),
+        filter(f => f != null && f != 'Unauthenticated.'),
         switchMap(err => {
           const opts = {
             cssClass: 'pap-alert',
