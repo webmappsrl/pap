@@ -1,7 +1,7 @@
 <ion-header>
-  <pap-header [modal]="true"></pap-header>
+  <pap-header></pap-header>
 </ion-header>
-<ion-content *ngIf="report as rep">
+<ion-content *ngIf="report$|async as report; else noReport">
   <ion-card>
     <ion-card-header>
       <ion-card-title>
@@ -25,7 +25,7 @@
                   *ngSwitchCase="'info'"></ion-icon>
               </ng-container>
               <ion-label class="pap-reports-detail-ticket-type">
-                {{rep.ticket_type|papTicket}}
+                {{report.ticket_type|papTicket}}
               </ion-label>
             </ion-col>
           </ion-row>
@@ -33,30 +33,7 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-item *ngIf="rep.trashType as trashType">
-        <ion-grid>
-          <ion-row>
-            <ion-col
-              size-sm="4"
-              size-xs="12">
-              <ion-label class="pap-form-recap-label ion-text-wrap">
-                Servizio prenotato:
-              </ion-label>
-            </ion-col>
-            <ion-col
-              size-sm="8"
-              size-xs="12">
-              <ion-badge
-                [style.background-color]="trashType.color"
-                class="pap-reports-name ion-text-wrap">
-                {{ trashType.name }}
-              </ion-badge>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-
-      <ion-item *ngIf="rep.location_address as locationAddress">
+      <ion-item *ngIf="report.location_address as locationAddress">
         <ion-grid>
           <ion-row>
             <ion-col
@@ -68,15 +45,20 @@
               size-sm="8"
               size-xs="12">
               <ion-label class="ion-text-wrap pap-form-recap-location-address">
-                {{rep.location_address}}
+                {{report.location_address}}
               </ion-label>
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination={{report.location_address}}"
+                target="_blank"
+                >Apri in Google Maps</a
+              >
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
 
       <ion-accordion-group
-        *ngIf="rep.location as loc"
+        *ngIf="report.location as loc"
         [value]="['location']">
         <ion-accordion value="location">
           <ion-item
@@ -98,7 +80,7 @@
         </ion-accordion>
       </ion-accordion-group>
 
-      <ion-item *ngIf="rep.created_at as createdAt">
+      <ion-item *ngIf="report.created_at as createdAt">
         <ion-grid>
           <ion-row>
             <ion-col
@@ -110,14 +92,14 @@
               size-sm="8"
               size-xs="12">
               <ion-label class="ion-text-wrap pap-form-recap-created-at">
-                {{createdAt|date:'dd/MM/yyyy'}}
+                {{createdAt|date:'dd/MM/yyyy hh:mm a'}}
               </ion-label></ion-col
             >
           </ion-row>
         </ion-grid>
       </ion-item>
 
-      <ion-item *ngIf="rep.image as img">
+      <ion-item *ngIf="report.image as img">
         <ion-grid>
           <ion-row>
             <ion-col
@@ -134,7 +116,7 @@
         </ion-grid>
       </ion-item>
 
-      <ion-item *ngIf="rep.note as note">
+      <ion-item *ngIf="report.note as note">
         <ion-grid>
           <ion-row>
             <ion-col
@@ -153,7 +135,7 @@
         </ion-grid>
       </ion-item>
 
-      <ion-item *ngIf="rep.phone as phone">
+      <ion-item *ngIf="report.phone as phone">
         <ion-grid>
           <ion-row>
             <ion-col
@@ -164,19 +146,39 @@
             <ion-col
               size-sm="8"
               size-xs="12">
-              <ion-label class="ion-text-wrap pap-form-recap-phone">
-                {{phone}}
-              </ion-label>
+              <a href="tel:+{{phone}}"> {{phone}}</a>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
-      <ion-item *ngIf="isDustyMan$|async">
-        <ion-button (click)="ticketIsDone()">ritiro effettuato</ion-button>
-      </ion-item>
     </ion-card-content>
   </ion-card>
+  <ion-item>
+    <ion-button
+      (click)="ticketIsDone(report.id)"
+      expand="full"
+      >ritiro effettuato</ion-button
+    >
+  </ion-item>
 </ion-content>
+<ng-template #noReport>
+  <ion-content>
+    <ion-card>
+      <ion-card-header>
+        <ion-grid>
+          <ion-row>
+            <ion-col
+              size="12"
+              class="pap-col-reports-detail-ticket-type">
+              <ion-card-title> ticket non disponibile </ion-card-title>
+            </ion-col></ion-row
+          ></ion-grid
+        >
+      </ion-card-header>
+      <ion-card-content> </ion-card-content>
+    </ion-card>
+  </ion-content>
+</ng-template>
 <ion-footer collapse="fade">
   <pap-footer></pap-footer>
 </ion-footer>

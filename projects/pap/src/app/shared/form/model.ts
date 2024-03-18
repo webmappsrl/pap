@@ -1,48 +1,6 @@
 import {Address, User} from '../../core/auth/auth.model';
 import {TrashBookType} from '../../features/trash-book/trash-book-model';
 
-export interface TicketForm {
-  cancel: string;
-  finalMessage: string;
-  pages: number;
-  step: TicketFormStep[];
-  translationsObj: any;
-}
-export interface TicketFormStep {
-  extraOptions?: TicketFormOption[];
-  label: string;
-  options?: TicketFormOption[];
-  recap?: string;
-  required: boolean;
-  translationsObj?: any;
-  type: TicketFieldTypes;
-  value?: any;
-}
-
-export interface TicketFormOption {
-  label: string;
-  show: boolean;
-  value: string;
-}
-export interface Ticket {
-  address_id?: number;
-  company_id: number;
-  created_at: string;
-  geometry?: string;
-  id: number;
-  image?: string;
-  location: number[];
-  location_address: string;
-  missed_withdraw_date?: string;
-  note?: string;
-  phone?: string;
-  ticket_type: TicketType;
-  trashType?: TrashBookType;
-  trash_type_id: number;
-  updated_at: string;
-  user_id: number;
-}
-
 export type TicketFieldTypes =
   | 'ticket_type'
   | 'trash_type_id'
@@ -53,8 +11,12 @@ export type TicketFieldTypes =
   | 'phone'
   | 'calendar_trash_type_id'
   | 'house_number';
-
 export type TicketType = 'reservation' | 'info' | 'abandonment' | 'report';
+
+export interface SuccessData<T> {
+  data: T;
+  message: string;
+}
 
 export interface SuccessResponse {
   data: {
@@ -77,7 +39,49 @@ export interface SuccessResponse {
   success: boolean;
 }
 
-export interface SuccessData<T> {
-  data: T;
-  message: string;
+export interface Ticket {
+  address_id?: number;
+  company_id: number;
+  created_at: string;
+  geometry?: string;
+  id: number;
+  image?: string;
+  location: number[];
+  location_address: string;
+  missed_withdraw_date?: string;
+  note?: string;
+  phone?: string;
+  status?:string
+  ticket_type: TicketType;
+  trashType?: TrashBookType;
+  trash_type?: TrashBookType;
+  trash_type_id: number;
+  updated_at: string;
+  user?: User;
+  user_id: number;
+}
+
+export interface TicketForm {
+  cancel: string;
+  finalMessage: string;
+  pages: number;
+  step: TicketFormStep[];
+  translationsObj: any;
+}
+
+export interface TicketFormOption {
+  label: string;
+  show: boolean;
+  value: string;
+}
+
+export interface TicketFormStep {
+  extraOptions?: TicketFormOption[];
+  label: string;
+  options?: TicketFormOption[];
+  recap?: string;
+  required: boolean;
+  translationsObj?: any;
+  type: TicketFieldTypes;
+  value?: any;
 }

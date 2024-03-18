@@ -1,6 +1,7 @@
 import {createAction, props} from '@ngrx/store';
 import {ApiTicket} from '../../../shared/models/apimodels';
 import {SuccessResponse} from '../../../shared/form/model';
+import {Ticket} from '../../reports/state/reports.effects';
 
 export const loadInfoTickets = createAction('[InfoTicket] Load InfoTickets');
 
@@ -24,6 +25,6 @@ export const sendReportInfoTicketsSuccess = createAction(
 );
 
 export const sendReportInfoTicketsFailure = createAction(
-  '[InfoTicket] sendReport InfoTickets Failure',
+  '[Ticket] sendReport InfoTickets Failure',
   props<{error: string}>(),
 );

@@ -5,7 +5,13 @@ import {Store, select} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {filter, skip, switchMap, take} from 'rxjs/operators';
 import {loadAuths} from './core/auth/state/auth.actions';
-import {error, isLogged, noAddress, noHouseNumber} from './core/auth/state/auth.selectors';
+import {
+  error,
+  isLogged,
+  noAddress,
+  noHouseNumber,
+  userRoles,
+} from './core/auth/state/auth.selectors';
 import {AppState} from './core/core.state';
 import {loadCalendars} from './features/calendar/state/calendar.actions';
 import {loadTrashBooks} from './features/trash-book/state/trash-book.actions';
@@ -17,6 +23,7 @@ import {App} from '@capacitor/app';
 import {MissedHouseNumberModal} from './shared/missed-house.number-modal/missed-house-number.modal';
 import {TranslateService} from '@ngx-translate/core';
 import {IT} from '../assets/i18n/it';
+import {yHomes} from './features/home/state/home.actions';
 
 @Component({
   selector: 'pap-root',
@@ -28,6 +35,7 @@ export class AppComponent {
   isLogged$ = this._store.pipe(select(isLogged));
   noAddress$: Observable<boolean> = this._store.select(noAddress);
   noHouseNumber$: Observable<Address[] | undefined> = this._store.select(noHouseNumber);
+  userRoles$ = this._store.pipe(select(userRoles));
 
   constructor(
     private _store: Store<AppState>,
@@ -49,6 +57,7 @@ export class AppComponent {
       .subscribe(async () => {
         this._store.dispatch(loadCalendars());
         this._store.dispatch(loadConfiniZone());
+        this._store.dispatch(yHomes());
         this._localNotificationSvc.scheduleNotifications();
         App.addListener('resume', () => {
           this._localNotificationSvc.scheduleNotifications();
@@ -156,5 +165,13 @@ export class AppComponent {
       .subscribe(async alert => {
         (await alert).present();
       });
+
+    this.userRoles$.subscribe(roles => {
+      if (roles.some(r => r === 'dusty_man')) {
+        this._navCtrl.navigateRoot('/dusty-man-reports');
+      } else {
+        this._navCtrl.navigateRoot('/home');
+      }
+    });
   }
 }

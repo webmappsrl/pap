@@ -1,0 +1,15 @@
+{
+  "title": "Raccolta VIP: giuseppe",
+  "body": "Corso Giacomo Matteotti, 12",
+  "id": "A27E57E9-C717-42E7-B7E8-460E7A03EE9B",
+  "badge": 1,
+  "data": {
+    "google.c.a.e": "1",
+    "google.c.fid": "cmyZxyCoM0lvsvLBY4vG3w",
+    "aps": {"alert": {"body": "Corso Giacomo Matteotti, 12", "title": "Raccolta VIP: giuseppe"}},
+    "google.c.sender.id": "198619834396",
+    "gcm.notification.data": "{\"ticket_id\":1067}",
+    "gcm.message_id": "1709816827386374"
+  },
+  "subtitle": ""
+}

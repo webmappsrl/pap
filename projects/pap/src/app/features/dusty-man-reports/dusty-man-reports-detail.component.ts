@@ -3,33 +3,38 @@ import {Ticket} from './state/reports.effects';
 import {AppState} from '../../core/core.state';
 import {Store, select} from '@ngrx/store';
 import {isDustyMan} from '../../core/auth/state/auth.selectors';
-import {lastTicketUpdate} from './state/reports.selectors';
+import {lastTicketUpdate, selectReportById} from './state/reports.selectors';
 import {AlertController, ModalController, NavController} from '@ionic/angular';
 import {skip, switchMap} from 'rxjs/operators';
 import {updateTicket} from './state/reports.actions';
-import {Subscription} from 'rxjs';
-
+import {Subscription, Observable} from 'rxjs';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {ActivatedRoute} from '@angular/router';
 @Component({
-  selector: 'pap-reports-detail',
-  templateUrl: './reports-detail.component.html',
-  styleUrls: ['./reports-detail.component.scss'],
+  selector: 'pap-dusty-man-reports-detail',
+  templateUrl: './dusty-man-reports-detail.component.html',
+  styleUrls: ['./dusty-man-reports-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class ReportsDetailComponent {
+export class DustyManReportsDetailComponent {
   private _lastTicketUpdateSub: Subscription = Subscription.EMPTY;
-
-  @Input() report!: Ticket;
 
   isDustyMan$ = this._store.pipe(select(isDustyMan));
   lastTicketUpdate$ = this._store.pipe(select(lastTicketUpdate));
+  report$: Observable<Ticket>;
+  safeUrl: SafeResourceUrl;
 
   constructor(
     private _store: Store<AppState>,
     private _alertCtrl: AlertController,
-    private _navCtrl: NavController,
+    private _activatedRoute: ActivatedRoute,
     private _modalCtrl: ModalController,
+    private _navCtrl: NavController,
+    public sanitazer: DomSanitizer,
   ) {
+    this.report$ = this._store.pipe(select(selectReportById)) as Observable<Ticket>;
+
     this._lastTicketUpdateSub = this.lastTicketUpdate$
       .pipe(
         skip(1),
@@ -44,7 +49,7 @@ export class ReportsDetailComponent {
                 {
                   text: 'Ok',
                   handler: async () => {
-                    await this._modalCtrl.dismiss();
+                    await this._alertCtrl.dismiss();
                   },
                 },
               ],
@@ -65,15 +70,17 @@ export class ReportsDetailComponent {
           return alert.onWillDismiss();
         }),
       )
-      .subscribe(res => {});
+      .subscribe(res => {
+        this._navCtrl.navigateRoot('/dusty-man-reports');
+      });
   }
 
   ionViewWillLeave(): void {
     this._lastTicketUpdateSub.unsubscribe();
   }
 
-  ticketIsDone(): void {
-    const ticket: Partial<Ticket> = {id: +this.report.id, status: 'execute'};
+  ticketIsDone(id: any): void {
+    const ticket: Partial<Ticket> = {id: +id, status: 'done'};
     this._store.dispatch(updateTicket({data: ticket}));
   }
 }

@@ -1,3 +1,4 @@
+import {switchMap, tap} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment as env, environment} from 'projects/pap/src/environments/environment';
@@ -44,8 +45,10 @@ export class AuthService {
   }
 
   logout(): Observable<LogoutResponse> {
-    localStorage.removeItem('access_token');
-    return this.getUser() as Observable<LogoutResponse>;
+    return this.update({fcm_token: ''}).pipe(
+      tap(() => localStorage.removeItem('access_token')),
+      switchMap(() => this.getUser()),
+    ) as Observable<LogoutResponse>;
   }
 
   register(data: RegisterData): Observable<User> {

@@ -33,6 +33,50 @@ export interface TicketFormStep {
   value?: any;
 }
 
+export const ticketVipReservationForm: TicketFormConf = {
+  ticketType: 'reservation',
+  label: 'Prenotazione servizio di ritiro VIP',
+  cancel: 'Sicuro di voler cancellare la prenotazione?',
+  finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
+  pages: 6,
+  step: [
+    {
+      label: `Questo serivizio ti permette di inviare una richiesta di prenotazione di un servizio ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice della segnalazione e verrà inviata una email a ${environment.config.name}: verrai ricontattato concordare i dettagli della prenotazione. Vai avanti per iniziare.`,
+      type: 'label',
+      required: false,
+    },
+    {
+      label: 'Seleziona il luogo:',
+      type: 'location',
+      userAddress: true,
+      required: true,
+      recap: 'Indirizzo',
+    },
+    {
+      label: 'Puoi aggiungere una foto: ci aiuterà a capire meglio la situazione',
+      type: 'image',
+      required: false,
+      recap: 'Immagine',
+    },
+    {
+      label: 'Se lo ritieni opportuno, puoi inserire delle note',
+      type: 'note',
+      required: false,
+      recap: 'Note',
+    },
+    {
+      label: 'Inserisci un numero di telefono',
+      type: 'phone',
+      required: true,
+      recap: 'Telefono',
+    },
+    {
+      label: '',
+      type: 'recap',
+      required: false,
+    },
+  ],
+};
 export const ticketReservationForm: TicketFormConf = {
   ticketType: 'reservation',
   label: 'Prenotazione servizio di ritiro',

@@ -1,3 +1,4 @@
+
 export interface TrashBookRow {
   collection_center: boolean;
   delivery: boolean;

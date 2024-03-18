@@ -8,7 +8,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full', // if no route redirect to home
   },
-  {path: 'home', loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule)},
+  {
+    path: 'home',
+    loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule),
+  },
   {
     path: 'trashbook',
     loadChildren: () =>
@@ -50,6 +53,14 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'ticket-vip-reservation',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./features/ticket-vip-reservation/ticket-vip-reservation.module').then(
+        m => m.TicketVipReservationModule,
+      ),
+  },
+  {
     path: 'abandonment-ticket',
     canActivate: [AuthGuard],
     loadChildren: () =>
@@ -72,6 +83,14 @@ const routes: Routes = [
     path: 'reports',
     canActivate: [AuthGuard],
     loadChildren: () => import('./features/reports/reports.module').then(m => m.ReportsModule),
+  },
+  {
+    path: 'dusty-man-reports',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./features/dusty-man-reports/dusty-man-reports.module').then(
+        m => m.DustyManReportsModule,
+      ),
   },
   {
     path: '**',

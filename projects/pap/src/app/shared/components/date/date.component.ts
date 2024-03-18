@@ -9,4 +9,5 @@ import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@ang
 })
 export class DateComponent {
   @Input() dateKey: string;
+  @Input() showHours = false;
 }

@@ -176,7 +176,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         if (val != null && val.role != null && val.role === 'logout-ok') {
           this._store.dispatch(logout());
           this._alertEVT.emit(LOGOUT_CONFIRM);
-          this._navCtrl.navigateForward('home');
         }
       });
   }

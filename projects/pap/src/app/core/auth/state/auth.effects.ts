@@ -10,6 +10,7 @@ import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../core.state';
 import {AuthService} from './auth.service';
+import {BroadcastNotificationService} from '../../../shared/services/broadcast-notification.service';
 
 const SUCESSFULLY_UPDATE: AlertOptions = {
   cssClass: 'pap-alert',
@@ -108,6 +109,7 @@ export class AuthEffects {
           map(user => {
             return AuthActions.loadSignInsSuccess({user});
           }),
+          tap(() => this._broadcastNotificationSvc.getFcmToken()),
           catchError(error => {
             return of(AuthActions.loadSignInsFailure({error: this._generateErrorMsg(error)}));
           }),
@@ -124,7 +126,6 @@ export class AuthEffects {
             this._alertEVT.emit(SUCESSFULLY_REGISTRATION);
             return AuthActions.loadSignUpsSuccess({user});
           }),
-          tap(_ => this._navCtrl.navigateForward('settings')),
           catchError(error => {
             return of(AuthActions.loadSignUpsFailure({error: this._generateErrorMsg(error)}));
           }),
@@ -185,8 +186,8 @@ export class AuthEffects {
     private _authSvc: AuthService,
     private _alertCtrl: AlertController,
     private _store: Store<AppState>,
-    private _navCtrl: NavController,
     private _translateSvc: TranslateService,
+    private _broadcastNotificationSvc: BroadcastNotificationService,
   ) {
     this._alertSub = this._alertEVT
       .pipe(

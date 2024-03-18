@@ -47,10 +47,12 @@ import {RecapRowComponent} from './form/recap/recap-row/recap-row.component';
 import {addr2StringPipe} from './pipes/addr-2-string.pipe';
 import {AddressSelectorComponent} from './components/address-selector/address-selector.component';
 import {papAddressesFromCalendars} from './pipes/pap-addresses-from-calendars';
+import { PapTimeAgoPipe } from './pipes/pap-time-ago.pipe';
 const pipes = [
   InputTypePipe,
   InputPatternPipe,
   PapTicketPipe,
+  PapTimeAgoPipe,
   PapDatePipe,
   PapLangPipe,
   SortPipe,

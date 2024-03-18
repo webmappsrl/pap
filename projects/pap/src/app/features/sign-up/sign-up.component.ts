@@ -59,14 +59,6 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
         location: [[], [Validators.required]],
       }),
     });
-    this._isLoggesSub = this._store
-      .pipe(
-        select(selectAuthState),
-        filter(v => v.isLogged),
-      )
-      .subscribe(val => {
-        this._navCtrl.navigateRoot('home');
-      });
   }
 
   getForm(): UntypedFormGroup {

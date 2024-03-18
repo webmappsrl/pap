@@ -27,3 +27,14 @@ export const updateTicketFailure = createAction(
   '[Ticket] update tickets Failure',
   props<{error: string}>(),
 );
+
+export const selectTicketById = createAction('[Ticket] select ticket by id', props<{id: number}>());
+
+export const selectTicketByIdSuccess = createAction(
+  '[Ticket] select ticket by id Success',
+  props<{report: any}>(),
+);
+export const selectTicketByIdFailure = createAction(
+  '[Ticket] select ticket by id Failure',
+  props<{error: any}>(),
+);

@@ -7,8 +7,8 @@ import {AppState} from '../../../core/core.state';
 import {Ticket as BaseTicket} from '../../../shared/form/model';
 import {trashBookTypes} from '../../trash-book/state/trash-book.selectors';
 import {TrashBookType} from '../../trash-book/trash-book-model';
-import {ReportsService} from '../../../shared/services/reports.service';
 import * as ReportsActions from './reports.actions';
+import {ReportsService} from '../../../shared/services/reports.service';
 
 export interface Ticket extends BaseTicket {
   created_at: string;

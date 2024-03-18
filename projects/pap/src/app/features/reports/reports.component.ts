@@ -1,4 +1,9 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ViewEncapsulation,
+} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
 import {skip} from 'rxjs/operators';
@@ -7,7 +12,7 @@ import {setTrashBookType} from '../trash-book/state/trash-book.actions';
 import {TrashBookType} from '../trash-book/trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book/trash-book-type/trash-book-type.component';
 import {ReportsDetailComponent} from './reports-detail.component';
-import {loadReportss} from './state/reports.actions';
+import {loadTickets} from './state/reports.actions';
 import {Ticket} from './state/reports.effects';
 import {selectReports} from './state/reports.selectors';
 
@@ -21,8 +26,15 @@ import {selectReports} from './state/reports.selectors';
 export class ReportsComponent {
   reportsView$ = this._store.pipe(select(selectReports), skip(1));
 
-  constructor(private _store: Store<AppState>, private _modalCtrl: ModalController) {
-    this._store.dispatch(loadReportss());
+  constructor(
+    private _store: Store<AppState>,
+    private _modalCtrl: ModalController,
+    private _cdr: ChangeDetectorRef,
+  ) {}
+
+  ionViewWillEnter(): void {
+    this._store.dispatch(loadTickets());
+    this._cdr.detectChanges();
   }
 
   openDetail(report: Ticket) {

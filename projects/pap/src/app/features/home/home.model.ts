@@ -24,6 +24,7 @@ export const servicesButtons = [
   {
     text: 'Prenota un servizio di ritiro',
     icon: 'create',
+    roles: ['contributor'],
     data: {
       action: 'ticket-reservation',
     },
@@ -54,13 +55,19 @@ export const servicesButtons = [
     role: 'cancel',
   },
 ];
-
 export const homeButtons = [
   {
     label: environment.config.name,
     img: 'assets/icons/app_icon.png',
     url: 'info',
     action: buttonAction.NAVIGATION,
+  },
+  {
+    label: 'Servizio VIP',
+    icon: 'star',
+    url: 'ticket-vip-reservation',
+    action: buttonAction.NAVIGATION,
+    roles: ['vip'],
   },
   {
     label: 'Calendari',
@@ -80,6 +87,13 @@ export const homeButtons = [
     icon: 'archive',
     url: 'reports',
     action: buttonAction.NAVIGATION,
+  },
+  {
+    label: 'Segnalazioni',
+    icon: 'archive',
+    url: 'dusty-man-reports',
+    action: buttonAction.NAVIGATION,
+    roles: ['dusty_man'],
   },
   {
     label: 'Centri di Raccolta',
@@ -107,7 +121,6 @@ export const homeButtons = [
     hideInHome: true,
   },
 ];
-
 export const noLoggedButtons = [
   {
     text: 'accedi',
