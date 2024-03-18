@@ -1,5 +1,12 @@
 # Changelog pap
 
+## [2.4.0](https://github.com/webmappsrl/pap/compare/v2.3.0...v2.4.0) (2024-03-18)
+
+
+### Features
+
+* feature vip ([7b4d858](https://github.com/webmappsrl/pap/commit/7b4d858d84845191d110ebdbcedd14539134c857))
+
 ## [2.3.0](https://github.com/webmappsrl/pap/compare/v2.2.29...v2.3.0) (2024-02-01)
 
 ### Features
