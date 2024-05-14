@@ -64,7 +64,7 @@ gulp.task('build', async () => {
     createFolder(paths.instancePath);
     const capacitorConfig: CapacitorConfig = {
       appId: config.sku,
-      appName: 'PortAPPorta',
+      appName: `${config.name}`,
       webDir: 'dist/pap/',
       bundledWebRuntime: false,
       plugins: {
