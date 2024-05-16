@@ -15,7 +15,7 @@ const devApi = 'https://dev.portapporta.webmapp.it/api/v1';
 const prodApi = 'https://portapporta.webmapp.it/api/v1';
 // const api = 'http://127.0.0.1:8000/api/v1';
 interface Config {
-  app_name:string;
+  app_name: string;
   id: number;
   name: string;
   resources: {
@@ -111,8 +111,12 @@ gulp.task('build', async () => {
     await ionicBuildIAndroid();
     await addPermissionsToAndroidManifest();
     console.log('VERSION: ', version);
-    console.log('BUILD VERSION: ', buildVersion(version));
-    await execCmd(`npx capacitor-set-version -v ${version} -b ${buildVersion(version)}`);
+    let buildV = buildVersion(version);
+    if (config.id === 1) {
+      buildV = `${buildV}000`;
+    }
+    console.log('BUILD VERSION: ', buildV);
+    await execCmd(`npx capacitor-set-version -v ${version} -b ${buildV}`);
     await ionicCapSync();
     await ionicPlathforms(config.resources);
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
@@ -394,6 +398,7 @@ const addPermissionsToAndroidManifest = (): Promise<void> => {
         'CAMERA',
         'WRITE_EXTERNAL_STORAGE',
         'READ_EXTERNAL_STORAGE',
+        'READ_MEDIA_IMAGES',
       ];
       permissions.forEach(permission => {
         if (
