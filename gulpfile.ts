@@ -15,6 +15,7 @@ const devApi = 'https://dev.portapporta.webmapp.it/api/v1';
 const prodApi = 'https://portapporta.webmapp.it/api/v1';
 // const api = 'http://127.0.0.1:8000/api/v1';
 interface Config {
+  app_name:string;
   id: number;
   name: string;
   resources: {
@@ -64,7 +65,7 @@ gulp.task('build', async () => {
     createFolder(paths.instancePath);
     const capacitorConfig: CapacitorConfig = {
       appId: config.sku,
-      appName: `${config.name}`,
+      appName: `${config.app_name}`,
       webDir: 'dist/pap/',
       bundledWebRuntime: false,
       plugins: {
@@ -387,7 +388,13 @@ const addPermissionsToAndroidManifest = (): Promise<void> => {
       const manifestXML = fs.readFileSync(androidManifestPath, 'utf8');
       const manifest = await parser.parseStringPromise(manifestXML);
 
-      const permissions = ['ACCESS_FINE_LOCATION', 'ACCESS_COARSE_LOCATION'];
+      const permissions = [
+        'ACCESS_FINE_LOCATION',
+        'ACCESS_COARSE_LOCATION',
+        'CAMERA',
+        'WRITE_EXTERNAL_STORAGE',
+        'READ_EXTERNAL_STORAGE',
+      ];
       permissions.forEach(permission => {
         if (
           !manifest['manifest']['uses-permission'] ||
