@@ -2,13 +2,12 @@
 
 ## [2.4.1](https://github.com/webmappsrl/pap/compare/v2.4.0...v2.4.1) (2024-05-16)
 
-
 ### Miscellaneous
 
-* Update app name in gulpfile.ts ([0861b68](https://github.com/webmappsrl/pap/commit/0861b682bebddae873ea82fe1fb3afb451a0a5d9))
-* Update dependencies ([3ef3dab](https://github.com/webmappsrl/pap/commit/3ef3dab05db721bbe92195b9d8232ebc49456c2e))
-* Update gulpfile.ts ([829a732](https://github.com/webmappsrl/pap/commit/829a732e1896f649b943fbb133be8d0cb4e01842))
-* Update image-picker.component.ts oc :3379 ([37168e5](https://github.com/webmappsrl/pap/commit/37168e56c002357a73e6c04ee58c002f1ea956a2))
+- Update app name in gulpfile.ts ([0861b68](https://github.com/webmappsrl/pap/commit/0861b682bebddae873ea82fe1fb3afb451a0a5d9))
+- Update dependencies ([3ef3dab](https://github.com/webmappsrl/pap/commit/3ef3dab05db721bbe92195b9d8232ebc49456c2e))
+- Update gulpfile.ts ([829a732](https://github.com/webmappsrl/pap/commit/829a732e1896f649b943fbb133be8d0cb4e01842))
+- Update image-picker.component.ts oc :3379 ([37168e5](https://github.com/webmappsrl/pap/commit/37168e56c002357a73e6c04ee58c002f1ea956a2))
 
 ## [2.4.0](https://github.com/webmappsrl/pap/compare/v2.3.0...v2.4.0) (2024-03-18)
 
