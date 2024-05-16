@@ -5,7 +5,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Camera} from '@awesome-cordova-plugins/camera/ngx';
+import {Camera, CameraResultType, CameraSource} from '@capacitor/camera';
 import {ActionSheetController} from '@ionic/angular';
 import {BehaviorSubject} from 'rxjs';
 @Component({
@@ -20,7 +20,6 @@ import {BehaviorSubject} from 'rxjs';
       multi: true,
       useExisting: ImagePickerComponent,
     },
-    Camera,
   ],
 })
 export class ImagePickerComponent implements ControlValueAccessor {
@@ -30,40 +29,29 @@ export class ImagePickerComponent implements ControlValueAccessor {
   onTouched = () => {};
   touched = false;
 
-  constructor(
-    private _camera: Camera,
-    private _actionSheetCtrl: ActionSheetController,
-    private _cdr: ChangeDetectorRef,
-  ) {}
+  constructor(private _actionSheetCtrl: ActionSheetController, private _cdr: ChangeDetectorRef) {}
 
-  getImage(type: any): void {
-    let source = this._camera.PictureSourceType.CAMERA;
+  async getImage(source: CameraSource): Promise<void> {
+    try {
+      let permStatus = await Camera.checkPermissions();
 
-    if (type == 1) source = this._camera.PictureSourceType.SAVEDPHOTOALBUM;
-
-    this._camera
-      .getPicture({
+      const image = await Camera.getPhoto({
         quality: 10,
-        destinationType: this._camera.DestinationType.DATA_URL,
-        sourceType: source,
-        encodingType: this._camera.EncodingType.JPEG,
-        mediaType: this._camera.MediaType.PICTURE,
-      })
-      .then(
-        imageData => {
-          const image = `data:image/jpeg;base64,${imageData}`;
-          this.image$.next(image);
-          this.writeValue(image);
-          this._cdr.detectChanges();
-        },
-        err => {
-          console.log(err);
-        },
-      );
+        resultType: CameraResultType.DataUrl,
+        source,
+        correctOrientation: true,
+      });
+      if (image.dataUrl != null) {
+        this.image$.next(image.dataUrl);
+        this.writeValue(image.dataUrl);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
+    }
   }
 
-  imageSheet(): void {
-    let actionSheet = this._actionSheetCtrl.create({
+  async imageSheet(): Promise<void> {
+    const actionSheet = await this._actionSheetCtrl.create({
       cssClass: 'pap-image-picker-action-sheet',
       buttons: [
         {
@@ -72,18 +60,16 @@ export class ImagePickerComponent implements ControlValueAccessor {
         },
         {
           text: 'Camera',
-          handler: () => this.getImage(0),
+          handler: () => this.getImage(CameraSource.Camera),
         },
         {
           text: 'Galleria',
-          handler: () => this.getImage(1),
+          handler: () => this.getImage(CameraSource.Photos),
         },
       ],
     });
 
-    actionSheet.then(a => {
-      a.present();
-    });
+    await actionSheet.present();
   }
 
   markAsTouched(): void {
