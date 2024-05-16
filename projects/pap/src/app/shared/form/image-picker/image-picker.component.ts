@@ -29,7 +29,10 @@ export class ImagePickerComponent implements ControlValueAccessor {
   onTouched = () => {};
   touched = false;
 
-  constructor(private _actionSheetCtrl: ActionSheetController, private _cdr: ChangeDetectorRef) {}
+  constructor(
+    private _actionSheetCtrl: ActionSheetController,
+    private _cdr: ChangeDetectorRef,
+  ) {}
 
   async getImage(source: CameraSource): Promise<void> {
     try {
