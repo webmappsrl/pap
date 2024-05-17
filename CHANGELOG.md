@@ -2,10 +2,9 @@
 
 ## [2.4.2](https://github.com/webmappsrl/pap/compare/v2.4.1...v2.4.2) (2024-05-16)
 
-
 ### Miscellaneous
 
-* Update gulpfile.ts ([0b9a05d](https://github.com/webmappsrl/pap/commit/0b9a05d21ce08fc874601f82cc4e4af81109d000))
+- Update gulpfile.ts ([0b9a05d](https://github.com/webmappsrl/pap/commit/0b9a05d21ce08fc874601f82cc4e4af81109d000))
 
 ## [2.4.1](https://github.com/webmappsrl/pap/compare/v2.4.0...v2.4.1) (2024-05-16)
 
