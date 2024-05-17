@@ -110,6 +110,7 @@ gulp.task('build', async () => {
     await ionicBuildIos();
     await ionicBuildIAndroid();
     await addPermissionsToAndroidManifest();
+    await modifyStringsXml(config);
     console.log('VERSION: ', version);
     let buildV = buildVersion(version);
     if (config.id === 1) {
@@ -122,11 +123,10 @@ gulp.task('build', async () => {
     await writeFile(paths.devVariablesConfigPath, config.resources.variables);
     await moveFoldersToInstance(paths.instancePath);
 
-    const info = (await readFileContent('./ios-custom/info.plist')) || ''; /* .replace(
-      '<string>PAP</string>',
-      `<string>${config.name}</string>`,
+    const info = ((await readFileContent('./ios-custom/info.plist')) || '').replace(
+      '<string>PortAPPorta</string>',
+      `<string>${config.app_name}</string>`,
     );
-    å*/
     await writeFile(`${paths.instancePath}/ios/App/App/info.plist`, info);
 
     console.log('Build completed successfully.');
@@ -273,8 +273,12 @@ function init(): Promise<void> {
       await execCmd(`rm -rf resources`);
       await execCmd(`rm -rf icons`);
       await execCmd(`npm install --force`);
-      await execCmd(`npx cap add android`);
-      await execCmd(`npx cap add ios`);
+      try {
+        await execCmd(`npx cap add android`);
+        await execCmd(`npx cap add ios`);
+      } catch (e) {
+        console.log(e);
+      }
       // Imposta la variabile di ambiente LANG su en_US.UTF-8
       process.env['LANG'] = 'en_US.UTF-8';
       await execCmd(`cd ios/App && pod install`);
@@ -421,6 +425,48 @@ const addPermissionsToAndroidManifest = (): Promise<void> => {
     }
   });
 };
+async function modifyStringsXml(config: Config): Promise<void> {
+  const stringsPath = './android/app/src/main/res/values/strings.xml';
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const stringsXML = fs.readFileSync(stringsPath, 'utf8');
+      const parser = new xml2js.Parser();
+      parser.parseString(stringsXML, (err, result) => {
+        if (err) {
+          throw err; // Gestisci l'errore di parsing
+        }
+
+        // Modifica l'oggetto JS in base al tuo config
+        result.resources.string.forEach((str: any) => {
+          if (str.$.name === 'app_name') {
+            str._ = config.app_name; // Cambia il nome dell'app
+          }
+          if (str.$.name === 'title_activity_main') {
+            str._ = config.app_name; // Cambia il nome dell'app
+          }
+          if (str.$.name === 'package_name') {
+            str._ = config.sku; // Cambia il nome dell'app
+          }
+          if (str.$.name === 'custom_url_scheme') {
+            str._ = config.sku; // Cambia il nome dell'app
+          }
+        });
+
+        // Converti l'oggetto JS di nuovo in stringa XML
+        const builder = new xml2js.Builder();
+        const updatedXml = builder.buildObject(result);
+
+        // Scrivi il nuovo XML nel file
+        fs.writeFileSync(stringsPath, updatedXml);
+        console.log('strings.xml has been updated successfully.');
+        resolve();
+      });
+    } catch (e) {
+      reject();
+    }
+  });
+}
 const ionicPlathforms = (resources: {icon: string; splash: string}): Promise<void> => {
   return new Promise((resolve, reject) => {
     createFolder('resources');
