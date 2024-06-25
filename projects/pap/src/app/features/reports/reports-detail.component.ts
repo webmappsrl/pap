@@ -68,6 +68,32 @@ export class ReportsDetailComponent {
       .subscribe(res => {});
   }
 
+  deleteTicket(): void {
+    this._alertCtrl.create({
+      cssClass: 'pap-alert',
+      header: 'Cancella Segnalazione',
+      message: 'Sei sicuro di voler cancellare la segnalazione?',
+      buttons: [
+        {
+          text: 'Conferma',
+          role: 'ok',
+          handler: async () => {
+            const ticket: Partial<Ticket> = {id: +this.report.id, status: 'deleted'};
+            this._store.dispatch(updateTicket({data: ticket}));
+            await this._modalCtrl.dismiss();
+          },
+        },
+        {
+          text: 'Annulla',
+        },
+      ]
+    }).then(alert => {
+      alert.present();
+    }).catch(error => {
+      console.error('Error presenting alert:', error);
+    });
+  }
+
   ionViewWillLeave(): void {
     this._lastTicketUpdateSub.unsubscribe();
   }

@@ -175,6 +175,15 @@
         <ion-button (click)="ticketIsDone()">ritiro effettuato</ion-button>
       </ion-item>
     </ion-card-content>
+    <ion-button
+      expand="full"
+      fill="clear"
+      color="danger"
+      (click)="deleteTicket()"
+    >
+    <ion-icon name="trash-outline"></ion-icon>
+    Cancella Segnalazione
+    </ion-button>
   </ion-card>
 </ion-content>
 <ion-footer collapse="fade">
