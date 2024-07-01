@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, ViewEncapsulati
 import {Ticket} from './state/reports.effects';
 import {AppState} from '../../core/core.state';
 import {Store, select} from '@ngrx/store';
-import {isDustyMan} from '../../core/auth/state/auth.selectors';
+import {isDustyMan, isVip} from '../../core/auth/state/auth.selectors';
 import {lastTicketUpdate} from './state/reports.selectors';
 import {AlertController, AlertOptions, ModalController, NavController} from '@ionic/angular';
 import {skip, switchMap} from 'rxjs/operators';
@@ -42,6 +42,7 @@ export class ReportsDetailComponent {
   @Input() report!: Ticket;
 
   isDustyMan$ = this._store.pipe(select(isDustyMan));
+  isVip$ = this._store.pipe(select(isVip));
   lastTicketUpdate$ = this._store.pipe(select(lastTicketUpdate));
 
   constructor(
@@ -108,13 +109,21 @@ export class ReportsDetailComponent {
     this._alertEVT.emit(DELETE);
   }
 
+  getStatusColor(status: string): string {
+    let color: string = "red";
+    if(status === 'execute')
+        color = 'red';
+
+    return color;
+  }
+
   ionViewWillLeave(): void {
     this._lastTicketUpdateSub.unsubscribe();
     this._alertSub.unsubscribe();
   }
 
-  ticketIsDone(): void {
-    const ticket: Partial<Ticket> = {id: +this.report.id, status: 'execute'};
+  ticketIs(status: string): void {
+    const ticket: Partial<Ticket> = {id: +this.report.id, status: status};
     this._store.dispatch(updateTicket({data: ticket}));
   }
 }
