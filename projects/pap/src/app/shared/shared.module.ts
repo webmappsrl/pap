@@ -7,7 +7,7 @@ import {RouterModule} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
-import {TranslateModule} from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CalendarComponent} from './components/calendar/calendar.component';
 import {ErrorFormHandlerComponent} from './error-form-handler/error-form-handler';
 import {FooterComponent} from './footer/footer.component';
@@ -48,6 +48,7 @@ import {addr2StringPipe} from './pipes/addr-2-string.pipe';
 import {AddressSelectorComponent} from './components/address-selector/address-selector.component';
 import {papAddressesFromCalendars} from './pipes/pap-addresses-from-calendars';
 import { PapTimeAgoPipe } from './pipes/pap-time-ago.pipe';
+import { IT } from '../../assets/i18n/it';
 const pipes = [
   InputTypePipe,
   InputPatternPipe,
@@ -100,7 +101,9 @@ const pipes = [
     EffectsModule.forFeature([FormEffects]),
     StoreModule.forFeature(fromSignUp.signUpFeatureKey, fromSignUp.reducer),
     EffectsModule.forFeature([SignUpEffects]),
-    TranslateModule.forRoot(),
+    TranslateModule.forRoot({
+      defaultLanguage: 'it'
+    }),
   ],
   providers: [LocalNotificationService, BroadcastNotificationService],
   exports: [
@@ -136,4 +139,8 @@ const pipes = [
     ...pipes,
   ],
 })
-export class SharedModule {}
+export class SharedModule {
+  constructor(private _translateSvc:TranslateService) {
+    this._translateSvc.setTranslation('it', IT);
+  }
+}

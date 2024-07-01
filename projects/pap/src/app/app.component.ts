@@ -21,8 +21,6 @@ import {LocalNotificationService} from './shared/services/local-notification.ser
 import {Address} from './core/auth/auth.model';
 import {App} from '@capacitor/app';
 import {MissedHouseNumberModal} from './shared/missed-house.number-modal/missed-house-number.modal';
-import {TranslateService} from '@ngx-translate/core';
-import {IT} from '../assets/i18n/it';
 import {yHomes} from './features/home/state/home.actions';
 
 @Component({
@@ -44,9 +42,7 @@ export class AppComponent {
     private _navCtrl: NavController,
     private _alertCtrl: AlertController,
     private _modalCtrl: ModalController,
-    private _translateSvc: TranslateService,
   ) {
-    this._translateSvc.setTranslation('it', IT);
     this._store.dispatch(loadAuths());
     this._store.dispatch(loadTrashBooks());
     this.isLogged$
