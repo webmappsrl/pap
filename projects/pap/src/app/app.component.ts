@@ -24,7 +24,7 @@ import {MissedHouseNumberModal} from './shared/missed-house.number-modal/missed-
 import {TranslateService} from '@ngx-translate/core';
 import {IT} from '../assets/i18n/it';
 import {yHomes} from './features/home/state/home.actions';
-import { loadPushNotification } from './features/push-notification/state/push-notification.actions';
+import {loadPushNotification} from './features/push-notification/state/push-notification.actions';
 
 @Component({
   selector: 'pap-root',
