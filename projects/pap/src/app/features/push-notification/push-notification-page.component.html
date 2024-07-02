@@ -1,0 +1,12 @@
+<ion-header class="pap-calendar-header">
+  <pap-header></pap-header>
+</ion-header>
+<ion-content>
+  <ng-container *ngIf="pushNotifications$|async as pushNotifications">
+    <ion-list>
+      <ion-item *ngFor="let pn of pushNotifications">
+        <ion-label>{{pn.title}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+</ion-content>

@@ -80,6 +80,11 @@ const routes: Routes = [
     loadChildren: () => import('./features/calendar/calendar.module').then(m => m.CalendarModule),
   },
   {
+    path: 'push-notification',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./features/push-notification/push-notification.module').then(m => m.PushNotificationModule),
+  },
+  {
     path: 'reports',
     canActivate: [AuthGuard],
     loadChildren: () => import('./features/reports/reports.module').then(m => m.ReportsModule),
