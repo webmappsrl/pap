@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {AlertController, AlertOptions, ModalController, NavController} from '@ionic/angular';
+import {AlertController, AlertOptions, ModalController, NavController, Platform} from '@ionic/angular';
 import {environment as env} from 'projects/pap/src/environments/environment';
 import {Store, select} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable, from} from 'rxjs';
 import {filter, skip, switchMap, take} from 'rxjs/operators';
 import {loadAuths} from './core/auth/state/auth.actions';
 import {
@@ -24,7 +24,7 @@ import {MissedHouseNumberModal} from './shared/missed-house.number-modal/missed-
 import {TranslateService} from '@ngx-translate/core';
 import {IT} from '../assets/i18n/it';
 import {yHomes} from './features/home/state/home.actions';
-import {loadPushNotification} from './features/push-notification/state/push-notification.actions';
+import {getDeliveredNotification, loadPushNotification} from './features/push-notification/state/push-notification.actions';
 
 @Component({
   selector: 'pap-root',
@@ -36,6 +36,7 @@ export class AppComponent {
   isLogged$ = this._store.pipe(select(isLogged));
   noAddress$: Observable<boolean> = this._store.select(noAddress);
   noHouseNumber$: Observable<Address[] | undefined> = this._store.select(noHouseNumber);
+  platformReady$ = from(this._platform.ready());
   userRoles$ = this._store.pipe(select(userRoles));
 
   constructor(
@@ -46,6 +47,7 @@ export class AppComponent {
     private _alertCtrl: AlertController,
     private _modalCtrl: ModalController,
     private _translateSvc: TranslateService,
+    private _platform: Platform
   ) {
     this._translateSvc.setTranslation('it', IT);
     this._store.dispatch(loadAuths());
@@ -174,6 +176,15 @@ export class AppComponent {
       } else {
         this._navCtrl.navigateRoot('/home');
       }
+    });
+
+    this.platformReady$.subscribe(() => {
+      App.addListener('appStateChange', ({ isActive }) => {
+        if (isActive) {
+          // App has resumed
+          this._store.dispatch(getDeliveredNotification());
+        }
+      });
     });
   }
 }
