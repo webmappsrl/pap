@@ -12,8 +12,11 @@ import {
   loadTickets,
 } from '../../features/dusty-man-reports/state/reports.actions';
 import {selectReports} from '../../features/dusty-man-reports/state/reports.selectors';
-import { getDeliveredNotification, loadPushNotification } from '../../features/push-notification/state/push-notification.actions';
-import { Observable, from } from 'rxjs';
+import {
+  getDeliveredNotification,
+  loadPushNotification,
+} from '../../features/push-notification/state/push-notification.actions';
+import {Observable, from} from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -50,11 +53,10 @@ export class BroadcastNotificationService {
             );
             console.log('Push notification action performed', JSON.stringify(notification));
             const jsonDataString = notification.notification.data['gcm.notification.data'];
-            if(!jsonDataString){
+            if (!jsonDataString) {
               this._store.dispatch(loadPushNotification());
               this._router.navigate(['/push-notification']);
-            }
-            else{
+            } else {
               const jsonData = JSON.parse(jsonDataString);
               const ticketId = jsonData.ticket_id ?? null;
               this.userRoles$.pipe(take(1)).subscribe(roles => {
@@ -84,11 +86,11 @@ export class BroadcastNotificationService {
 
   getDeliveredNotifications(): Observable<DeliveredNotifications> {
     return from(PushNotifications.getDeliveredNotifications()).pipe(
-      map((listNotifications:DeliveredNotifications) => {
+      map((listNotifications: DeliveredNotifications) => {
         console.log('service getDeliveredNotifications', listNotifications);
-        return listNotifications
-      })
-    )
+        return listNotifications;
+      }),
+    );
   }
 
   async getFcmToken(): Promise<void> {
