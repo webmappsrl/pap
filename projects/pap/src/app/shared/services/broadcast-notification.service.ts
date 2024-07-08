@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Capacitor} from '@capacitor/core';
-import {PushNotifications} from '@capacitor/push-notifications';
+import {DeliveredNotifications, PushNotifications} from '@capacitor/push-notifications';
 import {Store, select} from '@ngrx/store';
-import {filter, take} from 'rxjs/operators';
+import {filter, map, take} from 'rxjs/operators';
 import {isLogged, userRoles} from '../../core/auth/state/auth.selectors';
 import {AuthService} from '../../core/auth/state/auth.service';
 import {AppState} from '../../core/core.state';
@@ -12,6 +12,8 @@ import {
   loadTickets,
 } from '../../features/dusty-man-reports/state/reports.actions';
 import {selectReports} from '../../features/dusty-man-reports/state/reports.selectors';
+import { getDeliveredNotification, loadPushNotification } from '../../features/push-notification/state/push-notification.actions';
+import { Observable, from } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -35,6 +37,8 @@ export class BroadcastNotificationService {
           await this._registerNotifications();
           await PushNotifications.addListener('pushNotificationReceived', notification => {
             console.log('Push notification received: ', JSON.stringify(notification));
+            this._store.dispatch(loadPushNotification());
+            this._store.dispatch(getDeliveredNotification());
             this._store.dispatch(loadTickets());
           });
 
@@ -46,19 +50,26 @@ export class BroadcastNotificationService {
             );
             console.log('Push notification action performed', JSON.stringify(notification));
             const jsonDataString = notification.notification.data['gcm.notification.data'];
-            const jsonData = JSON.parse(jsonDataString);
-            const ticketId = jsonData.ticket_id ?? null;
-            this.userRoles$.pipe(take(1)).subscribe(roles => {
-              if (roles.includes('dusty_man')) {
-                this._store.dispatch(loadTickets());
-                setTimeout(() => {
-                  this.selectReports$.pipe(take(1)).subscribe(d => {
-                    this._store.dispatch(selectTicketById({id: ticketId}));
-                    this._router.navigate(['/dusty-man-reports', ticketId]);
-                  });
-                }, 1500);
-              }
-            });
+            if(!jsonDataString){
+              this._store.dispatch(loadPushNotification());
+              this._router.navigate(['/push-notification']);
+            }
+            else{
+              const jsonData = JSON.parse(jsonDataString);
+              const ticketId = jsonData.ticket_id ?? null;
+              this.userRoles$.pipe(take(1)).subscribe(roles => {
+                if (roles.includes('dusty_man')) {
+                  this._store.dispatch(loadTickets());
+                  setTimeout(() => {
+                    this.selectReports$.pipe(take(1)).subscribe(d => {
+                      this._store.dispatch(selectTicketById({id: ticketId}));
+                      this._router.navigate(['/dusty-man-reports', ticketId]);
+                    });
+                  }, 1500);
+                }
+              });
+            }
+            this._store.dispatch(getDeliveredNotification());
           });
           await PushNotifications.addListener('registration', token => {
             console.info('Registration token: ', token.value);
@@ -67,9 +78,17 @@ export class BroadcastNotificationService {
           await PushNotifications.addListener('registrationError', err => {
             console.error('Registration error: ', err.error);
           });
-          this._getDeliveredNotifications();
         });
     }
+  }
+
+  getDeliveredNotifications(): Observable<DeliveredNotifications> {
+    return from(PushNotifications.getDeliveredNotifications()).pipe(
+      map((listNotifications:DeliveredNotifications) => {
+        console.log('service getDeliveredNotifications', listNotifications);
+        return listNotifications
+      })
+    )
   }
 
   async getFcmToken(): Promise<void> {
@@ -79,11 +98,8 @@ export class BroadcastNotificationService {
     });
   }
 
-  private async _getDeliveredNotifications(): Promise<void> {
-    try {
-      const notificationList = await PushNotifications.getDeliveredNotifications();
-      console.log('delivered notifications', notificationList);
-    } catch (e) {}
+  removeAllDeliveredNotifications(): Observable<void> {
+    return from(PushNotifications.removeAllDeliveredNotifications());
   }
 
   private async _registerNotifications(): Promise<void> {
