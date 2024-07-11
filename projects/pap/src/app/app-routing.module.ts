@@ -82,7 +82,10 @@ const routes: Routes = [
   {
     path: 'push-notification',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./features/push-notification/push-notification.module').then(m => m.PushNotificationModule),
+    loadChildren: () =>
+      import('./features/push-notification/push-notification.module').then(
+        m => m.PushNotificationModule,
+      ),
   },
   {
     path: 'reports',

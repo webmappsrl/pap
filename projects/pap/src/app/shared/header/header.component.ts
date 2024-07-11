@@ -17,7 +17,7 @@ import {buttonAction} from '../../features/home/home.model';
 import {selectHomeState} from '../../features/home/state/home.selectors';
 import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {selectHeaderState} from './state/header.selectors';
-import { deliveredNotifications } from '../../features/push-notification/state/push-notification.selectors';
+import {deliveredNotifications} from '../../features/push-notification/state/push-notification.selectors';
 
 interface ActionEvt {
   action: string;
@@ -51,7 +51,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     private _navCtrl: NavController,
     private _menuCtrl: MenuController,
     private _modalCtrl: ModalController,
-    private _cdr: ChangeDetectorRef
+    private _cdr: ChangeDetectorRef,
   ) {
     this._store.dispatch(loadHeaders());
 
@@ -82,10 +82,10 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this._deliveredNotificationSub = this.deliveredNotifications$.subscribe((dnotifications)=>{
-      this.hasDeliveredNotifications$.next(dnotifications&&dnotifications.length>0||false);
+    this._deliveredNotificationSub = this.deliveredNotifications$.subscribe(dnotifications => {
+      this.hasDeliveredNotifications$.next((dnotifications && dnotifications.length > 0) || false);
       this._cdr.detectChanges();
-    })
+    });
   }
 
   ngOnDestroy(): void {

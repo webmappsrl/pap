@@ -1,5 +1,5 @@
 export interface PushNotification {
-  company_id: number
+  company_id: number;
   created_at: Date;
   id: number;
   message: string;

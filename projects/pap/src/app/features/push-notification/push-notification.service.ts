@@ -4,7 +4,7 @@ import {environment as env} from 'projects/pap/src/environments/environment';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SuccessData} from '../../shared/form/model';
-import { PushNotification } from './push-notification.model';
+import {PushNotification} from './push-notification.model';
 
 @Injectable({
   providedIn: 'root',

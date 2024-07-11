@@ -1,7 +1,15 @@
 import {createReducer, on} from '@ngrx/store';
-import { PushNotification } from '../push-notification.model';
-import { getDeliveredNotificationFailure, getDeliveredNotificationSuccess, loadPushNotification, loadPushNotificationFailure, loadPushNotificationSuccess, removeAllDeliveredNotificationsFailure, removeAllDeliveredNotificationsSuccess } from './push-notification.actions';
-import { PushNotificationSchema } from '@capacitor/push-notifications';
+import {PushNotification} from '../push-notification.model';
+import {
+  getDeliveredNotificationFailure,
+  getDeliveredNotificationSuccess,
+  loadPushNotification,
+  loadPushNotificationFailure,
+  loadPushNotificationSuccess,
+  removeAllDeliveredNotificationsFailure,
+  removeAllDeliveredNotificationsSuccess,
+} from './push-notification.actions';
+import {PushNotificationSchema} from '@capacitor/push-notifications';
 
 export const pushNotificationFeatureKey = 'push-notification';
 
@@ -14,33 +22,33 @@ export interface PushNotificationState {
 export const initialState: PushNotificationState = {
   error: '',
   deliveredNotifications: [],
-  pushNotifications:[]
+  pushNotifications: [],
 };
 
 export const reducer = createReducer(
   initialState,
   on(loadPushNotification, state => state),
-  on(loadPushNotificationSuccess, (state, { pushNotifications }) => ({
+  on(loadPushNotificationSuccess, (state, {pushNotifications}) => ({
     ...state,
     pushNotifications,
   })),
-  on(loadPushNotificationFailure, (state, { error }) => ({
-    ...state,
-    error
-  })),
-  on(getDeliveredNotificationSuccess, (state, { deliveredNotifications }) => ({
-    ...state,
-    deliveredNotifications: deliveredNotifications.notifications
-  })),
-  on(getDeliveredNotificationFailure, (state, { error }) => ({
+  on(loadPushNotificationFailure, (state, {error}) => ({
     ...state,
     error,
   })),
-  on(removeAllDeliveredNotificationsSuccess, (state) => ({
+  on(getDeliveredNotificationSuccess, (state, {deliveredNotifications}) => ({
     ...state,
-    deliveredNotifications: []
+    deliveredNotifications: deliveredNotifications.notifications,
   })),
-  on(removeAllDeliveredNotificationsFailure, (state, { error }) => ({
+  on(getDeliveredNotificationFailure, (state, {error}) => ({
+    ...state,
+    error,
+  })),
+  on(removeAllDeliveredNotificationsSuccess, state => ({
+    ...state,
+    deliveredNotifications: [],
+  })),
+  on(removeAllDeliveredNotificationsFailure, (state, {error}) => ({
     ...state,
     error,
   })),

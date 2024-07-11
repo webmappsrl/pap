@@ -18,8 +18,8 @@ import {LayoutComponent} from './layout/layout.component';
 import {LayoutEffects} from './layout/state/layout.effects';
 import {CalendarEffects} from '../features/calendar/state/calendar.effects';
 import {MapEffects} from '../shared/map/state/map.effects';
-import { PushNotificationEffects } from '../features/push-notification/state/push-notification.effects';
-import * as fromPushnotification from '../features/push-notification/state/push-notification.reducer'
+import {PushNotificationEffects} from '../features/push-notification/state/push-notification.effects';
+import * as fromPushnotification from '../features/push-notification/state/push-notification.reducer';
 @NgModule({
   declarations: [LayoutComponent],
   imports: [
@@ -37,8 +37,17 @@ import * as fromPushnotification from '../features/push-notification/state/push-
     StoreModule.forFeature(fromTrashBook.trashBookFeatureKey, fromTrashBook.reducer),
     StoreModule.forFeature(fromMap.mapFeatureKey, fromMap.reducer),
     StoreModule.forFeature(fromMap.mapFeatureKey, fromMap.reducer),
-    StoreModule.forFeature(fromPushnotification.pushNotificationFeatureKey, fromPushnotification.reducer),
-    EffectsModule.forRoot([LayoutEffects, TrashBookEffects, MapEffects, CalendarEffects, PushNotificationEffects]),
+    StoreModule.forFeature(
+      fromPushnotification.pushNotificationFeatureKey,
+      fromPushnotification.reducer,
+    ),
+    EffectsModule.forRoot([
+      LayoutEffects,
+      TrashBookEffects,
+      MapEffects,
+      CalendarEffects,
+      PushNotificationEffects,
+    ]),
     IonicModule.forRoot({
       rippleEffect: false,
       mode: 'md',
