@@ -1,0 +1,26 @@
+<ion-header class="pap-calendar-header">
+  <pap-header></pap-header>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Le mie notifiche</ion-card-title>
+    </ion-card-header>
+    <ng-container *ngIf="pushNotifications$|async as pushNotifications">
+      <ion-accordion-group value="{{firstNotificationId$|async}}">
+        <ion-accordion *ngFor="let pn of pushNotifications" value="{{pn.id}}">
+          <ion-item slot="header" color="light">
+            <ion-label>
+              <div>{{pn.schedule_date ? pn.schedule_date : pn.created_at|date:'dd/MM/yyyy hh:mm a'}}</div>
+              <div>{{pn.title}}</div>
+            </ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">{{pn.message}}</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ng-container>
+  </ion-card>
+</ion-content>
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>

@@ -19,6 +19,10 @@
       <img *ngIf="view.img" class="pap-header-img" src="{{view.img}}" />
     </ion-title>
     <ion-buttons class="pap-header-buttons" slot="end" *ngIf="endButton" color="light">
+      <ion-button class="pap-header-button" *ngIf="isLogged$|async" (click)="action('navigation', 'push-notification')">
+        <ion-icon slot="icon-only" size="large" color="light" name="notifications-circle-outline"></ion-icon>
+        <span *ngIf="hasDeliveredNotifications$ | async" class="badge-notification"></span>
+      </ion-button>
       <ion-button class="pap-header-button" (click)="action('navigation','settings')">
         <ng-container *ngIf="(isLogged$|async)===false">
           <ion-icon slot="icon-only" name="log-in-outline" size="large" color="light"></ion-icon>

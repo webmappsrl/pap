@@ -1,0 +1,12 @@
+pap-push-notification-page{
+  ion-card{
+    ion-accordion-group{
+      ion-label{
+        > div:nth-of-type(1){
+          color: var(--ion-color-medium);
+          font-size: .75em;
+        }
+      }
+    }
+  }
+}
