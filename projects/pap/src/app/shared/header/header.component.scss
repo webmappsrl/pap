@@ -18,7 +18,7 @@
     --color: var(--ion-color-primary-contrast);
     font-size: 1.3rem;
   }
-  .pap-header-button {
+  ion-button[class^='pap-header-button'] {
     margin-right: -20px !important;
     width: 65px !important;
     span{

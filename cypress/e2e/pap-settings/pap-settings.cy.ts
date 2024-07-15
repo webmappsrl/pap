@@ -59,7 +59,7 @@ before(() => {
 
 describe('pap-settings: test the correct behaviour of firstStep tab', () => {
   it('should navigate to /settings after login', () => {
-    cy.get('.pap-header-button').click();
+    cy.get('.pap-header-button-setting').click();
     cy.url().should('include', '/settings');
   });
 

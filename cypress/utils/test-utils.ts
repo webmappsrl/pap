@@ -37,7 +37,7 @@ export function e2eLogin(
   email = Cypress.env(email);
   const apiLogin = `${environment.api}/login`;
   cy.intercept('POST', apiLogin).as('loginRequest');
-  cy.get('.pap-header-button').click();
+  cy.get('.pap-header-button-setting').click();
   cy.get('ion-alert').should('be.visible');
   cy.get('.alert-button-role-sign-in').click();
   cy.url().should('include', '/sign-in');
