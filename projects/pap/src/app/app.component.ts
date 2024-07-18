@@ -34,7 +34,7 @@ import {
   getDeliveredNotification,
   loadPushNotification,
 } from './features/push-notification/state/push-notification.actions';
-import { loadFormJson } from './shared/form/state/form-fields.actions';
+import {loadFormJson} from './shared/form/state/form-fields.actions';
 
 @Component({
   selector: 'pap-root',
