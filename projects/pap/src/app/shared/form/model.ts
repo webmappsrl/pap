@@ -13,6 +13,16 @@ export type TicketFieldTypes =
   | 'house_number';
 export type TicketType = 'reservation' | 'info' | 'abandonment' | 'report';
 
+export interface FormJson {
+  customValidator?: { name: string, args: any[] };
+  id: string;
+  label?: string;
+  placeholder?: string;
+  step: number;
+  type: string;
+  validators?: { name: string, value?: any }[];
+}
+
 export interface SuccessData<T> {
   data: T;
   message: string;
