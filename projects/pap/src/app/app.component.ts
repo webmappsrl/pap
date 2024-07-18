@@ -34,6 +34,7 @@ import {
   getDeliveredNotification,
   loadPushNotification,
 } from './features/push-notification/state/push-notification.actions';
+import { loadFormJson } from './shared/form/state/form-fields.actions';
 
 @Component({
   selector: 'pap-root',
@@ -61,6 +62,7 @@ export class AppComponent {
     this._translateSvc.setTranslation('it', IT);
     this._store.dispatch(loadAuths());
     this._store.dispatch(loadTrashBooks());
+    this._store.dispatch(loadFormJson());
     this.isLogged$
       .pipe(
         filter(l => l),
