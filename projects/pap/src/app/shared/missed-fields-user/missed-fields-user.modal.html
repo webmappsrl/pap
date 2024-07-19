@@ -1,0 +1,47 @@
+<ion-header><pap-header></pap-header></ion-header>
+<ion-content class="ion-padding">
+  <ion-label>per favore inserisci i seguenti campi mancanti</ion-label>
+  <form [formGroup]="missedForm">
+
+    <ion-list lines="inset">
+      <ng-container *ngIf="fields$ | async as formJson">
+        <ng-container *ngFor="let formField of formJson">
+          <ng-container *ngIf="formField.type !== 'group'">
+            <ion-item>
+              <ion-label position="stacked">
+                {{ formField.label }}
+                <span *ngIf="isRequired(formField)"> * </span>
+              </ion-label>
+              <ion-input
+                [type]="formField.type"
+                [formControlName]="formField.id"
+                [placeholder]="formField.placeholder">
+              </ion-input>
+            </ion-item>
+            <ion-item *ngIf="missedForm.get(formField.id) != null && !missedForm.get(formField.id)!.valid">
+              <pap-error-form-handler [errors]="missedForm.get(formField.id)!.errors"></pap-error-form-handler>
+            </ion-item>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ion-list>
+
+    <div class="pap-location-modal-buttons">
+      <ion-buttons slot="end">
+        <ion-button
+          (click)="save()"
+          [strong]="true"
+          [disabled]="missedForm.invalid"
+          color="primary"
+          shape="round"
+          fill="solid"
+          >Salva</ion-button
+        >
+      </ion-buttons>
+    </div>
+  </form>
+</ion-content>
+
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>
