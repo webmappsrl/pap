@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 import { FormJson } from '../model';
 import { Store } from '@ngrx/store';
 import { selectFormJsonByStep } from '../state/form-fields.selectors';
-import { isFieldRequired } from '../../../features/sign-up/sign-up.component';
+import { FormJsonService } from '../state/form-fields.service';
 
 @Component({
   template: `
@@ -86,9 +86,9 @@ export class secondStepSignupComponent {
   formJson$: Observable<FormJson[] | undefined> = this._store.select(selectFormJsonByStep(2));
   secondStep: UntypedFormGroup = this._formProvider.getForm().get('secondStep') as UntypedFormGroup;
 
-  constructor(private _formProvider: FormProvider, private _store: Store) {}
+  constructor(private _formProvider: FormProvider, private _store: Store, private _formJsonSvc: FormJsonService) {}
 
   isRequired(field: FormJson): boolean{
-    return isFieldRequired(field)
+    return this._formJsonSvc.isFieldRequired(field)
   }
 }

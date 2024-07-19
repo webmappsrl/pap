@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 import { FormJson } from '../model';
 import { Store } from '@ngrx/store';
 import { selectFormJsonByStep } from '../state/form-fields.selectors';
-import { isFieldRequired } from '../../../features/sign-up/sign-up.component';
+import { FormJsonService } from '../state/form-fields.service';
 
 @Component({
   selector: 'pap-first-step-signup-form',
@@ -29,10 +29,10 @@ export class firstStepSignupComponent implements OnInit {
   firstStep: UntypedFormGroup;
   formJson$: Observable<FormJson[] | undefined> = this._store.select(selectFormJsonByStep(1));
 
-  constructor(private _parent: FormGroupDirective, private _store: Store) {}
+  constructor(private _parent: FormGroupDirective, private _store: Store, private _formJsonSvc: FormJsonService) {}
 
   isRequired(field: FormJson): boolean{
-    return isFieldRequired(field)
+    return this._formJsonSvc.isFieldRequired(field);
   }
 
   ngOnInit(): void {
