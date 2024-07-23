@@ -9,8 +9,8 @@ import {AppState} from '../../core/core.state';
 import {FormProvider} from '../../shared/form/form-provider';
 import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 import {loadConfiniZone} from '../../shared/map/state/map.actions';
-import { selectFormJsonByStep } from '../../shared/form/state/form-fields.selectors';
-import { FormJsonService } from '../../shared/form/state/form-fields.service';
+import { selectFormJsonByStep } from '../../shared/form/state/company.selectors';
+import { FormCustomService } from '../../shared/form/state/form-custom.service';
 
 @Component({
   selector: 'pap-sign-up',
@@ -27,17 +27,15 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
   step$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   constructor(
-    public fb: UntypedFormBuilder,
+    fb: UntypedFormBuilder,
     private _store: Store<AppState>,
     private _navCtrl: NavController,
-    private _formJsonSvc: FormJsonService,
+    private _formCustomSvc: FormCustomService
   ) {
     super();
     this._store.dispatch(loadConfiniZone());
     this._store.dispatch(loadUserTypes());
     this.signUpForm = fb.group({
-      firstStep: this.fb.group({}),
-      secondStep: this.fb.group({}),
       thirdStep: fb.group({
         address: ['', [Validators.required]],
         city: ['', [Validators.required]],
@@ -49,16 +47,14 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
     });
 
     this._store.select(selectFormJsonByStep(1)).pipe(take(1)).subscribe(formJson => {
-      console.log('subscribe step 1: ', formJson);
       if (formJson) {
-        const firstStep = this._formJsonSvc.createForm(fb, formJson);
+        const firstStep = this._formCustomSvc.createForm(fb, formJson);
         this.signUpForm.setControl('firstStep', firstStep);
       }
     })
     this._store.select(selectFormJsonByStep(2)).pipe(take(1)).subscribe(formJson => {
-      console.log('subscribe step 2: ', formJson);
       if (formJson) {
-        const secondStep = this._formJsonSvc.createForm(fb, formJson);
+        const secondStep = this._formCustomSvc.createForm(fb, formJson);
         this.signUpForm.setControl('secondStep', secondStep);
       }
     })
