@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { FormJson } from "../model";
-import { UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from "@angular/forms";
-import { ConfirmedValidator } from "../../../features/sign-up/sign-up.component";
+import {Injectable} from '@angular/core';
+import {FormJson} from '../model';
+import {UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {ConfirmedValidator} from '../../../features/sign-up/sign-up.component';
 
 @Injectable({
   providedIn: 'root',
@@ -30,17 +30,17 @@ export class FormCustomService {
     return field.validators?.some(validator => validator.name === 'required') ?? false;
   }
 
-  private _getCustomValidator(customValidator: { name: string, args: string[] }) {
+  private _getCustomValidator(customValidator: {name: string; args: string[]}) {
     switch (customValidator.name) {
       case 'confirmedValidator':
         return ConfirmedValidator(customValidator.args[0], customValidator.args[1]);
       default:
-        return ConfirmedValidator(customValidator.args[0], customValidator.args[1]);;
+        return ConfirmedValidator(customValidator.args[0], customValidator.args[1]);
     }
   }
 
   private _getValidators(field: FormJson): ValidatorFn[] {
-    const validators:  ValidatorFn[] = [];
+    const validators: ValidatorFn[] = [];
     if (field.validators) {
       field.validators.forEach(validator => {
         switch (validator.name) {
