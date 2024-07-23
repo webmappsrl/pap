@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { FormJson } from "../model";
-import { UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from "@angular/forms";
-import { ConfirmedValidator } from "../../../features/sign-up/sign-up.component";
-import { User } from "../../../core/auth/auth.model";
+import {Injectable} from '@angular/core';
+import {FormJson} from '../model';
+import {UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {ConfirmedValidator} from '../../../features/sign-up/sign-up.component';
+import {User} from '../../../core/auth/auth.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormCustomService {
-  createForm(fb: UntypedFormBuilder, formFields: FormJson[], user?: User ): UntypedFormGroup {
+  createForm(fb: UntypedFormBuilder, formFields: FormJson[], user?: User): UntypedFormGroup {
     const formGroup = fb.group({});
     formFields.forEach(field => {
       if (field.type !== 'group') {
