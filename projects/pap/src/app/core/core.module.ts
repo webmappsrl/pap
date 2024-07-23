@@ -20,8 +20,8 @@ import {CalendarEffects} from '../features/calendar/state/calendar.effects';
 import {MapEffects} from '../shared/map/state/map.effects';
 import {PushNotificationEffects} from '../features/push-notification/state/push-notification.effects';
 import * as fromPushnotification from '../features/push-notification/state/push-notification.reducer';
-import { FormJsonEffects } from '../shared/form/state/form-fields.effects';
-import * as fromFormJson from '../shared/form/state/form-fields.reducer';
+import { CompanyEffects } from '../shared/form/state/company.effects';
+import * as fromCompany from '../shared/form/state/company.reducer';
 @NgModule({
   declarations: [LayoutComponent],
   imports: [
@@ -44,8 +44,8 @@ import * as fromFormJson from '../shared/form/state/form-fields.reducer';
       fromPushnotification.reducer,
     ),
     StoreModule.forFeature(
-      fromFormJson.formJsonFeatureKey,
-      fromFormJson.formJsonReducer,
+      fromCompany.companyFeatureKey,
+      fromCompany.reducer,
     ),
     EffectsModule.forRoot([
       LayoutEffects,
@@ -53,7 +53,7 @@ import * as fromFormJson from '../shared/form/state/form-fields.reducer';
       MapEffects,
       CalendarEffects,
       PushNotificationEffects,
-      FormJsonEffects
+      CompanyEffects
     ]),
     IonicModule.forRoot({
       rippleEffect: false,

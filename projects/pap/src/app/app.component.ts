@@ -37,7 +37,7 @@ import {
 } from './features/push-notification/state/push-notification.actions';
 import {MissedFieldsUserModal} from './shared/missed-fields-user/missed-fields-user.modal';
 import {FormJson} from './shared/form/model';
-import {loadFormJson} from './shared/form/state/form-fields.actions';
+import {loadFormJson} from './shared/form/state/company.actions';
 
 @Component({
   selector: 'pap-root',

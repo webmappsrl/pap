@@ -1,7 +1,7 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import * as fromAuth from './auth.reducer';
 import {Role} from '../auth.model';
-import { selectRequiredFields } from '../../../shared/form/state/form-fields.selectors';
+import { selectRequiredFields } from '../../../shared/form/state/company.selectors';
 
 export const selectAuthState = createFeatureSelector<fromAuth.AuthState>(fromAuth.authFeatureKey);
 export const isLogged = createSelector(selectAuthState, state => state != null && state.isLogged);

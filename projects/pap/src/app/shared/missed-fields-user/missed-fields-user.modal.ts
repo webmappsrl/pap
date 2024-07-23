@@ -4,11 +4,11 @@ import {User} from '../../core/auth/auth.model';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import { FormJson } from '../form/model';
-import { FormJsonService } from '../form/state/form-fields.service';
 import { select, Store } from '@ngrx/store';
 import { UpdateUser, UpdateUserSuccess } from '../../core/auth/state/auth.actions';
 import { user } from '../../core/auth/state/auth.selectors';
 import { Actions, ofType } from '@ngrx/effects';
+import { FormCustomService } from '../form/state/form-custom.service';
 
 @Component({
   selector: 'pap-missed-fields-user-modal',
@@ -22,7 +22,7 @@ export class MissedFieldsUserModal {
 
   @Input() set fields(formFields: FormJson[]){
     this.fields$.next(formFields);
-    this.missedForm = this._formJsonSvc.createForm(this._fb, formFields);
+    this.missedForm = this._formCustomSvc.createForm(this._fb, formFields);
   }
 
   fields$: BehaviorSubject<FormJson[]> = new BehaviorSubject<FormJson[]>([]);
@@ -31,7 +31,7 @@ export class MissedFieldsUserModal {
 
   constructor(
     private _fb: UntypedFormBuilder,
-    private _formJsonSvc: FormJsonService,
+    private _formCustomSvc: FormCustomService,
     private _store: Store,
     private _modalCtrl: ModalController,
     private _actions: Actions
@@ -44,7 +44,7 @@ export class MissedFieldsUserModal {
   }
 
   isRequired(field: FormJson): boolean{
-    return this._formJsonSvc.isFieldRequired(field)
+    return this._formCustomSvc.isFieldRequired(field)
   }
 
   ngOnDestroy(): void {

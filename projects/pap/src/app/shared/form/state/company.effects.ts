@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { loadFormJson, loadFormJsonFailure, loadFormJsonSuccess } from "./form-fields.actions";
+import { loadFormJson, loadFormJsonFailure, loadFormJsonSuccess } from "./company.actions";
 import { catchError, map, mergeMap } from "rxjs/operators";
 import { of } from "rxjs";
-import { FormJsonService } from "./form-fields.service";
+import { CompanyService } from "./company.service";
 
 @Injectable()
-export class FormJsonEffects {
+export class CompanyEffects {
   loadFormJson$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadFormJson),
       mergeMap(() =>
-        this._formJsonSvc.getFormJson().pipe(
+        this._companySvc.getFormJson().pipe(
           map(formJson => loadFormJsonSuccess({formJson})),
           catchError(error => of(loadFormJsonFailure({error: error.message}))),
         )
@@ -19,5 +19,5 @@ export class FormJsonEffects {
     );
   });
 
-  constructor(private actions$: Actions, private _formJsonSvc: FormJsonService) {}
+  constructor(private actions$: Actions, private _companySvc: CompanyService) {}
 }

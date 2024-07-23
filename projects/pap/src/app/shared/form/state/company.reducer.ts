@@ -1,20 +1,20 @@
 import { createReducer, on } from "@ngrx/store";
 import { FormJson } from "../model";
-import { loadFormJson, loadFormJsonFailure, loadFormJsonSuccess } from "./form-fields.actions";
+import { loadFormJson, loadFormJsonFailure, loadFormJsonSuccess } from "./company.actions";
 
-export const formJsonFeatureKey = 'formJson';
+export const companyFeatureKey = 'company';
 
-export interface FormJsonState {
+export interface CompanyState {
   error?: string;
   formJson?: FormJson[];
   loading: boolean;
 }
 
-export const initialState: FormJsonState = {
+export const initialState: CompanyState = {
   loading: false,
 };
 
-export const formJsonReducer = createReducer(
+export const reducer = createReducer(
   initialState,
   on(loadFormJson, state => ({
     ...state,

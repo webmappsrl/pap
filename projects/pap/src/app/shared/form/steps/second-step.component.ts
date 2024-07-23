@@ -11,8 +11,8 @@ import {FormProvider} from '../form-provider';
 import { Observable } from 'rxjs';
 import { FormJson } from '../model';
 import { Store } from '@ngrx/store';
-import { selectFormJsonByStep } from '../state/form-fields.selectors';
-import { FormJsonService } from '../state/form-fields.service';
+import { selectFormJsonByStep } from '../state/company.selectors';
+import { FormCustomService } from '../state/form-custom.service';
 
 @Component({
   template: `
@@ -86,9 +86,9 @@ export class secondStepSignupComponent {
   formJson$: Observable<FormJson[] | undefined> = this._store.select(selectFormJsonByStep(2));
   secondStep: UntypedFormGroup = this._formProvider.getForm().get('secondStep') as UntypedFormGroup;
 
-  constructor(private _formProvider: FormProvider, private _store: Store, private _formJsonSvc: FormJsonService) {}
+  constructor(private _formProvider: FormProvider, private _store: Store, private _formCustomSvc: FormCustomService) {}
 
   isRequired(field: FormJson): boolean{
-    return this._formJsonSvc.isFieldRequired(field)
+    return this._formCustomSvc.isFieldRequired(field)
   }
 }
