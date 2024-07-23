@@ -1,18 +1,12 @@
 import { Injectable } from "@angular/core";
-import { FormJson, SuccessData } from "../model";
-import { Observable } from "rxjs";
-import {environment as env} from 'projects/pap/src/environments/environment';
-import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import { FormJson } from "../model";
 import { UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { ConfirmedValidator } from "../../../features/sign-up/sign-up.component";
 
 @Injectable({
   providedIn: 'root',
 })
-export class FormJsonService {
-  constructor(private _http: HttpClient) {}
-
+export class FormCustomService {
   createForm(fb: UntypedFormBuilder, formFields: FormJson[]): UntypedFormGroup {
     const formGroup = fb.group({});
     formFields.forEach(field => {
@@ -30,14 +24,6 @@ export class FormJsonService {
     });
 
     return formGroup;
-  }
-
-  getFormJson(): Observable<FormJson[]> {
-    return (
-      this._http.get(`${env.api}/c/${env.companyId}/form_json`) as Observable<
-        SuccessData<FormJson[]>
-      >
-    ).pipe(map(r => r.data));
   }
 
   isFieldRequired(field: FormJson): boolean {
