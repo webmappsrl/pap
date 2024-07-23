@@ -33,6 +33,8 @@ import {settingView} from './state/settings.selectors';
 import {SettingsService} from './state/settings.service';
 import {Zone} from '../../shared/form/location/location.model';
 import {User} from '../../core/auth/auth.model';
+import { FormCustomService } from '../../shared/form/state/form-custom.service';
+import { selectFormJsonByStep } from '../../shared/form/state/company.selectors';
 
 const DELETE: AlertOptions = {
   cssClass: 'pap-alert',
@@ -112,6 +114,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private _settingsSvc: SettingsService,
     private _cdr: ChangeDetectorRef,
     private _route: ActivatedRoute,
+    private _formCustomSvc: FormCustomService,
     fb: UntypedFormBuilder,
   ) {
     const urlSegments = this._route.snapshot.url.map(segment => segment.path);
@@ -119,8 +122,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.initStep = 'thirdStep';
       this.currentStep$.next('thirdStep');
     }
-    this._settingsFormSub = this.settingsView$.subscribe(sv => {
-      try {
+
+    this._settingsFormSub = this.settingsView$.pipe(
+      switchMap(sv => {
+        // create the form controls based on settingsView
         (sv.user?.addresses ?? []).forEach(address => {
           this._addressFormArray.push(
             fb.group({
@@ -133,30 +138,30 @@ export class SettingsComponent implements OnInit, OnDestroy {
         });
 
         this.settingsForm = fb.group({
-          firstStep: fb.group({
-            name: [sv.user?.name ?? '', [Validators.required]],
-            email: [sv.user?.email ?? '', [Validators.required, Validators.email]],
-            phone_number: [sv.user?.phone_number ?? null],
-            user_code: [sv.user?.user_code ?? null],
-            fiscal_code: [sv.user?.fiscal_code ?? null],
-          }),
-          secondStep: fb.group(
-            {
-              password: ['', [Validators.required, Validators.minLength(8)]],
-              password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
-            },
-            {
-              validator: ConfirmedValidator('password', 'password_confirmation'),
-            },
-          ),
           thirdStep: fb.group({
             addresses: this._addressFormArray,
           }),
         });
-      } catch (e) {
-        console.error(e);
-      }
-    });
+
+        // Fetch additional data for form steps
+        return this._store.select(selectFormJsonByStep(1)).pipe(
+          take(1),
+          switchMap(formJson1 => {
+            if (formJson1) {
+              const firstStep = this._formCustomSvc.createForm(fb, formJson1, sv.user);
+              this.settingsForm.setControl('firstStep', firstStep);
+            }
+            return this._store.select(selectFormJsonByStep(2)).pipe(take(1));
+          }),
+          map(formJson2 => {
+            if (formJson2) {
+              const secondStep = this._formCustomSvc.createForm(fb, formJson2, sv.user);
+              this.settingsForm.setControl('secondStep', secondStep);
+            }
+          })
+        );
+      })
+    ).subscribe();
 
     this._alertSub = this._alertEVT
       .pipe(
