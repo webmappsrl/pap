@@ -56,17 +56,15 @@ export interface User {
     message: string;
   };
   fcm_token?: string;
-  fiscal_code?: string;
+  form_data?: { [key: string]: any };
   id: number;
   location: [number, number];
   name: string;
   password: string;
   password_confirmation: string;
-  phone_number?: string;
   roles: Role[];
   success: boolean;
   updated_at?: string;
-  user_code?: string;
   user_type_id?: number;
   zone_id?: number;
 }
