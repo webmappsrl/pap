@@ -52,7 +52,7 @@ export class MissedFieldsUserModal {
   }
 
   save(): void {
-    const updates: Partial<User> = this.missedForm.getRawValue();
+    const updates: Partial<User> = {form_data: this.missedForm.getRawValue()};
     this._store.dispatch(UpdateUser({updates}));
   }
 }

@@ -305,13 +305,26 @@ export class SettingsComponent implements OnInit, OnDestroy {
           const formControlNames = Object.keys((firstStep as any).controls as string[]);
           Object.values((firstStep as any).controls as any[]).forEach((fcontrol, idx) => {
             if (fcontrol?.dirty) {
-              (updates as any)[formControlNames[idx]] = fcontrol.value!;
+              if (this._formCustomSvc.directUserFields.includes(formControlNames[idx])) {
+                (updates as any)[formControlNames[idx]] = fcontrol.value!;
+              } else {
+                (updates as any).form_data = (updates as any).form_data || {};
+                (updates as any).form_data[formControlNames[idx]] = fcontrol.value!;
+              }
             }
           });
         }
         break;
       case 'secondStep':
-        updates = this.settingsForm.controls['secondStep'].value;
+        const allValues = this.settingsForm.controls['secondStep'].value;
+        const { name, email, password, password_confirmation, ...rest } = allValues;
+        updates = {
+          ...(name != null && { name }),
+          ...(email != null && { email }),
+          ...(password != null && { password }),
+          ...(password_confirmation != null && { password_confirmation }),
+          form_data: Object.fromEntries(Object.entries(rest).filter(([_, v]) => v != null))
+        };
         this.settingsForm.controls['secondStep'].reset();
         break;
       case 'thirdStep':

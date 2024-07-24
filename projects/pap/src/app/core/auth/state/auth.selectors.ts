@@ -37,6 +37,7 @@ export const isDustyMan = createSelector(user, user => {
 export const error = createSelector(selectAuthState, state => state != null && state.error);
 export const missedUserFields = createSelector(user, selectRequiredFields, (user, requiredFields)=> {
   return !user ? [] : requiredFields?.filter((requiredField)=> {
-    return (user as any)[requiredField?.id] === null;
+    return (user as any)[requiredField?.id] === null &&
+      (user.form_data?.[requiredField?.id] === null || user.form_data?.[requiredField?.id] === undefined || user.form_data?.[requiredField?.id] === '');
   })??[];
 })

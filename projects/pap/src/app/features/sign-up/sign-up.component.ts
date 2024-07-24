@@ -69,11 +69,19 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
   }
 
   register(): void {
-    const res = {
+    const allValues = {
       ...this.signUpForm.controls['firstStep'].value,
       ...this.signUpForm.controls['secondStep'].value,
-      ...this.signUpForm.controls['thirdStep'].value,
     };
+    const { name, email, password, password_confirmation, ...rest } = allValues;
+    const res = {
+      name,
+      email,
+      password,
+      password_confirmation,
+      form_data: rest,
+      ...this.signUpForm.controls['thirdStep'].value,
+    }
     this._store.dispatch(loadSignUps({data: res}));
   }
 }

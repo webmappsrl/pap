@@ -8,12 +8,18 @@ import {User} from '../../../core/auth/auth.model';
   providedIn: 'root',
 })
 export class FormCustomService {
+  private _directUserFields: string[] = ['name', 'email', 'password', 'password_confirmation'];
+
+  get directUserFields(): string[]{
+    return this._directUserFields;
+  }
+
   createForm(fb: UntypedFormBuilder, formFields: FormJson[], user?: User): UntypedFormGroup {
     const formGroup = fb.group({});
     formFields.forEach(field => {
       if (field.type !== 'group') {
         const validators = this._getValidators(field);
-        const value = user ? user[field.id as keyof User] : '';
+        const value = user ? (user[field.id as keyof User] as any) ?? user.form_data?.[field.id] ?? '' : '';
         formGroup.addControl(field.id, fb.control(value, validators));
       }
     });
