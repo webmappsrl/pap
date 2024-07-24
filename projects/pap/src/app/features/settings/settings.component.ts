@@ -33,8 +33,8 @@ import {settingView} from './state/settings.selectors';
 import {SettingsService} from './state/settings.service';
 import {Zone} from '../../shared/form/location/location.model';
 import {User} from '../../core/auth/auth.model';
-import { FormCustomService } from '../../shared/form/state/form-custom.service';
-import { selectFormJsonByStep } from '../../shared/form/state/company.selectors';
+import {FormCustomService} from '../../shared/form/state/form-custom.service';
+import {selectFormJsonByStep} from '../../shared/form/state/company.selectors';
 
 const DELETE: AlertOptions = {
   cssClass: 'pap-alert',
@@ -123,45 +123,47 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.currentStep$.next('thirdStep');
     }
 
-    this._settingsFormSub = this.settingsView$.pipe(
-      switchMap(sv => {
-        // create the form controls based on settingsView
-        (sv.user?.addresses ?? []).forEach(address => {
-          this._addressFormArray.push(
-            fb.group({
-              address: new FormControl(address.address, Validators.required),
-              location: new FormControl(address.location, Validators.required),
-              user_type_id: [address.user_type_id ?? '', [Validators.required]],
-              id: new FormControl(address.id, Validators.required),
+    this._settingsFormSub = this.settingsView$
+      .pipe(
+        switchMap(sv => {
+          // create the form controls based on settingsView
+          (sv.user?.addresses ?? []).forEach(address => {
+            this._addressFormArray.push(
+              fb.group({
+                address: new FormControl(address.address, Validators.required),
+                location: new FormControl(address.location, Validators.required),
+                user_type_id: [address.user_type_id ?? '', [Validators.required]],
+                id: new FormControl(address.id, Validators.required),
+              }),
+            );
+          });
+
+          this.settingsForm = fb.group({
+            thirdStep: fb.group({
+              addresses: this._addressFormArray,
+            }),
+          });
+
+          // Fetch additional data for form steps
+          return this._store.select(selectFormJsonByStep(1)).pipe(
+            take(1),
+            switchMap(formJson1 => {
+              if (formJson1) {
+                const firstStep = this._formCustomSvc.createForm(fb, formJson1, sv.user);
+                this.settingsForm.setControl('firstStep', firstStep);
+              }
+              return this._store.select(selectFormJsonByStep(2)).pipe(take(1));
+            }),
+            map(formJson2 => {
+              if (formJson2) {
+                const secondStep = this._formCustomSvc.createForm(fb, formJson2, sv.user);
+                this.settingsForm.setControl('secondStep', secondStep);
+              }
             }),
           );
-        });
-
-        this.settingsForm = fb.group({
-          thirdStep: fb.group({
-            addresses: this._addressFormArray,
-          }),
-        });
-
-        // Fetch additional data for form steps
-        return this._store.select(selectFormJsonByStep(1)).pipe(
-          take(1),
-          switchMap(formJson1 => {
-            if (formJson1) {
-              const firstStep = this._formCustomSvc.createForm(fb, formJson1, sv.user);
-              this.settingsForm.setControl('firstStep', firstStep);
-            }
-            return this._store.select(selectFormJsonByStep(2)).pipe(take(1));
-          }),
-          map(formJson2 => {
-            if (formJson2) {
-              const secondStep = this._formCustomSvc.createForm(fb, formJson2, sv.user);
-              this.settingsForm.setControl('secondStep', secondStep);
-            }
-          })
-        );
-      })
-    ).subscribe();
+        }),
+      )
+      .subscribe();
 
     this._alertSub = this._alertEVT
       .pipe(
@@ -317,13 +319,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
         break;
       case 'secondStep':
         const allValues = this.settingsForm.controls['secondStep'].value;
-        const { name, email, password, password_confirmation, ...rest } = allValues;
+        const {name, email, password, password_confirmation, ...rest} = allValues;
         updates = {
-          ...(name != null && { name }),
-          ...(email != null && { email }),
-          ...(password != null && { password }),
-          ...(password_confirmation != null && { password_confirmation }),
-          form_data: Object.fromEntries(Object.entries(rest).filter(([_, v]) => v != null))
+          ...(name != null && {name}),
+          ...(email != null && {email}),
+          ...(password != null && {password}),
+          ...(password_confirmation != null && {password_confirmation}),
+          form_data: Object.fromEntries(Object.entries(rest).filter(([_, v]) => v != null)),
         };
         this.settingsForm.controls['secondStep'].reset();
         break;

@@ -10,7 +10,7 @@ import {User} from '../../../core/auth/auth.model';
 export class FormCustomService {
   private _directUserFields: string[] = ['name', 'email', 'password', 'password_confirmation'];
 
-  get directUserFields(): string[]{
+  get directUserFields(): string[] {
     return this._directUserFields;
   }
 
@@ -19,7 +19,9 @@ export class FormCustomService {
     formFields.forEach(field => {
       if (field.type !== 'group') {
         const validators = this._getValidators(field);
-        const value = user ? (user[field.id as keyof User] as any) ?? user.form_data?.[field.id] ?? '' : '';
+        const value = user
+          ? ((user[field.id as keyof User] as any) ?? user.form_data?.[field.id] ?? '')
+          : '';
         formGroup.addControl(field.id, fb.control(value, validators));
       }
     });

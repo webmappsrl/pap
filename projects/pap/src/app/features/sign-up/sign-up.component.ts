@@ -1,5 +1,12 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation} from '@angular/core';
-import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import {NavController} from '@ionic/angular';
 import {Store} from '@ngrx/store';
 import {BehaviorSubject, Subscription} from 'rxjs';
@@ -9,8 +16,8 @@ import {AppState} from '../../core/core.state';
 import {FormProvider} from '../../shared/form/form-provider';
 import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 import {loadConfiniZone} from '../../shared/map/state/map.actions';
-import { selectFormJsonByStep } from '../../shared/form/state/company.selectors';
-import { FormCustomService } from '../../shared/form/state/form-custom.service';
+import {selectFormJsonByStep} from '../../shared/form/state/company.selectors';
+import {FormCustomService} from '../../shared/form/state/form-custom.service';
 
 @Component({
   selector: 'pap-sign-up',
@@ -30,7 +37,7 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
     fb: UntypedFormBuilder,
     private _store: Store<AppState>,
     private _navCtrl: NavController,
-    private _formCustomSvc: FormCustomService
+    private _formCustomSvc: FormCustomService,
   ) {
     super();
     this._store.dispatch(loadConfiniZone());
@@ -46,18 +53,24 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
       }),
     });
 
-    this._store.select(selectFormJsonByStep(1)).pipe(take(1)).subscribe(formJson => {
-      if (formJson) {
-        const firstStep = this._formCustomSvc.createForm(fb, formJson);
-        this.signUpForm.setControl('firstStep', firstStep);
-      }
-    })
-    this._store.select(selectFormJsonByStep(2)).pipe(take(1)).subscribe(formJson => {
-      if (formJson) {
-        const secondStep = this._formCustomSvc.createForm(fb, formJson);
-        this.signUpForm.setControl('secondStep', secondStep);
-      }
-    })
+    this._store
+      .select(selectFormJsonByStep(1))
+      .pipe(take(1))
+      .subscribe(formJson => {
+        if (formJson) {
+          const firstStep = this._formCustomSvc.createForm(fb, formJson);
+          this.signUpForm.setControl('firstStep', firstStep);
+        }
+      });
+    this._store
+      .select(selectFormJsonByStep(2))
+      .pipe(take(1))
+      .subscribe(formJson => {
+        if (formJson) {
+          const secondStep = this._formCustomSvc.createForm(fb, formJson);
+          this.signUpForm.setControl('secondStep', secondStep);
+        }
+      });
   }
 
   getForm(): UntypedFormGroup {
@@ -73,7 +86,7 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
       ...this.signUpForm.controls['firstStep'].value,
       ...this.signUpForm.controls['secondStep'].value,
     };
-    const { name, email, password, password_confirmation, ...rest } = allValues;
+    const {name, email, password, password_confirmation, ...rest} = allValues;
     const res = {
       name,
       email,
@@ -81,7 +94,7 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
       password_confirmation,
       form_data: rest,
       ...this.signUpForm.controls['thirdStep'].value,
-    }
+    };
     this._store.dispatch(loadSignUps({data: res}));
   }
 }
@@ -92,8 +105,8 @@ export function ConfirmedValidator(controlName: string, matchingControlName: str
     const matchingControl = formGroup.get(matchingControlName);
 
     if (control && matchingControl && control.value !== matchingControl.value) {
-      matchingControl.setErrors({ confirmedValidator: true });
-      return { confirmedValidator: true };
+      matchingControl.setErrors({confirmedValidator: true});
+      return {confirmedValidator: true};
     } else {
       if (matchingControl) {
         matchingControl.setErrors(null);
