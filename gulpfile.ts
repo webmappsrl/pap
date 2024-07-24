@@ -11,8 +11,8 @@ const args: any = <any>yargs.argv;
 let version = '';
 let paths: Paths = {} as Paths;
 // const api = 'https://dev.portapporta.webmapp.it/api/v1';
-const devApi = 'https://dev.portapporta.webmapp.it/api/v1';
-const prodApi = 'https://portapporta.webmapp.it/api/v1';
+const devApi = 'https://dev.portapporta.webmapp.it/api/v2';
+const prodApi = 'https://portapporta.webmapp.it/api/v2';
 // const api = 'http://127.0.0.1:8000/api/v1';
 interface Config {
   app_name: string;
