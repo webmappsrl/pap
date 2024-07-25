@@ -95,20 +95,3 @@ export class SignUpComponent extends BaseCustomForm implements OnDestroy {
     this._store.dispatch(loadSignUps({data: res}));
   }
 }
-
-export function ConfirmedValidator(controlName: string, matchingControlName: string): ValidatorFn {
-  return (formGroup: AbstractControl): ValidationErrors | null => {
-    const control = formGroup.get(controlName);
-    const matchingControl = formGroup.get(matchingControlName);
-
-    if (control && matchingControl && control.value !== matchingControl.value) {
-      matchingControl.setErrors({confirmedValidator: true});
-      return {confirmedValidator: true};
-    } else {
-      if (matchingControl) {
-        matchingControl.setErrors(null);
-      }
-      return null;
-    }
-  };
-}

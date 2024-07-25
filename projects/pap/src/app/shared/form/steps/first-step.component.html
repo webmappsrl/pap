@@ -8,7 +8,7 @@
             <ion-item>
               <ion-label position="stacked">
                 {{ formField.label }}
-                <span *ngIf="isRequired(formField)"> * </span>
+                <span *ngIf="isFieldRequired(formField)"> * </span>
               </ion-label>
               <ion-input
                 [type]="formField.type"
@@ -17,7 +17,7 @@
                 [disabled]="disable.indexOf(formField.id)> -1">
               </ion-input>
             </ion-item>
-            <ion-item *ngIf="firstStep.get(formField.id) != null && !firstStep.get(formField.id)!.valid">
+            <ion-item *ngIf="firstStep.get(formField.id) != null && !firstStep.get(formField.id)!.valid" class="error-input-{{formField.id}}">
               <pap-error-form-handler [errors]="firstStep.get(formField.id)!.errors"></pap-error-form-handler>
             </ion-item>
           </ng-container>

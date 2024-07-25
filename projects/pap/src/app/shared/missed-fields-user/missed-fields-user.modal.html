@@ -10,7 +10,7 @@
             <ion-item>
               <ion-label position="stacked">
                 {{ formField.label }}
-                <span *ngIf="isRequired(formField)"> * </span>
+                <span *ngIf="isFieldRequired(formField)"> * </span>
               </ion-label>
               <ion-input
                 [type]="formField.type"

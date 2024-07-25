@@ -27,7 +27,6 @@ import {FormProvider} from '../../shared/form/form-provider';
 import {LocationModalComponent} from '../../shared/form/location/location.modal';
 import {showButtons} from '../../shared/header/state/header.actions';
 import {confiniZone} from '../../shared/map/state/map.selectors';
-import {ConfirmedValidator} from '../sign-up/sign-up.component';
 import {loadCalendarSettings, toggleEdit} from './state/settings.actions';
 import {settingView} from './state/settings.selectors';
 import {SettingsService} from './state/settings.service';

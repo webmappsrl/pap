@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {User} from '../../core/auth/auth.model';
 import {BehaviorSubject, Subscription} from 'rxjs';
@@ -14,10 +14,11 @@ import {BaseCustomForm} from '../form/base-custom-form.component';
   selector: 'pap-missed-fields-user-modal',
   templateUrl: 'missed-fields-user.modal.html',
   styleUrls: ['./missed-fields-user.modal.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class MissedFieldsUserModal extends BaseCustomForm {
-  private _subscription: Subscription = new Subscription();
+  private _updateUserSub: Subscription = Subscription.EMPTY;
 
   @Input() set fields(formFields: FormJson[]) {
     this.fields$.next(formFields);
@@ -35,19 +36,14 @@ export class MissedFieldsUserModal extends BaseCustomForm {
     private _actions: Actions,
   ) {
     super(_fb);
-    this._subscription.add(
-      this._actions.pipe(ofType(UpdateUserSuccess)).subscribe(() => {
-        this._modalCtrl.dismiss(null, 'ok');
-      }),
-    );
-  }
 
-  isRequired(field: FormJson): boolean {
-    return this.isFieldRequired(field);
+    this._updateUserSub = this._actions.pipe(ofType(UpdateUserSuccess)).subscribe(() => {
+      this._modalCtrl.dismiss(null, 'ok');
+    });
   }
 
   ngOnDestroy(): void {
-    this._subscription.unsubscribe();
+    this._updateUserSub.unsubscribe();
   }
 
   save(): void {

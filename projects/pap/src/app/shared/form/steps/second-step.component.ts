@@ -8,12 +8,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {FormGroupDirective, UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
-import {FormProvider} from '../form-provider';
-import {Observable} from 'rxjs';
-import {FormJson} from '../model';
-import {Store} from '@ngrx/store';
-import {selectFormJsonByStep} from '../state/company.selectors';
-import {BaseCustomForm} from '../base-custom-form.component';
+import { Observable } from 'rxjs';
+import { FormJson } from '../model';
+import { Store } from '@ngrx/store';
+import { selectFormJsonByStep } from '../state/company.selectors';
+import { BaseCustomForm } from '../base-custom-form.component';
 
 @Component({
   template: `
@@ -26,7 +25,7 @@ import {BaseCustomForm} from '../base-custom-form.component';
               <ion-item>
                 <ion-label position="stacked">
                   {{ formField.label }}
-                  <span *ngIf="isRequired(formField)"> * </span>
+                  <span *ngIf="isFieldRequired(formField)"> * </span>
                 </ion-label>
                 <ion-input
                   [type]="formField.type"
@@ -93,10 +92,6 @@ export class secondStepSignupComponent extends BaseCustomForm implements OnInit 
     fb: UntypedFormBuilder,
   ) {
     super(fb);
-  }
-
-  isRequired(field: FormJson): boolean {
-    return this.isFieldRequired(field);
   }
 
   ngOnInit(): void {
