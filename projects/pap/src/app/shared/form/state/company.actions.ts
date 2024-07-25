@@ -1,5 +1,5 @@
-import { createAction, props } from "@ngrx/store";
-import { FormJson } from "../model";
+import {createAction, props} from '@ngrx/store';
+import {FormJson} from '../model';
 
 export const loadFormJson = createAction('[FormJson] load form fields');
 

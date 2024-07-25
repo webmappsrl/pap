@@ -1,6 +1,6 @@
-import { createReducer, on } from "@ngrx/store";
-import { FormJson } from "../model";
-import { loadFormJson, loadFormJsonFailure, loadFormJsonSuccess } from "./company.actions";
+import {createReducer, on} from '@ngrx/store';
+import {FormJson} from '../model';
+import {loadFormJson, loadFormJsonFailure, loadFormJsonSuccess} from './company.actions';
 
 export const companyFeatureKey = 'company';
 
@@ -30,4 +30,4 @@ export const reducer = createReducer(
     error,
     loading: false,
   })),
-)
+);

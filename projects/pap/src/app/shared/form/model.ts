@@ -14,13 +14,13 @@ export type TicketFieldTypes =
 export type TicketType = 'reservation' | 'info' | 'abandonment' | 'report';
 
 export interface FormJson {
-  customValidator?: { name: string, args: any[] };
+  customValidator?: {name: string; args: any[]};
   id: string;
   label?: string;
   placeholder?: string;
   step: number;
   type: string;
-  validators?: { name: string, value?: any }[];
+  validators?: {name: string; value?: any}[];
 }
 
 export interface SuccessData<T> {
@@ -61,7 +61,7 @@ export interface Ticket {
   missed_withdraw_date?: string;
   note?: string;
   phone?: string;
-  status?:string
+  status?: string;
   ticket_type: TicketType;
   trashType?: TrashBookType;
   trash_type?: TrashBookType;

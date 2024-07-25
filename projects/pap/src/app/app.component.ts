@@ -181,10 +181,10 @@ export class AppComponent {
           };
           return this._alertCtrl.create(SUCESSFULLY_UPDATE);
         }),
-        switchMap( alert => {
+        switchMap(alert => {
           alert.present();
           return alert.onWillDismiss();
-        })
+        }),
       )
       .subscribe();
     this.noHouseNumber$

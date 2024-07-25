@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { FormJson, SuccessData } from "../model";
-import { Observable } from "rxjs";
+import {Injectable} from '@angular/core';
+import {FormJson, SuccessData} from '../model';
+import {Observable} from 'rxjs';
 import {environment as env} from 'projects/pap/src/environments/environment';
-import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

@@ -56,7 +56,7 @@ export interface User {
     message: string;
   };
   fcm_token?: string;
-  form_data?: { [key: string]: any };
+  form_data?: {[key: string]: any};
   id: number;
   location: [number, number];
   name: string;
