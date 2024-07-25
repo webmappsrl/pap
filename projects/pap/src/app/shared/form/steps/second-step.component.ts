@@ -8,11 +8,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {FormGroupDirective, UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
-import { Observable } from 'rxjs';
-import { FormJson } from '../model';
-import { Store } from '@ngrx/store';
-import { selectFormJsonByStep } from '../state/company.selectors';
-import { BaseCustomForm } from '../base-custom-form.component';
+import {Observable} from 'rxjs';
+import {FormJson} from '../model';
+import {Store} from '@ngrx/store';
+import {selectFormJsonByStep} from '../state/company.selectors';
+import {BaseCustomForm} from '../base-custom-form.component';
 
 @Component({
   template: `
