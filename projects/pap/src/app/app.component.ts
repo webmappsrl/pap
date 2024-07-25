@@ -181,10 +181,12 @@ export class AppComponent {
           };
           return this._alertCtrl.create(SUCESSFULLY_UPDATE);
         }),
+        switchMap( alert => {
+          alert.present();
+          return alert.onWillDismiss();
+        })
       )
-      .subscribe(async alert => {
-        (await alert).present();
-      });
+      .subscribe();
     this.noHouseNumber$
       .pipe(
         filter(a => a != null),
