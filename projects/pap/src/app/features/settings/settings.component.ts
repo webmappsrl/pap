@@ -34,7 +34,7 @@ import {SettingsService} from './state/settings.service';
 import {Zone} from '../../shared/form/location/location.model';
 import {User} from '../../core/auth/auth.model';
 import {selectFormJsonByStep} from '../../shared/form/state/company.selectors';
-import { BaseCustomForm } from '../../shared/form/base-custom-form.component';
+import {BaseCustomForm} from '../../shared/form/base-custom-form.component';
 
 const DELETE: AlertOptions = {
   cssClass: 'pap-alert',

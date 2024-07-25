@@ -8,7 +8,7 @@ import {select, Store} from '@ngrx/store';
 import {UpdateUser, UpdateUserSuccess} from '../../core/auth/state/auth.actions';
 import {user} from '../../core/auth/state/auth.selectors';
 import {Actions, ofType} from '@ngrx/effects';
-import { BaseCustomForm } from '../form/base-custom-form.component';
+import {BaseCustomForm} from '../form/base-custom-form.component';
 
 @Component({
   selector: 'pap-missed-fields-user-modal',
@@ -16,7 +16,7 @@ import { BaseCustomForm } from '../form/base-custom-form.component';
   styleUrls: ['./missed-fields-user.modal.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MissedFieldsUserModal extends BaseCustomForm{
+export class MissedFieldsUserModal extends BaseCustomForm {
   private _subscription: Subscription = new Subscription();
 
   @Input() set fields(formFields: FormJson[]) {

@@ -8,11 +8,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {FormGroupDirective, UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
-import { Observable } from 'rxjs';
-import { FormJson } from '../model';
-import { Store } from '@ngrx/store';
-import { selectFormJsonByStep } from '../state/company.selectors';
-import { BaseCustomForm } from '../base-custom-form.component';
+import {Observable} from 'rxjs';
+import {FormJson} from '../model';
+import {Store} from '@ngrx/store';
+import {selectFormJsonByStep} from '../state/company.selectors';
+import {BaseCustomForm} from '../base-custom-form.component';
 
 @Component({
   selector: 'pap-first-step-signup-form',
@@ -29,11 +29,15 @@ export class firstStepSignupComponent extends BaseCustomForm implements OnInit {
   firstStep: UntypedFormGroup;
   formJson$: Observable<FormJson[] | undefined> = this._store.select(selectFormJsonByStep(1));
 
-  constructor(private _parent: FormGroupDirective, private _store: Store, fb: UntypedFormBuilder) {
+  constructor(
+    private _parent: FormGroupDirective,
+    private _store: Store,
+    fb: UntypedFormBuilder,
+  ) {
     super(fb);
   }
 
-  isRequired(field: FormJson): boolean{
+  isRequired(field: FormJson): boolean {
     return this.isFieldRequired(field);
   }
 

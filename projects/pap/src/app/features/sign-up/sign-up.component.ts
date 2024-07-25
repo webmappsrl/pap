@@ -16,7 +16,7 @@ import {AppState} from '../../core/core.state';
 import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 import {loadConfiniZone} from '../../shared/map/state/map.actions';
 import {selectFormJsonByStep} from '../../shared/form/state/company.selectors';
-import { BaseCustomForm } from '../../shared/form/base-custom-form.component';
+import {BaseCustomForm} from '../../shared/form/base-custom-form.component';
 
 @Component({
   selector: 'pap-sign-up',
@@ -25,7 +25,7 @@ import { BaseCustomForm } from '../../shared/form/base-custom-form.component';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignUpComponent extends BaseCustomForm  implements OnDestroy {
+export class SignUpComponent extends BaseCustomForm implements OnDestroy {
   private _isLoggesSub: Subscription = Subscription.EMPTY;
 
   signUpForm: UntypedFormGroup;

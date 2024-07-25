@@ -1,6 +1,15 @@
-import { FormGroup, FormBuilder, Validators, UntypedFormBuilder, UntypedFormGroup, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { FormJson } from './model';
-import { User } from '../../core/auth/auth.model';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  AbstractControl,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
+import {FormJson} from './model';
+import {User} from '../../core/auth/auth.model';
 
 export abstract class BaseCustomForm {
   private _directUserFields: string[] = ['name', 'email', 'password', 'password_confirmation'];
