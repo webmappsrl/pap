@@ -3,16 +3,17 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import {UntypedFormGroup} from '@angular/forms';
+import {FormGroupDirective, UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import {FormProvider} from '../form-provider';
 import { Observable } from 'rxjs';
 import { FormJson } from '../model';
 import { Store } from '@ngrx/store';
 import { selectFormJsonByStep } from '../state/company.selectors';
-import { FormCustomService } from '../state/form-custom.service';
+import { BaseCustomForm } from '../base-custom-form.component';
 
 @Component({
   template: `
@@ -78,17 +79,23 @@ import { FormCustomService } from '../state/form-custom.service';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class secondStepSignupComponent {
+export class secondStepSignupComponent extends BaseCustomForm implements OnInit{
   @Input() buttons = true;
   @Output() next: EventEmitter<void> = new EventEmitter<void>();
   @Output() prev: EventEmitter<void> = new EventEmitter<void>();
 
   formJson$: Observable<FormJson[] | undefined> = this._store.select(selectFormJsonByStep(2));
-  secondStep: UntypedFormGroup = this._formProvider.getForm().get('secondStep') as UntypedFormGroup;
+  secondStep: UntypedFormGroup;
 
-  constructor(private _formProvider: FormProvider, private _store: Store, private _formCustomSvc: FormCustomService) {}
+  constructor(private _parent: FormGroupDirective, private _store: Store, fb: UntypedFormBuilder) {
+    super(fb);
+  }
 
   isRequired(field: FormJson): boolean{
-    return this._formCustomSvc.isFieldRequired(field)
+    return this.isFieldRequired(field)
+  }
+
+  ngOnInit(): void {
+    this.secondStep = this._parent.form.get('secondStep') as UntypedFormGroup;
   }
 }

@@ -8,7 +8,7 @@ import {select, Store} from '@ngrx/store';
 import {UpdateUser, UpdateUserSuccess} from '../../core/auth/state/auth.actions';
 import {user} from '../../core/auth/state/auth.selectors';
 import {Actions, ofType} from '@ngrx/effects';
-import {FormCustomService} from '../form/state/form-custom.service';
+import { BaseCustomForm } from '../form/base-custom-form.component';
 
 @Component({
   selector: 'pap-missed-fields-user-modal',
@@ -16,12 +16,12 @@ import {FormCustomService} from '../form/state/form-custom.service';
   styleUrls: ['./missed-fields-user.modal.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MissedFieldsUserModal {
+export class MissedFieldsUserModal extends BaseCustomForm{
   private _subscription: Subscription = new Subscription();
 
   @Input() set fields(formFields: FormJson[]) {
     this.fields$.next(formFields);
-    this.missedForm = this._formCustomSvc.createForm(this._fb, formFields);
+    this.missedForm = this.createForm(this._fb, formFields);
   }
 
   fields$: BehaviorSubject<FormJson[]> = new BehaviorSubject<FormJson[]>([]);
@@ -30,11 +30,11 @@ export class MissedFieldsUserModal {
 
   constructor(
     private _fb: UntypedFormBuilder,
-    private _formCustomSvc: FormCustomService,
     private _store: Store,
     private _modalCtrl: ModalController,
     private _actions: Actions,
   ) {
+    super(_fb);
     this._subscription.add(
       this._actions.pipe(ofType(UpdateUserSuccess)).subscribe(() => {
         this._modalCtrl.dismiss(null, 'ok');
@@ -43,7 +43,7 @@ export class MissedFieldsUserModal {
   }
 
   isRequired(field: FormJson): boolean {
-    return this._formCustomSvc.isFieldRequired(field);
+    return this.isFieldRequired(field);
   }
 
   ngOnDestroy(): void {

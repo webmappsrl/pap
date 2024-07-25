@@ -13,11 +13,10 @@ import {BehaviorSubject, Subscription} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {loadSignUps} from '../../core/auth/state/auth.actions';
 import {AppState} from '../../core/core.state';
-import {FormProvider} from '../../shared/form/form-provider';
 import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 import {loadConfiniZone} from '../../shared/map/state/map.actions';
 import {selectFormJsonByStep} from '../../shared/form/state/company.selectors';
-import {FormCustomService} from '../../shared/form/state/form-custom.service';
+import { BaseCustomForm } from '../../shared/form/base-custom-form.component';
 
 @Component({
   selector: 'pap-sign-up',
@@ -25,9 +24,8 @@ import {FormCustomService} from '../../shared/form/state/form-custom.service';
   styleUrls: ['./sign-up.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{provide: FormProvider, useExisting: SignUpComponent}],
 })
-export class SignUpComponent extends FormProvider implements OnDestroy {
+export class SignUpComponent extends BaseCustomForm  implements OnDestroy {
   private _isLoggesSub: Subscription = Subscription.EMPTY;
 
   signUpForm: UntypedFormGroup;
@@ -37,9 +35,8 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
     fb: UntypedFormBuilder,
     private _store: Store<AppState>,
     private _navCtrl: NavController,
-    private _formCustomSvc: FormCustomService,
   ) {
-    super();
+    super(fb);
     this._store.dispatch(loadConfiniZone());
     this._store.dispatch(loadUserTypes());
     this.signUpForm = fb.group({
@@ -58,7 +55,7 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
       .pipe(take(1))
       .subscribe(formJson => {
         if (formJson) {
-          const firstStep = this._formCustomSvc.createForm(fb, formJson);
+          const firstStep = this.createForm(fb, formJson);
           this.signUpForm.setControl('firstStep', firstStep);
         }
       });
@@ -67,7 +64,7 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
       .pipe(take(1))
       .subscribe(formJson => {
         if (formJson) {
-          const secondStep = this._formCustomSvc.createForm(fb, formJson);
+          const secondStep = this.createForm(fb, formJson);
           this.signUpForm.setControl('secondStep', secondStep);
         }
       });

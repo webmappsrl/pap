@@ -1,17 +1,33 @@
-import {Injectable} from '@angular/core';
-import {FormJson} from '../model';
-import {UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
-import {ConfirmedValidator} from '../../../features/sign-up/sign-up.component';
-import {User} from '../../../core/auth/auth.model';
+import { FormGroup, FormBuilder, Validators, UntypedFormBuilder, UntypedFormGroup, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormJson } from './model';
+import { User } from '../../core/auth/auth.model';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class FormCustomService {
+export abstract class BaseCustomForm {
   private _directUserFields: string[] = ['name', 'email', 'password', 'password_confirmation'];
 
   get directUserFields(): string[] {
     return this._directUserFields;
+  }
+
+  form: FormGroup;
+
+  constructor(protected fb: FormBuilder) {}
+
+  ConfirmedValidator(controlName: string, matchingControlName: string): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const control = formGroup.get(controlName);
+      const matchingControl = formGroup.get(matchingControlName);
+
+      if (control && matchingControl && control.value !== matchingControl.value) {
+        matchingControl.setErrors({confirmedValidator: true});
+        return {confirmedValidator: true};
+      } else {
+        if (matchingControl) {
+          matchingControl.setErrors(null);
+        }
+        return null;
+      }
+    };
   }
 
   createForm(fb: UntypedFormBuilder, formFields: FormJson[], user?: User): UntypedFormGroup {
@@ -43,9 +59,9 @@ export class FormCustomService {
   private _getCustomValidator(customValidator: {name: string; args: string[]}) {
     switch (customValidator.name) {
       case 'confirmedValidator':
-        return ConfirmedValidator(customValidator.args[0], customValidator.args[1]);
+        return this.ConfirmedValidator(customValidator.args[0], customValidator.args[1]);
       default:
-        return ConfirmedValidator(customValidator.args[0], customValidator.args[1]);
+        return this.ConfirmedValidator(customValidator.args[0], customValidator.args[1]);
     }
   }
 
@@ -63,7 +79,6 @@ export class FormCustomService {
           case 'minLength':
             validators.push(Validators.minLength(validator.value));
             break;
-          // Aggiungi altri validatori personalizzati qui se necessario
         }
       });
     }

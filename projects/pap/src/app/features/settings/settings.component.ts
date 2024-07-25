@@ -33,8 +33,8 @@ import {settingView} from './state/settings.selectors';
 import {SettingsService} from './state/settings.service';
 import {Zone} from '../../shared/form/location/location.model';
 import {User} from '../../core/auth/auth.model';
-import {FormCustomService} from '../../shared/form/state/form-custom.service';
 import {selectFormJsonByStep} from '../../shared/form/state/company.selectors';
+import { BaseCustomForm } from '../../shared/form/base-custom-form.component';
 
 const DELETE: AlertOptions = {
   cssClass: 'pap-alert',
@@ -91,7 +91,7 @@ const LOGOUT_CONFIRM: AlertOptions = {
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: FormProvider, useExisting: SettingsComponent}],
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent extends BaseCustomForm implements OnInit, OnDestroy {
   private _addressFormArray: UntypedFormArray = this._formBuilder.array([]);
   private _alertEVT: EventEmitter<AlertOptions> = new EventEmitter<AlertOptions>();
   private _alertSub: Subscription = Subscription.EMPTY;
@@ -114,9 +114,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private _settingsSvc: SettingsService,
     private _cdr: ChangeDetectorRef,
     private _route: ActivatedRoute,
-    private _formCustomSvc: FormCustomService,
     fb: UntypedFormBuilder,
   ) {
+    super(_formBuilder);
     const urlSegments = this._route.snapshot.url.map(segment => segment.path);
     if (urlSegments.includes('address')) {
       this.initStep = 'thirdStep';
@@ -149,14 +149,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
             take(1),
             switchMap(formJson1 => {
               if (formJson1) {
-                const firstStep = this._formCustomSvc.createForm(fb, formJson1, sv.user);
+                const firstStep = this.createForm(fb, formJson1, sv.user);
                 this.settingsForm.setControl('firstStep', firstStep);
               }
               return this._store.select(selectFormJsonByStep(2)).pipe(take(1));
             }),
             map(formJson2 => {
               if (formJson2) {
-                const secondStep = this._formCustomSvc.createForm(fb, formJson2, sv.user);
+                const secondStep = this.createForm(fb, formJson2, sv.user);
                 this.settingsForm.setControl('secondStep', secondStep);
               }
             }),
@@ -307,7 +307,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           const formControlNames = Object.keys((firstStep as any).controls as string[]);
           Object.values((firstStep as any).controls as any[]).forEach((fcontrol, idx) => {
             if (fcontrol?.dirty) {
-              if (this._formCustomSvc.directUserFields.includes(formControlNames[idx])) {
+              if (this.directUserFields.includes(formControlNames[idx])) {
                 (updates as any)[formControlNames[idx]] = fcontrol.value!;
               } else {
                 (updates as any).form_data = (updates as any).form_data || {};
