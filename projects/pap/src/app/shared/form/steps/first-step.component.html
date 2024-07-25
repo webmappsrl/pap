@@ -1,71 +1,28 @@
 <ng-container *ngIf="firstStep!=null">
   <form [formGroup]="firstStep">
     <ion-list lines="inset">
-      <ion-item>
-        <ion-label position="stacked">Nome*</ion-label>
-        <ion-input
-          label="Nome"
-          formControlName="name"
-          required
-          placeholder="Inserire il nome">
-        </ion-input>
-      </ion-item>
-      <ion-item *ngIf="firstStep.get('name')!= null && firstStep.get('name')!.valid">
-        <pap-error-form-handler [errors]="firstStep.get('name')!.errors"></pap-error-form-handler>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Email*</ion-label>
-        <ion-input
-          formControlName="email"
-          required
-          placeholder="Inserire la email"
-          [disabled]="disable.indexOf('email')> -1">
-        </ion-input>
-      </ion-item>
-      <ion-item *ngIf="firstStep.get('email')!= null &&firstStep.get('email')!.valid">
-        <pap-error-form-handler [errors]="firstStep.get('email')!.errors"></pap-error-form-handler>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Telefono</ion-label>
-        <ion-input
-          formControlName="phone_number"
-          placeholder="Inserire un recapito telefonico"
-          [disabled]="disable.indexOf('phone_number')> -1">
-        </ion-input>
-      </ion-item>
-      <ion-item
-        *ngIf="firstStep.get('phone_number')!= null && firstStep.get('phone_number')!.valid">
-        <pap-error-form-handler
-          [errors]="firstStep.get('phone_number')!.errors"></pap-error-form-handler>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">nominativo intestatario TARI</ion-label>
-        <ion-input
-          formControlName="user_code"
-          placeholder="digita il nominativo Intestatario TARI"
-          [disabled]="disable.indexOf('user_code')> -1">
-        </ion-input>
-      </ion-item>
-      <ion-item *ngIf="firstStep.get('user_code')!=null && firstStep.get('user_code')!.valid">
-        <pap-error-form-handler
-          [errors]="firstStep.get('user_code')!.errors"></pap-error-form-handler>
-      </ion-item>
-      <ion-item>
-        <ion-label
-          class="ion-text-wrap"
-          position="stacked"
-          >Codice fiscale dell'intestatario della bolletta</ion-label
-        >
-        <ion-input
-          formControlName="fiscal_code"
-          placeholder="digita il CF dell'intestatario della bolletta"
-          [disabled]="disable.indexOf('fiscal_code')> -1">
-        </ion-input>
-      </ion-item>
-      <ion-item *ngIf="firstStep.get('fiscal_code')!=null &&firstStep.get('fiscal_code')!.valid">
-        <pap-error-form-handler
-          [errors]="firstStep.get('fiscal_code')!.errors"></pap-error-form-handler>
-      </ion-item>
+      <ng-container *ngIf="formJson$ | async as formJson">
+        <ng-container *ngFor="let formField of formJson">
+          <!-- Controllo se il tipo è 'group' -->
+          <ng-container *ngIf="formField.type !== 'group'">
+            <ion-item>
+              <ion-label position="stacked">
+                {{ formField.label }}
+                <span *ngIf="isFieldRequired(formField)"> * </span>
+              </ion-label>
+              <ion-input
+                [type]="formField.type"
+                [formControlName]="formField.id"
+                [placeholder]="formField.placeholder"
+                [disabled]="disable.indexOf(formField.id)> -1">
+              </ion-input>
+            </ion-item>
+            <ion-item *ngIf="firstStep.get(formField.id) != null && !firstStep.get(formField.id)!.valid" class="error-input-{{formField.id}}">
+              <pap-error-form-handler [errors]="firstStep.get(formField.id)!.errors"></pap-error-form-handler>
+            </ion-item>
+          </ng-container>
+        </ng-container>
+      </ng-container>
     </ion-list>
 
     <ion-grid *ngIf="buttons">

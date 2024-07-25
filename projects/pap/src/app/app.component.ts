@@ -14,6 +14,7 @@ import {loadAuths} from './core/auth/state/auth.actions';
 import {
   error,
   isLogged,
+  missedUserFields,
   noAddress,
   noHouseNumber,
   userRoles,
@@ -34,6 +35,9 @@ import {
   getDeliveredNotification,
   loadPushNotification,
 } from './features/push-notification/state/push-notification.actions';
+import {MissedFieldsUserModal} from './shared/missed-fields-user/missed-fields-user.modal';
+import {FormJson} from './shared/form/model';
+import {loadFormJson} from './shared/form/state/company.actions';
 
 @Component({
   selector: 'pap-root',
@@ -43,6 +47,7 @@ import {
 export class AppComponent {
   authError$ = this._store.pipe(select(error));
   isLogged$ = this._store.pipe(select(isLogged));
+  missedFields$: Observable<FormJson[]> = this._store.select(missedUserFields);
   noAddress$: Observable<boolean> = this._store.select(noAddress);
   noHouseNumber$: Observable<Address[] | undefined> = this._store.select(noHouseNumber);
   platformReady$ = from(this._platform.ready());
@@ -61,6 +66,7 @@ export class AppComponent {
     this._translateSvc.setTranslation('it', IT);
     this._store.dispatch(loadAuths());
     this._store.dispatch(loadTrashBooks());
+    this._store.dispatch(loadFormJson());
     this.isLogged$
       .pipe(
         filter(l => l),
@@ -146,6 +152,41 @@ export class AppComponent {
       .subscribe(_ => {
         this._navCtrl.navigateForward('settings/address');
       });
+    this.isLogged$
+      .pipe(
+        filter(l => l),
+        switchMap(() => this.missedFields$),
+        filter(f => f != null && f.length > 0),
+        switchMap(fields =>
+          this._modalCtrl.create({
+            component: MissedFieldsUserModal,
+            componentProps: {fields},
+          }),
+        ),
+        switchMap(modal => {
+          modal.present();
+          return modal.onWillDismiss();
+        }),
+        switchMap(res => {
+          const SUCESSFULLY_UPDATE: AlertOptions = {
+            cssClass: 'pap-alert',
+            header: 'Aggiornamento avvenuto con successo',
+            message: 'i dati relativi al tuo profilo sono stati aggiornati',
+            buttons: [
+              {
+                text: 'ok',
+                role: 'ok',
+              },
+            ],
+          };
+          return this._alertCtrl.create(SUCESSFULLY_UPDATE);
+        }),
+        switchMap( alert => {
+          alert.present();
+          return alert.onWillDismiss();
+        })
+      )
+      .subscribe();
     this.noHouseNumber$
       .pipe(
         filter(a => a != null),

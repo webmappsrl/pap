@@ -49,8 +49,8 @@ export class FormComponent implements OnDestroy {
       let value = '';
       if (step.type === 'phone') {
         this._user$.pipe(take(1)).subscribe(user => {
-          if (user != null && user['phone_number'] != null) {
-            value = user['phone_number'];
+          if (user != null && user.form_data?.['phone_number'] != null) {
+            value = user.form_data?.['phone_number'];
           }
         });
       }
@@ -177,7 +177,7 @@ export class FormComponent implements OnDestroy {
   sendData(): void {
     let formValue = this.ticketForm.value;
     if (formValue['phone'] != null && this.ticketForm.controls['phone'].dirty) {
-      const updates = {phone_number: formValue['phone']};
+      const updates = {form_data: {phone_number: formValue['phone']}};
       this._store.dispatch(UpdateUser({updates}));
     }
     if (formValue['calendar_trash_type_id'] != null) {

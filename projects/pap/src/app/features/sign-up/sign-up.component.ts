@@ -1,15 +1,22 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import {NavController} from '@ionic/angular';
-import {Store, select} from '@ngrx/store';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import {take} from 'rxjs/operators';
 import {loadSignUps} from '../../core/auth/state/auth.actions';
-import {error, selectAuthState} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
-import {FormProvider} from '../../shared/form/form-provider';
 import {loadUserTypes} from '../../shared/form/state/sign-up.actions';
 import {loadConfiniZone} from '../../shared/map/state/map.actions';
+import {selectFormJsonByStep} from '../../shared/form/state/company.selectors';
+import {BaseCustomForm} from '../../shared/form/base-custom-form.component';
 
 @Component({
   selector: 'pap-sign-up',
@@ -17,9 +24,8 @@ import {loadConfiniZone} from '../../shared/map/state/map.actions';
   styleUrls: ['./sign-up.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{provide: FormProvider, useExisting: SignUpComponent}],
 })
-export class SignUpComponent extends FormProvider implements OnDestroy {
+export class SignUpComponent extends BaseCustomForm implements OnDestroy {
   private _isLoggesSub: Subscription = Subscription.EMPTY;
 
   signUpForm: UntypedFormGroup;
@@ -30,26 +36,10 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
     private _store: Store<AppState>,
     private _navCtrl: NavController,
   ) {
-    super();
+    super(fb);
     this._store.dispatch(loadConfiniZone());
     this._store.dispatch(loadUserTypes());
     this.signUpForm = fb.group({
-      firstStep: fb.group({
-        name: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
-        phone_number: [null],
-        user_code: [null],
-        fiscal_code: [null],
-      }),
-      secondStep: fb.group(
-        {
-          password: ['', [Validators.required, Validators.minLength(8)]],
-          password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
-        },
-        {
-          validator: ConfirmedValidator('password', 'password_confirmation'),
-        },
-      ),
       thirdStep: fb.group({
         address: ['', [Validators.required]],
         city: ['', [Validators.required]],
@@ -59,6 +49,25 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
         location: [[], [Validators.required]],
       }),
     });
+
+    this._store
+      .select(selectFormJsonByStep(1))
+      .pipe(take(1))
+      .subscribe(formJson => {
+        if (formJson) {
+          const firstStep = this.createForm(fb, formJson);
+          this.signUpForm.setControl('firstStep', firstStep);
+        }
+      });
+    this._store
+      .select(selectFormJsonByStep(2))
+      .pipe(take(1))
+      .subscribe(formJson => {
+        if (formJson) {
+          const secondStep = this.createForm(fb, formJson);
+          this.signUpForm.setControl('secondStep', secondStep);
+        }
+      });
   }
 
   getForm(): UntypedFormGroup {
@@ -70,29 +79,19 @@ export class SignUpComponent extends FormProvider implements OnDestroy {
   }
 
   register(): void {
-    const res = {
+    const allValues = {
       ...this.signUpForm.controls['firstStep'].value,
       ...this.signUpForm.controls['secondStep'].value,
+    };
+    const {name, email, password, password_confirmation, ...rest} = allValues;
+    const res = {
+      name,
+      email,
+      password,
+      password_confirmation,
+      form_data: rest,
       ...this.signUpForm.controls['thirdStep'].value,
     };
     this._store.dispatch(loadSignUps({data: res}));
   }
-}
-
-export function ConfirmedValidator(controlName: string, matchingControlName: string) {
-  return (formGroup: UntypedFormGroup) => {
-    const control = formGroup.controls[controlName];
-    const matchingControl = formGroup.controls[matchingControlName];
-    if (
-      matchingControl == null ||
-      (matchingControl.errors && !matchingControl.errors['confirmedValidator'])
-    ) {
-      return;
-    }
-    if (control.value !== matchingControl.value) {
-      matchingControl.setErrors({confirmedValidator: true});
-    } else {
-      matchingControl.setErrors(null);
-    }
-  };
 }

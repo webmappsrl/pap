@@ -48,6 +48,7 @@ import {addr2StringPipe} from './pipes/addr-2-string.pipe';
 import {AddressSelectorComponent} from './components/address-selector/address-selector.component';
 import {papAddressesFromCalendars} from './pipes/pap-addresses-from-calendars';
 import { PapTimeAgoPipe } from './pipes/pap-time-ago.pipe';
+import { MissedFieldsUserModal } from './missed-fields-user/missed-fields-user.modal';
 const pipes = [
   InputTypePipe,
   InputPatternPipe,
@@ -85,6 +86,7 @@ const pipes = [
     CalendarComponent,
     DateComponent,
     MissedHouseNumberModal,
+    MissedFieldsUserModal,
     ...pipes,
   ],
   imports: [
@@ -133,6 +135,7 @@ const pipes = [
     LocationModalComponent,
     AddressSelectorComponent,
     MissedHouseNumberModal,
+    MissedFieldsUserModal,
     ...pipes,
   ],
 })

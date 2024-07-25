@@ -1,6 +1,7 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import * as fromAuth from './auth.reducer';
 import {Role} from '../auth.model';
+import {selectRequiredFields} from '../../../shared/form/state/company.selectors';
 
 export const selectAuthState = createFeatureSelector<fromAuth.AuthState>(fromAuth.authFeatureKey);
 export const isLogged = createSelector(selectAuthState, state => state != null && state.isLogged);
@@ -34,3 +35,19 @@ export const isDustyMan = createSelector(user, user => {
   return roles.map((r: Role) => r.name).includes('dusty_man');
 });
 export const error = createSelector(selectAuthState, state => state != null && state.error);
+export const missedUserFields = createSelector(
+  user,
+  selectRequiredFields,
+  (user, requiredFields) => {
+    return !user
+      ? []
+      : (requiredFields?.filter(requiredField => {
+          return (
+            (user as any)[requiredField?.id] === null &&
+            (user.form_data?.[requiredField?.id] === null ||
+              user.form_data?.[requiredField?.id] === undefined ||
+              user.form_data?.[requiredField?.id] === '')
+          );
+        }) ?? []);
+  },
+);
