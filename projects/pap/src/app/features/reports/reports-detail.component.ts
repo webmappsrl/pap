@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  ViewEncapsulation,
+} from '@angular/core';
 import {Ticket} from './state/reports.effects';
 import {AppState} from '../../core/core.state';
 import {Store, select} from '@ngrx/store';
@@ -110,9 +116,8 @@ export class ReportsDetailComponent {
   }
 
   getStatusColor(status: string): string {
-    let color: string = "red";
-    if(status === 'execute')
-        color = 'red';
+    let color: string = 'red';
+    if (status === 'execute') color = 'red';
 
     return color;
   }

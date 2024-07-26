@@ -47,7 +47,7 @@ import {RecapRowComponent} from './form/recap/recap-row/recap-row.component';
 import {addr2StringPipe} from './pipes/addr-2-string.pipe';
 import {AddressSelectorComponent} from './components/address-selector/address-selector.component';
 import {papAddressesFromCalendars} from './pipes/pap-addresses-from-calendars';
-import { IT } from '../../assets/i18n/it';
+import {IT} from '../../assets/i18n/it';
 import {MissedFieldsUserModal} from './missed-fields-user/missed-fields-user.modal';
 import {PapTimeAgoPipe} from './pipes/pap-time-ago.pipe';
 const pipes = [
@@ -104,7 +104,7 @@ const pipes = [
     StoreModule.forFeature(fromSignUp.signUpFeatureKey, fromSignUp.reducer),
     EffectsModule.forFeature([SignUpEffects]),
     TranslateModule.forRoot({
-      defaultLanguage: 'it'
+      defaultLanguage: 'it',
     }),
   ],
   providers: [LocalNotificationService, BroadcastNotificationService],
@@ -143,7 +143,7 @@ const pipes = [
   ],
 })
 export class SharedModule {
-  constructor(private _translateSvc:TranslateService) {
+  constructor(private _translateSvc: TranslateService) {
     this._translateSvc.setTranslation('it', IT);
   }
 }

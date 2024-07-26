@@ -4,7 +4,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 import {AuthEffects} from './state/auth.effects';
 import * as fromAuth from './state/auth.reducer';
-import { SharedModule } from '../../shared/shared.module';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [],
