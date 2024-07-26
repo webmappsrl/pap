@@ -1,13 +1,37 @@
-import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  ViewEncapsulation,
+} from '@angular/core';
 import {Ticket} from './state/reports.effects';
 import {AppState} from '../../core/core.state';
 import {Store, select} from '@ngrx/store';
-import {isDustyMan} from '../../core/auth/state/auth.selectors';
+import {isDustyMan, isVip} from '../../core/auth/state/auth.selectors';
 import {lastTicketUpdate} from './state/reports.selectors';
-import {AlertController, ModalController, NavController} from '@ionic/angular';
+import {AlertController, AlertOptions, ModalController, NavController} from '@ionic/angular';
 import {skip, switchMap} from 'rxjs/operators';
 import {updateTicket} from './state/reports.actions';
 import {Subscription} from 'rxjs';
+
+const DELETE: AlertOptions = {
+  cssClass: 'pap-alert',
+
+  header: 'Vuoi cancellare la segnalazione?',
+  message: 'questa operazione è irreversibile una volta eseguita',
+  buttons: [
+    {
+      text: 'ok',
+      role: 'delete-ok',
+      cssClass: 'pap-alert-btn-ok',
+    },
+    {
+      text: 'annulla',
+      role: 'annulla',
+    },
+  ],
+};
 
 @Component({
   selector: 'pap-reports-detail',
@@ -17,11 +41,14 @@ import {Subscription} from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class ReportsDetailComponent {
+  private _alertEVT: EventEmitter<AlertOptions> = new EventEmitter<AlertOptions>();
+  private _alertSub: Subscription = Subscription.EMPTY;
   private _lastTicketUpdateSub: Subscription = Subscription.EMPTY;
 
   @Input() report!: Ticket;
 
   isDustyMan$ = this._store.pipe(select(isDustyMan));
+  isVip$ = this._store.pipe(select(isVip));
   lastTicketUpdate$ = this._store.pipe(select(lastTicketUpdate));
 
   constructor(
@@ -66,14 +93,42 @@ export class ReportsDetailComponent {
         }),
       )
       .subscribe(res => {});
+
+    this._alertSub = this._alertEVT
+      .pipe(
+        switchMap(opt => this._alertCtrl.create(opt)),
+        switchMap(alert => {
+          alert.present();
+          return alert.onWillDismiss();
+        }),
+      )
+      .subscribe(val => {
+        if (val != null && val.role != null && val.role === 'delete-ok') {
+          const ticket: Partial<Ticket> = {id: +this.report.id, status: 'deleted'};
+          this._store.dispatch(updateTicket({data: ticket}));
+          this._modalCtrl.dismiss();
+        }
+      });
+  }
+
+  deleteTicket(): void {
+    this._alertEVT.emit(DELETE);
+  }
+
+  getStatusColor(status: string): string {
+    let color: string = 'red';
+    if (status === 'execute') color = 'red';
+
+    return color;
   }
 
   ionViewWillLeave(): void {
     this._lastTicketUpdateSub.unsubscribe();
+    this._alertSub.unsubscribe();
   }
 
-  ticketIsDone(): void {
-    const ticket: Partial<Ticket> = {id: +this.report.id, status: 'execute'};
+  ticketIs(status: string): void {
+    const ticket: Partial<Ticket> = {id: +this.report.id, status: status};
     this._store.dispatch(updateTicket({data: ticket}));
   }
 }
