@@ -58,7 +58,6 @@ export class AppComponent {
     private _navCtrl: NavController,
     private _alertCtrl: AlertController,
     private _modalCtrl: ModalController,
-    private _translateSvc: TranslateService,
     private _platform: Platform,
   ) {
     this._store.dispatch(loadAuths());
