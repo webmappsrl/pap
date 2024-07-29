@@ -25,8 +25,8 @@ export class PushNotificationsPageComponent implements OnInit {
     this._store.dispatch(removeAllDeliveredNotifications());
     this.pushNotifications$
       .pipe(
-        filter((notifications) => !!notifications && notifications.length > 0),
-        take(1)
+        filter(notifications => !!notifications && notifications.length > 0),
+        take(1),
       )
       .subscribe((notifications: PushNotification[] | undefined) => {
         if (notifications && notifications.length > 0) {

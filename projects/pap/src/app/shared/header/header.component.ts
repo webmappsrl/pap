@@ -18,7 +18,7 @@ import {selectHomeState} from '../../features/home/state/home.selectors';
 import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {selectHeaderState} from './state/header.selectors';
 import {deliveredNotifications} from '../../features/push-notification/state/push-notification.selectors';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 interface ActionEvt {
   action: string;
@@ -77,7 +77,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   action(action: string, url?: string, replaceUrl?: boolean): void {
-    this._actionEVT$.emit({ action, url, replaceUrl });
+    this._actionEVT$.emit({action, url, replaceUrl});
   }
 
   closeModal(): void {
