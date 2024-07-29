@@ -3,7 +3,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {PushNotification} from './push-notification.model';
 import {Store} from '@ngrx/store';
 import {pushNotifications} from './state/push-notification.selectors';
-import {take} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 import {removeAllDeliveredNotifications} from './state/push-notification.actions';
 
 @Component({
@@ -24,7 +24,10 @@ export class PushNotificationsPageComponent implements OnInit {
   ngOnInit(): void {
     this._store.dispatch(removeAllDeliveredNotifications());
     this.pushNotifications$
-      .pipe(take(1))
+      .pipe(
+        filter((notifications) => !!notifications && notifications.length > 0),
+        take(1)
+      )
       .subscribe((notifications: PushNotification[] | undefined) => {
         if (notifications && notifications.length > 0) {
           this.firstNotificationId$.next(notifications[0].id);

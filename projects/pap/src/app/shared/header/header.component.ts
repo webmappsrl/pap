@@ -18,9 +18,11 @@ import {selectHomeState} from '../../features/home/state/home.selectors';
 import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {selectHeaderState} from './state/header.selectors';
 import {deliveredNotifications} from '../../features/push-notification/state/push-notification.selectors';
+import { Router } from '@angular/router';
 
 interface ActionEvt {
   action: string;
+  replaceUrl?: boolean;
   url?: string;
 }
 
@@ -45,9 +47,11 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   headerView$ = this._store.pipe(select(selectHeaderState));
   homeView$ = this._store.pipe(select(selectHomeState));
   isLogged$ = this._store.pipe(select(isLogged));
+  isNotificationsPage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private _store: Store<AppState>,
+    private _router: Router,
     private _navCtrl: NavController,
     private _menuCtrl: MenuController,
     private _modalCtrl: ModalController,
@@ -63,13 +67,17 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
       }
       if (evt.action === buttonAction.NAVIGATION && evt.url) {
         this.closedMenu();
-        this._navCtrl.navigateForward(evt.url);
+        if (evt.replaceUrl) {
+          this._navCtrl.navigateRoot(evt.url);
+        } else {
+          this._navCtrl.navigateForward(evt.url);
+        }
       }
     });
   }
 
-  action(action: string, url?: string): void {
-    this._actionEVT$.emit({action, url});
+  action(action: string, url?: string, replaceUrl?: boolean): void {
+    this._actionEVT$.emit({ action, url, replaceUrl });
   }
 
   closeModal(): void {
@@ -86,6 +94,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
       this.hasDeliveredNotifications$.next((dnotifications && dnotifications.length > 0) || false);
       this._cdr.detectChanges();
     });
+    this.isNotificationsPage$.next(this._router.url.includes('push-notification'));
   }
 
   ngOnDestroy(): void {
