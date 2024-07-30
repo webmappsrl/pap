@@ -21,11 +21,10 @@ export class PushNotificationsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this._store.dispatch(removeAllDeliveredNotifications());
-    this.firstNotificationId$ = this.pushNotifications$
-      .pipe(
-        filter(notifications => !!notifications && notifications.length > 0),
-        take(1),
-        map(notifications => notifications![0].id)
-      )
+    this.firstNotificationId$ = this.pushNotifications$.pipe(
+      filter(notifications => !!notifications && notifications.length > 0),
+      take(1),
+      map(notifications => notifications![0].id),
+    );
   }
 }
