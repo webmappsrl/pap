@@ -26,7 +26,7 @@ export class BroadcastNotificationService {
     private _store: Store<AppState>,
     private _authSvc: AuthService,
     private _router: Router,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
   ) {
     if (Capacitor.getPlatform() !== 'web') {
       this.isLogged$

@@ -19,7 +19,7 @@ import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {selectHeaderState} from './state/header.selectors';
 import {deliveredNotifications} from '../../features/push-notification/state/push-notification.selectors';
 import {NavigationEnd, Router} from '@angular/router';
-import { filter } from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 
 interface ActionEvt {
   action: string;
@@ -109,10 +109,10 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     this._deliveredNotificationSub.unsubscribe();
   }
 
-  private _needBack():void{
+  private _needBack(): void {
     const currentUrl = this._router.url;
     const subPath = ['push-notification', 'reports/'];
-    const needBack =  subPath.some(element => currentUrl.includes(element));
+    const needBack = subPath.some(element => currentUrl.includes(element));
     this.needBack$.next(needBack);
   }
 }

@@ -11,10 +11,6 @@ import * as fromReports from './state/reports.reducer';
 
 @NgModule({
   declarations: [ReportsComponent, ReportsDetailComponent],
-  imports: [
-    CommonModule,
-    ReportsRoutingModule,
-    SharedModule,
-  ],
+  imports: [CommonModule, ReportsRoutingModule, SharedModule],
 })
 export class ReportsModule {}
