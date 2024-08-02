@@ -15,8 +15,6 @@ import * as fromReports from './state/reports.reducer';
     CommonModule,
     ReportsRoutingModule,
     SharedModule,
-    StoreModule.forFeature(fromReports.reportsFeatureKey, fromReports.reducer),
-    EffectsModule.forFeature([ReportsEffects]),
   ],
 })
 export class ReportsModule {}

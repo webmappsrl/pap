@@ -2,7 +2,7 @@
   <ion-toolbar class="pap-header">
     <ion-buttons slot="start">
       <ion-back-button
-      *ngIf="!(isNotificationsPage$|async)"
+        *ngIf="!(needBack$ | async); else backButton"
         icon="arrow-back-outline"
         text=""
         class="back-button"
@@ -10,9 +10,11 @@
         color="light"
       >
       </ion-back-button>
-      <ion-button *ngIf="(isNotificationsPage$|async)" (click)="action('navigation', '/home', true)" color="light">
-        <ion-icon slot="icon-only" name="arrow-back-outline" size="large"></ion-icon>
-      </ion-button>
+      <ng-template #backButton>
+        <ion-button (click)="action('navigation', '/home', true)">
+          <ion-icon slot="icon-only" name="arrow-back-outline" color="light" size="large"></ion-icon>
+        </ion-button>
+      </ng-template>
       <ion-menu-button color="white" *ngIf="startButton"></ion-menu-button>
       <ion-button (click)="closeModal()" *ngIf="modal" class="modal" color="light">
         <ion-icon name="arrow-back-outline" size="large"></ion-icon>

@@ -1,15 +1,14 @@
 import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
-import {Ticket} from './state/reports.effects';
 import {AppState} from '../../core/core.state';
 import {Store, select} from '@ngrx/store';
 import {isDustyMan} from '../../core/auth/state/auth.selectors';
-import {lastTicketUpdate, selectReportById} from './state/reports.selectors';
-import {AlertController, ModalController, NavController} from '@ionic/angular';
-import {skip, switchMap} from 'rxjs/operators';
-import {updateTicket} from './state/reports.actions';
+import {AlertController, NavController} from '@ionic/angular';
+import {skip, switchMap, take} from 'rxjs/operators';
 import {Subscription, Observable} from 'rxjs';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {ActivatedRoute} from '@angular/router';
+import {lastTicketUpdate, selectReportById} from '../reports/state/reports.selectors';
+import {Ticket} from '../reports/state/reports.effects';
+import {updateTicket} from '../reports/state/reports.actions';
 @Component({
   selector: 'pap-dusty-man-reports-detail',
   templateUrl: './dusty-man-reports-detail.component.html',
@@ -28,8 +27,6 @@ export class DustyManReportsDetailComponent {
   constructor(
     private _store: Store<AppState>,
     private _alertCtrl: AlertController,
-    private _activatedRoute: ActivatedRoute,
-    private _modalCtrl: ModalController,
     private _navCtrl: NavController,
     public sanitazer: DomSanitizer,
   ) {
@@ -80,7 +77,7 @@ export class DustyManReportsDetailComponent {
   }
 
   ticketIsDone(id: any): void {
-    const ticket: Partial<Ticket> = {id: +id, status: 'done'};
+    const ticket: Partial<Ticket> = {id: +id, status: 'collected'};
     this._store.dispatch(updateTicket({data: ticket}));
   }
 }

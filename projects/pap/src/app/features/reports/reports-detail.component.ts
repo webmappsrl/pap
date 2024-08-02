@@ -1,19 +1,13 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  ViewEncapsulation,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, ViewEncapsulation} from '@angular/core';
 import {Ticket} from './state/reports.effects';
 import {AppState} from '../../core/core.state';
 import {Store, select} from '@ngrx/store';
 import {isDustyMan, isVip} from '../../core/auth/state/auth.selectors';
-import {lastTicketUpdate} from './state/reports.selectors';
-import {AlertController, AlertOptions, ModalController, NavController} from '@ionic/angular';
-import {skip, switchMap} from 'rxjs/operators';
+import {lastTicketUpdate, selectReportById} from './state/reports.selectors';
+import {AlertController, AlertOptions, NavController} from '@ionic/angular';
+import {map, skip, switchMap} from 'rxjs/operators';
 import {updateTicket} from './state/reports.actions';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 const DELETE: AlertOptions = {
   cssClass: 'pap-alert',
@@ -45,18 +39,18 @@ export class ReportsDetailComponent {
   private _alertSub: Subscription = Subscription.EMPTY;
   private _lastTicketUpdateSub: Subscription = Subscription.EMPTY;
 
-  @Input() report!: Ticket;
-
   isDustyMan$ = this._store.pipe(select(isDustyMan));
   isVip$ = this._store.pipe(select(isVip));
   lastTicketUpdate$ = this._store.pipe(select(lastTicketUpdate));
+  report$: Observable<Ticket>;
 
   constructor(
     private _store: Store<AppState>,
     private _alertCtrl: AlertController,
     private _navCtrl: NavController,
-    private _modalCtrl: ModalController,
   ) {
+    this.report$ = this._store.pipe(select(selectReportById)) as Observable<Ticket>;
+
     this._lastTicketUpdateSub = this.lastTicketUpdate$
       .pipe(
         skip(1),
@@ -71,7 +65,7 @@ export class ReportsDetailComponent {
                 {
                   text: 'Ok',
                   handler: async () => {
-                    await this._modalCtrl.dismiss();
+                    this._navCtrl.back();
                   },
                 },
               ],
@@ -101,14 +95,21 @@ export class ReportsDetailComponent {
           alert.present();
           return alert.onWillDismiss();
         }),
+        switchMap(val => {
+          if (val != null && val.role != null && val.role === 'delete-ok') {
+            return this.report$.pipe(
+              map(report => {
+                const ticket: Partial<Ticket> = {id: +report.id, status: 'deleted'};
+                this._store.dispatch(updateTicket({data: ticket}));
+                this._navCtrl.back();
+              }),
+            );
+          } else {
+            return [];
+          }
+        }),
       )
-      .subscribe(val => {
-        if (val != null && val.role != null && val.role === 'delete-ok') {
-          const ticket: Partial<Ticket> = {id: +this.report.id, status: 'deleted'};
-          this._store.dispatch(updateTicket({data: ticket}));
-          this._modalCtrl.dismiss();
-        }
-      });
+      .subscribe();
   }
 
   deleteTicket(): void {
@@ -117,7 +118,7 @@ export class ReportsDetailComponent {
 
   getStatusColor(status: string): string {
     let color: string = 'red';
-    if (status === 'execute') color = 'red';
+    if (status === 'execute' || status === 'collected') color = 'green';
 
     return color;
   }
@@ -127,8 +128,8 @@ export class ReportsDetailComponent {
     this._alertSub.unsubscribe();
   }
 
-  ticketIs(status: string): void {
-    const ticket: Partial<Ticket> = {id: +this.report.id, status: status};
+  ticketIs(id: number, status: string): void {
+    const ticket: Partial<Ticket> = {id, status};
     this._store.dispatch(updateTicket({data: ticket}));
   }
 }
