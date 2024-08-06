@@ -45,9 +45,9 @@ export abstract class BaseCustomForm {
       if (field.type !== 'group') {
         const validators = this._getValidators(field);
         const value = user
-          ? ((user[field.id as keyof User] as any) ?? user.form_data?.[field.id] ?? '')
+          ? ((user[field.name as keyof User] as any) ?? user.form_data?.[field.name] ?? '')
           : '';
-        formGroup.addControl(field.id, fb.control(value, validators));
+        formGroup.addControl(field.name, fb.control(value, validators));
       }
     });
 
@@ -62,7 +62,7 @@ export abstract class BaseCustomForm {
   }
 
   isFieldRequired(field: FormJson): boolean {
-    return field.validators?.some(validator => validator.name === 'required') ?? false;
+    return field.rules?.some(rule => rule.name === 'required') ?? false;
   }
 
   private _getCustomValidator(customValidator: {name: string; args: string[]}) {
@@ -76,9 +76,9 @@ export abstract class BaseCustomForm {
 
   private _getValidators(field: FormJson): ValidatorFn[] {
     const validators: ValidatorFn[] = [];
-    if (field.validators) {
-      field.validators.forEach(validator => {
-        switch (validator.name) {
+    if (field.rules) {
+      field.rules.forEach(rule => {
+        switch (rule.name) {
           case 'required':
             validators.push(Validators.required);
             break;
@@ -86,7 +86,7 @@ export abstract class BaseCustomForm {
             validators.push(Validators.email);
             break;
           case 'minLength':
-            validators.push(Validators.minLength(validator.value));
+            validators.push(Validators.minLength(rule.value));
             break;
         }
       });

@@ -11,9 +11,9 @@ export const selectFormJsonByStep = (step: number) =>
 export const selectRequiredFields = createSelector(selectCompanyState, state =>
   state.formJson?.filter(
     field =>
-      field.validators?.some(validator => validator.name === 'required') &&
-      field.id !== 'password' &&
-      field.id !== 'password_confirmation',
+      field.rules?.some(validator => validator.name === 'required') &&
+      field.name !== 'password' &&
+      field.name !== 'password_confirmation',
   ),
 );
 export const selectError = createSelector(selectCompanyState, state => state.error);

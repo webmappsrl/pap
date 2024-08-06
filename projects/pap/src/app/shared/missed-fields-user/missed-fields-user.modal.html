@@ -14,12 +14,12 @@
               </ion-label>
               <ion-input
                 [type]="formField.type"
-                [formControlName]="formField.id"
+                [formControlName]="formField.name"
                 [placeholder]="formField.placeholder">
               </ion-input>
             </ion-item>
-            <ion-item *ngIf="missedForm.get(formField.id) != null && !missedForm.get(formField.id)!.valid">
-              <pap-error-form-handler [errors]="missedForm.get(formField.id)!.errors"></pap-error-form-handler>
+            <ion-item *ngIf="missedForm.get(formField.name) != null && !missedForm.get(formField.name)!.valid">
+              <pap-error-form-handler [errors]="missedForm.get(formField.name)!.errors"></pap-error-form-handler>
             </ion-item>
           </ng-container>
         </ng-container>

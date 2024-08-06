@@ -29,12 +29,12 @@ import {BaseCustomForm} from '../base-custom-form.component';
                 </ion-label>
                 <ion-input
                   [type]="formField.type"
-                  [formControlName]="formField.id"
+                  [formControlName]="formField.name"
                   [placeholder]="formField.placeholder">
                 </ion-input>
               </ion-item>
-              <ion-item *ngIf="secondStep.get(formField.id) != null && !secondStep.get(formField.id)!.valid">
-                <pap-error-form-handler [errors]="secondStep.get(formField.id)!.errors"></pap-error-form-handler>
+              <ion-item *ngIf="secondStep.get(formField.name) != null && !secondStep.get(formField.name)!.valid">
+                <pap-error-form-handler [errors]="secondStep.get(formField.name)!.errors"></pap-error-form-handler>
               </ion-item>
             </ng-container>
           </ng-container>

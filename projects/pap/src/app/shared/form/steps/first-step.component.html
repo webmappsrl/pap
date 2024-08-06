@@ -12,13 +12,13 @@
               </ion-label>
               <ion-input
                 [type]="formField.type"
-                [formControlName]="formField.id"
+                [formControlName]="formField.name"
                 [placeholder]="formField.placeholder"
-                [disabled]="disable.indexOf(formField.id)> -1">
+                [disabled]="disable.indexOf(formField.name)> -1">
               </ion-input>
             </ion-item>
-            <ion-item *ngIf="firstStep.get(formField.id) != null && !firstStep.get(formField.id)!.valid" class="error-input-{{formField.id}}">
-              <pap-error-form-handler [errors]="firstStep.get(formField.id)!.errors"></pap-error-form-handler>
+            <ion-item *ngIf="firstStep.get(formField.name) != null && !firstStep.get(formField.name)!.valid" class="error-input-{{formField.name}}">
+              <pap-error-form-handler [errors]="firstStep.get(formField.name)!.errors"></pap-error-form-handler>
             </ion-item>
           </ng-container>
         </ng-container>

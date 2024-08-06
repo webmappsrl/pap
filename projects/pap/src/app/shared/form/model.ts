@@ -15,12 +15,12 @@ export type TicketType = 'reservation' | 'info' | 'abandonment' | 'report';
 
 export interface FormJson {
   customValidator?: {name: string; args: any[]};
-  id: string;
   label?: string;
+  name: string;
   placeholder?: string;
+  rules?: {name: string; value?: any}[];
   step: number;
   type: string;
-  validators?: {name: string; value?: any}[];
 }
 
 export interface SuccessData<T> {
