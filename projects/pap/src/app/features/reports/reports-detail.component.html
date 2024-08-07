@@ -1,7 +1,7 @@
 <ion-header>
-  <pap-header [modal]="true"></pap-header>
+  <pap-header></pap-header>
 </ion-header>
-<ion-content *ngIf="report as rep">
+<ion-content *ngIf="report$|async as rep">
   <ion-card>
     <ion-card-header>
       <ion-card-title>
@@ -10,7 +10,7 @@
             <ion-col
               size="12"
               class="pap-col-reports-detail-ticket-type">
-              <ng-container [ngSwitch]="report.ticket_type">
+              <ng-container [ngSwitch]="rep.ticket_type">
                 <ion-icon
                   name="trash-bin"
                   *ngSwitchCase="'abandonment'"></ion-icon>
@@ -196,11 +196,11 @@
       </ion-item>
 
       <ion-item *ngIf="isDustyMan$|async; else noDustyMan">
-        <ion-button (click)="ticketIs('execute')">ritiro effettuato</ion-button>
+        <ion-button (click)="ticketIs(rep.id, 'execute')">ritiro effettuato</ion-button>
       </ion-item>
       <ng-template #noDustyMan>
-        <ion-item *ngIf="!(isVip$|async)">
-          <ion-button (click)="ticketIs('done')">segnalazione risolta</ion-button>
+        <ion-item>
+          <ion-button (click)="ticketIs(rep.id, 'done')">segnalazione risolta</ion-button>
         </ion-item>
       </ng-template>
 

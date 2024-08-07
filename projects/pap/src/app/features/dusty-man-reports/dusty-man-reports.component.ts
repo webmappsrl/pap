@@ -6,11 +6,11 @@ import {AppState} from '../../core/core.state';
 import {setTrashBookType} from '../trash-book/state/trash-book.actions';
 import {TrashBookType} from '../trash-book/trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book/trash-book-type/trash-book-type.component';
-import {loadTickets, selectTicketById} from './state/reports.actions';
-import {Ticket} from './state/reports.effects';
-import {selectReports} from './state/reports.selectors';
 import {BehaviorSubject, Subscription, interval} from 'rxjs';
 import {Router} from '@angular/router';
+import {selectReports} from '../reports/state/reports.selectors';
+import {loadTickets, selectTicketById} from '../reports/state/reports.actions';
+import {Ticket} from '../reports/state/reports.effects';
 
 @Component({
   selector: 'pap-dusty-man-reports',

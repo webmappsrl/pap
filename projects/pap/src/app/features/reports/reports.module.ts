@@ -11,12 +11,6 @@ import * as fromReports from './state/reports.reducer';
 
 @NgModule({
   declarations: [ReportsComponent, ReportsDetailComponent],
-  imports: [
-    CommonModule,
-    ReportsRoutingModule,
-    SharedModule,
-    StoreModule.forFeature(fromReports.reportsFeatureKey, fromReports.reducer),
-    EffectsModule.forFeature([ReportsEffects]),
-  ],
+  imports: [CommonModule, ReportsRoutingModule, SharedModule],
 })
 export class ReportsModule {}

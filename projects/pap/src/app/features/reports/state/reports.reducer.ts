@@ -5,6 +5,7 @@ import {Ticket} from './reports.effects';
 export const reportsFeatureKey = 'reports';
 
 export interface State {
+  lastTicketSelected?: Ticket;
   lastTicketUpdate?: Ticket;
   reports: Ticket[];
   ticketById?: Ticket;
@@ -38,6 +39,12 @@ export const reducer = createReducer(
     return {
       ...state,
       lastTicketUpdate: undefined,
+    };
+  }),
+  on(ReportsActions.selectTicketById, (state, action) => {
+    return {
+      ...state,
+      lastTicketSelected: state.reports.filter(r => r.id === +action.id)[0] ?? undefined,
     };
   }),
 );

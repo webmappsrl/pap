@@ -22,6 +22,8 @@ import {PushNotificationEffects} from '../features/push-notification/state/push-
 import * as fromPushnotification from '../features/push-notification/state/push-notification.reducer';
 import {CompanyEffects} from '../shared/form/state/company.effects';
 import * as fromCompany from '../shared/form/state/company.reducer';
+import {ReportsEffects} from '../features/reports/state/reports.effects';
+import * as fromReports from '../features/reports/state/reports.reducer';
 @NgModule({
   declarations: [LayoutComponent],
   imports: [
@@ -44,6 +46,7 @@ import * as fromCompany from '../shared/form/state/company.reducer';
       fromPushnotification.reducer,
     ),
     StoreModule.forFeature(fromCompany.companyFeatureKey, fromCompany.reducer),
+    StoreModule.forFeature(fromReports.reportsFeatureKey, fromReports.reducer),
     EffectsModule.forRoot([
       LayoutEffects,
       TrashBookEffects,
@@ -51,6 +54,7 @@ import * as fromCompany from '../shared/form/state/company.reducer';
       CalendarEffects,
       PushNotificationEffects,
       CompanyEffects,
+      ReportsEffects,
     ]),
     IonicModule.forRoot({
       rippleEffect: false,

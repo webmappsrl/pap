@@ -6,8 +6,8 @@ import {SharedModule} from '../../shared/shared.module';
 import {DustyManReportsDetailComponent} from './dusty-man-reports-detail.component';
 import {ReportsRoutingModule} from './dusty-man-reports-routing.module';
 import {DustyManReportsComponent} from './dusty-man-reports.component';
-import {ReportsEffects} from './state/reports.effects';
-import * as fromReports from './state/reports.reducer';
+import * as fromReports from '../reports/state/reports.reducer';
+import {ReportsEffects} from '../reports/state/reports.effects';
 
 @NgModule({
   declarations: [DustyManReportsComponent, DustyManReportsDetailComponent],

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {Capacitor} from '@capacitor/core';
 import {DeliveredNotifications, PushNotifications} from '@capacitor/push-notifications';
 import {Store, select} from '@ngrx/store';
@@ -8,15 +8,12 @@ import {AuthService} from '../../core/auth/state/auth.service';
 import {AppState} from '../../core/core.state';
 import {Router} from '@angular/router';
 import {
-  selectTicketById,
-  loadTickets,
-} from '../../features/dusty-man-reports/state/reports.actions';
-import {selectReports} from '../../features/dusty-man-reports/state/reports.selectors';
-import {
   getDeliveredNotification,
   loadPushNotification,
 } from '../../features/push-notification/state/push-notification.actions';
 import {Observable, from} from 'rxjs';
+import {selectReports} from '../../features/reports/state/reports.selectors';
+import {loadTickets, selectTicketById} from '../../features/reports/state/reports.actions';
 @Injectable({
   providedIn: 'root',
 })
@@ -29,6 +26,7 @@ export class BroadcastNotificationService {
     private _store: Store<AppState>,
     private _authSvc: AuthService,
     private _router: Router,
+    private _ngZone: NgZone,
   ) {
     if (Capacitor.getPlatform() !== 'web') {
       this.isLogged$
@@ -46,31 +44,19 @@ export class BroadcastNotificationService {
           });
 
           await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-            console.log(
-              'Push notification action performed',
-              notification.actionId,
-              notification.inputValue,
-            );
+            console.log('in pushNotificationActionPerformed');
             console.log('Push notification action performed', JSON.stringify(notification));
-            const jsonDataString = notification.notification.data['gcm.notification.data'];
-            if (!jsonDataString) {
-              this._store.dispatch(loadPushNotification());
-              this._router.navigate(['/push-notification']);
-            } else {
-              const jsonData = JSON.parse(jsonDataString);
-              const ticketId = jsonData.ticket_id ?? null;
-              this.userRoles$.pipe(take(1)).subscribe(roles => {
-                if (roles.includes('dusty_man')) {
-                  this._store.dispatch(loadTickets());
-                  setTimeout(() => {
-                    this.selectReports$.pipe(take(1)).subscribe(d => {
-                      this._store.dispatch(selectTicketById({id: ticketId}));
-                      this._router.navigate(['/dusty-man-reports', ticketId]);
-                    });
-                  }, 1500);
-                }
-              });
+            const data = notification.notification.data;
+            switch (data.page_on_click) {
+              case '/push-notification':
+                this._store.dispatch(loadPushNotification());
+                break;
+              case '/dusty-man-reports':
+              case '/reports':
+                this._navigateToReportsPage(data.page_on_click, data.ticket_id);
+                break;
             }
+
             this._store.dispatch(getDeliveredNotification());
           });
           await PushNotifications.addListener('registration', token => {
@@ -102,6 +88,22 @@ export class BroadcastNotificationService {
 
   removeAllDeliveredNotifications(): Observable<void> {
     return from(PushNotifications.removeAllDeliveredNotifications());
+  }
+
+  private _navigateToReportsPage(path: string, ticketId: number | null): void {
+    console.log('in _navigateToReportsPage');
+    this._store.dispatch(loadTickets());
+    this.selectReports$
+      .pipe(
+        filter(r => !!r && r.length > 0),
+        take(1),
+      )
+      .subscribe(d => {
+        this._store.dispatch(selectTicketById({id: ticketId!}));
+        this._ngZone.run(() => {
+          this._router.navigate([path, ticketId ?? null]);
+        });
+      });
   }
 
   private async _registerNotifications(): Promise<void> {

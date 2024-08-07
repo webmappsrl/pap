@@ -18,7 +18,8 @@ import {selectHomeState} from '../../features/home/state/home.selectors';
 import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {selectHeaderState} from './state/header.selectors';
 import {deliveredNotifications} from '../../features/push-notification/state/push-notification.selectors';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
+import {filter} from 'rxjs/operators';
 
 interface ActionEvt {
   action: string;
@@ -37,6 +38,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   private _actionEVT$: EventEmitter<ActionEvt> = new EventEmitter<ActionEvt>();
   private _actionEVTSub: Subscription = Subscription.EMPTY;
   private _deliveredNotificationSub: Subscription = Subscription.EMPTY;
+  private _routerEventsSub: Subscription = Subscription.EMPTY;
 
   @Input() endButton: boolean = false;
   @Input() modal: boolean = false;
@@ -47,7 +49,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   headerView$ = this._store.pipe(select(selectHeaderState));
   homeView$ = this._store.pipe(select(selectHomeState));
   isLogged$ = this._store.pipe(select(isLogged));
-  isNotificationsPage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  needBack$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private _store: Store<AppState>,
@@ -74,6 +76,12 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
         }
       }
     });
+
+    this._routerEventsSub = this._router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this._needBack();
+      });
   }
 
   action(action: string, url?: string, replaceUrl?: boolean): void {
@@ -94,11 +102,17 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
       this.hasDeliveredNotifications$.next((dnotifications && dnotifications.length > 0) || false);
       this._cdr.detectChanges();
     });
-    this.isNotificationsPage$.next(this._router.url.includes('push-notification'));
   }
 
   ngOnDestroy(): void {
     this._actionEVTSub.unsubscribe();
     this._deliveredNotificationSub.unsubscribe();
+  }
+
+  private _needBack(): void {
+    const currentUrl = this._router.url;
+    const subPath = ['push-notification', 'reports/'];
+    const needBack = subPath.some(element => currentUrl.includes(element));
+    this.needBack$.next(needBack);
   }
 }

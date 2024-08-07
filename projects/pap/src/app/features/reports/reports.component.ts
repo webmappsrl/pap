@@ -11,10 +11,10 @@ import {AppState} from '../../core/core.state';
 import {setTrashBookType} from '../trash-book/state/trash-book.actions';
 import {TrashBookType} from '../trash-book/trash-book-model';
 import {TrashBookTypeComponent} from '../trash-book/trash-book-type/trash-book-type.component';
-import {ReportsDetailComponent} from './reports-detail.component';
-import {loadTickets} from './state/reports.actions';
+import {loadTickets, selectTicketById} from './state/reports.actions';
 import {Ticket} from './state/reports.effects';
 import {selectReports} from './state/reports.selectors';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'pap-reports',
@@ -30,6 +30,7 @@ export class ReportsComponent {
     private _store: Store<AppState>,
     private _modalCtrl: ModalController,
     private _cdr: ChangeDetectorRef,
+    private _router: Router,
   ) {}
 
   ionViewWillEnter(): void {
@@ -38,13 +39,8 @@ export class ReportsComponent {
   }
 
   openDetail(report: Ticket) {
-    this._modalCtrl
-      .create({
-        component: ReportsDetailComponent,
-        showBackdrop: true,
-        componentProps: {report},
-      })
-      .then(modal => modal.present());
+    this._store.dispatch(selectTicketById({id: report.id}));
+    this._router.navigate(['/reports', report.id]);
   }
 
   openTrashTypeDetail(tbType: TrashBookType, event: Event) {
