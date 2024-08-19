@@ -118,7 +118,7 @@ export class ReportsDetailComponent {
 
   getStatusColor(status: string): string {
     let color: string = 'red';
-    if (status === 'execute' || status === 'collected') color = 'green';
+    if (status === 'execute') color = 'green';
 
     return color;
   }

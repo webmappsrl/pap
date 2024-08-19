@@ -3,7 +3,7 @@ import {AppState} from '../../core/core.state';
 import {Store, select} from '@ngrx/store';
 import {isDustyMan} from '../../core/auth/state/auth.selectors';
 import {AlertController, NavController} from '@ionic/angular';
-import {skip, switchMap, take} from 'rxjs/operators';
+import {skip, switchMap} from 'rxjs/operators';
 import {Subscription, Observable} from 'rxjs';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {lastTicketUpdate, selectReportById} from '../reports/state/reports.selectors';
@@ -77,7 +77,7 @@ export class DustyManReportsDetailComponent {
   }
 
   ticketIsDone(id: any): void {
-    const ticket: Partial<Ticket> = {id: +id, status: 'collected'};
+    const ticket: Partial<Ticket> = {id: +id, status: 'execute'};
     this._store.dispatch(updateTicket({data: ticket}));
   }
 }
