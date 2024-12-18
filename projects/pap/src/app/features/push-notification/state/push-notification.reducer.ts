@@ -16,6 +16,7 @@ export const pushNotificationFeatureKey = 'push-notification';
 export interface PushNotificationState {
   deliveredNotifications?: PushNotificationSchema[];
   error: string;
+  firstNotificationId?: number;
   pushNotifications?: PushNotification[];
 }
 
@@ -31,6 +32,7 @@ export const reducer = createReducer(
   on(loadPushNotificationSuccess, (state, {pushNotifications}) => ({
     ...state,
     pushNotifications,
+    firstNotificationId: pushNotifications?.[0]?.id,
   })),
   on(loadPushNotificationFailure, (state, {error}) => ({
     ...state,

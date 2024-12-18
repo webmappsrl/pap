@@ -16,3 +16,7 @@ export const deliveredNotifications = createSelector(
 export const hasDeliveredNotifications = createSelector(deliveredNotifications, dnotifications => {
   return dnotifications && dnotifications.length > 0;
 });
+export const firstNotificationId = createSelector(
+  selectPushNotificationState,
+  state => state.firstNotificationId,
+);
