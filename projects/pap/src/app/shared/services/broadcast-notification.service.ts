@@ -53,7 +53,7 @@ export class BroadcastNotificationService {
                 break;
               case '/dusty-man-reports':
               case '/reports':
-                if(data.ticket_id) {
+                if (data.ticket_id) {
                   this._navigateToReportsPage(data.page_on_click, +data.ticket_id);
                 }
                 break;
