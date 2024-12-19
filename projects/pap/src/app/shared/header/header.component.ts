@@ -99,16 +99,18 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   navigateToHome(): void {
-    this.userRoles$.pipe(
-      take(1),
-      tap(roles => {
-        if (roles.some(r => r === 'dusty_man')) {
-          this._navCtrl.navigateRoot('/dusty-man-reports');
-        } else {
-          this._navCtrl.navigateRoot('/home');
-        }
-      })
-    ).subscribe();
+    this.userRoles$
+      .pipe(
+        take(1),
+        tap(roles => {
+          if (roles.some(r => r === 'dusty_man')) {
+            this._navCtrl.navigateRoot('/dusty-man-reports');
+          } else {
+            this._navCtrl.navigateRoot('/home');
+          }
+        }),
+      )
+      .subscribe();
   }
 
   ngAfterViewInit(): void {
