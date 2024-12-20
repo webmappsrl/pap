@@ -25,7 +25,7 @@ export const environment = {
       other_info_url: "https://ersu.it/sportello-on-line/come-possiamo-aiutarti/"
     }
   },
-  api: "https://dev.portapporta.webmapp.it/api/v1",
+  api: "https://dev.portapporta.webmapp.it/api/v2",
   GOOOGLEAPIKEY: "",
   production: false
 }
