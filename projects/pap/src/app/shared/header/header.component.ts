@@ -11,7 +11,7 @@ import {
 import {MenuController, ModalController, NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
 import {BehaviorSubject, Subscription} from 'rxjs';
-import {isLogged} from '../../core/auth/state/auth.selectors';
+import {isLogged, userRoles} from '../../core/auth/state/auth.selectors';
 import {AppState} from '../../core/core.state';
 import {buttonAction} from '../../features/home/home.model';
 import {selectHomeState} from '../../features/home/state/home.selectors';
@@ -19,7 +19,7 @@ import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {selectHeaderState} from './state/header.selectors';
 import {deliveredNotifications} from '../../features/push-notification/state/push-notification.selectors';
 import {NavigationEnd, Router} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 
 interface ActionEvt {
   action: string;
@@ -50,6 +50,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   homeView$ = this._store.pipe(select(selectHomeState));
   isLogged$ = this._store.pipe(select(isLogged));
   needBack$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  userRoles$ = this._store.pipe(select(userRoles));
 
   constructor(
     private _store: Store<AppState>,
@@ -97,6 +98,16 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     this._store.dispatch(closeMenu());
   }
 
+  navigateToHome(): void {
+    this.userRoles$.pipe(take(1)).subscribe(roles => {
+      if (roles.some(r => r === 'dusty_man')) {
+        this._navCtrl.navigateRoot('/dusty-man-reports');
+      } else {
+        this._navCtrl.navigateRoot('/home');
+      }
+    });
+  }
+
   ngAfterViewInit(): void {
     this._deliveredNotificationSub = this.deliveredNotifications$.subscribe(dnotifications => {
       this.hasDeliveredNotifications$.next((dnotifications && dnotifications.length > 0) || false);
@@ -114,5 +125,6 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     const subPath = ['push-notification', 'reports/'];
     const needBack = subPath.some(element => currentUrl.includes(element));
     this.needBack$.next(needBack);
+    this._cdr.detectChanges();
   }
 }
