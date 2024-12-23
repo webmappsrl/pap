@@ -1,5 +1,31 @@
 # Changelog pap
 
+## [2.5.0](https://github.com/webmappsrl/pap/compare/v2.4.2...v2.5.0) (2024-12-23)
+
+
+### Features
+
+* click push notifications oc: 3696 ([#68](https://github.com/webmappsrl/pap/issues/68)) ([1d0a22a](https://github.com/webmappsrl/pap/commit/1d0a22a7afa51c51a50d503f17861c2aa01042fa))
+* delete ticket ([#66](https://github.com/webmappsrl/pap/issues/66)) ([8b0d543](https://github.com/webmappsrl/pap/commit/8b0d543776fb719d1f87bfe7461c73133471d7bd))
+* use the customizable registration form oc: 2908 ([#65](https://github.com/webmappsrl/pap/issues/65)) ([88fec05](https://github.com/webmappsrl/pap/commit/88fec05cc2b93f714ced89d3613264bf057db4ff))
+
+
+### Bug Fixes
+
+* e2eLogin ([72fbbcf](https://github.com/webmappsrl/pap/commit/72fbbcf7183cc20cc6dc22d250c587992c09a2ef)), closes [#123](https://github.com/webmappsrl/pap/issues/123)
+* update form field references in auth and form components ([d24dfe2](https://github.com/webmappsrl/pap/commit/d24dfe2f9a3acece1b987137f5201aea6c399c66))
+
+
+### Miscellaneous
+
+* Removed unused TranslateService from AppComponent ([7540065](https://github.com/webmappsrl/pap/commit/75400657662af90e83792087524c04f44d8bd4b8))
+* Update BroadcastNotificationService oc: 4509 ([#71](https://github.com/webmappsrl/pap/issues/71)) ([9c1f46a](https://github.com/webmappsrl/pap/commit/9c1f46aaa1e69728a8604f854cff7c002fd5944d))
+* Update dependencies and translations ([f4c05b9](https://github.com/webmappsrl/pap/commit/f4c05b9d87d2a1a350ad2c2ad382d5d9c159de93))
+* Update header component oc: 3696 ([#67](https://github.com/webmappsrl/pap/issues/67)) ([0766e36](https://github.com/webmappsrl/pap/commit/0766e366606d7c7f0e6d461ccbaa78618f7b5abb))
+* Update header component oc: 4510 ([#72](https://github.com/webmappsrl/pap/issues/72)) ([e5c3f23](https://github.com/webmappsrl/pap/commit/e5c3f23ad86393eb95957d1ff36a05e98f44ef16))
+* Update launch.json and gulpfile.ts ([c11c1db](https://github.com/webmappsrl/pap/commit/c11c1dbe1e1cc3feacab4307e936a2f7543768d5))
+* Update upload-artifact action to v3 in job_test.yml ([121092e](https://github.com/webmappsrl/pap/commit/121092e21ef3c21bca4e1989eb92fdafd4bc8982))
+
 ## [2.4.2](https://github.com/webmappsrl/pap/compare/v2.4.1...v2.4.2) (2024-05-16)
 
 ### Miscellaneous
