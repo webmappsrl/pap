@@ -93,14 +93,13 @@ export class BroadcastNotificationService {
   }
 
   private _navigateToReportsPage(path: string, ticketId: number): void {
-    console.log('in _navigateToReportsPage');
     this._store.dispatch(loadTickets());
     this.selectReports$
       .pipe(
         filter(r => !!r && r.length > 0 && !!r.find(t => t.id == ticketId)),
         take(1),
       )
-      .subscribe(d => {
+      .subscribe(_ => {
         this._store.dispatch(selectTicketById({id: ticketId}));
         this._ngZone.run(() => {
           this._router.navigate([path, ticketId]);
