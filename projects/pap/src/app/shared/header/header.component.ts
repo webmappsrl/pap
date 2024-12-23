@@ -19,7 +19,7 @@ import {closeMenu, loadHeaders, openMenu} from './state/header.actions';
 import {selectHeaderState} from './state/header.selectors';
 import {deliveredNotifications} from '../../features/push-notification/state/push-notification.selectors';
 import {NavigationEnd, Router} from '@angular/router';
-import {filter, take, tap} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
 
 interface ActionEvt {
   action: string;
@@ -102,15 +102,14 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     this.userRoles$
       .pipe(
         take(1),
-        tap(roles => {
-          if (roles.some(r => r === 'dusty_man')) {
-            this._navCtrl.navigateRoot('/dusty-man-reports');
-          } else {
-            this._navCtrl.navigateRoot('/home');
-          }
-        }),
       )
-      .subscribe();
+      .subscribe(roles => {
+        if (roles.some(r => r === 'dusty_man')) {
+          this._navCtrl.navigateRoot('/dusty-man-reports');
+        } else {
+          this._navCtrl.navigateRoot('/home');
+        }
+      });
   }
 
   ngAfterViewInit(): void {
