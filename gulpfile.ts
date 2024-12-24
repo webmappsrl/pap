@@ -108,7 +108,17 @@ gulp.task('build', async () => {
     await download(config.resources.push_notification_json_url, `android/app/google-services.json`);
     await ionicBuild();
     await ionicBuildIos();
-    await ionicBuildIAndroid();
+    await ionicBuildAndroid();
+    try {
+      await ensureWritableAndCopy(
+        './android-custom/variables.gradle', // File sorgente
+        './android/variables.gradle', // File di destinazione
+        './android', // Directory
+      );
+    } catch (error) {
+      console.error('Errore durante l’operazione di copia:', error);
+    }
+
     await addPermissionsToAndroidManifest();
     await modifyStringsXml(config);
     console.log('VERSION: ', version);
@@ -373,7 +383,7 @@ const ionicBuildIos = (): Promise<void> => {
   });
 };
 
-const ionicBuildIAndroid = (): Promise<void> => {
+const ionicBuildAndroid = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     const cmd = `ionic  build android --prod`;
     exec(cmd, (error, stdout, stderr) => {
@@ -586,4 +596,53 @@ function buildVersion(version: string): string {
 
   // Concatenare i numeri in una stringa senza punti
   return numbers.join('');
+}
+
+/**
+ * Assicura che una directory sia scrivibile e copia un file al suo interno.
+ * @param sourcePath - Percorso del file sorgente.
+ * @param destinationPath - Percorso del file di destinazione.
+ * @param directoryPath - Percorso della directory di destinazione.
+ */
+async function ensureWritableAndCopy(
+  sourcePath: string,
+  destinationPath: string,
+  directoryPath: string,
+): Promise<void> {
+  try {
+    // Assicura che la directory sia scrivibile
+    await ensureWritableDirectory(directoryPath);
+
+    // Copia il file nella destinazione
+    await fsExtra.copy(sourcePath, destinationPath, {overwrite: true});
+    console.log(`File copiato con successo da "${sourcePath}" a "${destinationPath}".`);
+  } catch (error) {
+    console.error(
+      `Errore durante la copia del file "${sourcePath}" nella directory "${directoryPath}":`,
+      error,
+    );
+    throw error;
+  }
+}
+
+/**
+ * Assicura che la directory abbia i permessi di lettura e scrittura.
+ * Se non esiste, la crea.
+ * @param path - Percorso della directory.
+ */
+async function ensureWritableDirectory(path: string): Promise<void> {
+  try {
+    // Verifica se la directory esiste
+    if (!fs.existsSync(path)) {
+      console.log(`Directory "${path}" non trovata, creazione in corso...`);
+      fs.mkdirSync(path, {recursive: true}); // Crea la directory se non esiste
+    }
+
+    // Imposta i permessi di lettura e scrittura (775)
+    fs.chmodSync(path, 0o775);
+    console.log(`Permessi impostati per la directory: ${path}`);
+  } catch (error) {
+    console.error(`Errore nell'assicurare i permessi della directory "${path}":`, error);
+    throw error;
+  }
 }
