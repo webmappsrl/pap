@@ -1,5 +1,13 @@
 # Changelog pap
 
+## [2.5.1](https://github.com/webmappsrl/pap/compare/v2.5.0...v2.5.1) (2024-12-24)
+
+
+### Miscellaneous
+
+* Add custom variables.gradle file and copy it to the Android project ([4ab87aa](https://github.com/webmappsrl/pap/commit/4ab87aa812dbb0a4c7d48fe5ecb7f402236526f4))
+* update package-lock.json ([cacc445](https://github.com/webmappsrl/pap/commit/cacc4454fa0c87865c3d443f4ef23ae8cb773b66))
+
 ## [2.5.0](https://github.com/webmappsrl/pap/compare/v2.4.2...v2.5.0) (2024-12-23)
 
 ### Features
