@@ -43,10 +43,9 @@ export const missedUserFields = createSelector(
       ? []
       : (requiredFields?.filter(requiredField => {
           return (
-            (user as any)[requiredField?.name] === null &&
-            (user.form_data?.[requiredField?.name] === null ||
-              user.form_data?.[requiredField?.name] === undefined ||
-              user.form_data?.[requiredField?.name] === '')
+            (user as any)[requiredField?.name] == null &&
+            (user.form_data?.[requiredField?.name] == null ||
+              user.form_data?.[requiredField?.name] == '')
           );
         }) ?? []);
   },
