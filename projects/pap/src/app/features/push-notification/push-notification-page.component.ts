@@ -16,6 +16,7 @@ import {
 })
 export class PushNotificationsPageComponent implements OnInit {
   private _firstNotificationIdSub: Subscription = Subscription.EMPTY;
+  private _pushNotificationsSub: Subscription = Subscription.EMPTY;
 
   firstNotificationId$: Observable<number | undefined> = this._store.select(firstNotificationId);
   pushNotifications$: Observable<PushNotification[] | undefined> =
@@ -28,14 +29,18 @@ export class PushNotificationsPageComponent implements OnInit {
   ) {}
 
   ngOnDestroy(): void {
+    this._pushNotificationsSub.unsubscribe();
     this._firstNotificationIdSub.unsubscribe();
   }
 
   ngOnInit(): void {
     this._store.dispatch(removeAllDeliveredNotifications());
     this._store.dispatch(loadPushNotification());
-    this._firstNotificationIdSub = this.firstNotificationId$.subscribe(() =>
-      this._ngZone.run(() => this._cdr.detectChanges()),
-    );
+    this._pushNotificationsSub = this.pushNotifications$.subscribe(() => {
+      this._ngZone.run(() => this._cdr.detectChanges());
+    });
+    this._firstNotificationIdSub = this.firstNotificationId$.subscribe(() => {
+      this._ngZone.run(() => this._cdr.detectChanges());
+    });
   }
 }
