@@ -1,5 +1,12 @@
 # Changelog pap
 
+## [2.5.2](https://github.com/webmappsrl/pap/compare/v2.5.1...v2.5.2) (2025-01-14)
+
+
+### Miscellaneous
+
+* Update auth.selectors.ts ([#76](https://github.com/webmappsrl/pap/issues/76)) ([0f4152b](https://github.com/webmappsrl/pap/commit/0f4152be96b8af724c34e511d22319f8780806f6))
+
 ## [2.5.1](https://github.com/webmappsrl/pap/compare/v2.5.0...v2.5.1) (2024-12-24)
 
 ### Miscellaneous
