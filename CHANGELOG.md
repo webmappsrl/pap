@@ -1,5 +1,12 @@
 # Changelog pap
 
+## [2.5.3](https://github.com/webmappsrl/pap/compare/v2.5.2...v2.5.3) (2025-01-15)
+
+
+### Bug Fixes
+
+* Fix date formatting in push notification page component ([6a68133](https://github.com/webmappsrl/pap/commit/6a68133280161916b0e8a2fec3acc0c756d89a21))
+
 ## [2.5.2](https://github.com/webmappsrl/pap/compare/v2.5.1...v2.5.2) (2025-01-14)
 
 ### Miscellaneous
