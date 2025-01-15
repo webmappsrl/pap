@@ -15,10 +15,7 @@ import {loadCalendars} from '../calendar/state/calendar.actions';
 export class ReportTicketComponent {
   form: TicketFormConf = reportTicketForm;
 
-  constructor(
-    private _navCtrl: NavController,
-    private _store: Store<AppState>,
-  ) {}
+  constructor(private _navCtrl: NavController, private _store: Store<AppState>) {}
 
   exitPage(): void {
     this._navCtrl.pop();
@@ -29,8 +26,8 @@ export class ReportTicketComponent {
   }
 
   ionViewWillEnter(): void {
-    const stop_date = fm(subDays(new Date(), 1), 'd-M-Y');
-    const start_date = fm(subDays(new Date(), 15), 'd-M-Y');
+    const start_date = fm(subDays(new Date(), 15), 'd-M-yyyy');
+    const stop_date = fm(new Date(), 'd-M-yyyy');
     this._store.dispatch(loadCalendars({start_date, stop_date}));
   }
 
