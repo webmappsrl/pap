@@ -83,7 +83,7 @@ export class LocalNotificationService {
         body += `${trashObj.name['it']}, `;
       });
     }
-    body += `esporre i sacchetti dalle ore ${calendarRow.start_time} alle ore ${calendarRow.stop_time}`;
+    body += `il ritiro verrà effettuato dalle ore ${calendarRow.start_time} alle ore ${calendarRow.stop_time}`;
     return body;
   }
 
