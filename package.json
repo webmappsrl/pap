@@ -17,7 +17,8 @@
     "cy:action": "cypress run --browser chrome",
     "e2e": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy:run\" --kill-others --success first",
     "e2e-gui": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy:open\" --kill-others --success first",
-    "serve-wastes-elements": "ionic serve --configuration=elements"
+    "serve-wastes-elements": "ionic serve --configuration=elements",
+    "build-wastes-elements": "ionic build --configuration=elements"
   },
   "private": true,
   "dependencies": {
