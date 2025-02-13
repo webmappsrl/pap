@@ -32,14 +32,16 @@ export class TrashBookElementComponent implements OnDestroy {
 
   buttonClick(item: TrashBookRow): void {
     this._store.dispatch(setTrashBookDetail({trashBookDetail: item}));
-    this._modalCtrl.create({
-      showBackdrop: true,
-      backdropDismiss: true,
-      component: TrashBookDetailsComponent,
-      componentProps: {
-        modal: true,
-      },
-    }).then(modal => modal.present());
+    this._modalCtrl
+      .create({
+        showBackdrop: true,
+        backdropDismiss: true,
+        component: TrashBookDetailsComponent,
+        componentProps: {
+          modal: true,
+        },
+      })
+      .then(modal => modal.present());
   }
 
   ngOnDestroy(): void {

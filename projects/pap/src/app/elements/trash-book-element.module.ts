@@ -7,12 +7,7 @@ import {SharedModule} from '../shared/shared.module';
 import {CoreModule} from '../core/core.module';
 @NgModule({
   declarations: [TrashBookElementComponent],
-  imports: [
-    BrowserModule,
-    IonicModule,
-    SharedModule,
-    CoreModule,
-  ],
+  imports: [BrowserModule, IonicModule, SharedModule, CoreModule],
   entryComponents: [TrashBookElementComponent],
 })
 export class TrashBookElementModule {
