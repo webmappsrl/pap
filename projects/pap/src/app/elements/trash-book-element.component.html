@@ -1,0 +1,31 @@
+<ng-container *ngIf="trashBookView$|async as trashBookView">
+  <ion-content padding>
+    <ion-searchbar
+      placeholder="Ricerca"
+      debounce="200"
+      (ionChange)="searchChange($event)">
+    </ion-searchbar>
+
+    <ion-list lines="none">
+      <ion-item
+        *ngFor="let item of trashBookView.trashBook"
+        button
+        (click)="buttonClick(item)"
+        [hidden]="item.hide">
+        <ion-button
+          shape="round"
+          [style.--background]="item.trashBookType?.color"
+          class="pap-calendar-trashlist">
+          <ion-label
+            class="pap-trashlist-details-label ion-text-wrap"
+            *ngIf="item.name">
+            {{item.name|papLang}}
+          </ion-label>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ng-container>
+<ion-footer collapse="fade">
+  <pap-footer></pap-footer>
+</ion-footer>
