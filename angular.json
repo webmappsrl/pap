@@ -117,6 +117,7 @@
               "index": "projects/pap/src/index-elements.html",
               "tsConfig": "projects/pap/tsconfig.app.json",
               "polyfills": "projects/pap/src/polyfills.ts",
+              "inlineStyleLanguage": "scss",
               "assets": [
                 "projects/pap/src/favicon.ico",
                 "projects/pap/src/assets",
