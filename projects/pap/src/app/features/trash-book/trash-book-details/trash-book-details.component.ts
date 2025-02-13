@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
 import {ModalController, NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
 import {AppState} from '../../../core/core.state';
@@ -16,6 +16,8 @@ import {TrashBookTypeComponent} from '../trash-book-type/trash-book-type.compone
   encapsulation: ViewEncapsulation.None,
 })
 export class TrashBookDetailsComponent {
+  @Input() modal: boolean = false;
+
   trashBookDetailsView$ = this._store.pipe(select(selectedTrashBookDetail));
 
   constructor(

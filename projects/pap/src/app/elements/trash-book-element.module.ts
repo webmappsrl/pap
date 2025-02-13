@@ -1,27 +1,23 @@
 import {Injector, NgModule} from '@angular/core';
 import {createCustomElement} from '@angular/elements';
 import {BrowserModule} from '@angular/platform-browser';
-import {TrashBookComponent} from './trash-book.component';
-import {StoreModule} from '@ngrx/store';
-import {EffectsModule} from '@ngrx/effects';
-import {reducers} from '../core/core.state';
+import {TrashBookElementComponent} from './trash-book-element.component';
 import {IonicModule} from '@ionic/angular';
 import {SharedModule} from '../shared/shared.module';
-
+import {CoreModule} from '../core/core.module';
 @NgModule({
-  declarations: [TrashBookComponent],
+  declarations: [TrashBookElementComponent],
   imports: [
     BrowserModule,
-    StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([]),
     IonicModule,
     SharedModule,
+    CoreModule,
   ],
-  entryComponents: [TrashBookComponent],
+  entryComponents: [TrashBookElementComponent],
 })
 export class TrashBookElementModule {
   constructor(injector: Injector) {
-    const trashBookElement = createCustomElement(TrashBookComponent, {injector});
+    const trashBookElement = createCustomElement(TrashBookElementComponent, {injector});
     customElements.define('trash-book-element', trashBookElement);
   }
 
