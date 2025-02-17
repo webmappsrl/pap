@@ -166,7 +166,19 @@
                   "input": "projects/pap/src/theme/dev-variables.scss"
                 }
               ],
-              "scripts": []
+              "scripts": [],
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": true
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
           },
           "defaultConfiguration": "production"
