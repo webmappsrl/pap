@@ -1,0 +1,42 @@
+trash-book-element {
+  ion-list {
+    margin-top: 20px;
+    overflow: auto;
+    height: 95%;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    ion-item {
+      --background: white;
+      ion-button {
+        transition: all 200ms ease;
+      }
+    }
+    ion-item:hover {
+      ion-button {
+        transform: scale(1.01);
+      }
+    }
+  }
+  .list-md{
+    background-color: white;
+  }
+}
+
+ion-modal {
+  --width: 600px;
+  --height: 600px;
+  --border-radius: 10px;
+  @media (max-width: 768px) {
+    --width: 100%;
+    --height: 100%;
+  }
+
+  pap-trash-book-details{
+    .trash-book-details-calendar,
+    .trash-book-details-delivery,
+    .trash-book-details-collection-center{
+      display: none !important;
+    }
+  }
+}
