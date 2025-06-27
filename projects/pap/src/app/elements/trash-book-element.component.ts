@@ -12,6 +12,8 @@ import {
 } from '../features/trash-book/state/trash-book.actions';
 import {TrashBookDetailsComponent} from '../features/trash-book/trash-book-details/trash-book-details.component';
 
+//TODO: fare in modo tale da poter passare al componente l'id dell'app(cliente) e avere un unico componente
+//      per tutte le app senza dover crearne uno diverso ogni volta
 @Component({
   selector: 'pap-trash-book-element',
   templateUrl: './trash-book-element.component.html',
