@@ -1,14 +1,14 @@
 import {createAction, props} from '@ngrx/store';
-import {FormJson} from '../model';
+import {FormJson, Properties} from '../model';
 
-export const loadFormJson = createAction('[FormJson] load form fields');
+export const loadCompaniesData = createAction('[Company] load companies data');
 
-export const loadFormJsonSuccess = createAction(
-  '[FormJson] load form fileds Success',
-  props<{formJson: FormJson[]}>(),
+export const loadCompaniesDataSuccess = createAction(
+  '[Company] load companies data Success',
+  props<{formJson: FormJson[]; properties: Properties}>(),
 );
 
-export const loadFormJsonFailure = createAction(
-  '[FormJson] load form fileds Failure',
+export const loadCompaniesDataFailure = createAction(
+  '[Company] load companies data Failure',
   props<{error: string}>(),
 );

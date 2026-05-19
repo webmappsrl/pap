@@ -1,12 +1,17 @@
 import {createReducer, on} from '@ngrx/store';
-import {FormJson} from '../model';
-import {loadFormJson, loadFormJsonFailure, loadFormJsonSuccess} from './company.actions';
+import {FormJson, Properties} from '../model';
+import {
+  loadCompaniesData,
+  loadCompaniesDataFailure,
+  loadCompaniesDataSuccess,
+} from './company.actions';
 
 export const companyFeatureKey = 'company';
 
 export interface CompanyState {
   error?: string;
   formJson?: FormJson[];
+  properties?: Properties;
   loading: boolean;
 }
 
@@ -16,16 +21,17 @@ export const initialState: CompanyState = {
 
 export const reducer = createReducer(
   initialState,
-  on(loadFormJson, state => ({
+  on(loadCompaniesData, state => ({
     ...state,
     loading: true,
   })),
-  on(loadFormJsonSuccess, (state, {formJson}) => ({
+  on(loadCompaniesDataSuccess, (state, {formJson, properties}) => ({
     ...state,
     formJson,
+    properties,
     loading: false,
   })),
-  on(loadFormJsonFailure, (state, {error}) => ({
+  on(loadCompaniesDataFailure, (state, {error}) => ({
     ...state,
     error,
     loading: false,

@@ -35,7 +35,7 @@ import {
 } from './features/push-notification/state/push-notification.actions';
 import {MissedFieldsUserModal} from './shared/missed-fields-user/missed-fields-user.modal';
 import {FormJson} from './shared/form/model';
-import {loadFormJson} from './shared/form/state/company.actions';
+import {loadCompaniesData} from './shared/form/state/company.actions';
 
 @Component({
   selector: 'pap-root',
@@ -62,7 +62,7 @@ export class AppComponent {
   ) {
     this._store.dispatch(loadAuths());
     this._store.dispatch(loadTrashBooks());
-    this._store.dispatch(loadFormJson());
+    this._store.dispatch(loadCompaniesData());
     this.isLogged$
       .pipe(
         filter(l => l),

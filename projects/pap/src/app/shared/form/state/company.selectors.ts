@@ -8,6 +8,10 @@ export const selectCompanyState = createFeatureSelector<CompanyState>(
 export const selectFormJson = createSelector(selectCompanyState, state => state.formJson);
 export const selectFormJsonByStep = (step: number) =>
   createSelector(selectCompanyState, state => state.formJson?.filter(item => item.step === step));
+export const selectCompanyProperties = createSelector(
+  selectCompanyState,
+  state => state.properties,
+);
 export const selectRequiredFields = createSelector(selectCompanyState, state =>
   state.formJson?.filter(
     field =>

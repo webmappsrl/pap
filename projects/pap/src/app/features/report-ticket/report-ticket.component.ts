@@ -1,9 +1,11 @@
 import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
-import {AppState} from '@capacitor/app';
 import {NavController} from '@ionic/angular';
-import {Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {format as fm, subDays} from 'date-fns';
+import {take} from 'rxjs/operators';
+import {AppState} from '../../core/core.state';
 import {reportTicketForm, TicketFormConf} from '../../shared/models/form.model';
+import {selectCompanyProperties} from '../../shared/form/state/company.selectors';
 import {loadCalendars} from '../calendar/state/calendar.actions';
 @Component({
   selector: 'pap-report-ticket',
@@ -31,10 +33,15 @@ export class ReportTicketComponent {
   ionViewWillEnter(): void {
     const start_date = fm(subDays(new Date(), 15), 'd-M-yyyy');
     const stop_date = fm(new Date(), 'd-M-yyyy');
-    this._store.dispatch(loadCalendars({start_date, stop_date}));
-  }
-
-  ionViewWillLeave(): void {
-    this._store.dispatch(loadCalendars());
+    this._store
+      .pipe(select(selectCompanyProperties), take(1))
+      .subscribe(properties => {
+        this._store.dispatch(
+          loadCalendars({
+            start_date,
+            stop_date,
+            exclude_in_progress: properties?.enableExludeInProgress ?? false,
+        }));
+      });
   }
 }

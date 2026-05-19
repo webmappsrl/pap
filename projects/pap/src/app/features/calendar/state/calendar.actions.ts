@@ -3,7 +3,9 @@ import {Calendar} from '../calendar.model';
 
 export const loadCalendars = createAction(
   '[Calendar] Load Calendars',
-  (prop: {start_date: string; stop_date: string} | null = null) => ({prop}),
+  (prop: {start_date: string; stop_date: string; exclude_in_progress?: boolean} | null = null) => ({
+    prop,
+  }),
 );
 
 export const loadCalendarsSuccess = createAction(

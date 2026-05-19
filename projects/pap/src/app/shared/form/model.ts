@@ -23,6 +23,10 @@ export interface FormJson {
   type: string;
 }
 
+export interface Properties {
+  enableExludeInProgress?: boolean;
+}
+
 export interface SuccessData<T> {
   data: T;
   message: string;
