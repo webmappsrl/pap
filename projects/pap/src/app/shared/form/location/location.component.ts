@@ -141,6 +141,7 @@ export class LocationComponent implements OnDestroy, ControlValueAccessor {
       this.form.get('house_number')?.reset();
       this.form.get('location')?.reset();
       this.form.get('address_id')?.reset();
+      this.form.get('zone_id')?.reset();
       this.formAddress.reset();
       this._store.dispatch(setMarker({coords: [0, 0]}));
     } else {
@@ -174,6 +175,9 @@ export class LocationComponent implements OnDestroy, ControlValueAccessor {
         });
         this.form.get('location')?.setValue(address.location);
       }
+      if (address.zone_id != null && address.zone_id !== '') {
+        this.form.get('zone_id')?.setValue(address.zone_id);
+      }
     }
 
     this._cdr.detectChanges();
@@ -197,6 +201,11 @@ export class LocationComponent implements OnDestroy, ControlValueAccessor {
     this.currentZone$.pipe(take(1)).subscribe(zone => {
       if (zone == null) {
         this.form.get('location')!.setErrors({'incorrect': true});
+      } else {
+        const comune = zone.properties?.comune ?? '';
+        this.formAddress.patchValue({city: comune});
+        this.form.get('city')?.setValue(comune);
+        this.form.get('zone_id')?.setValue(zone.properties?.id);
       }
     });
   }
