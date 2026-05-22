@@ -19,7 +19,7 @@ export class LocationService {
       .pipe(
         map((response: any) => {
           const rawAddress = response.address ?? {};
-          return this._getAddressAndCityFromNominatim(response.display_name, rawAddress);
+          return this._getAddressAndCityFromNominatim(rawAddress);
         }),
       );
   }
@@ -37,42 +37,12 @@ export class LocationService {
   }
 
   private _getAddressAndCityFromNominatim(
-    displayName: string,
     address: {[key: string]: string},
-    keysToRemove: string[] = ['postcode', 'state', 'country', 'house_number'],
-    addressKeys: string[] = ['road', 'isolated_dwelling', 'amenity', 'suburb'],
-  ): {address: string; city: string} {
-    // Verifica la validità di displayName e address
-    if (
-      !displayName ||
-      typeof displayName !== 'string' ||
-      !address ||
-      typeof address !== 'object'
-    ) {
-      return {address: '', city: ''};
-    }
-
-    let addressComponents: string[] = [];
-    let cityComponents: string[] = [];
-    let displayNameParts = displayName.split(', ').filter(part => part.trim() !== '');
-
-    displayNameParts.forEach(part => {
-      let foundInAddressKeys = false;
-      for (const key of addressKeys) {
-        if (address[key] === part) {
-          addressComponents.push(part);
-          foundInAddressKeys = true;
-          break;
-        }
-      }
-      if (!foundInAddressKeys && !keysToRemove.some(key => address[key] === part)) {
-        cityComponents.push(part);
-      }
-    });
-
+  ): {address: string; city: string; house_number: string} {
     return {
-      address: addressComponents.reverse().join(', '),
-      city: cityComponents.reverse().join(', '),
+      address: address['road'] ?? '',
+      house_number: address['house_number'] ?? '',
+      city: '',
     };
   }
 }
