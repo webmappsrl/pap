@@ -2,22 +2,23 @@
   <pap-header></pap-header>
 </ion-header>
 <ng-container *ngIf="infoTicketView$|async as view">
-  <ion-content class="" *ngIf="!view.reportSend">
-    <pap-form
-      [ticketFormConf]="formConf"
-      (onFormFilled)="formFilled($event)"
-      (onClickExit)="exitPage()"
-    >
-    </pap-form>
-  </ion-content>
-  <ion-content class="" *ngIf="view.reportSend">
-    <ion-label>
-      {{formConf.finalMessage| translate}}
-    </ion-label>
-    <div class="pap-infoticket-buttons">
-      <ion-button color="light" (click)="exitPage()">{{'esci' | translate}}</ion-button>
-    </div>
-  </ion-content>
+  <ng-container *ngIf="formConf$ | async as formConf">
+    <ion-content class="" *ngIf="!view.reportSend">
+      <pap-form
+        [ticketFormConf]="formConf"
+        (onClickExit)="exitPage()"
+      >
+      </pap-form>
+    </ion-content>
+    <ion-content class="" *ngIf="view.reportSend">
+      <ion-label>
+        {{formConf.finalMessage| translate}}
+      </ion-label>
+      <div class="pap-infoticket-buttons">
+        <ion-button color="light" (click)="exitPage()">{{'esci' | translate}}</ion-button>
+      </div>
+    </ion-content>
+  </ng-container>
 </ng-container>
 <ion-footer collapse="fade">
   <pap-footer></pap-footer>

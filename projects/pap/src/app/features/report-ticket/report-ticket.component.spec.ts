@@ -2,9 +2,12 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {provideMockStore, MockStore} from '@ngrx/store/testing';
+import {take} from 'rxjs/operators';
 import {ReportTicketComponent} from './report-ticket.component';
 import {loadCalendars} from '../calendar/state/calendar.actions';
 import {selectCompanyProperties} from '../../shared/form/state/company.selectors';
+import {selectTicketFormsConfigs} from '../../shared/form/state/form.selectors';
+import {reportTicketForm, TicketFormConf} from '../../shared/models/form.model';
 
 // In this repo the global `expect` can be typed as Chai's Assertion in some tsconfigs.
 // This local declaration forces Jasmine matchers in this spec file.
@@ -51,6 +54,34 @@ describe('ReportTicketComponent', () => {
     const action = dispatchSpy.calls.mostRecent().args[0] as any;
     expect(action.type).toBe(loadCalendars.type);
     expect(action.prop.exclude_in_progress).toBeTrue();
+  });
+
+  it('should expose form$ Observable that emits backend config when store has configs', () => {
+    const backendConf: TicketFormConf = {...reportTicketForm, finalMessage: 'Backend report message'};
+    // Override the base selector so all instances of selectTicketFormConfByType('report') react
+    store.overrideSelector(selectTicketFormsConfigs as any, {report: backendConf});
+    store.refreshState();
+
+    let result: TicketFormConf | undefined;
+    component.form$.pipe(take(1)).subscribe(conf => {
+      result = conf;
+    });
+
+    expect(result).toBeDefined();
+    expect(result!.finalMessage).toBe('Backend report message');
+  });
+
+  it('should fall back to hardcoded reportTicketForm when store has no configs', () => {
+    store.overrideSelector(selectTicketFormsConfigs as any, null);
+    store.refreshState();
+
+    let result: TicketFormConf | undefined;
+    component.form$.pipe(take(1)).subscribe(conf => {
+      result = conf;
+    });
+
+    expect(result).toBeDefined();
+    expect(result).toEqual(reportTicketForm);
   });
 });
 

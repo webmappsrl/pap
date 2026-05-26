@@ -22,7 +22,4 @@ export class TicketVipReservationComponent {
     this._navCtrl.pop();
   }
 
-  formFilled(event: any): void {
-    this.form = event;
-  }
 }

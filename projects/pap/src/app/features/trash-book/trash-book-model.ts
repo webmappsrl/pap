@@ -16,6 +16,7 @@ export interface TrashBookRow {
 export interface TrashBookType {
   allowed: ({[lang: string]: string} | string)[];
   color: string;
+  confirmation_message?: string;
   company_id?: number;
   description?: {[lang: string]: string};
   howto?: {[lang: string]: string};

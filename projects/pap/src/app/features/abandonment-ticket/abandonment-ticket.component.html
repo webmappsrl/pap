@@ -3,8 +3,8 @@
 </ion-header>
 <ion-content class="">
   <pap-form
+    *ngIf="form$ | async as form"
     [ticketFormConf]="form"
-    (onFormFilled)="formFilled($event)"
     (onClickExit)="exitPage()"
   ></pap-form>
 </ion-content>

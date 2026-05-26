@@ -10,8 +10,8 @@ import {
 import {UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {AlertController, IonInput, NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-import {filter, map, switchMap, take} from 'rxjs/operators';
+import {BehaviorSubject, Observable, Subscription, from} from 'rxjs';
+import {filter, map, switchMap, take, withLatestFrom} from 'rxjs/operators';
 import {AppState} from '../../../core/core.state';
 import {selectCalendarState} from '../../../features/calendar/state/calendar.selectors';
 import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
@@ -105,28 +105,39 @@ export class FormComponent implements OnDestroy {
     this._ticketSub = this.formSuccess$
       .pipe(
         filter(v => v != null),
-        switchMap(success => {
-          const label = this.ticketFormConf$.value?.label || 'Prenotazione';
-          const header = `${
-            success ? `${label} avvenuta con successo` : `Errore nella prenotazione`
-          }`;
-          const message = `${
-            success
-              ? 'Puoi visualizzarla nella sezione "i miei ticket".'
-              : 'Errore durante l’invio - Si è verificato un errore durante l’invio del tuo ticket. Per favore, prova di nuovo.'
-          }`;
-          return this._alertCtrl.create({
-            cssClass: `pap-status-alert-${success ? 'confirmation' : 'error'}`,
-            header,
-            message,
-            buttons: [
-              {
-                text: 'X',
-                role: 'close',
-                cssClass: `pap-status-alert-${success ? 'confirmation' : 'error'}-close`,
-              },
-            ],
-          });
+        withLatestFrom(this.currentTrashbookType$),
+        switchMap(([success, trashBookType]) => {
+          const conf = this.ticketFormConf$.value;
+          const label = conf?.label ?? `Prenotazione`;
+          const header = success
+            ? `${label} avvenuta con successo`
+            : `Errore nella prenotazione`;
+
+          let message: string;
+          if (success) {
+            let finalMsg = conf?.finalMessage ?? ``;
+            if (conf?.ticketType === `reservation` && trashBookType?.confirmation_message) {
+              finalMsg += `\n\n${trashBookType.confirmation_message}`;
+            }
+            message = `${finalMsg}<br><br>Puoi visualizzare la segnalazione nella sezione <strong>"i miei ticket"</strong>.`;
+          } else {
+            message = `Errore durante l’invio - Si e’ verificato un errore durante l’invio del tuo ticket. Per favore, prova di nuovo.`;
+          }
+
+          return from(
+            this._alertCtrl.create({
+              cssClass: `pap-status-alert-${success ? `confirmation` : `error`}`,
+              header,
+              message,
+              buttons: [
+                {
+                  text: `X`,
+                  role: `close`,
+                  cssClass: `pap-status-alert-${success ? `confirmation` : `error`}-close`,
+                },
+              ],
+            }),
+          );
         }),
         switchMap(alert => {
           alert.present();

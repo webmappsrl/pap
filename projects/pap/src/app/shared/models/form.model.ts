@@ -81,7 +81,7 @@ export const ticketReservationForm: TicketFormConf = {
   ticketType: 'reservation',
   label: 'Prenotazione servizio di ritiro',
   cancel: 'Sicuro di voler cancellare la prenotazione?',
-  finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
+  finalMessage: `La sua segnalazione è stata presa in carico, verrà contattata quanto prima per darle l'appuntamento.`,
   pages: 6,
   step: [
     {
@@ -128,14 +128,14 @@ export const ticketReservationForm: TicketFormConf = {
   ],
 };
 export const abandonmentTicketForm: TicketFormConf = {
-  cancel: 'Sicuro di voler cancellare la prenotazione?',
-  finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
+  cancel: 'AAA Sicuro di voler cancellare la prenotazione?',
+  finalMessage: `AAA La ringraziamo per la segnalazione, provvederemo quanto prima a recuperare il rifiuto (entro 24h dalla segnalazione). Eventualmente se ci sarà la necessità verrà contattata.`,
   pages: 6,
   ticketType: 'abandonment',
   label: 'Segnalazione di abbandono',
   step: [
     {
-      label: `Questo serivizio ti permette di inviare una segnalazione di abbandono ad ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice e verrà inviata una email a ${environment.config.name}. Vai avanti per iniziare.`,
+      label: `AAA Questo serivizio ti permette di inviare una segnalazione di abbandono ad ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice e verrà inviata una email a ${environment.config.name}. Vai avanti per iniziare.`,
       type: 'label',
       required: false,
     },
@@ -180,7 +180,7 @@ export const abandonmentTicketForm: TicketFormConf = {
 export const reportTicketForm: TicketFormConf = {
   ticketType: 'report',
   cancel: 'Sicuro di voler cancellare la prenotazione?',
-  finalMessage: `La tua richiesta è stata inoltrata correttamente a ${environment.config.name}: verrai ricontattato quanto prima via email per eventuali dettagli. Puoi usare tale codice per eventuali successive comunicazioni con ${environment.config.name}. Puoi rivedere tutte le tue segnalazioni nella sezione “Le mie Segnalazioni”`,
+  finalMessage: `Ci scusiamo per il disservizio, provvederemo quanto prima a recuperare il rifiuto (entro 24h dalla segnalazione). Lasciarlo esposto. Eventualmente se ci sarà la necessità verrà contattata.`,
   pages: 6,
   label: 'Segnalazione mancato ritiro',
   step: [

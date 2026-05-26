@@ -7,6 +7,7 @@ import {AppState} from '../../core/core.state';
 import {showButtons} from '../../shared/header/state/header.actions';
 import {buttonAction, buttonInfo} from './home.model';
 import {yHomes} from './state/home.actions';
+import {loadTicketFormsConfig} from '../../shared/form/state/form.actions';
 import {selectHomeState} from './state/home.selectors';
 import {userRoles} from '../../core/auth/state/auth.selectors';
 
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
       this._navCtrl.navigateForward(button.url);
     }
     if (button.action === buttonAction.ACTION && button.buttons != null) {
+      this._store.dispatch(loadTicketFormsConfig());
       this.userRoles$
         .pipe(
           take(1),

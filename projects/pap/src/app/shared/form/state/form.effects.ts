@@ -5,6 +5,7 @@ import {catchError, map, switchMap} from 'rxjs/operators';
 import * as TicketActions from './form.actions';
 import {TicketService} from './form.service';
 
+
 @Injectable()
 export class FormEffects {
   sendTicket$ = createEffect(() => {
@@ -15,6 +16,23 @@ export class FormEffects {
       catchError(err => of(TicketActions.sendTicketFailure({err: err.error.message}))),
     );
   });
+
+  loadTicketFormsConfig$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TicketActions.loadTicketFormsConfig),
+      switchMap(() =>
+        this._ticketSvc.getTicketFormsConfig().pipe(
+          map((res: any) => {
+            const configs = res?.data ?? res;
+            return TicketActions.loadTicketFormsConfigSuccess({configs});
+          }),
+          catchError(err =>
+            of(TicketActions.loadTicketFormsConfigFailure({err: err?.message ?? 'error'})),
+          ),
+        ),
+      ),
+    ),
+  );
 
   constructor(private actions$: Actions, private _ticketSvc: TicketService) {}
 }
