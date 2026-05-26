@@ -1,5 +1,6 @@
 import {createReducer, on} from '@ngrx/store';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
+import {TicketFormConf} from '../../models/form.model';
 import * as TicketActions from './form.actions';
 
 export const ticketFeatureKey = 'ticket';
@@ -9,10 +10,14 @@ export interface TicketState {
   error?: string;
   loading: boolean;
   success?: boolean;
+  ticketFormsConfigs: {[key: string]: TicketFormConf} | null;
+  ticketFormsConfigsLoaded: boolean;
 }
 
 export const initialState: TicketState = {
   loading: false,
+  ticketFormsConfigs: null,
+  ticketFormsConfigsLoaded: false,
 };
 
 export const reducer = createReducer(
@@ -49,4 +54,13 @@ export const reducer = createReducer(
       currentTrashBookType: action.currentTrashBookType,
     };
   }),
+  on(TicketActions.loadTicketFormsConfigSuccess, (state, action) => ({
+    ...state,
+    ticketFormsConfigs: action.configs,
+    ticketFormsConfigsLoaded: true,
+  })),
+  on(TicketActions.loadTicketFormsConfigFailure, state => ({
+    ...state,
+    ticketFormsConfigsLoaded: true,
+  })),
 );

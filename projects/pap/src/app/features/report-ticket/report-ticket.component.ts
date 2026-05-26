@@ -2,10 +2,12 @@ import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/co
 import {NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
 import {format as fm, subDays} from 'date-fns';
+import {Observable} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {AppState} from '../../core/core.state';
-import {reportTicketForm, TicketFormConf} from '../../shared/models/form.model';
+import {TicketFormConf} from '../../shared/models/form.model';
 import {selectCompanyProperties} from '../../shared/form/state/company.selectors';
+import {selectTicketFormConfByType} from '../../shared/form/state/form.selectors';
 import {loadCalendars} from '../calendar/state/calendar.actions';
 @Component({
   selector: 'pap-report-ticket',
@@ -15,7 +17,7 @@ import {loadCalendars} from '../calendar/state/calendar.actions';
   encapsulation: ViewEncapsulation.None,
 })
 export class ReportTicketComponent {
-  form: TicketFormConf = reportTicketForm;
+  form$: Observable<TicketFormConf> = this._store.pipe(select(selectTicketFormConfByType('report')));
 
   constructor(
     private _navCtrl: NavController,
@@ -26,9 +28,6 @@ export class ReportTicketComponent {
     this._navCtrl.pop();
   }
 
-  formFilled(event: any): void {
-    this.form = event;
-  }
 
   ionViewWillEnter(): void {
     const start_date = fm(subDays(new Date(), 15), 'd-M-yyyy');

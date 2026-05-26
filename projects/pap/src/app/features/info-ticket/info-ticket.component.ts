@@ -1,11 +1,13 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {Store, select} from '@ngrx/store';
-import {first} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {first, withLatestFrom} from 'rxjs/operators';
 import {AuthService} from '../../core/auth/state/auth.service';
 import {AppState} from '../../core/core.state';
 import {ApiTicketType} from '../../shared/models/apimodels';
-import {TicketFormConf, infoTicketForm} from '../../shared/models/form.model';
+import {TicketFormConf} from '../../shared/models/form.model';
+import {selectTicketFormConfByType} from '../../shared/form/state/form.selectors';
 import {ReportService} from '../../shared/services/report.service';
 import {loadInfoTickets, sendReportInfoTickets} from './state/info-ticket.actions';
 import {selectInfoTicketState} from './state/info-ticket.selectors';
@@ -19,7 +21,9 @@ import {selectInfoTicketState} from './state/info-ticket.selectors';
 })
 export class InfoTicketComponent implements OnInit {
   end = false;
-  formConf: TicketFormConf = infoTicketForm;
+  formConf$: Observable<TicketFormConf> = this._store.pipe(
+    select(selectTicketFormConfByType('info')),
+  );
   infoTicketView$ = this._store.pipe(select(selectInfoTicketState));
   privacyCheck: boolean = false;
 
@@ -34,10 +38,6 @@ export class InfoTicketComponent implements OnInit {
     this._navCtrl.pop();
   }
 
-  formFilled(event: any): void {
-    this.end = true;
-  }
-
   ngOnInit(): void {
     this._store.dispatch(loadInfoTickets());
   }
@@ -49,9 +49,12 @@ export class InfoTicketComponent implements OnInit {
   saveData(): void {
     this._authSvc
       .getUser()
-      .pipe(first())
-      .subscribe(user => {
-        let report = this._reportSvc.createReport(this.formConf, user, ApiTicketType.INFO);
+      .pipe(
+        first(),
+        withLatestFrom(this._store.pipe(select(selectTicketFormConfByType('info')))),
+      )
+      .subscribe(([user, conf]) => {
+        let report = this._reportSvc.createReport(conf, user, ApiTicketType.INFO);
         this._store.dispatch(sendReportInfoTickets({data: report}));
       });
   }
