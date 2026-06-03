@@ -111,12 +111,30 @@ gulp.task('build', async () => {
     await ionicBuildAndroid();
     try {
       await ensureWritableAndCopy(
-        './android-custom/variables.gradle', // File sorgente
-        './android/variables.gradle', // File di destinazione
-        './android', // Directory
+        './android-custom/variables.gradle',
+        './android/variables.gradle',
+        './android',
       );
     } catch (error) {
-      console.error('Errore durante l’operazione di copia:', error);
+      console.error("Errore durante l'operazione di copia:", error);
+    }
+    try {
+      await ensureWritableAndCopy(
+        './android-custom/gradle-wrapper.properties',
+        './android/gradle/wrapper/gradle-wrapper.properties',
+        './android/gradle/wrapper',
+      );
+    } catch (error) {
+      console.error('Errore durante la copia di gradle-wrapper.properties:', error);
+    }
+    try {
+      await ensureWritableAndCopy(
+        './android-custom/build.gradle',
+        './android/build.gradle',
+        './android',
+      );
+    } catch (error) {
+      console.error('Errore durante la copia di build.gradle:', error);
     }
 
     await addPermissionsToAndroidManifest();

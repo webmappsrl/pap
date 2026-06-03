@@ -10,6 +10,7 @@ import {environment as env} from 'projects/pap/src/environments/environment';
 import {Store, select} from '@ngrx/store';
 import {Observable, from} from 'rxjs';
 import {filter, skip, switchMap, take} from 'rxjs/operators';
+import {format, addDays} from 'date-fns';
 import {loadAuths} from './core/auth/state/auth.actions';
 import {
   error,
@@ -69,11 +70,16 @@ export class AppComponent {
         take(1),
       )
       .subscribe(async () => {
-        this._store.dispatch(loadCalendars());
+        const start_date = format(new Date(), 'd-M-yyyy');
+        const stop_date = format(addDays(new Date(), 60), 'd-M-yyyy');
+        this._store.dispatch(loadCalendars({start_date, stop_date}));
         this._store.dispatch(loadPushNotification());
         this._store.dispatch(loadConfiniZone());
         this._store.dispatch(yHomes());
         this._localNotificationSvc.scheduleNotifications();
+        this._localNotificationSvc.recoveryTap$.subscribe(() => {
+          this._navCtrl.navigateRoot('/calendar');
+        });
         App.addListener('resume', () => {
           this._localNotificationSvc.scheduleNotifications();
         });
