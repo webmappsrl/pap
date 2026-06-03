@@ -61,6 +61,7 @@
               rows="4"
               [autoGrow]="true"
               placeholder="Eventuali note..."
+              [attr.e2e-pap-form-control-name]="currentStep.type"
               [formControlName]="currentStep.type"></ion-textarea>
             <ng-container [ngSwitch]="currentStep.type">
               <ion-input
@@ -69,6 +70,7 @@
                 class="pap-form-input"
                 [type]="currentStep.type|inputType"
                 [pattern]="currentStep.type|inputPattern"
+                [attr.e2e-pap-form-control-name]="currentStep.type"
                 [formControlName]="currentStep.type">
               </ion-input>
               <ion-input
@@ -78,6 +80,7 @@
                 pattern="^[789]\d{9,9}$"
                 [type]="currentStep.type|inputType"
                 [pattern]="currentStep.type|inputPattern"
+                [attr.e2e-pap-form-control-name]="currentStep.type"
                 [formControlName]="currentStep.type">
               </ion-input>
               <div
@@ -107,21 +110,25 @@
                 [form]="ticketForm"
                 [userAddress]="currentStep.userAddress??false"
                 [formControlName]="currentStep.type"
+                [attr.e2e-pap-form-control-name]="currentStep.type"
                 [features]="confiniZone$|async">
               </pap-form-location>
               <pap-form-calendar-select
                 *ngSwitchCase="'calendar_trash_type_id'"
                 [calendars]="(calendars$|async)!"
+                [attr.e2e-pap-form-control-name]="currentStep.type"
                 [formControlName]="currentStep.type"></pap-form-calendar-select>
               <pap-form-select
                 *ngSwitchCase="'trash_type_id'"
                 #focusInput
                 [formControlName]="currentStep.type"
+                [attr.e2e-pap-form-control-name]="currentStep.type"
                 [selected]="currentTrashbookType$|async"
                 [options]="(trashBookTypesOpts$|async)??[]"></pap-form-select>
               <pap-form-image-picker
                 *ngSwitchCase="'image'"
                 #focusInput
+                [attr.e2e-pap-form-control-name]="currentStep.type"
                 [formControlName]="currentStep.type">
               </pap-form-image-picker>
               <pap-form-recap

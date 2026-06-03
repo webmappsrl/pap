@@ -13,6 +13,7 @@
               <ion-input
                 [type]="formField.type"
                 [formControlName]="formField.name"
+                [attr.e2e-pap-form-control-name]="formField.name"
                 [placeholder]="formField.placeholder"
                 [disabled]="disable.indexOf(formField.name)> -1">
               </ion-input>

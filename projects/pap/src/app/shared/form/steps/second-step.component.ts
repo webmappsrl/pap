@@ -30,6 +30,7 @@ import {BaseCustomForm} from '../base-custom-form.component';
                 <ion-input
                   [type]="formField.type"
                   [formControlName]="formField.name"
+                  [attr.e2e-pap-form-control-name]="formField.name"
                   [placeholder]="formField.placeholder">
                 </ion-input>
               </ion-item>

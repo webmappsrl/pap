@@ -12,6 +12,7 @@ import {
 
 const calendarsButton = homeButtons.find(button => button.label === 'Calendari');
 const apiCalendar = `${environment.api}/c/${environment.companyId}/calendar`;
+let savedCalendarXhr: any = null;
 
 before(() => {
   clearTestState();
@@ -19,15 +20,13 @@ before(() => {
   e2eLogin();
 });
 
-beforeEach(() => {
-  cy.intercept('GET', apiCalendar).as('calendarCall');
-});
 
 describe('pap-calendar-page: test the correct behaviour of page', () => {
   it('should navigate to the calendar page and make a successful GET request to the calendar API', () => {
     if (calendarsButton) {
+      cy.intercept('GET', apiCalendar).as('calendarCall');
       navigateToPageAndVerifyUrl(calendarsButton.label, calendarsButton.url);
-      cy.wait('@calendarCall').its('response.statusCode').should('eq', 200); //success status code
+      cy.wait('@calendarCall').then(xhr => { savedCalendarXhr = xhr; }).its('response.statusCode').should('eq', 200);
     } else {
       throw new Error('Button not found.');
     }
@@ -42,7 +41,7 @@ describe('pap-calendar-page: test the correct behaviour of page', () => {
   });
 
   it('should load the addresses correctly in the ion-popover and and must load the data into ion-list correctly', () => {
-    cy.wait('@calendarCall').then(interception => {
+    cy.wrap(savedCalendarXhr).then(interception => {
       setTimeout(() => {
         const apiData = interception?.response?.body.data;
         const apiAddresses = apiData.map((d: Address) => d.address);

@@ -151,6 +151,12 @@
             ],
             "styles": ["projects/pap/src/styles.scss"],
             "scripts": []
+          },
+          "configurations": {
+            "ci": {
+              "progress": false,
+              "watch": false
+            }
           }
         },
         "lint": {

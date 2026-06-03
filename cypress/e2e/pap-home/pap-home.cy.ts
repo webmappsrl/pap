@@ -2,7 +2,7 @@ import {clearTestState} from 'cypress/utils/test-utils';
 import {homeButtons, noLoggedButtons} from 'projects/pap/src/app/features/home/home.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
-const filteredHomeButtons = homeButtons.filter(btn => btn.hideInHome == null);
+const filteredHomeButtons = homeButtons.filter(btn => btn.hideInHome == null && btn.roles == null);
 const apiLogin = `${environment.api}/login`;
 
 beforeEach(() => {
@@ -24,7 +24,7 @@ describe('pap-home: test the correct presences of home buttons', () => {
 
 describe('pap-home: test no logged user', () => {
   it('should display the correct alert .pap-alert-login when .pap-header-button is clicked', () => {
-    cy.get('.pap-header-button').click();
+    cy.get('.pap-header-button-setting').click();
     cy.get('.pap-alert button').should('have.length', noLoggedButtons.length);
     noLoggedButtons.forEach((button, index) => {
       cy.get('.pap-alert button').eq(index).should('have.text', button.text);
@@ -34,14 +34,14 @@ describe('pap-home: test no logged user', () => {
   });
 
   it('should navigate to /sign-in when sign in button is clicked', () => {
-    cy.get('.pap-header-button').click();
+    cy.get('.pap-header-button-setting').click();
     cy.get('.pap-alert .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
     cy.go('back');
   });
 
   it('should navigate to /sign-up when sign up button is clicked', () => {
-    cy.get('.pap-header-button').click();
+    cy.get('.pap-header-button-setting').click();
     cy.get('.pap-alert .alert-button-role-sign-up').click();
     cy.url().should('include', '/sign-up');
     cy.go('back');
@@ -51,7 +51,7 @@ describe('pap-home: test no logged user', () => {
     cy.window().then(win => {
       cy.stub(win, 'open').as('windowOpen');
     });
-    cy.get('.pap-header-button').click();
+    cy.get('.pap-header-button-setting').click();
     cy.get('.pap-alert .alert-button-role-forgot-password').click();
     cy.get('@windowOpen').should('be.called');
   });
@@ -63,7 +63,7 @@ describe('pap-home: test logged user', () => {
   });
 
   it('should login successfully using provided credentials, navigate correctly path when button is clicked and logout successfully ', () => {
-    cy.get('.pap-header-button').click();
+    cy.get('.pap-header-button-setting').click();
     cy.get('.pap-alert .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
     cy.get('form [formControlName="email"]').type(Cypress.env('email'));
@@ -78,7 +78,7 @@ describe('pap-home: test logged user', () => {
       cy.url().should('include', btn.url);
       cy.go('back');
     });
-    cy.get('.pap-header-button').should('be.visible').click();
+    cy.get('.pap-header-button-setting').should('be.visible').click();
     cy.get('ion-button[fill="outline"][shape="round"]')
       .contains('Log out')
       .should('be.visible')
