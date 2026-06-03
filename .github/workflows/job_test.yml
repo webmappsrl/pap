@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Set Domain Name
         run: |
           if [ "${{ github.ref_name }}" == "develop" ]; then
@@ -32,7 +32,7 @@ jobs:
           echo "ID to use: $ID"
           echo "DEPLOY_ID=$ID" >> $GITHUB_ENV
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: 16
       - name: Install Dependencies
@@ -79,7 +79,7 @@ jobs:
           config: defaultCommandTimeout=5000,pageLoadTimeout=10000,viewportWidth=412,viewportHeight=832,testIsolation=false
       - name: Upload screenshots
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: cypress/screenshots
