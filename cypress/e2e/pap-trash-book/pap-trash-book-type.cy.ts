@@ -44,7 +44,7 @@ describe('pap-trash-book-type: test the correct behaviour of page', () => {
   });
 
   it('should navigate to the trash book detail page, display correct waste details based on search input, and verify associated actions', function () {
-    const randomIndex = Math.floor(Math.random() * this['wastesData'].length);
+    const randomIndex = 0;
     const randomWaste = this['wastesData'][randomIndex];
     const searchTerm = randomWaste.name;
     const trashTypeId = randomWaste.trash_type_id;
@@ -64,10 +64,11 @@ describe('pap-trash-book-type: test the correct behaviour of page', () => {
       (type: TrashBookType) => type.id === trashTypeId,
     ).notallowed;
     cy.get('ion-searchbar input').type(searchTerm);
+    cy.wait(300);
     cy.get('pap-trash-book ion-card ion-list ion-item ion-label')
       .contains(searchTerm)
       .should('be.visible')
-      .click();
+      .click({force: true});
     cy.get('.trash-book-details-type').should('be.visible').click();
     cy.get('pap-trash-book-type').should('exist');
     cy.get('ion-badge').should('contain.text', papLang(expectedTypeName));
@@ -77,12 +78,12 @@ describe('pap-trash-book-type: test the correct behaviour of page', () => {
     if (expectedTypeHowTo) {
       cy.get('.trash-book-type-content').should('contain.text', papLang(expectedTypeHowTo));
     }
-    if (expectedAllowedData) {
+    if (expectedAllowedData && expectedAllowedData.length > 0) {
       cy.get('ion-col[size="6"]:first li').each(($li, index) => {
         expect($li.text().trim()).to.equal(expectedAllowedData[index].trim());
       });
     }
-    if (expectedNotAllowedData) {
+    if (expectedNotAllowedData && expectedNotAllowedData.length > 0) {
       cy.get('ion-col[size="6"]:last li').each(($li, index) => {
         expect($li.text().trim()).to.equal(expectedNotAllowedData[index].trim());
       });

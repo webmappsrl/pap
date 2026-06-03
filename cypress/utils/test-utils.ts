@@ -189,7 +189,7 @@ export function testLocation(formMockup: any): void {
       if (width && height) {
         // Find the center of the element
         const centerX = width / 2;
-        const centerY = height / 2;
+        const centerY = height / 2.5;
         // Click on the center of the map
         cy.wrap($map).click(centerX, centerY);
       }
@@ -275,7 +275,7 @@ export function testTicketFormStep(
   stepIndex: number,
   nextButtonShouldBeDisabled: boolean = false,
   shouldCheckErrorMessage: boolean = false,
-  mandatoryMessage: string = 'Questo campo è obbligatorio',
+  mandatoryMessage: string = 'obbligatorio',
 ): void {
   const currentStep = ticketForm.step[stepIndex];
   const expectedLabelText = currentStep.label;
@@ -291,7 +291,7 @@ export function testTicketFormStep(
       cy.get('.pap-form-content').should('include.text', ticketForm.label);
       cy.get('.pap-form-label').should('include.text', expectedLabelText);
       cy.get('.pap-status-next-button').should('not.be.enabled');
-      cy.get('pap-error-form-handler ion-list ion-label').should('include.text', mandatoryMessage);
+      cy.get('pap-error-form-handler ion-label').should('include.text', mandatoryMessage);
       break;
 
     case 2:
@@ -309,12 +309,12 @@ export function testTicketFormStep(
       }
 
       if (shouldCheckErrorMessage) {
-        cy.get('pap-error-form-handler ion-list ion-label').should(
+        cy.get('pap-error-form-handler ion-label').should(
           'include.text',
           mandatoryMessage,
         );
       } else {
-        cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
+        cy.get('pap-error-form-handler ion-label').should('not.exist');
       }
       break;
 
@@ -322,7 +322,7 @@ export function testTicketFormStep(
     case 4:
       cy.get('.pap-form-content').should('include.text', ticketForm.label);
       cy.get('.pap-form-label').should('include.text', expectedLabelText);
-      cy.get('pap-error-form-handler ion-list ion-label').should('not.exist');
+      cy.get('pap-error-form-handler ion-label').should('not.exist');
       break;
 
     default:

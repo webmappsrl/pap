@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:ci": "CI=true ng test --configuration=ci",
     "lint": "ng lint",
     "try": "ng lint",
     "release:major": "changelog -M && git add CHùANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags",

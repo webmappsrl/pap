@@ -16,11 +16,19 @@ describe('pap-push-notifications: test correct behavior when user is not logged 
 });
 
 describe('pap-push-notifications: test correct behavior when user is logged in', () => {
+  beforeEach(() => {
+    cy.intercept('GET', apiPushNotifications, {
+      body: {
+        success: true,
+        data: [{id: 1, title: 'Test notifica', message: 'Testo notifica di test', updated_at: '2024-01-01T10:00:00.000Z', status: false, company_id: 1, schedule_date: 0, created_at: '2024-01-01T10:00:00.000Z'}],
+      },
+    }).as('getPushNotifications');
+  });
+
   it('should show notifications button if logged in', () => {
-    e2eLogin().then(() => {
-      cy.intercept('GET', apiPushNotifications).as('getPushNotifications');
-      cy.get('.pap-header-button-notifications').should('exist');
-    });
+    e2eLogin();
+    cy.wait('@getPushNotifications');
+    cy.get('.pap-header-button-notifications').should('exist');
   });
 
   it('should navigate to /push-notification after login', () => {
