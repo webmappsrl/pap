@@ -36,14 +36,14 @@ Le notifiche di calendario sono locali e schedulate solo quando l'app è aperta 
 
 ## Rischi
 
-| Rischio | Mitigazione |
-|---|---|
-| Race condition: `loadCalendars$` sovrascrive store con 10gg dopo il caricamento a 60gg | Rimozione di `loadCalendars$`; `loadCalendarsWithDate$` copre il caso d'uso |
-| Listener `localNotificationActionPerformed` registrato più volte (ogni resume) | Registrazione una tantum in `_initNotifications()` |
-| `NavController` non disponibile al cold-start se nel service | `recoveryTap$` Observable nel service, navigazione gestita da `app.component.ts` che controlla il ciclo di vita |
-| Permessi notifiche revocati → scheduling silenzioso inutile | Early return in `_initNotifications()` se `requestPermissions()` ≠ `granted` |
-| Con calendari ad alta densità (>2 raccolte/giorno) la copertura si riduce sotto i 60gg | Limite noto e accettato: con 1-2 raccolte/giorno ERSU la copertura è 21-42gg normali + 8gg recovery |
-| Recovery già schedulate rimangono sul dispositivo dopo un rollback | Al primo avvio post-rollback, `_removeNotifications()` le cancella prima di rischedulare |
+| Rischio                                                                                | Mitigazione                                                                                                     |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Race condition: `loadCalendars$` sovrascrive store con 10gg dopo il caricamento a 60gg | Rimozione di `loadCalendars$`; `loadCalendarsWithDate$` copre il caso d'uso                                     |
+| Listener `localNotificationActionPerformed` registrato più volte (ogni resume)         | Registrazione una tantum in `_initNotifications()`                                                              |
+| `NavController` non disponibile al cold-start se nel service                           | `recoveryTap$` Observable nel service, navigazione gestita da `app.component.ts` che controlla il ciclo di vita |
+| Permessi notifiche revocati → scheduling silenzioso inutile                            | Early return in `_initNotifications()` se `requestPermissions()` ≠ `granted`                                    |
+| Con calendari ad alta densità (>2 raccolte/giorno) la copertura si riduce sotto i 60gg | Limite noto e accettato: con 1-2 raccolte/giorno ERSU la copertura è 21-42gg normali + 8gg recovery             |
+| Recovery già schedulate rimangono sul dispositivo dopo un rollback                     | Al primo avvio post-rollback, `_removeNotifications()` le cancella prima di rischedulare                        |
 
 ## Out of scope
 
@@ -55,8 +55,8 @@ Le notifiche di calendario sono locali e schedulate solo quando l'app è aperta 
 
 ## Moduli toccati
 
-| File | Tipo modifica |
-|---|---|
-| `projects/pap/src/app/shared/services/local-notification.service.ts` | Logica suddivisione normale/recovery, `recoveryTap$` Observable, listener tap, check permessi |
-| `projects/pap/src/app/features/calendar/state/calendar.effects.ts` | Rimozione effetto `loadCalendars$` (race condition con 60gg) |
-| `projects/pap/src/app/app.component.ts` | `loadCalendars` con `stop_date +60gg`; sottoscrizione a `recoveryTap$` → `navigateRoot('/calendar')` |
+| File                                                                 | Tipo modifica                                                                                        |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `projects/pap/src/app/shared/services/local-notification.service.ts` | Logica suddivisione normale/recovery, `recoveryTap$` Observable, listener tap, check permessi        |
+| `projects/pap/src/app/features/calendar/state/calendar.effects.ts`   | Rimozione effetto `loadCalendars$` (race condition con 60gg)                                         |
+| `projects/pap/src/app/app.component.ts`                              | `loadCalendars` con `stop_date +60gg`; sottoscrizione a `recoveryTap$` → `navigateRoot('/calendar')` |

@@ -8,6 +8,7 @@ Branch: `feature/oc-7608-stabilita-notifiche-push-background-task`
 Commit convention: `feat(oc:7608): ...` / `fix(oc:7608): ...` / `refactor(oc:7608): ...`
 
 **Tre file toccati, in questo ordine:**
+
 1. `calendar.effects.ts` — rimozione dell'effetto che causa race condition
 2. `local-notification.service.ts` — logica di suddivisione + `recoveryTap$`
 3. `app.component.ts` — `loadCalendars` con 60gg + sottoscrizione `recoveryTap$`
