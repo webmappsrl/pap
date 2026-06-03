@@ -2,7 +2,6 @@ import {
   FormMockup,
   clearTestState,
   e2eLogin,
-  getApiDateRange,
   testGoToThirdStep,
   testRecapTicketForm,
   testTicketFormStep,
@@ -17,8 +16,7 @@ const reportTicketoButton = servicesButtons.find(
   button => button.text === 'Segnala mancato ritiro',
 );
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
-const {startDate, stopDate} = getApiDateRange();
-const apiCalendarWithDates = `${environment.api}/c/${environment.companyId}/calendar?start_date=${startDate}&stop_date=${stopDate}`;
+const apiCalendarWithDates = `${environment.api}/c/${environment.companyId}/calendar*`;
 let calendarData: any = null;
 let formMockup: FormMockup = {
   Telefono: '356273894',

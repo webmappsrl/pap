@@ -19,6 +19,17 @@ const ticketReservationButton = servicesButtons.find(
 );
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
+const mockZonesGeoJson = {
+  type: 'FeatureCollection',
+  features: [{
+    type: 'Feature',
+    geometry: {
+      type: 'MultiPolygon',
+      coordinates: [[[[9.5, 43.5], [11.0, 43.5], [11.0, 44.8], [9.5, 44.8], [9.5, 43.5]]]],
+    },
+    properties: {id: 1, label: 'Zona Test', comune: 'Massarosa', availableUserTypes: [], types: [], url: ''},
+  }],
+};
 let apiZonesGeoJsonData: any = null;
 let formMockup: FormMockup = {
   Telefono: '356273894',
@@ -35,19 +46,17 @@ before(() => {
   cy.clearCookies();
   cy.clearLocalStorage();
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
-  cy.intercept('GET', apiZonesGeoJson).as('apiZonesGeoJsonCall');
+  cy.intercept('GET', apiZonesGeoJson, {body: mockZonesGeoJson}).as('apiZonesGeoJsonCall');
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@trashTypesCall').then(interception => {
     const trashTypesData = interception?.response?.body;
     cy.wrap(trashTypesData).as('trashTypesData');
     cy.log(trashTypesData);
   });
-  cy.wait('@apiZonesGeoJsonCall').then(interception => {
-    apiZonesGeoJsonData = interception?.response?.body;
-    cy.wrap(apiZonesGeoJsonData).as('apiZonesGeoJsonData');
-    cy.log(apiZonesGeoJsonData);
-  });
   e2eLogin();
+  // Zones are mocked with mockZonesGeoJson — set directly without relying on HTTP call
+  apiZonesGeoJsonData = mockZonesGeoJson;
+  cy.wrap(mockZonesGeoJson).as('apiZonesGeoJsonData');
 });
 
 describe('pap-ticket-reservation: test the correct behaviour of form at first step', () => {

@@ -10,7 +10,7 @@ describe('pap-sign-in: test the correct behaviour with wrong credentials', () =>
   });
 
   it('should navigate to /sign-in when sign in button is clicked', () => {
-    cy.get('.pap-header-button').click();
+    cy.get('.pap-header-button-setting').click();
     cy.get('.pap-alert .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
   });
@@ -20,22 +20,28 @@ describe('pap-sign-in: test the correct behaviour with wrong credentials', () =>
   });
 
   it('should display error message with incorrect credentials', () => {
+    cy.intercept('POST', apiLogin).as('loginRequest');
     cy.get('[formControlName="email"]').type('wrongemail@test.com');
     cy.get('[formControlName="password"]').type('wrongpassword');
     cy.get('ion-card ion-button[type="submit"]').click();
-    cy.intercept('POST', apiLogin).as('loginRequest');
     cy.wait('@loginRequest').then(interception => {
       const apiMessage = interception?.response?.body.message;
-      cy.get('ion-label[color="danger"]').should('have.text', apiMessage);
+      cy.get('ion-alert').should('be.visible');
+      cy.get('ion-alert .alert-message').should('include.text', apiMessage);
     });
   });
 
   it('should display an error message when trying to login with incorrect credentials', () => {
-    cy.get('ion-card ion-button').click();
     cy.intercept('POST', apiLogin).as('loginRequest');
+    // Dismiss error alert from previous test
+    cy.get('ion-alert .alert-button').first().click({force: true});
+    cy.get('ion-alert').should('not.exist');
+    cy.get('[formControlName="password"]').type('{selectall}wrongpassword');
+    cy.get('ion-card ion-button[type="submit"]').click();
     cy.wait('@loginRequest').then(interception => {
       const apiMessage = interception?.response?.body.message;
-      cy.get('ion-label[color="danger"]').should('have.text', apiMessage);
+      cy.get('ion-alert').should('be.visible');
+      cy.get('ion-alert .alert-message').should('include.text', apiMessage);
     });
   });
 });
@@ -49,7 +55,7 @@ describe('pap-sign-in: test the correct behaviour with correct credentials', () 
   });
 
   it('should login successfully using correct credentials and not display an error message', () => {
-    cy.get('.pap-header-button').click();
+    cy.get('.pap-header-button-setting').click();
     cy.get('.pap-alert .alert-button-role-sign-in').click();
     cy.url().should('include', '/sign-in');
     cy.get('form [formControlName="email"]').type(Cypress.env('email'));
