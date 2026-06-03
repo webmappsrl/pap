@@ -6,7 +6,7 @@ on:
       - synchronize
 jobs:
   format:
-    uses: webmappsrl/pap/.github/workflows/job_format.yml@develop
+    uses: ./.github/workflows/job_format.yml
   test:
-    uses: webmappsrl/pap/.github/workflows/job_test.yml@develop
+    uses: ./.github/workflows/job_test.yml
     secrets: inherit
