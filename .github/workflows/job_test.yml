@@ -47,6 +47,8 @@ jobs:
       - name: Install Ionic CLI
         run: npm install -g @ionic/cli
       - run: npm install
+      - name: Run unit tests (Karma headless)
+        run: npm run test:ci
       - name: Run Gulp
         env:
           EMAIL: ${{ secrets.PAP_EMAIL }}
