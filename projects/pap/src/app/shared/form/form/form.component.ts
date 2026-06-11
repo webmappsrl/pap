@@ -41,6 +41,7 @@ export class FormComponent implements OnDestroy {
 
   @Input() set ticketFormConf(ticketFormConf: TicketFormConf) {
     this.ticketFormConf$.next(ticketFormConf);
+    this.ticketForm = new UntypedFormGroup({});
     ticketFormConf.step.forEach(step => {
       const validators: ValidatorFn[] = [];
       if (step.required) {
@@ -100,7 +101,6 @@ export class FormComponent implements OnDestroy {
     private _navCtrl: NavController,
     private _alertCtrl: AlertController,
   ) {
-    this.currentTrashbookType$.subscribe(val => console.log(val));
     this.alertEvt$.pipe(switchMap(obj => this._alertCtrl.create(obj)));
     this._ticketSub = this.formSuccess$
       .pipe(
@@ -117,7 +117,7 @@ export class FormComponent implements OnDestroy {
           if (success) {
             let finalMsg = conf?.finalMessage ?? ``;
             if (conf?.ticketType === `reservation` && trashBookType?.confirmation_message) {
-              finalMsg += `\n\n${trashBookType.confirmation_message}`;
+              finalMsg += `<br><br>${trashBookType.confirmation_message}`;
             }
             message = `${finalMsg}<br><br>Puoi visualizzare la segnalazione nella sezione <strong>"i miei ticket"</strong>.`;
           } else {

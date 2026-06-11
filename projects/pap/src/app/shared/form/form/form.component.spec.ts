@@ -15,6 +15,14 @@ import {user} from '../../../core/auth/state/auth.selectors';
 
 declare const expect: (actual: any) => jasmine.Matchers<any>;
 
+const noteStepConf: TicketFormConf = {
+  cancel: '',
+  finalMessage: '',
+  pages: 1,
+  ticketType: 'report',
+  step: [{label: 'Note', type: 'note', required: false}],
+};
+
 const locationStepConf: TicketFormConf = {
   cancel: '',
   finalMessage: '',
@@ -198,6 +206,32 @@ describe('FormComponent — success alert message', () => {
     expect(msg).toContain('Assicurarsi che la strada sia larga.');
   }));
 
+  it('should use <br><br> (not newline) as separator between finalMessage and confirmation_message', fakeAsync(() => {
+    store.overrideSelector(currentTrashBookType as any, {
+      id: 5,
+      slug: 'raee',
+      name: {it: 'RAEE'},
+      confirmation_message: 'Assicurarsi che la strada sia larga.',
+    });
+    store.refreshState();
+
+    component.ticketFormConf = {
+      cancel: '',
+      finalMessage: 'La sua segnalazione è stata presa in carico.',
+      pages: 1,
+      ticketType: 'reservation',
+      step: [],
+    };
+
+    store.overrideSelector(ticketSuccess as any, true);
+    store.refreshState();
+    tick(300);
+
+    const msg: string = alertCreateSpy.calls.mostRecent().args[0].message;
+    expect(msg).toContain('<br><br>Assicurarsi che la strada sia larga.');
+    expect(msg).not.toContain('\n');
+  }));
+
   it('should NOT append confirmation_message for non-reservation type', fakeAsync(() => {
     store.overrideSelector(currentTrashBookType as any, {
       id: 5,
@@ -236,4 +270,54 @@ describe('FormComponent — success alert message', () => {
     expect(args.cssClass).toContain('error');
     expect(args.message).toContain('Errore');
   }));
+});
+
+describe('FormComponent — ticketFormConf setter idempotency', () => {
+  let component: FormComponent;
+  let store: MockStore;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [FormComponent],
+      imports: [ReactiveFormsModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        provideMockStore(),
+        {provide: NavController, useValue: {navigateRoot: () => undefined}},
+        {
+          provide: AlertController,
+          useValue: {create: () => Promise.resolve({present: () => {}, onDidDismiss: () => of(null)})},
+        },
+      ],
+    }).compileComponents();
+
+    store = TestBed.inject(MockStore);
+    store.overrideSelector(selectCalendarState as any, null);
+    store.overrideSelector(trashBookTypes as any, []);
+    store.overrideSelector(confiniZone as any, []);
+    store.overrideSelector(currentTrashBookType as any, undefined);
+    store.overrideSelector(ticketError as any, null);
+    store.overrideSelector(ticketLoading as any, false);
+    store.overrideSelector(ticketSuccess as any, null);
+    store.overrideSelector(user as any, null);
+
+    const fixture = TestBed.createComponent(FormComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should not duplicate controls when ticketFormConf is set twice with the same config', () => {
+    component.ticketFormConf = noteStepConf;
+    component.ticketFormConf = noteStepConf;
+    expect(component.ticketForm.contains('note')).toBeTrue();
+    expect(Object.keys(component.ticketForm.controls).filter(k => k === 'note').length).toBe(1);
+  });
+
+  it('should reset form controls when ticketFormConf is set a second time', () => {
+    const confA: TicketFormConf = {...noteStepConf, step: [{label: 'Note', type: 'note', required: false}]};
+    const confB: TicketFormConf = {...noteStepConf, step: [{label: 'Telefono', type: 'phone', required: true}]};
+    component.ticketFormConf = confA;
+    component.ticketFormConf = confB;
+    expect(component.ticketForm.contains('phone')).toBeTrue();
+    expect(component.ticketForm.contains('note')).toBeFalse();
+  });
 });

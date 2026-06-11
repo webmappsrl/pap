@@ -11,12 +11,14 @@ import {
   testAlertTitle,
 } from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
-import {abandonmentTicketForm} from 'projects/pap/src/app/shared/models/form.model';
+import {TicketFormConf} from 'projects/pap/src/app/shared/models/form.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
 const servicesButton = homeButtons.find(button => button.label === 'Servizi');
 const abandonmentTicketButton = servicesButtons.find(button => button.text === 'Segnala abbandono');
+let abandonmentConfig: TicketFormConf;
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
+const apiTicketFormsConfig = `${environment.api}/c/${environment.companyId}/ticket-forms-config`;
 const apiZonesGeoJson = `${environment.api}/c/${environment.companyId}/zones.geojson`;
 const mockZonesGeoJson = {
   type: 'FeatureCollection',
@@ -44,7 +46,11 @@ let formMockup: FormMockup = {
 before(() => {
   clearTestState();
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
+  cy.intercept('GET', apiTicketFormsConfig, {fixture: 'ticket-forms-config.json'}).as('ticketFormsConfigCall');
   cy.intercept('GET', apiZonesGeoJson, {body: mockZonesGeoJson}).as('apiZonesGeoJsonCall');
+  cy.fixture('ticket-forms-config.json').then(data => {
+    abandonmentConfig = data.data.abandonment;
+  });
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@trashTypesCall').then(interception => {
     const trashTypesData = interception?.response?.body;
@@ -68,13 +74,13 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at first st
   });
 
   it('should display the correct ticket type, label and status back button should be hidden', () => {
-    testTicketFormStep(abandonmentTicketForm, 0);
+    testTicketFormStep(abandonmentConfig, 0);
   });
 });
 
 describe('pap-abandonment-ticket: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no trash type selected', () => {
-    testTicketFormStep(abandonmentTicketForm, 1);
+    testTicketFormStep(abandonmentConfig, 1);
   });
 });
 
@@ -84,7 +90,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at third st
   });
 
   it('should display the correct ticket type and label for the third step with a disabled next button and an error message', () => {
-    testTicketFormStep(abandonmentTicketForm, 2, true, true);
+    testTicketFormStep(abandonmentConfig, 2, true, true);
   });
 
   it('should click on a random position on the pap-map and verify address', () =>
@@ -101,7 +107,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fourth s
   });
 
   it('should display the correct ticket type, ticket label', () => {
-    testTicketFormStep(abandonmentTicketForm, 3);
+    testTicketFormStep(abandonmentConfig, 3);
   });
 
   it('should open action sheet when image picker button is clicked', () => {
@@ -115,7 +121,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of form at fifth st
   });
 
   it('should display the correct ticket type, ticket label', () => {
-    testTicketFormStep(abandonmentTicketForm, 4);
+    testTicketFormStep(abandonmentConfig, 4);
   });
 
   it('should write a text into text area and go to recap', () => {
@@ -151,7 +157,7 @@ describe('pap-abandonment-ticket: test the correct behaviour of cancel button in
   });
 
   it('should display alert title correctly', () => {
-    testAlertTitle(abandonmentTicketForm);
+    testAlertTitle(abandonmentConfig);
   });
 
   it('should have 2 buttons inside the alert-button-group', () => {
