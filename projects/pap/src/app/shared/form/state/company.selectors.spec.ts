@@ -11,6 +11,10 @@ import {FormJson, Properties} from '../model';
 declare const expect: (actual: any) => jasmine.Matchers<any>;
 
 describe('Company selectors', () => {
+  beforeEach(() => {
+    (selectCompanyProperties as any).clearResult();
+  });
+
   it('selectCompanyProperties should return properties', () => {
     const properties: Properties = {enableExludeInProgress: true};
     const companyState: CompanyState = {loading: false, properties};

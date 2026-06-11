@@ -103,8 +103,8 @@ export class LocationComponent implements OnDestroy, ControlValueAccessor {
     try {
       navigator.geolocation.getCurrentPosition(location => {
         const coords = [location.coords.longitude, location.coords.latitude] as [number, number];
-        this.setPosition(coords);
         this._store.dispatch(setMarker({coords}));
+        this.setPosition(coords);
       });
     } catch (error) {
       console.error(error);

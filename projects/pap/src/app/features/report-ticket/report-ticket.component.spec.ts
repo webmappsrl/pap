@@ -33,6 +33,10 @@ describe('ReportTicketComponent', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    store.resetSelectors();
+  });
+
   it('should dispatch loadCalendars WITHOUT exclude_in_progress when property is false/undefined', () => {
     store.overrideSelector(selectCompanyProperties as any, {enableExludeInProgress: false});
     const dispatchSpy = spyOn(store, 'dispatch');
