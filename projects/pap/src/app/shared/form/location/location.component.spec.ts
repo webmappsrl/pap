@@ -37,9 +37,7 @@ describe('LocationComponent', () => {
     store.refreshState();
 
     locationSpy = jasmine.createSpyObj('LocationService', ['getAddress']);
-    locationSpy.getAddress.and.returnValue(
-      of({address: 'Via Roma', house_number: '5', city: ''}),
-    );
+    locationSpy.getAddress.and.returnValue(of({address: 'Via Roma', house_number: '5', city: ''}));
 
     component = new LocationComponent(locationSpy, store as any, {detectChanges: () => {}} as any);
     component.form = buildParentForm();
@@ -81,7 +79,13 @@ describe('LocationComponent', () => {
 
   describe('setAddress() con indirizzo salvato', () => {
     it('should set zone_id from address.zone_id', () => {
-      component.setAddress({address: 'Via Verdi', city: 'Firenze', house_number: '3', id: 10, zone_id: 99});
+      component.setAddress({
+        address: 'Via Verdi',
+        city: 'Firenze',
+        house_number: '3',
+        id: 10,
+        zone_id: 99,
+      });
       expect(component.form.get('zone_id')!.value).toBe(99);
     });
 
@@ -97,6 +101,53 @@ describe('LocationComponent', () => {
       component.form.get('zone_id')!.setValue(42);
       component.setAddress({address: 'altro'});
       expect(component.form.get('zone_id')!.value).toBeNull();
+    });
+  });
+
+  describe('getLocation()', () => {
+    beforeEach(() => {
+      spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((cb: any) => {
+        cb({coords: {longitude: 11.25, latitude: 43.77}});
+      });
+    });
+
+    it('non produce errore spurio quando non esiste un marker precedente (Caso 2)', async () => {
+      store.overrideSelector(currentZone as any, null);
+      store.refreshState();
+
+      spyOn(store, 'dispatch').and.callFake((action: any) => {
+        if (action.type === '[Map] set current marker') {
+          store.overrideSelector(currentZone as any, mockZone);
+          store.refreshState();
+        }
+      });
+
+      await component.getLocation();
+
+      expect(component.form.get('location')!.errors).toBeNull();
+      expect(component.form.get('zone_id')!.value).toBe(42);
+    });
+
+    it('usa zone_id e city delle coordinate GPS nuove, non del marker precedente (Caso 1)', async () => {
+      const oldZone = {
+        type: 'Feature',
+        geometry: {coordinates: [], type: 'MultiPolygon'},
+        properties: {id: 99, comune: 'Vecchio', availableUserTypes: [], types: [], url: ''},
+      };
+      store.overrideSelector(currentZone as any, oldZone);
+      store.refreshState();
+
+      spyOn(store, 'dispatch').and.callFake((action: any) => {
+        if (action.type === '[Map] set current marker') {
+          store.overrideSelector(currentZone as any, mockZone);
+          store.refreshState();
+        }
+      });
+
+      await component.getLocation();
+
+      expect(component.form.get('zone_id')!.value).toBe(42);
+      expect(component.form.get('city')!.value).toBe('Firenze');
     });
   });
 });
