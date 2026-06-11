@@ -22,10 +22,7 @@ describe('ReportTicketComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ReportTicketComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
-        {provide: NavController, useValue: {pop: () => undefined}},
-        provideMockStore(),
-      ],
+      providers: [{provide: NavController, useValue: {pop: () => undefined}}, provideMockStore()],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
@@ -61,7 +58,10 @@ describe('ReportTicketComponent', () => {
   });
 
   it('should expose form$ Observable that emits backend config when store has configs', () => {
-    const backendConf: TicketFormConf = {...reportTicketForm, finalMessage: 'Backend report message'};
+    const backendConf: TicketFormConf = {
+      ...reportTicketForm,
+      finalMessage: 'Backend report message',
+    };
     // Override the base selector so all instances of selectTicketFormConfByType('report') react
     store.overrideSelector(selectTicketFormsConfigs as any, {report: backendConf});
     store.refreshState();
@@ -88,4 +88,3 @@ describe('ReportTicketComponent', () => {
     expect(result).toEqual(reportTicketForm);
   });
 });
-

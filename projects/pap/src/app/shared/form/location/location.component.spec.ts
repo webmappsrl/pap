@@ -37,9 +37,7 @@ describe('LocationComponent', () => {
     store.refreshState();
 
     locationSpy = jasmine.createSpyObj('LocationService', ['getAddress']);
-    locationSpy.getAddress.and.returnValue(
-      of({address: 'Via Roma', house_number: '5', city: ''}),
-    );
+    locationSpy.getAddress.and.returnValue(of({address: 'Via Roma', house_number: '5', city: ''}));
 
     component = new LocationComponent(locationSpy, store as any, {detectChanges: () => {}} as any);
     component.form = buildParentForm();
@@ -81,7 +79,13 @@ describe('LocationComponent', () => {
 
   describe('setAddress() con indirizzo salvato', () => {
     it('should set zone_id from address.zone_id', () => {
-      component.setAddress({address: 'Via Verdi', city: 'Firenze', house_number: '3', id: 10, zone_id: 99});
+      component.setAddress({
+        address: 'Via Verdi',
+        city: 'Firenze',
+        house_number: '3',
+        id: 10,
+        zone_id: 99,
+      });
       expect(component.form.get('zone_id')!.value).toBe(99);
     });
 

@@ -29,7 +29,7 @@
 
 ## Moduli toccati
 
-| File | Azione |
-|---|---|
-| `projects/pap/src/app/shared/form/location/location.component.ts` | swap 2 righe in `getLocation()` (riga 106–107) |
+| File                                                                   | Azione                                          |
+| ---------------------------------------------------------------------- | ----------------------------------------------- |
+| `projects/pap/src/app/shared/form/location/location.component.ts`      | swap 2 righe in `getLocation()` (riga 106–107)  |
 | `projects/pap/src/app/shared/form/location/location.component.spec.ts` | aggiunta `describe('getLocation()')` con 2 test |

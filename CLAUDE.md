@@ -14,10 +14,10 @@ ng serve             # dev server su localhost:8100
 
 ## Feature disponibili
 
-| Feature | Ticket | Moduli toccati | Note |
-|---|---|---|---|
-| Fix race condition GPS in getLocation() | oc:8045 | `location.component.ts`, `location.component.spec.ts`, `report-ticket.component.spec.ts`, `company.selectors.spec.ts` | Swap 2 righe in getLocation(); 2 test di regressione per Caso 1 e Caso 2 |
-| Revisione test suite CI headless | oc:7991 | `karma.conf.js`, `angular.json`, `package.json`, `cypress/e2e/**`, `form.component.html`, `first-step.component.html`, `second-step.component.ts` | Karma CI headless + script test:ci; tutti i test Cypress corretti e funzionanti |
+| Feature                                 | Ticket  | Moduli toccati                                                                                                                                    | Note                                                                            |
+| --------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Fix race condition GPS in getLocation() | oc:8045 | `location.component.ts`, `location.component.spec.ts`, `report-ticket.component.spec.ts`, `company.selectors.spec.ts`                             | Swap 2 righe in getLocation(); 2 test di regressione per Caso 1 e Caso 2        |
+| Revisione test suite CI headless        | oc:7991 | `karma.conf.js`, `angular.json`, `package.json`, `cypress/e2e/**`, `form.component.html`, `first-step.component.html`, `second-step.component.ts` | Karma CI headless + script test:ci; tutti i test Cypress corretti e funzionanti |
 
 ## Decisioni architetturali
 

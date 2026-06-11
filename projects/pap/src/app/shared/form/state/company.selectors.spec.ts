@@ -1,8 +1,4 @@
-import {
-  selectCompanyProperties,
-  selectFormJsonByStep,
-  selectLoading,
-} from './company.selectors';
+import {selectCompanyProperties, selectFormJsonByStep, selectLoading} from './company.selectors';
 import {CompanyState} from './company.reducer';
 import {FormJson, Properties} from '../model';
 
@@ -42,4 +38,3 @@ describe('Company selectors', () => {
     expect(selectLoading(rootState as any)).toBeFalse();
   });
 });
-

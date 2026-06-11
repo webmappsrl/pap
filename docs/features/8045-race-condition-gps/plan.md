@@ -17,6 +17,7 @@ git checkout -b fix/oc-8045-race-condition-gps
 Nella callback di `getLocation()` (righe 104–108), invertire le due righe: dispatchare `setMarker` **prima** di chiamare `setPosition`.
 
 **Prima (ordine errato):**
+
 ```ts
 navigator.geolocation.getCurrentPosition(location => {
   const coords = [location.coords.longitude, location.coords.latitude] as [number, number];
@@ -26,6 +27,7 @@ navigator.geolocation.getCurrentPosition(location => {
 ```
 
 **Dopo (ordine corretto):**
+
 ```ts
 navigator.geolocation.getCurrentPosition(location => {
   const coords = [location.coords.longitude, location.coords.latitude] as [number, number];
@@ -126,6 +128,7 @@ git add docs/features/8045-race-condition-gps/
 ```
 
 Commit message:
+
 ```
 fix(oc:8045): correggi race condition GPS in getLocation() — dispatch setMarker prima di setPosition
 
