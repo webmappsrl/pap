@@ -41,10 +41,13 @@ Il setter diventa idempotente: chiamarlo più volte non accumula controlli dupli
 ### 2b — Separatore `<br><br>` (riga 120)
 
 Sostituire:
+
 ```typescript
 finalMsg += `\n\n${trashBookType.confirmation_message}`;
 ```
+
 con:
+
 ```typescript
 finalMsg += `<br><br>${trashBookType.confirmation_message}`;
 ```
@@ -52,6 +55,7 @@ finalMsg += `<br><br>${trashBookType.confirmation_message}`;
 ### 2c — Rimozione console.log e subscription non chiusa (riga 103)
 
 Rimuovere interamente la riga:
+
 ```typescript
 this.currentTrashbookType$.subscribe(val => console.log(val));
 ```
@@ -80,15 +84,19 @@ export const selectTicketFormsConfigsLoaded = createSelector(
 **File:** `projects/pap/src/app/features/home/home.component.ts`
 
 Aggiungere l'import del nuovo selector:
+
 ```typescript
 import {selectTicketFormsConfigsLoaded} from '../../shared/form/state/form.selectors';
 ```
 
 Nel metodo `action()`, sostituire il dispatch diretto:
+
 ```typescript
 this._store.dispatch(loadTicketFormsConfig());
 ```
+
 con il dispatch condizionale:
+
 ```typescript
 this._store.pipe(select(selectTicketFormsConfigsLoaded), take(1)).subscribe(loaded => {
   if (!loaded) this._store.dispatch(loadTicketFormsConfig());
@@ -222,6 +230,7 @@ cy.intercept('GET', apiTicketFormsConfig, {fixture: 'ticket-forms-config.json'})
 ```
 
 Aggiungere la variabile in testa al file:
+
 ```typescript
 const apiTicketFormsConfig = `${environment.api}/c/${environment.companyId}/ticket-forms-config`;
 ```
@@ -239,6 +248,7 @@ Stessa modifica di 7a: aggiungere la variabile e l'intercept nel `before()`.
 **File:** `cypress/e2e/pap-ticket-reservation/pap-ticket-reservation.cy.ts`
 
 Aggiungere in testa al file le variabili necessarie:
+
 ```typescript
 const apiTicket = `${environment.api}/c/${environment.companyId}/ticket`;
 ```

@@ -5,6 +5,7 @@
 ## Cosa cambia
 
 Quattro difetti bloccanti introdotti dal commit `f25abfc` (oc:7612) vengono corretti nel frontend `pap`:
+
 - I testi fallback di `abandonmentTicketForm` non mostrano più il prefisso debug "AAA " all'utente
 - Il form viene reinizializzato correttamente quando la config backend arriva dopo il render col fallback
 - Il messaggio di conferma per prenotazioni RAEE/ingombranti appare separato visivamente dal messaggio principale
@@ -49,14 +50,14 @@ I seguenti cleanup identificati in code review sono **documentati ma non impleme
 
 ## Moduli toccati
 
-| File | Modifica |
-|------|---------|
-| `projects/pap/src/app/shared/models/form.model.ts` | Rimozione prefissi "AAA " da `abandonmentTicketForm` |
-| `projects/pap/src/app/shared/form/form/form.component.ts` | Reinizializzazione FormGroup nel setter, fix `<br><br>`, rimozione console.log/subscription |
-| `projects/pap/src/app/shared/form/form/form.component.spec.ts` | Aggiunta test di regressione per fix 2 e fix 3 |
-| `projects/pap/src/app/shared/form/state/form.selectors.ts` | Nuovo selector `selectTicketFormsConfigsLoaded` |
-| `projects/pap/src/app/features/home/home.component.ts` | Guard already-loaded prima del dispatch di `loadTicketFormsConfig` |
-| `cypress/fixtures/ticket-forms-config.json` | Nuova fixture da chiamata reale backend |
-| `cypress/fixtures/trash-types.json` | Nuova fixture da chiamata reale backend (con `confirmation_message`) |
-| `cypress/e2e/pap-abandonment-ticket/pap-abandonment-ticket.cy.ts` | Aggiunta intercept `ticket-forms-config` |
-| `cypress/e2e/pap-ticket-reservation/pap-ticket-reservation.cy.ts` | Aggiunta intercept `ticket-forms-config` + test flusso successo con `confirmation_message` |
+| File                                                              | Modifica                                                                                    |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `projects/pap/src/app/shared/models/form.model.ts`                | Rimozione prefissi "AAA " da `abandonmentTicketForm`                                        |
+| `projects/pap/src/app/shared/form/form/form.component.ts`         | Reinizializzazione FormGroup nel setter, fix `<br><br>`, rimozione console.log/subscription |
+| `projects/pap/src/app/shared/form/form/form.component.spec.ts`    | Aggiunta test di regressione per fix 2 e fix 3                                              |
+| `projects/pap/src/app/shared/form/state/form.selectors.ts`        | Nuovo selector `selectTicketFormsConfigsLoaded`                                             |
+| `projects/pap/src/app/features/home/home.component.ts`            | Guard already-loaded prima del dispatch di `loadTicketFormsConfig`                          |
+| `cypress/fixtures/ticket-forms-config.json`                       | Nuova fixture da chiamata reale backend                                                     |
+| `cypress/fixtures/trash-types.json`                               | Nuova fixture da chiamata reale backend (con `confirmation_message`)                        |
+| `cypress/e2e/pap-abandonment-ticket/pap-abandonment-ticket.cy.ts` | Aggiunta intercept `ticket-forms-config`                                                    |
+| `cypress/e2e/pap-ticket-reservation/pap-ticket-reservation.cy.ts` | Aggiunta intercept `ticket-forms-config` + test flusso successo con `confirmation_message`  |
