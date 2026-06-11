@@ -1,0 +1,165 @@
+{
+  "success": true,
+  "data": {
+    "report": {
+      "ticketType": "report",
+      "label": "Segnalazione mancato ritiro",
+      "cancel": "Sicuro di voler cancellare la prenotazione?",
+      "finalMessage": "Ci scusiamo per il disservizio, provvederemo quanto prima a recuperare il rifiuto (entro 24h dalla segnalazione). Lasciarlo esposto. Eventualmente se ci sar\u00e0 la necessit\u00e0 verr\u00e0 contattata.",
+      "pages": 6,
+      "step": [
+        {
+          "label": "Questo servizio ti permette di segnalare ad Ersu un mancato ritiro del servizio di raccolta porta a porta. Al termine ti verr\u00e0 assegnato un codice e verr\u00e0 inviata una email a Ersu: verrai ricontattato in caso di necessit\u00e0. Vai avanti per iniziare.",
+          "type": "label",
+          "required": false
+        },
+        {
+          "label": "Scegli il tipo di servizio che non ha funzionato:",
+          "type": "calendar_trash_type_id",
+          "required": true,
+          "recap": "Servizio"
+        },
+        {
+          "label": "Puoi aggiungere una foto: ci aiuter\u00e0 a capire meglio cosa \u00e8 successo",
+          "type": "image",
+          "required": false,
+          "recap": "Immagine"
+        },
+        {
+          "label": "Se lo ritieni opportuno puoi inserire delle note",
+          "type": "note",
+          "required": false,
+          "recap": "Note"
+        },
+        {
+          "label": "Inserisci un numero di telefono",
+          "type": "phone",
+          "required": true,
+          "recap": "Telefono"
+        },
+        {"label": "", "type": "recap", "required": false}
+      ]
+    },
+    "abandonment": {
+      "ticketType": "abandonment",
+      "label": "Segnalazione di abbandono",
+      "cancel": "Sicuro di voler cancellare la prenotazione?",
+      "finalMessage": "La ringraziamo per la segnalazione, provvederemo quanto prima a recuperare il rifiuto (entro 24h dalla segnalazione). Eventualmente se ci sar\u00e0 la necessit\u00e0 verr\u00e0 contattata.",
+      "pages": 6,
+      "step": [
+        {
+          "label": "Questo servizio ti permette di inviare una segnalazione di abbandono ad Ersu. Al termine della segnalazione ti verr\u00e0 assegnato un codice e verr\u00e0 inviata una email a Ersu. Vai avanti per iniziare.",
+          "type": "label",
+          "required": false
+        },
+        {
+          "label": "Scegli il tipo di abbandono:",
+          "type": "trash_type_id",
+          "required": true,
+          "recap": "Servizio"
+        },
+        {
+          "label": "Seleziona il luogo:",
+          "type": "location",
+          "required": true,
+          "recap": "Indirizzo",
+          "userAddress": true
+        },
+        {
+          "label": "Aggiungi una foto: ci aiuter\u00e0 a capire la situazione",
+          "type": "image",
+          "required": false,
+          "recap": "Immagine"
+        },
+        {
+          "label": "Se lo ritieni opportuno puoi inserire delle note",
+          "type": "note",
+          "required": false,
+          "recap": "Note"
+        },
+        {
+          "label": "Inserisci un numero di telefono",
+          "type": "phone",
+          "required": true,
+          "recap": "Telefono"
+        },
+        {"label": "", "type": "recap", "required": false}
+      ]
+    },
+    "reservation": {
+      "ticketType": "reservation",
+      "label": "Prenotazione servizio di ritiro",
+      "cancel": "Sicuro di voler cancellare la prenotazione?",
+      "finalMessage": "La sua segnalazione \u00e8 stata presa in carico, verr\u00e0 contattata quanto prima per darle l'appuntamento.",
+      "pages": 6,
+      "step": [
+        {
+          "label": "Questo servizio ti permette di inviare una richiesta di prenotazione di un servizio Ersu. Al termine della segnalazione ti verr\u00e0 assegnato un codice della segnalazione e verr\u00e0 inviata una email a Ersu: verrai ricontattato per concordare i dettagli della prenotazione. Vai avanti per iniziare.",
+          "type": "label",
+          "required": false
+        },
+        {
+          "label": "Scegli il tipo di servizio da prenotare:",
+          "type": "trash_type_id",
+          "required": true,
+          "recap": "Servizio"
+        },
+        {
+          "label": "Seleziona il luogo:",
+          "type": "location",
+          "required": true,
+          "recap": "Indirizzo",
+          "userAddress": true
+        },
+        {
+          "label": "Puoi aggiungere una foto: ci aiuter\u00e0 a capire meglio la situazione",
+          "type": "image",
+          "required": false,
+          "recap": "Immagine"
+        },
+        {
+          "label": "Se lo ritieni opportuno, puoi inserire delle note",
+          "type": "note",
+          "required": false,
+          "recap": "Note"
+        },
+        {
+          "label": "Inserisci un numero di telefono",
+          "type": "phone",
+          "required": true,
+          "recap": "Telefono"
+        },
+        {"label": "", "type": "recap", "required": false}
+      ]
+    },
+    "info": {
+      "ticketType": "info",
+      "label": "Richiesta informazioni",
+      "cancel": "Uscendo perderai tutti i dati inseriti. Sicuro di volerlo fare?",
+      "finalMessage": "Puoi visualizzarla nella sezione \"i miei ticket\".",
+      "pages": 4,
+      "step": [
+        {
+          "label": "Questo servizio ti permette di richiedere informazioni direttamente a Ersu. Al termine ti verr\u00e0 assegnato un codice della richiesta e verr\u00e0 inviata una email a Ersu: verrai ricontattato appena possibile. Clicca sul bottone per iniziare.",
+          "type": "label",
+          "required": false
+        },
+        {
+          "label": "Scrivi qui le informazioni che vorresti richiedere a Ersu",
+          "type": "note",
+          "required": true,
+          "value": "",
+          "recap": "Richiesta"
+        },
+        {
+          "label": "Inserisci un numero di telefono",
+          "type": "phone",
+          "required": true,
+          "recap": "Telefono"
+        },
+        {"label": "", "type": "recap", "required": false}
+      ]
+    }
+  },
+  "message": "Ticket forms config"
+}
