@@ -8,7 +8,7 @@ import {
   testAlertTitle,
 } from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
-import {reportTicketForm} from 'projects/pap/src/app/shared/models/form.model';
+import {TicketFormConf} from 'projects/pap/src/app/shared/models/form.model';
 import {environment} from 'projects/pap/src/environments/environment';
 
 const servicesButton = homeButtons.find(button => button.label === 'Servizi');
@@ -16,8 +16,10 @@ const reportTicketoButton = servicesButtons.find(
   button => button.text === 'Segnala mancato ritiro',
 );
 const apiTrashTypes = `${environment.api}/c/${environment.companyId}/trash_types.json`;
+const apiTicketFormsConfig = `${environment.api}/c/${environment.companyId}/ticket-forms-config`;
 const apiCalendarWithDates = `${environment.api}/c/${environment.companyId}/calendar*`;
 let calendarData: any = null;
+let reportConfig: TicketFormConf;
 let formMockup: FormMockup = {
   Telefono: '356273894',
   Note: 'this is a text note',
@@ -32,7 +34,11 @@ let formMockup: FormMockup = {
 before(() => {
   clearTestState();
   cy.intercept('GET', apiTrashTypes).as('trashTypesCall');
+  cy.intercept('GET', apiTicketFormsConfig, {fixture: 'ticket-forms-config.json'}).as('ticketFormsConfigCall');
   cy.intercept('GET', apiCalendarWithDates).as('calendarWithDatesCall');
+  cy.fixture('ticket-forms-config.json').then(data => {
+    reportConfig = data.data.report;
+  });
   cy.visit(Cypress.env('baseurl'));
   cy.wait('@trashTypesCall').then(interception => {
     cy.wrap(interception?.response?.body).as('trashTypesData');
@@ -57,14 +63,14 @@ describe('pap-report-ticket: test the correct behaviour of form at first step', 
   });
 
   it('should display the correct ticket type, label and status back button should be hidden', () => {
-    testTicketFormStep(reportTicketForm, 0);
+    testTicketFormStep(reportConfig, 0);
   });
 });
 
 describe('pap-report-ticket: test the correct behaviour of form at second step', () => {
   it('should display the correct ticket type, ticket label, status next button should be disabled and a label with this field is required if no trash type selected', () => {
     cy.wait(500);
-    testTicketFormStep(reportTicketForm, 1);
+    testTicketFormStep(reportConfig, 1);
   });
 });
 
@@ -75,7 +81,7 @@ describe('pap-report-ticket: test the correct behaviour of form at third step', 
   });
 
   it('should display the correct ticket type and label for the third step without an error message', () => {
-    testTicketFormStep(reportTicketForm, 2, false, false);
+    testTicketFormStep(reportConfig, 2, false, false);
   });
 
   it('should open action sheet when image picker button is clicked', () => {
@@ -92,7 +98,7 @@ describe('pap-report-ticket: test the correct behaviour of form at fourth step',
   });
 
   it('should display the correct ticket type, ticket label', () => {
-    testTicketFormStep(reportTicketForm, 3);
+    testTicketFormStep(reportConfig, 3);
   });
 
   it('should write a text into text area and go to recap', () => {
@@ -118,7 +124,7 @@ describe('pap-report-ticket: test the correct behaviour of cancel button in stat
   });
 
   it('should display alert title correctly', () => {
-    testAlertTitle(reportTicketForm);
+    testAlertTitle(reportConfig);
   });
 
   it('should have 2 buttons inside the alert-button-group', () => {

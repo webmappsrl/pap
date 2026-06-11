@@ -1,0 +1,20 @@
+{
+  "data": {
+    "reservation": {
+      "cancel": "Sicuro di voler cancellare la prenotazione?",
+      "finalMessage": "La sua segnalazione è stata presa in carico.",
+      "label": "Prenotazione servizio di ritiro",
+      "pages": 4,
+      "ticketType": "reservation",
+      "step": [
+        {"label": "Intro", "type": "label", "required": false},
+        {"label": "Scegli il tipo di servizio da prenotare:", "type": "trash_type_id", "required": true, "recap": "Servizio"},
+        {"label": "Note", "type": "note", "required": false, "recap": "Note"},
+        {"label": "Inserisci un numero di telefono", "type": "phone", "required": true, "recap": "Telefono"},
+        {"label": "", "type": "recap", "required": false}
+      ]
+    }
+  },
+  "message": "ok",
+  "success": true
+}

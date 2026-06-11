@@ -1,0 +1,890 @@
+[
+  {
+    "id": 18,
+    "slug": "organico",
+    "name": "Organico",
+    "description": "L'organico comprende tutti gli scarti di provenienza alimentare, vegetale, animale ad alta umidità che costituiscono circa il 37% della composizione totale dei rifiuti solidi urbani.",
+    "howto": "Deporre il materiale nei sacchetti biodegradabili di mater-bi all'interno del bidoncino da 10 litri. I sacchetti pieni e ben chiusi vanno poi inseriti nel bidoncino verde o marrone da 20 litri, che andrà esposto nei giorni indicati. I sacchetti di mater-bi sono un prodotto naturale, ricavato dall'amido del mais e trattengono i liquidi. Chi è dotato di composter non deve conferire l'organico al servizio, ma utilizzare direttamente il bidone di compostaggio.",
+    "where": "il bidoncino dell'organico",
+    "color": "#b34e17",
+    "allowed": [
+      "Resti di frutta, ortaggi, verdure",
+      "Carne e pesce a piccoli pezzi",
+      "Gusci d'uova",
+      "Alimenti deteriorati",
+      "Fondi di caffè o tè",
+      "Pane, pasta, riso",
+      "Piccoli ossi",
+      "Fazzoletti e tovaglioli di carta",
+      "Piccole lettiere non sintetiche per animali domestici con escrementi",
+      "Ceneri spente di caminetti"
+    ],
+    "notallowed": [
+      "Vetro",
+      "Metalli",
+      "Ceramica",
+      "Contenitori in plastica e brik",
+      "Tessuti colorati",
+      "Legno verniciato",
+      "Fogli di alluminio",
+      "Spazzatura",
+      "Oli, grassi",
+      "Carta patinata di riviste",
+      "Carta sporca di grasso o altro"
+    ],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Organic",
+        "description": "The organic includes all food, vegetable and animal wastes with a high humidity rate which make up about the 37% of the total composition of municipal solid waste. It must be put in the Compostable Bag provided by ERSU",
+        "howto": "Put the organic waste in the compostable bag provided by ERSU, using the 10 liters brown bin for inside. Use the 20 liters brown bin for the curbside collection. Who is equipped with the Composter Bin, has to use it and not the curbside service.",
+        "where": "the Brown Organic Bin",
+        "allowed": [
+          "Remnants of fruit",
+          "vegetables",
+          "greens",
+          "Meat and fish in small pieces",
+          "Deteriorated foods",
+          "Bread",
+          "pasta",
+          "rice",
+          "Paper handkerchiefs and napkins",
+          "Small non-synthetic litters for pets with excrement",
+          "Unlit ashes of fireplaces"
+        ],
+        "notallowed": [
+          "Glass",
+          "Metals",
+          "Ceramics",
+          "Plastic and brik containers",
+          "Painted wood",
+          "Aluminum foil",
+          "Rubbish",
+          "Oils",
+          "fats",
+          "Coated magazine paper",
+          "Greasy or other dirty paper"
+        ]
+      }
+    }
+  },
+  {
+    "id": 21,
+    "slug": "vetro",
+    "name": "Vetro",
+    "description": "Il vetro ha come materia base la sabbia ed è un ossido di silicio con aggiunta di elementi quali soda, carbonato di calcio e solfato sodico per formare il vetro di base. Si possono aggiungere sostanze coloranti.",
+    "howto": "Il vetro, lavato e pulito da eventuali residui, deve essere inserito senza alcun sacco nel bidone blu da 40lt fornito dal servizio. Il bidone dovrà essere esposto fuori dall'abitazione nel giorno indicato.",
+    "where": "il bidone del vetro",
+    "color": "#18961c",
+    "allowed": [
+      "Bottiglie",
+      "Flaconi",
+      "attoli",
+      "Bicchieri"
+    ],
+    "notallowed": [
+      "Vetri per finestre",
+      "Piatti",
+      "Specchi",
+      "Pirofile da forno",
+      "Tazzine da caffè",
+      "Porcellana",
+      "Lampadine e tubi al neon"
+    ],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Glass",
+        "description": "Glass has sand as its base material and is a silicon oxide with the addition of elements such as soda, calcium carbonate and sodium sulphate to form the base glass. It must be put in the Green Bin provided by ERSU",
+        "howto": "The glass, washed and cleaned of any residues, must be inserted without any bag in the green 40 liters bin provided by the service (The old ones are Blue). The bin must be displayed outside the home on the day indicated.",
+        "where": "the Green Bin",
+        "allowed": [
+          "Bottles",
+          "Flasks",
+          "Jars",
+          "Glasses"
+        ],
+        "notallowed": [
+          "Window glass",
+          "Dishes",
+          "Mirrors",
+          "Oven dishes",
+          "Coffee cups",
+          "Porcelain",
+          "Neon bulbs and tubes"
+        ]
+      }
+    }
+  },
+  {
+    "id": 19,
+    "slug": "carta",
+    "name": "Carta",
+    "description": "Costituiscono il 24% della composizione totale dei rifiuti",
+    "howto": "Deporre il materiale nei sacchi in carta forniti dal servizio. Il cartone va piegato in modo da ridurre al minimo il volume. In caso di grandi quantità, il cartone va legato e depositato nel luogo di raccolta.",
+    "where": "i sacchi della carta",
+    "color": "#65c1f8",
+    "allowed": [
+      "Giornali, riviste",
+      "Quaderni e libri",
+      "Opuscoli",
+      "Sacchetti di carta",
+      "Fotocopie e moduli",
+      "Pacchi, pacchetti e scatole in cartone",
+      "Imballaggi in cartone",
+      "Contenitori in tetrapak per latte, succhi di frutta, ecc.",
+      "Contenitori della pizza",
+      "Bicchieri e piatti di carta"
+    ],
+    "notallowed": [
+      "Carta con residui di colla o altre sostanze",
+      "Carta chimica",
+      "Carta autocopiante"
+    ],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Paper",
+        "description": "They make up the 24% of of the total composition of municipal solid waste. It must be put in the Blue Paper Bag provided by ERSU, the one with the Carta word.",
+        "howto": "Place the material in the Blue Paper Bags provided by the service. The cardboard should be folded to minimize the volume. In the case of large quantities, the cardboard must be tied and deposited in the collection place.",
+        "where": "the Blue Paper Bag",
+        "allowed": [
+          "Newspapers",
+          "magazines",
+          "Notebooks and books",
+          "Brochures",
+          "Paper bag",
+          "Photocopies and forms",
+          "Parcels",
+          "packages and cardboard boxes",
+          "Tetrapak containers for milk, fruit juices, etc.",
+          "Pizza containers",
+          "Paper cups and plates"
+        ],
+        "notallowed": [
+          "Paper with many glue residues or other substances",
+          "Chemical paper",
+          "Carbonless paper"
+        ]
+      }
+    }
+  },
+  {
+    "id": 27,
+    "slug": "ingombranti_big",
+    "name": "Ingombranti di grandi dimensioni",
+    "description": "E' possibile ritirare oggetti ingombranti provenienti da utenze domestiche come ad esempio poltrone, divani, reti, letti, armadi, materassi. Sono esclusi tutti i materiali edili e sostanze pericolose.",
+    "howto": "Il materiale deve essere esposto all'esterno dell'abitazione la sera precedente (se il ritiro avviene al mattino) oppure entro le ore 12:00 (se il ritiro avviene di pomeriggio), dove può essere agevolmente ritirato dal mezzo di ERSU S.p.A. e tale da non intralciare la viabilità. Per appuntamento chiama n° verde 800 942540 o scrivi a urp@ersu.it specificando nominativo, indirizzo, numero di telefono ed elenco degli oggetti da ritirare. Per ritiri superiori a 5 oggetti il servizio è a pagamento ed è necessario contattare il numero 800 942857 aperto dal lunedì al venerdì tra le 14:30 e le 17:00",
+    "where": null,
+    "color": null,
+    "allowed": null,
+    "notallowed": null,
+    "showed_in": {
+      "reservation": true,
+      "info": true,
+      "abandonment": true,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Big sized bulky Waste",
+        "description": "It is possible to collect Bulky Waste from domestic users such as armchairs, sofas, bed bases, beds, mattresses. It is a on-call collection service.",
+        "howto": "The bulky waste must be placed outside your house the previous evening (if the collection takes place in the morning) or by 12 AM (if the collection takes place in the afternoon), where it can be easily collected from the ERSU vehicle, in a proper way not to hinder the viability. Book the collection via the PortAPPorta App, via ERSU website (www.ersu.it), via email at urp@ersu.it or call the toll-free number 800 942540. This become a paid service when there are more than 5 goods in one collection. If you have more than 5 goods then call the toll-free number 800 942857 open monday-friday at 14:30-17:00",
+        "where": null,
+        "allowed": null,
+        "notallowed": null
+      }
+    }
+  },
+  {
+    "id": 28,
+    "slug": "raee_small",
+    "name": "RAEE di piccole dimensioni",
+    "description": "Dal 1 agosto 2008 è necessario smaltire i rifiuti RAEE secondo una modalità specifica. E' possibile ritirare apparecchiature che contengono materiali elettrici o elettronici provenienti da utenze domestiche, come ad esempio pc, monitor, phon, telefoni cellulari, lampadine e neon.",
+    "howto": "È necessario conferire i RAEE di piccole dimensioni ai centri di raccolta predisposti",
+    "where": "",
+    "color": null,
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": true,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Small sized white goods",
+        "description": "It is possible to collect White Goods that contains electrical or electronic materials from domestic users, such as PCs, monitors, hair dryers, smartphones. It is a on-call collection service.",
+        "howto": "The small white goods must be taken to the collection centers.",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 26,
+    "slug": "ingombranti_small",
+    "name": "Ingombranti di piccole dimensioni",
+    "description": "E' possibile conferire oggetti ingombranti di piccole dimensioni provenienti da utenze domestiche come ad esempio sedie, stendini, abat-jour, piccoli mobili. Sono esclusi tutti i materiali edili e sostanze pericolose.",
+    "howto": "È necessario conferire gli ingombranti di piccole dimensioni negli appositi centri di raccolta",
+    "where": "",
+    "color": null,
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": true,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Small sized bulky Waste",
+        "description": "Small sized bulky waste coming from privates like chairs, small wardrobes, abat-jour.",
+        "howto": "The small sized bulky wastes must be taken to the collection centers",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 24,
+    "slug": "verde",
+    "name": "Verde",
+    "description": "Per 'Verde' si intendono tutti gli scarti provenienti da potature di alberi e siepi, sfalci d'erba e fiori recisi, piante senza terra, residui vegetali dell'orto, ramaglie.",
+    "howto": "Deporre il materiale nei sacchetti trasparenti verdi forniti dal servizio. Le fascine vanno legate ed esposte insieme ai sacchetti.",
+    "where": "i sacchetti del verde",
+    "color": "#7ffc49",
+    "allowed": [
+      "Potature di alberi e siepi",
+      "Sfalci d'erba",
+      "Fiori recisi",
+      "Piante senza terra",
+      "Residui vegetali dell'orto",
+      "Ramaglie"
+    ],
+    "notallowed": [
+      "Frazione organica della cucina",
+      "Verde con materiali quali vetro, plastica, ecc."
+    ],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": true,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Garden Waste",
+        "description": "By 'Green' we mean all the waste deriving from pruning of trees and hedges, mowing of grass and cut flowers, plants without earth, vegetable residues from the vegetable garden, twigs. It must be put in the Green Plastic Bag provided by ERSU, the one with the Verde word.",
+        "howto": "Put the material in the Green Bags provided by the service. The bundles must be tied and exposed together with the bags.",
+        "where": "the Green plastic Bag",
+        "allowed": [
+          "Potature di alberi e siepi",
+          "Grass clippings",
+          "Cut flowers",
+          "Plants without soil",
+          "Vegetable residues from the garden",
+          "Brushwood"
+        ],
+        "notallowed": [
+          "Organic kitchen residues",
+          "Green with materials such as glass, plastic, etc."
+        ]
+      }
+    }
+  },
+  {
+    "id": 23,
+    "slug": "vetro_lattine",
+    "name": "Vetro e Lattine",
+    "description": "Lattine e vetro",
+    "howto": "Il vetro e le lattine, lavati e puliti da eventuali residui, devono essere inseriti senza alcun sacco nel bidone blu da 40lt fornito dal servizio. Il bidone dovrà essere esposto fuori dall'abitazione nel giorno indicato.",
+    "where": "il bidone del vetro",
+    "color": "#18961c",
+    "allowed": [
+      "Bottiglie",
+      "Flaconi",
+      "Bicchieri",
+      "Lattine in alluminio (es. bibite)",
+      "Scatole e contenitori in banda stagnata per alimenti (pelati, tonno)"
+    ],
+    "notallowed": [
+      "Vetri per finestre",
+      "Piatti",
+      "Specchi",
+      "Pirofile da forno",
+      "Tazzine da caffè",
+      "Porcellana",
+      "Lampadine e tubi al neon"
+    ],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Glass and Cans",
+        "description": "All alluminium cans and glass objects",
+        "howto": "The glass and the cans, washed and cleaned of any residues, must be inserted without any bag in the green 40 liters bin provided by the service (The old ones are Blue). The bin must be displayed outside the home on the day indicated.",
+        "where": "the Green Bin",
+        "allowed": [
+          "Aluminum cans (e.g. soft drinks)",
+          "Bottles",
+          "Flasks",
+          "Jars",
+          "Glasses"
+        ],
+        "notallowed": [
+          "Window glass",
+          "Dishes",
+          "Mirrors",
+          "Oven dishes",
+          "Coffee cups",
+          "Porcelain",
+          "Neon bulbs and tubes"
+        ]
+      }
+    }
+  },
+  {
+    "id": 29,
+    "slug": "raee_big",
+    "name": "RAEE di grandi dimensioni",
+    "description": "È necessario smaltire i rifiuti RAEE di grandi dimensioni secondo una modalità specifica. E' possibile ritirare apparecchiature che contengono materiali elettrici o elettronici provenienti da utenze domestiche, come ad esempio frigoriferi, lavatrici, asciugatrici, lavastoviglie.",
+    "howto": "Il materiale deve essere esposto all'esterno dell'abitazione la sera precedente (se il ritiro avviene al mattino) oppure entro le ore 13:00 (se il ritiro avviene di pomeriggio), dove può essere agevolmente ritirato dal mezzo di ERSU S.p.A. e tale da non intralciare la viabilità. Per organizzare una consegna con al più 5 RAEE chiama n° verde 800 942540 o scrivi a urp@ersu.it specificando nominativo, indirizzo, numero di telefono ed elenco degli elettrodomestici da ritirare. Per consegne superiori a 5 oggetti il servizio è a pagamento e occorre chiamare il numero verde 800 942857 aperto dal lunedì al venerdì dalle 14:30 alle 17:00",
+    "where": null,
+    "color": null,
+    "allowed": null,
+    "notallowed": null,
+    "showed_in": {
+      "reservation": true,
+      "info": true,
+      "abandonment": true,
+      "report": true
+    },
+    "confirmation_message": "Assicurarsi che il rifiuto RAEE sia collocato fuori dal cancello entro le ore 7:00 del giorno di raccolta.",
+    "translations": {
+      "en": {
+        "name": "Big sized white goods",
+        "description": "It is possible to collect White Goods that contains electrical or electronic materials from domestic users, such as refrigerators, washing machines, dryer machines. It is a on-call collection service.",
+        "howto": "The white goods must be placed outside your house the previous evening (if the collection takes place in the morning) or by 12 AM (if the collection takes place in the afternoon), where it can be easily collected from the ERSU vehicle, in a proper way not to hinder the viability. Book the collection for a maximum of 5 goods via the PortAPPorta App, via ERSU website (www.ersu.it), via email at urp@ersu.it or call the toll-free number 800 942540. This become a paid service when there are more than 5 goods in one collection. If you have more than 5 goods then call the toll-free number 800 942857 open monday-friday at 14:30-17:00",
+        "where": null,
+        "allowed": null,
+        "notallowed": null
+      }
+    }
+  },
+  {
+    "id": 34,
+    "slug": "inerti",
+    "name": "Inerti",
+    "description": "",
+    "howto": "",
+    "where": "",
+    "color": null,
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": true,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "",
+        "description": "",
+        "howto": "",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 35,
+    "slug": "pannoloni",
+    "name": "Pannoloni",
+    "description": "",
+    "howto": "",
+    "where": "",
+    "color": null,
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "",
+        "description": "",
+        "howto": "",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 32,
+    "slug": "metallo",
+    "name": "Metallo",
+    "description": "",
+    "howto": "",
+    "where": "",
+    "color": null,
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "",
+        "description": "",
+        "howto": "",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 31,
+    "slug": "pericolosi",
+    "name": "Rifiuti speciali e pericolosi",
+    "description": "Il servizio cura nello specifico il trasporto, il recupero e lo smaltimento di rifiuti provenienti da attività industriali, edili, commerciali, artigianali, utenti privati ed ogni altro genere di attività, in particolare:",
+    "howto": "",
+    "where": "",
+    "color": null,
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": true,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "",
+        "description": "",
+        "howto": "",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 36,
+    "slug": "defibrillator",
+    "name": "Defibrillatore1",
+    "description": "",
+    "howto": "",
+    "where": "",
+    "color": null,
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Defibrillator",
+        "description": "",
+        "howto": "",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 33,
+    "slug": "stoffa",
+    "name": "Stoffa",
+    "description": "",
+    "howto": "",
+    "where": "",
+    "color": null,
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "",
+        "description": "",
+        "howto": "",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 25,
+    "slug": "indifferenziato",
+    "name": "Rifiuto urbano residuo (RuR)",
+    "description": "Costituisce la parte non separata dei rifiuti solidi urbani, che allo stato attuale non è possibile recuperare. Si tratta dei rifiuti non rientranti nelle altre categorie raccolte separatamente o portate dal cittadino direttamente ai centri di raccolta differenziata di ERSU S.p.A. Devono essere messi solo rifiuti non riciclabili: Ad esempio: contenitori in cartone plastificato diversi dal tetrapak, carta oleata o plastificata, pannoloni e assorbenti, lampadine, penne e pennarelli, giocattoli e soprammobili, sacchi per aspirapolvere, compact disc, musicassette, videocassette e loro custodie, oggetti e tubi in gomma, cosmetici, spugne sintetiche, rasoi e spazzolini in plastica, borse e involucri per nylon. I pannolini e pannoloni, prima di essere inseriti nel sacco trasparente, possono essere messi nei sacchetti biodegradabili di mater-bi e chiusi ermeticamente per attenuare gli odori sgradevoli. * NOTA: Orario della raccolta indifferenziata della zona Quadrilatero si differenzia in questo modo: - UTENZE COMMERCIALI ALIMENTARI: dalle 07:00 alle 09:00 - UTENZE COMMERCIALI NON ALIMENTARI dalle 10:15 alle 12:15",
+    "howto": "Deporre il materiale nel sacco piccolo trasparente fornito dal servizio.",
+    "where": "i sacchetti del RuR",
+    "color": "#919191",
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": true,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Residual",
+        "description": "It is the residual part of the domestic separate collection, which at present cannot be recycled. The residual waste must be put in the Transparent Bag provided by ERSU, the one with the word RUR (Urban Residual Waste).",
+        "howto": "Put the residual in the small Transparent Bag provided by the service (RUR).",
+        "where": "the transparent bag for residual",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 20,
+    "slug": "multimateriale",
+    "name": "Multimateriale",
+    "description": "Con la parola multimateriale intendiamo le frazioni di rifiuti comprendenti plastica e lattine, che invece di essere conferiti in diversi bidoni, uno per ogni tipologia, vengono raccolti insieme in un unico contenitore.",
+    "howto": "Deporre i diversi materiali nel sacco grande trasparente giallo fornito dal servizio.",
+    "where": "il sacco del multimateriale",
+    "color": "#fcc703",
+    "allowed": [
+      "Bottiglie di acqua minerale, bibite, olio, succhi, latte, ecc.",
+      "Imballaggi classificati PVC, PET, PP, HDPE, LDPE",
+      "Flaconi/dispensatori sciroppi, creme, salse, yogurt, ecc.",
+      "Confezioni rigide e/o flessibili per alimenti in genere",
+      "Buste e sacchetti per alimenti in genere (es. pasta, riso)",
+      "Vaschette porta uova",
+      "Vaschette per alimenti, carne e pesce",
+      "Vaschette/barattoli per gelati",
+      "Contenitori per yogurt, creme di formaggio, dessert",
+      "Reti per frutta e verdura",
+      "Pellicole per alimenti in plastica trasparente e non Barattoli per alimenti in polvere",
+      "Contenitori vari per alimenti per animali",
+      "Coperchi",
+      "Cassette per prodotti ortofrutticoli e alimentari in genere",
+      "Flaconi per detersivi, saponi, prodotti per l'igiene della casa, della persona, cosmetici, acqua distillata",
+      "Barattoli per confezionamento di prodotti vari (es. cosmetici, articoli da cancelleria, salviette umide, detersivi)",
+      "Film e pellicole da imballaggio",
+      "Blister, contenitori rigidi e formati a sagoma (es. gusci per giocattoli, articoli da cancelleria, gadget)",
+      "Scatole e buste per capi di abbigliamento",
+      "Reggette per legatura pacchi",
+      "Sacchi, sacchetti",
+      "Vasi per vivaisti",
+      "Piatti, bicchieri, posate di plastica",
+      "Lattine in alluminio (es. bibite)",
+      "Scatole e contenitori in banda stagnata per alimenti (pelati, tonno)",
+      "Bombolette spray vuote",
+      "Grucce appendiabiti",
+      "Tappi e coperchi metallici vuoti (maionese, lucido per scarpe, ecc.)"
+    ],
+    "notallowed": [
+      "Qualsiasi manufatto non in plastica",
+      "Rifiuti ospedalieri (es. siringhe, sacche per plasma, contenitori per liquidi fisiologici e per emodialisi)",
+      "Beni durevoli in plastica (es. elettrodomestici, articoli casalinghi, complementi d'arredo, ecc.)",
+      "Giocattoli",
+      "Custodie per cd, musicassette, videocassette",
+      "Canne per irrigazione",
+      "Articoli per l'edilizia",
+      "Barattoli e sacchetti per colle, vernici, solventi",
+      "Borse, zainetti, sporte",
+      "Posacenere, portamatite, ecc.",
+      "Bidoni e cestini portarifiuti",
+      "Cartellette, portadocumenti, ecc.",
+      "Componentistica e accessori auto",
+      "Sacconi per materiale edile (es. calce, cemento)",
+      "Imballaggi con evidente residui del contenuto (rifiuti pericolosi, non pericolosi o putrescibili)",
+      "Contenitori di rifiuti pericolosi (etichettati T e/o F), ad esempio: colle, vernici, solventi"
+    ],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Plastic and Cans",
+        "description": "By the word Multimaterial we mean the fractions of waste comprising plastic and cans, which instead of being placed in different bins, one for each type, are collected together in the same Yellow Plastic Bag provided by ERSU, the one with the Multimateriale word.",
+        "howto": "Put plastic materials and cans in the Yellow bag provided by the service.",
+        "where": "the yellow plastic bag",
+        "allowed": [
+          "Bottles of mineral water, soft drinks, oil, juices, milk, etc.",
+          "Packaging classified as PVC, PET, PP, HDPE, LDPE",
+          "Syrup bottles, dispensers, creams, sauces, yogurt, etc.",
+          "Rigid and / or flexible packaging for food in general",
+          "Envelopes and bags for food in general (e.g. pasta, rice)",
+          "Egg trays",
+          "Trays for food, meat and fish",
+          "Ice cream tubs / jars Containers for yoghurt, cheese creams, desserts",
+          "Reti per frutta e verdura",
+          "Transparent and non-transparent plastic food films.",
+          "Various containers for animal food",
+          "Covers",
+          "Boxes for fruit and vegetables and food in general",
+          "Detergent bottles, soaps, home and personal hygiene products, cosmetics, distilled water",
+          "Jars for packaging various products (e.g. cosmetics, stationery, wet wipes, detergents)",
+          "Packaging films and films",
+          "Blisters, rigid containers and shaped shapes (e.g. shells for toys, stationery, gadgets)",
+          "Boxes and envelopes for clothing",
+          "Sacks, bags",
+          "Nursery pots",
+          "Plates, glasses, plastic cutlery",
+          "Aluminum cans (e.g. soft drinks)",
+          "Tinplate boxes and containers for food (peeled, tuna)",
+          "Empty spray cans",
+          "Clothes hangers",
+          "Empty metal caps and lids (mayonnaise, shoe polish, etc.)"
+        ],
+        "notallowed": [
+          "Any non-plastic artifact",
+          "Hospital waste (e.g. syringes, plasma bags, containers for physiological liquids and for hemodialysis)",
+          "Durable plastic goods (e.g. household appliances, household items, furnishing accessories, etc.)",
+          "Toys",
+          "Cases for CDs, cassettes, videotapes",
+          "Irrigation canes",
+          "Building materials",
+          "Jars and bags for glues, paints, solvents",
+          "Bags, backpacks",
+          "Ashtrays, pencil holders, etc.",
+          "Bins and waste bins",
+          "Briefcases, document holders, etc.",
+          "Car components and accessories",
+          "Big bags for building material (e.g. lime, cement)",
+          "Packaging with evident residual content (hazardous, non-hazardous or putrescible waste)",
+          "Hazardous waste containers (labeled T and / or F), for example: glues, paints, solvents"
+        ]
+      }
+    }
+  },
+  {
+    "id": 30,
+    "slug": "olio",
+    "name": "Olio esausto",
+    "description": "Gli oli vegetali soni i residui degli oli utilizzati in cucina.",
+    "howto": "Il servizio e la tanica apposita da 5,5lt possono essere richiesti gratuitamente. L'olio deve essere esposto all'esterno dell'abitazione o attività commerciale (solo se previsto) la sera precedente. Per richiedere il contenitore o prenotare il ritiro chiama n° verde 800 942540 o scrivi a urp@ersu.it specificando nominativo, indirizzo e numero di telefono.",
+    "where": "",
+    "color": null,
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": true,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Edible oil",
+        "description": "Edible oils are the residues of oils used in cooking.",
+        "howto": "The edible oil tank (provided by ERSU) must be placed outside your house the previous evening. Book the collection via the PortAPPorta App, via ERSU website (www.ersu.it), via email at urp@ersu.it or call the toll-free number 800 94254",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  },
+  {
+    "id": 22,
+    "slug": "plastica",
+    "name": "Plastica",
+    "description": "Tutti gli oggetti in plastica",
+    "howto": "Deporre i diversi materiali nel sacco grande trasparente giallo fornito dal servizio.",
+    "where": "il sacco della plastica",
+    "color": "#fcc703",
+    "allowed": [
+      "Bottiglie di acqua minerale, bibite, olio, succhi, latte, ecc.",
+      "Imballaggi classificati PVC, PET, PP, HDPE, LDPE",
+      "Flaconi/dispensatori sciroppi, creme, salse, yogurt, ecc.",
+      "Confezioni rigide e/o flessibili per alimenti in genere",
+      "Buste e sacchetti per alimenti in genere (es. pasta, riso)",
+      "Vaschette porta uova",
+      "Vaschette per alimenti, carne e pesce",
+      "Vaschette/barattoli per gelati",
+      "Contenitori per yogurt, creme di formaggio, dessert",
+      "Reti per frutta e verdura",
+      "Pellicole per alimenti in plastica trasparente e non Barattoli per alimenti in polvere",
+      "Contenitori vari per alimenti per animali",
+      "Cassette per prodotti ortofrutticoli e alimentari in genere",
+      "Flaconi per detersivi, saponi, prodotti per l'igiene della casa, della persona, cosmetici, acqua distillata",
+      "Barattoli per confezionamento di prodotti vari (es. cosmetici, articoli da cancelleria, salviette umide, detersivi)",
+      "Film e pellicole da imballaggio",
+      "Blister, contenitori rigidi e formati a sagoma (es. gusci per giocattoli, articoli da cancelleria, gadget)",
+      "Scatole e buste per capi di abbigliamento",
+      "Reggette per legatura pacchi",
+      "Sacchi, sacchetti",
+      "Vasi per vivaisti",
+      "Piatti, bicchieri, posate di plastica",
+      "Bombolette spray vuote",
+      "Grucce appendiabiti"
+    ],
+    "notallowed": [
+      "Qualsiasi manufatto non in plastica",
+      "Lattine in alluminio (es. bibite)",
+      "Rifiuti ospedalieri (es. siringhe, sacche per plasma, contenitori per liquidi fisiologici e per emodialisi)",
+      "Beni durevoli in plastica (es. elettrodomestici, articoli casalinghi, complementi d'arredo, ecc.)",
+      "Giocattoli",
+      "Custodie per cd, musicassette, videocassette",
+      "Canne per irrigazione",
+      "Articoli per l'edilizia",
+      "Barattoli e sacchetti per colle, vernici, solventi",
+      "Borse, zainetti, sporte",
+      "Posacenere, portamatite, ecc.",
+      "Bidoni e cestini portarifiuti",
+      "Cartellette, portadocumenti, ecc.",
+      "Componentistica e accessori auto",
+      "Sacconi per materiale edile (es. calce, cemento)",
+      "Imballaggi con evidente residui del contenuto (rifiuti pericolosi, non pericolosi o putrescibili)",
+      "Contenitori di rifiuti pericolosi (etichettati T e/o F), ad esempio: colle, vernici, solventi"
+    ],
+    "showed_in": {
+      "reservation": false,
+      "info": true,
+      "abandonment": false,
+      "report": true
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Plastic",
+        "description": "All plastic objects",
+        "howto": "Put plastic materials in the Yellow bag provided by the service.",
+        "where": "the yellow plastic bag",
+        "allowed": [
+          "Bottles of mineral water, soft drinks, oil, juices, milk, etc.",
+          "Packaging classified as PVC, PET, PP, HDPE, LDPE",
+          "Syrup bottles, dispensers, creams, sauces, yogurt, etc.",
+          "Rigid and / or flexible packaging for food in general",
+          "Envelopes and bags for food in general (e.g. pasta, rice)",
+          "Egg trays",
+          "Trays for food, meat and fish",
+          "Ice cream tubs / jars Containers for yoghurt, cheese creams, desserts",
+          "Reti per frutta e verdura",
+          "Transparent and non-transparent plastic food films.",
+          "Various containers for animal food",
+          "Covers",
+          "Boxes for fruit and vegetables and food in general",
+          "Detergent bottles, soaps, home and personal hygiene products, cosmetics, distilled water",
+          "Jars for packaging various products (e.g. cosmetics, stationery, wet wipes, detergents)",
+          "Packaging films and films",
+          "Blisters, rigid containers and shaped shapes (e.g. shells for toys, stationery, gadgets)",
+          "Boxes and envelopes for clothing",
+          "Sacks, bags",
+          "Nursery pots",
+          "Plates, glasses, plastic cutlery",
+          "Empty spray cans",
+          "Clothes hangers"
+        ],
+        "notallowed": [
+          "Any non-plastic artifact",
+          "Aluminum cans (e.g. soft drinks)",
+          "Hospital waste (e.g. syringes, plasma bags, containers for physiological liquids and for hemodialysis)",
+          "Durable plastic goods (e.g. household appliances, household items, furnishing accessories, etc.)",
+          "Toys",
+          "Cases for CDs, cassettes, videotapes",
+          "Irrigation canes",
+          "Building materials",
+          "Jars and bags for glues, paints, solvents",
+          "Bags, backpacks",
+          "Ashtrays, pencil holders, etc.",
+          "Bins and waste bins",
+          "Briefcases, document holders, etc.",
+          "Car components and accessories",
+          "Big bags for building material (e.g. lime, cement)",
+          "Packaging with evident residual content (hazardous, non-hazardous or putrescible waste)",
+          "Hazardous waste containers (labeled T and / or F), for example: glues, paints, solvents",
+          "Tinplate boxes and containers for food (peeled, tuna)"
+        ]
+      }
+    }
+  },
+  {
+    "id": 65,
+    "slug": "altro",
+    "name": "Altro",
+    "description": "",
+    "howto": "",
+    "where": "",
+    "color": "#000000",
+    "allowed": [],
+    "notallowed": [],
+    "showed_in": {
+      "reservation": false,
+      "info": false,
+      "abandonment": true,
+      "report": false
+    },
+    "confirmation_message": null,
+    "translations": {
+      "en": {
+        "name": "Other",
+        "description": "",
+        "howto": "",
+        "where": "",
+        "allowed": [],
+        "notallowed": []
+      }
+    }
+  }
+]

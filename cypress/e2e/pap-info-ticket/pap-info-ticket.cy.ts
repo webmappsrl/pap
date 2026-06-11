@@ -7,10 +7,13 @@ import {
   testAlertTitle,
 } from 'cypress/utils/test-utils';
 import {homeButtons, servicesButtons} from 'projects/pap/src/app/features/home/home.model';
-import {infoTicketForm} from 'projects/pap/src/app/shared/models/form.model';
+import {TicketFormConf} from 'projects/pap/src/app/shared/models/form.model';
+import {environment} from 'projects/pap/src/environments/environment';
 
 const servicesButton = homeButtons.find(button => button.label === 'Servizi');
 const infoTicketButton = servicesButtons.find(button => button.text === 'Richiedi Informazioni');
+const apiTicketFormsConfig = `${environment.api}/c/${environment.companyId}/ticket-forms-config`;
+let infoConfig: TicketFormConf;
 let formMockup: FormMockup = {
   Telefono: '356273894',
   Note: 'this is a text note',
@@ -23,6 +26,10 @@ let formMockup: FormMockup = {
 };
 before(() => {
   clearTestState();
+  cy.intercept('GET', apiTicketFormsConfig, {fixture: 'ticket-forms-config.json'}).as('ticketFormsConfigCall');
+  cy.fixture('ticket-forms-config.json').then(data => {
+    infoConfig = data.data.info;
+  });
   cy.visit(Cypress.env('baseurl'));
   e2eLogin();
 });
@@ -38,7 +45,7 @@ describe('pap-info-ticket: test the correct behaviour of form at first step', ()
   });
 
   it('should display the correct ticket type, label and status back button should be hidden', () => {
-    testTicketFormStep(infoTicketForm, 0);
+    testTicketFormStep(infoConfig, 0);
   });
 });
 
@@ -70,7 +77,7 @@ describe('pap-info-ticket: test the correct behaviour of cancel button in status
   });
 
   it('should display alert title correctly', () => {
-    testAlertTitle(infoTicketForm);
+    testAlertTitle(infoConfig);
   });
 
   it('should have 2 buttons inside the alert-button-group', () => {

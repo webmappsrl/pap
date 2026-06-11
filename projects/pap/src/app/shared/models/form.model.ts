@@ -128,14 +128,14 @@ export const ticketReservationForm: TicketFormConf = {
   ],
 };
 export const abandonmentTicketForm: TicketFormConf = {
-  cancel: 'AAA Sicuro di voler cancellare la prenotazione?',
-  finalMessage: `AAA La ringraziamo per la segnalazione, provvederemo quanto prima a recuperare il rifiuto (entro 24h dalla segnalazione). Eventualmente se ci sarà la necessità verrà contattata.`,
+  cancel: 'Sicuro di voler cancellare la prenotazione?',
+  finalMessage: `La ringraziamo per la segnalazione, provvederemo quanto prima a recuperare il rifiuto (entro 24h dalla segnalazione). Eventualmente se ci sarà la necessità verrà contattata.`,
   pages: 6,
   ticketType: 'abandonment',
   label: 'Segnalazione di abbandono',
   step: [
     {
-      label: `AAA Questo serivizio ti permette di inviare una segnalazione di abbandono ad ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice e verrà inviata una email a ${environment.config.name}. Vai avanti per iniziare.`,
+      label: `Questo serivizio ti permette di inviare una segnalazione di abbandono ad ${environment.config.name}. Al termine della segnalazione ti verrà assegnato un codice e verrà inviata una email a ${environment.config.name}. Vai avanti per iniziare.`,
       type: 'label',
       required: false,
     },
