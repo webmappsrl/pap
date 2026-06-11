@@ -44,3 +44,8 @@ export const selectTicketFormConfByType = (ticketType: TicketType) =>
     selectTicketFormsConfigs,
     configs => (configs?.[ticketType] ?? FALLBACK_CONFIGS[ticketType]) as TicketFormConf,
   );
+
+export const selectTicketFormsConfigsLoaded = createSelector(
+  selectTicketState,
+  state => state.ticketFormsConfigsLoaded,
+);
