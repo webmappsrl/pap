@@ -39,7 +39,6 @@ function applyRecoverySplit(
   return notifications;
 }
 
-
 describe('LocalNotificationService', () => {
   let service: LocalNotificationService;
 
@@ -58,8 +57,7 @@ describe('LocalNotificationService', () => {
   });
 
   describe('_getRecoveryBody', () => {
-    const getBody = (s?: string, t?: string) =>
-      (service as any)._getRecoveryBody(s, t) as string;
+    const getBody = (s?: string, t?: string) => (service as any)._getRecoveryBody(s, t) as string;
 
     it('should include start and stop time when both are provided', () => {
       const body = getBody('07:00', '13:00');
@@ -75,8 +73,7 @@ describe('LocalNotificationService', () => {
   });
 
   describe('split logic', () => {
-    const getBody = (s?: string, t?: string) =>
-      (service as any)._getRecoveryBody(s, t) as string;
+    const getBody = (s?: string, t?: string) => (service as any)._getRecoveryBody(s, t) as string;
 
     it('0 events: returns empty array', () => {
       const result = applyRecoverySplit([], getBody);
@@ -132,17 +129,21 @@ describe('LocalNotificationService', () => {
 
     it('recovery body should contain the time', () => {
       const result = applyRecoverySplit(makeNotifications(10), getBody);
-      result.filter(n => n.extra?.recovery).forEach(n => {
-        expect(n.body).toContain('07:00');
-        expect(n.body).toContain('13:00');
-      });
+      result
+        .filter(n => n.extra?.recovery)
+        .forEach(n => {
+          expect(n.body).toContain('07:00');
+          expect(n.body).toContain('13:00');
+        });
     });
 
     it('normal notifications should retain original body', () => {
       const result = applyRecoverySplit(makeNotifications(10), getBody);
-      result.filter(n => !n.extra?.recovery).forEach(n => {
-        expect(n.body).toContain('il ritiro verrà effettuato');
-      });
+      result
+        .filter(n => !n.extra?.recovery)
+        .forEach(n => {
+          expect(n.body).toContain('il ritiro verrà effettuato');
+        });
     });
 
     it('should be sorted chronologically', () => {

@@ -43,7 +43,7 @@ I due item di cleanup (formattazione orari e formato data) riducono il rischio d
 
 ## Moduli toccati
 
-| File | Tipo modifica |
-|------|---------------|
-| `projects/pap/src/app/shared/services/local-notification.service.ts` | Bug 2, Bug 4, cleanup formattazione |
-| `projects/pap/src/app/shared/services/local-notification.service.spec.ts` | Test aggiornati |
+| File                                                                      | Tipo modifica                       |
+| ------------------------------------------------------------------------- | ----------------------------------- |
+| `projects/pap/src/app/shared/services/local-notification.service.ts`      | Bug 2, Bug 4, cleanup formattazione |
+| `projects/pap/src/app/shared/services/local-notification.service.spec.ts` | Test aggiornati                     |

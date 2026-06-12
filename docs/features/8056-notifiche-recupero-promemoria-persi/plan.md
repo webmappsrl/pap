@@ -69,6 +69,7 @@ private async _removeNotifications(): Promise<void> {
 **File:** `projects/pap/src/app/shared/services/local-notification.service.ts`
 
 Riscrivere `scheduleNotifications()` applicando:
+
 1. Guard `_scheduling` in ingresso
 2. `_removeNotifications()` **prima** del check permessi
 3. `PLATFORM_LIMIT` come tetto prima dello split (con `sort` già applicato)
@@ -318,6 +319,7 @@ npm run test:ci
 ```
 
 Tutti i test devono passare (inclusi i nuovi). Verificare in particolare:
+
 - Nessuna regressione nelle suite `split logic` e `recoveryTap$` esistenti
 - Le 4 nuove assertion della suite `scheduleNotifications()` passano
 
