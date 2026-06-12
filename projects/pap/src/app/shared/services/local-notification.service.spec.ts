@@ -8,6 +8,7 @@ declare const expect: (actual: any) => jasmine.Matchers<any>;
 
 const MOCK_NOW = new Date('2026-01-01T00:00:00');
 const RECOVERY_COUNT = 8;
+const PLATFORM_LIMIT = 64;
 
 function makeNotifications(count: number): LocalNotificationSchema[] {
   return Array.from({length: count}, (_, i) => ({
@@ -51,9 +52,12 @@ describe('LocalNotificationService', () => {
     service = TestBed.inject(LocalNotificationService);
   });
 
+  afterEach(() => {
+    (service as any)._scheduling = false;
+  });
+
   describe('_getRecoveryBody', () => {
-    const getBody = (s?: string, t?: string) =>
-      (service as any)._getRecoveryBody(s, t) as string;
+    const getBody = (s?: string, t?: string) => (service as any)._getRecoveryBody(s, t) as string;
 
     it('should include start and stop time when both are provided', () => {
       const body = getBody('07:00', '13:00');
@@ -69,8 +73,7 @@ describe('LocalNotificationService', () => {
   });
 
   describe('split logic', () => {
-    const getBody = (s?: string, t?: string) =>
-      (service as any)._getRecoveryBody(s, t) as string;
+    const getBody = (s?: string, t?: string) => (service as any)._getRecoveryBody(s, t) as string;
 
     it('0 events: returns empty array', () => {
       const result = applyRecoverySplit([], getBody);
@@ -101,6 +104,20 @@ describe('LocalNotificationService', () => {
       expect(result.filter(n => n.extra?.recovery).length).toBe(8);
     });
 
+    it(`${PLATFORM_LIMIT} events: ${PLATFORM_LIMIT - RECOVERY_COUNT} normal, ${RECOVERY_COUNT} recovery`, () => {
+      const result = applyRecoverySplit(makeNotifications(PLATFORM_LIMIT), getBody);
+      expect(result.filter(n => !n.extra?.recovery).length).toBe(PLATFORM_LIMIT - RECOVERY_COUNT);
+      expect(result.filter(n => n.extra?.recovery).length).toBe(RECOVERY_COUNT);
+    });
+
+    it(`${PLATFORM_LIMIT + 10} events capped: splice keeps only ${PLATFORM_LIMIT}`, () => {
+      const notifications = makeNotifications(PLATFORM_LIMIT + 10);
+      notifications.sort((a, b) => a.schedule!.at!.getTime() - b.schedule!.at!.getTime());
+      notifications.splice(PLATFORM_LIMIT);
+      const result = applyRecoverySplit(notifications, getBody);
+      expect(result.length).toBe(PLATFORM_LIMIT);
+    });
+
     it('recovery notifications should be the chronologically latest ones', () => {
       const result = applyRecoverySplit(makeNotifications(20), getBody);
       const normals = result.filter(n => !n.extra?.recovery);
@@ -112,17 +129,21 @@ describe('LocalNotificationService', () => {
 
     it('recovery body should contain the time', () => {
       const result = applyRecoverySplit(makeNotifications(10), getBody);
-      result.filter(n => n.extra?.recovery).forEach(n => {
-        expect(n.body).toContain('07:00');
-        expect(n.body).toContain('13:00');
-      });
+      result
+        .filter(n => n.extra?.recovery)
+        .forEach(n => {
+          expect(n.body).toContain('07:00');
+          expect(n.body).toContain('13:00');
+        });
     });
 
     it('normal notifications should retain original body', () => {
       const result = applyRecoverySplit(makeNotifications(10), getBody);
-      result.filter(n => !n.extra?.recovery).forEach(n => {
-        expect(n.body).toContain('il ritiro verrà effettuato');
-      });
+      result
+        .filter(n => !n.extra?.recovery)
+        .forEach(n => {
+          expect(n.body).toContain('il ritiro verrà effettuato');
+        });
     });
 
     it('should be sorted chronologically', () => {
@@ -152,6 +173,48 @@ describe('LocalNotificationService', () => {
         tapped = true;
       });
       expect(tapped).toBe(false);
+    });
+  });
+
+  describe('scheduleNotifications()', () => {
+    let removeNotifSpy: jasmine.Spy;
+    let initNotifSpy: jasmine.Spy;
+
+    beforeEach(() => {
+      // Spy on private methods to avoid Capacitor Proxy non-configurability
+      removeNotifSpy = spyOn(service as any, '_removeNotifications').and.resolveTo(undefined);
+      initNotifSpy = spyOn(service as any, '_initNotifications').and.resolveTo(true);
+    });
+
+    it('calls _removeNotifications() even when permissions are denied', async () => {
+      initNotifSpy.and.resolveTo(false);
+      await service.scheduleNotifications();
+      expect(removeNotifSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls _removeNotifications() before _initNotifications()', async () => {
+      await service.scheduleNotifications();
+      expect(removeNotifSpy).toHaveBeenCalledBefore(initNotifSpy);
+    });
+
+    it('ignores concurrent calls while scheduling', async () => {
+      const p1 = service.scheduleNotifications();
+      const p2 = service.scheduleNotifications();
+      await Promise.all([p1, p2]);
+      expect(removeNotifSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('resets _scheduling flag after completion', async () => {
+      await service.scheduleNotifications();
+      expect((service as any)._scheduling).toBeFalse();
+    });
+
+    it('resets _scheduling flag even when _initNotifications throws', async () => {
+      initNotifSpy.and.rejectWith(new Error('permission error'));
+      try {
+        await service.scheduleNotifications();
+      } catch {}
+      expect((service as any)._scheduling).toBeFalse();
     });
   });
 });
