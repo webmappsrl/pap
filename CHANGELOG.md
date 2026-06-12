@@ -1,3 +1,33 @@
+#### 2.5.4 (2026-06-12)
+
+##### Chores
+
+*  add unit tests execution step in CI workflow (7b4d9d76)
+*  Update tsconfig.app.json to exclude test files (c6129e14)
+*  Update local notification service (03cc1229)
+* **form:**
+  *  ✨ implement dynamic ticket form configuration loading (a41a11af)
+  *  ✨ add zone_id control to form components (96f6f0f5)
+
+##### Other Changes
+
+* 8056): cap notifications to PLATFORM_LIMIT, fix zombie cleanup and concurrent scheduling (#87) (97ba2c50)
+* 8054): separate reportCalendar store slice and await company loading (#86) (9b0a14cf)
+* 8052): fix code review 7612 — messaggi conferma (#85) (9d46c2d3)
+* 8045): race condition GPS — dispatch setMarker prima di setPosition (#84) (39efb9de)
+* 7608 (#80) (98ce25a4)
+* 7609 (a9322790)
+* 4684 (4c111e26)
+
+##### Code Style Changes
+
+*  format code (df89fcf4)
+*  format code (27d94504)
+
+##### Tests
+
+* **form:**  🧪 add unit tests for form, location, and location service components (25c03c87)
+
 # Changelog pap
 
 ## [2.5.3](https://github.com/webmappsrl/pap/compare/v2.5.2...v2.5.3) (2025-01-15)
