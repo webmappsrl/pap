@@ -4,8 +4,8 @@ import {NavController} from '@ionic/angular';
 import {provideMockStore, MockStore} from '@ngrx/store/testing';
 import {take} from 'rxjs/operators';
 import {ReportTicketComponent} from './report-ticket.component';
-import {loadCalendars} from '../calendar/state/calendar.actions';
-import {selectCompanyProperties} from '../../shared/form/state/company.selectors';
+import {loadReportCalendars} from './state/report-calendar.actions';
+import {selectCompanyProperties, selectLoading} from '../../shared/form/state/company.selectors';
 import {selectTicketFormsConfigs} from '../../shared/form/state/form.selectors';
 import {reportTicketForm, TicketFormConf} from '../../shared/models/form.model';
 
@@ -34,35 +34,61 @@ describe('ReportTicketComponent', () => {
     store.resetSelectors();
   });
 
-  it('should dispatch loadCalendars WITHOUT exclude_in_progress when property is false/undefined', () => {
+  it('dispatches loadReportCalendars without exclude_in_progress when flag is false', () => {
+    store.overrideSelector(selectLoading as any, false);
     store.overrideSelector(selectCompanyProperties as any, {enableExludeInProgress: false});
     const dispatchSpy = spyOn(store, 'dispatch');
 
     component.ionViewWillEnter();
 
-    expect(dispatchSpy).toHaveBeenCalled();
+    expect(dispatchSpy).toHaveBeenCalledOnceWith(
+      jasmine.objectContaining({type: loadReportCalendars.type}),
+    );
     const action = dispatchSpy.calls.mostRecent().args[0] as any;
-    expect(action.type).toBe(loadCalendars.type);
     expect(action.prop.exclude_in_progress).not.toBeTrue();
   });
 
-  it('should dispatch loadCalendars WITH exclude_in_progress when property is true', () => {
+  it('dispatches loadReportCalendars with exclude_in_progress when flag is true', () => {
+    store.overrideSelector(selectLoading as any, false);
     store.overrideSelector(selectCompanyProperties as any, {enableExludeInProgress: true});
     const dispatchSpy = spyOn(store, 'dispatch');
 
     component.ionViewWillEnter();
 
     const action = dispatchSpy.calls.mostRecent().args[0] as any;
-    expect(action.type).toBe(loadCalendars.type);
+    expect(action.type).toBe(loadReportCalendars.type);
     expect(action.prop.exclude_in_progress).toBeTrue();
   });
 
-  it('should expose form$ Observable that emits backend config when store has configs', () => {
+  it('dispatches loadReportCalendars with exclude_in_progress false when properties undefined (API error fallback)', () => {
+    store.overrideSelector(selectLoading as any, false);
+    store.overrideSelector(selectCompanyProperties as any, undefined);
+    const dispatchSpy = spyOn(store, 'dispatch');
+
+    component.ionViewWillEnter();
+
+    expect(dispatchSpy).toHaveBeenCalledOnceWith(
+      jasmine.objectContaining({type: loadReportCalendars.type}),
+    );
+    const action = dispatchSpy.calls.mostRecent().args[0] as any;
+    expect(action.prop.exclude_in_progress).toBeFalse();
+  });
+
+  it('does not dispatch while company data is loading', () => {
+    store.overrideSelector(selectLoading as any, true);
+    store.overrideSelector(selectCompanyProperties as any, undefined);
+    const dispatchSpy = spyOn(store, 'dispatch');
+
+    component.ionViewWillEnter();
+
+    expect(dispatchSpy).not.toHaveBeenCalled();
+  });
+
+  it('exposes form$ Observable that emits backend config when store has configs', () => {
     const backendConf: TicketFormConf = {
       ...reportTicketForm,
       finalMessage: 'Backend report message',
     };
-    // Override the base selector so all instances of selectTicketFormConfByType('report') react
     store.overrideSelector(selectTicketFormsConfigs as any, {report: backendConf});
     store.refreshState();
 
@@ -75,7 +101,7 @@ describe('ReportTicketComponent', () => {
     expect(result!.finalMessage).toBe('Backend report message');
   });
 
-  it('should fall back to hardcoded reportTicketForm when store has no configs', () => {
+  it('falls back to hardcoded reportTicketForm when store has no configs', () => {
     store.overrideSelector(selectTicketFormsConfigs as any, null);
     store.refreshState();
 
