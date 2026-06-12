@@ -9,6 +9,7 @@ Il form "Mancato ritiro" usa un proprio store slice dedicato invece di contamina
 ## Perché
 
 La code review di oc:7609 ha evidenziato che:
+
 1. `report-ticket.component.ts` dispatchava `loadCalendars` con una finestra ridotta (`oggi-15 → oggi`), sovrascrivendo lo store condiviso. Al resume successivo, `scheduleNotifications()` trovava solo date passate e cancellava tutte le notifiche senza rischedularne.
 2. `ionViewWillEnter` leggeva `selectCompanyProperties` con `take(1)` sincrono: se `companies_data` non era ancora caricato il flag `exclude_in_progress` finiva a `false`, mostrando la data odierna durante il giro.
 
@@ -38,13 +39,13 @@ La code review di oc:7609 ha evidenziato che:
 
 ## Moduli toccati
 
-| File | Operazione |
-|---|---|
-| `projects/pap/src/app/features/report-ticket/report-ticket.component.ts` | Modifica: usa `loadReportCalendars`, attende `loading` |
-| `projects/pap/src/app/features/report-ticket/state/report-calendar.actions.ts` | Nuovo |
-| `projects/pap/src/app/features/report-ticket/state/report-calendar.reducer.ts` | Nuovo |
-| `projects/pap/src/app/features/report-ticket/state/report-calendar.effects.ts` | Nuovo |
-| `projects/pap/src/app/features/report-ticket/state/report-calendar.selectors.ts` | Nuovo |
-| `projects/pap/src/app/features/report-ticket/report-ticket.module.ts` | Modifica: registra nuovo store slice |
-| `projects/pap/src/app/features/report-ticket/report-ticket.component.spec.ts` | Modifica: aggiorna test |
-| `projects/pap/src/app/core/core.state.ts` | Modifica: aggiunge `reportCalendar` all'`AppState` (se centralizzato) |
+| File                                                                             | Operazione                                                            |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `projects/pap/src/app/features/report-ticket/report-ticket.component.ts`         | Modifica: usa `loadReportCalendars`, attende `loading`                |
+| `projects/pap/src/app/features/report-ticket/state/report-calendar.actions.ts`   | Nuovo                                                                 |
+| `projects/pap/src/app/features/report-ticket/state/report-calendar.reducer.ts`   | Nuovo                                                                 |
+| `projects/pap/src/app/features/report-ticket/state/report-calendar.effects.ts`   | Nuovo                                                                 |
+| `projects/pap/src/app/features/report-ticket/state/report-calendar.selectors.ts` | Nuovo                                                                 |
+| `projects/pap/src/app/features/report-ticket/report-ticket.module.ts`            | Modifica: registra nuovo store slice                                  |
+| `projects/pap/src/app/features/report-ticket/report-ticket.component.spec.ts`    | Modifica: aggiorna test                                               |
+| `projects/pap/src/app/core/core.state.ts`                                        | Modifica: aggiunge `reportCalendar` all'`AppState` (se centralizzato) |

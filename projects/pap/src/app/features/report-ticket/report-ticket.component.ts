@@ -18,7 +18,9 @@ import {loadReportCalendars} from './state/report-calendar.actions';
   encapsulation: ViewEncapsulation.None,
 })
 export class ReportTicketComponent {
-  form$: Observable<TicketFormConf> = this._store.pipe(select(selectTicketFormConfByType('report')));
+  form$: Observable<TicketFormConf> = this._store.pipe(
+    select(selectTicketFormConfByType('report')),
+  );
 
   constructor(
     private _navCtrl: NavController,

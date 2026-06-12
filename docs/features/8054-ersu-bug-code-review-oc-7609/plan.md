@@ -146,17 +146,20 @@ export const selectReportCalendarState =
 **File:** `projects/pap/src/app/core/core.module.ts` _(modifica)_
 
 Aggiungere in testa agli import TypeScript:
+
 ```typescript
 import {ReportCalendarEffects} from '../features/report-ticket/state/report-calendar.effects';
 import * as fromReportCalendar from '../features/report-ticket/state/report-calendar.reducer';
 ```
 
 Aggiungere nell'array `imports` del `@NgModule`, dopo `StoreModule.forFeature(fromReports...)`:
+
 ```typescript
 StoreModule.forFeature(fromReportCalendar.reportCalendarFeatureKey, fromReportCalendar.reducer),
 ```
 
 Aggiungere in `EffectsModule.forRoot([...])`:
+
 ```typescript
 ReportCalendarEffects,
 ```
@@ -232,6 +235,7 @@ export class ReportTicketComponent {
 **File:** `projects/pap/src/app/features/report-ticket/report-ticket.component.spec.ts` _(modifica)_
 
 I test devono:
+
 - Importare `loadReportCalendars` (non più `loadCalendars`)
 - Mockare `selectLoading` a `false` per permettere al `filter` di passare
 - Aggiungere un caso: `loading === true` inizialmente → il dispatch NON viene chiamato finché `loading` non diventa `false`
