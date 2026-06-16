@@ -430,7 +430,6 @@ const addPermissionsToAndroidManifest = (): Promise<void> => {
         'CAMERA',
         'WRITE_EXTERNAL_STORAGE',
         'READ_EXTERNAL_STORAGE',
-        'READ_MEDIA_IMAGES',
       ];
       permissions.forEach(permission => {
         if (
