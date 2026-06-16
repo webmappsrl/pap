@@ -30,6 +30,28 @@
 
 # Changelog pap
 
+## [2.5.4](https://github.com/webmappsrl/pap/compare/v2.5.3...v2.5.4) (2026-06-16)
+
+
+### Bug Fixes
+
+* **oc:8045:** race condition GPS — dispatch setMarker prima di setPosition ([#84](https://github.com/webmappsrl/pap/issues/84)) ([39efb9d](https://github.com/webmappsrl/pap/commit/39efb9def0a324a71acda030cabfbab85039c900))
+* **oc:8052:** fix code review 7612 — messaggi conferma ([#85](https://github.com/webmappsrl/pap/issues/85)) ([9d46c2d](https://github.com/webmappsrl/pap/commit/9d46c2d3e06dd77a571f01d2c54fbe69831c63b2))
+* **oc:8054:** separate reportCalendar store slice and await company loading ([#86](https://github.com/webmappsrl/pap/issues/86)) ([9b0a14c](https://github.com/webmappsrl/pap/commit/9b0a14cf266289939d7740f43c16172b6a1fca4e))
+* **oc:8056:** cap notifications to PLATFORM_LIMIT, fix zombie cleanup and concurrent scheduling ([#87](https://github.com/webmappsrl/pap/issues/87)) ([97ba2c5](https://github.com/webmappsrl/pap/commit/97ba2c5033cec9fb997d813ead33bc4141068e3d))
+
+
+### Miscellaneous
+
+* add unit tests execution step in CI workflow ([7b4d9d7](https://github.com/webmappsrl/pap/commit/7b4d9d76aa2698ea2c24005f2dcfae7336d85d98))
+* **android:** update SDK versions and remove unused permission ([3a232b0](https://github.com/webmappsrl/pap/commit/3a232b0273ed3777c0df8dee166f9b9a78574df2))
+* Enhance calendar loading functionality oc:7609 ([a932279](https://github.com/webmappsrl/pap/commit/a932279056d2b81e38964798b74aab2ea6bee6cc))
+* **form:** ✨ add zone_id control to form components ([96f6f0f](https://github.com/webmappsrl/pap/commit/96f6f0f552402d2e638b8e3b9e4c1cfaf0aea815))
+* **form:** ✨ implement dynamic ticket form configuration loading ([a41a11a](https://github.com/webmappsrl/pap/commit/a41a11af90e13d96f48a5e02210904ee958ff4e1))
+* Update local notification service ([03cc122](https://github.com/webmappsrl/pap/commit/03cc122999c168e2814da95fbc263e17e0223284))
+* Update report-ticket.component.ts oc:4684 ([4c111e2](https://github.com/webmappsrl/pap/commit/4c111e26bd830e1f01ef10e80edabdaf5cd03a15))
+* Update tsconfig.app.json to exclude test files ([c6129e1](https://github.com/webmappsrl/pap/commit/c6129e14630e0e1a13360f4b3e218ef66ab438d2))
+
 ## [2.5.3](https://github.com/webmappsrl/pap/compare/v2.5.2...v2.5.3) (2025-01-15)
 
 ### Bug Fixes
