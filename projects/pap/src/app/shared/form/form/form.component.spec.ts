@@ -3,11 +3,13 @@ import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AlertController, NavController} from '@ionic/angular';
 import {of} from 'rxjs';
+import {take} from 'rxjs/operators';
 import {provideMockStore, MockStore} from '@ngrx/store/testing';
 import {FormComponent} from './form.component';
 import {TicketFormConf} from '../../models/form.model';
 import {sendTicket} from '../state/form.actions';
 import {selectCalendarState} from '../../../features/calendar/state/calendar.selectors';
+import {selectReportCalendarState} from '../../../features/report-ticket/state/report-calendar.selectors';
 import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
 import {confiniZone} from '../../map/state/map.selectors';
 import {currentTrashBookType, ticketError, ticketLoading, ticketSuccess} from '../state/form.selectors';
@@ -270,6 +272,91 @@ describe('FormComponent — success alert message', () => {
     expect(args.cssClass).toContain('error');
     expect(args.message).toContain('Errore');
   }));
+});
+
+describe('FormComponent — calendars$ selector routing', () => {
+  let component: FormComponent;
+  let store: MockStore;
+
+  const pastCalendars = [{address: {id: 1} as any, calendar: {'2026-06-01': []}} as any];
+  const futureCalendars = [{address: {id: 2} as any, calendar: {'2026-08-15': []}} as any];
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [FormComponent],
+      imports: [ReactiveFormsModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        provideMockStore(),
+        {provide: NavController, useValue: {navigateRoot: () => undefined}},
+        {
+          provide: AlertController,
+          useValue: {create: () => Promise.resolve({present: () => {}, onDidDismiss: () => of(null)})},
+        },
+      ],
+    }).compileComponents();
+
+    store = TestBed.inject(MockStore);
+    store.overrideSelector(selectCalendarState as any, {calendars: futureCalendars});
+    store.overrideSelector(selectReportCalendarState as any, {calendars: pastCalendars, loading: false, error: ''});
+    store.overrideSelector(trashBookTypes as any, []);
+    store.overrideSelector(confiniZone as any, []);
+    store.overrideSelector(currentTrashBookType as any, undefined);
+    store.overrideSelector(ticketError as any, null);
+    store.overrideSelector(ticketLoading as any, false);
+    store.overrideSelector(ticketSuccess as any, null);
+    store.overrideSelector(user as any, null);
+
+    const fixture = TestBed.createComponent(FormComponent);
+    component = fixture.componentInstance;
+  });
+
+  afterEach(() => store.resetSelectors());
+
+  it('should read from selectReportCalendarState (date passate) when ticketType is report', (done) => {
+    component.ticketFormConf = {
+      cancel: '',
+      finalMessage: '',
+      pages: 1,
+      ticketType: 'report',
+      step: [{label: 'Tipo', type: 'calendar_trash_type_id', required: true}],
+    };
+
+    component.calendars$.pipe(take(1)).subscribe(cals => {
+      expect(cals).toEqual(pastCalendars);
+      done();
+    });
+  });
+
+  it('should read from selectCalendarState (date future) when ticketType is reservation', (done) => {
+    component.ticketFormConf = {
+      cancel: '',
+      finalMessage: '',
+      pages: 1,
+      ticketType: 'reservation',
+      step: [{label: 'Tipo', type: 'calendar_trash_type_id', required: true}],
+    };
+
+    component.calendars$.pipe(take(1)).subscribe(cals => {
+      expect(cals).toEqual(futureCalendars);
+      done();
+    });
+  });
+
+  it('should NOT show future dates when ticketType is report', (done) => {
+    component.ticketFormConf = {
+      cancel: '',
+      finalMessage: '',
+      pages: 1,
+      ticketType: 'report',
+      step: [{label: 'Tipo', type: 'calendar_trash_type_id', required: true}],
+    };
+
+    component.calendars$.pipe(take(1)).subscribe(cals => {
+      expect(cals).not.toEqual(futureCalendars);
+      done();
+    });
+  });
 });
 
 describe('FormComponent — ticketFormConf setter idempotency', () => {

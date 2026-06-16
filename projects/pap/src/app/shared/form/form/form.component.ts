@@ -14,6 +14,7 @@ import {BehaviorSubject, Observable, Subscription, from} from 'rxjs';
 import {filter, map, switchMap, take, withLatestFrom} from 'rxjs/operators';
 import {AppState} from '../../../core/core.state';
 import {selectCalendarState} from '../../../features/calendar/state/calendar.selectors';
+import {selectReportCalendarState} from '../../../features/report-ticket/state/report-calendar.selectors';
 import {trashBookTypes} from '../../../features/trash-book/state/trash-book.selectors';
 import {TrashBookType} from '../../../features/trash-book/trash-book-model';
 import {confiniZone} from '../../map/state/map.selectors';
@@ -79,7 +80,14 @@ export class FormComponent implements OnDestroy {
   @ViewChild('focusInput') focusInput!: IonInput;
 
   alertEvt$: EventEmitter<any> = new EventEmitter<any>();
-  calendars$ = this._store.pipe(select(selectCalendarState)).pipe(
+  ticketFormConf$: BehaviorSubject<TicketFormConf | null> =
+    new BehaviorSubject<TicketFormConf | null>(null);
+  calendars$ = this.ticketFormConf$.pipe(
+    switchMap(conf =>
+      conf?.ticketType === 'report'
+        ? this._store.pipe(select(selectReportCalendarState))
+        : this._store.pipe(select(selectCalendarState)),
+    ),
     filter(c => c != null),
     map(calendarView => calendarView.calendars),
   );
@@ -92,8 +100,6 @@ export class FormComponent implements OnDestroy {
   formSuccess$: Observable<any> = this._store.pipe(select(ticketSuccess));
   pos$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   ticketForm: UntypedFormGroup = new UntypedFormGroup({});
-  ticketFormConf$: BehaviorSubject<TicketFormConf | null> =
-    new BehaviorSubject<TicketFormConf | null>(null);
   trashBookTypesOpts$!: Observable<TrashBookType[]>;
 
   constructor(
